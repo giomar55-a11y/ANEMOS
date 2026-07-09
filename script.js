@@ -1,7 +1,13 @@
 const screenButtons = document.querySelectorAll("[data-screen]");
 const screens = document.querySelectorAll(".screen");
 
-function showScreen(screenId) {
+function showScreen(screenId)const backBtn = document.getElementById("homeBackBtn");
+
+if (screenId === "home") {
+    document.body.classList.add("homeActive");
+} else {
+    document.body.classList.remove("homeActive");
+} {
   screens.forEach(screen => {
     screen.classList.toggle("active", screen.id === screenId);
   });
