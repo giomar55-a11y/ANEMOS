@@ -27,5 +27,5 @@ accordionHeaders.forEach(header => {
     item.classList.toggle("open");
   });
 });
-
+document.body.classList.add("homeActive");
 showScreen("home");
