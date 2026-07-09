@@ -1,16 +1,16 @@
 const screenButtons = document.querySelectorAll("[data-screen]");
 const screens = document.querySelectorAll(".screen");
 
-function showScreen(screenId)const backBtn = document.getElementById("homeBackBtn");
-
-if (screenId === "home") {
-    document.body.classList.add("homeActive");
-} else {
-    document.body.classList.remove("homeActive");
-} {
+function showScreen(screenId) {
   screens.forEach(screen => {
     screen.classList.toggle("active", screen.id === screenId);
   });
+
+  if (screenId === "home") {
+    document.body.classList.add("homeActive");
+  } else {
+    document.body.classList.remove("homeActive");
+  }
 }
 
 screenButtons.forEach(button => {
@@ -27,5 +27,5 @@ accordionHeaders.forEach(header => {
     item.classList.toggle("open");
   });
 });
-document.body.classList.add("homeActive");
+
 showScreen("home");
