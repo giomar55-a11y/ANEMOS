@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ANEMOS</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <main class="app">
+
+    <section id="home" class="screen active">
+      <header class="hero">
+        <div class="logo">🌬️</div>
+        <h1>ANEMOS</h1>
+        <p>Laboratorio digitale del respiro</p>
+      </header>
+
+      <div class="homeGrid">
+        <button class="homeCard" data-screen="guided">🟢<span>Respirazione guidata</span></button>
+        <button class="homeCard" data-screen="create">➕<span>Crea respirazione</span></button>
+        <button class="homeCard" data-screen="library">📚<span>Libreria</span></button>
+        <button class="homeCard" data-screen="learn">🎓<span>Impara</span></button>
+      </div>
+    </section>
+
+    <section id="guided" class="screen">
+      <h2>🟢 Respirazione guidata</h2>
+      <p>Qui avvieremo respirazioni già pronte.</p>
+    </section>
+
+    <section id="create" class="screen">
+      <h2>➕ Crea respirazione</h2>
+      <p>Qui costruiremo il laboratorio ANEMOS.</p>
+    </section>
+
+    <section id="library" class="screen">
+      <h2>📚 Libreria</h2>
+      <p>Qui salveremo le respirazioni create.</p>
+    </section>
+
+    <section id="learn" class="screen">
+      <h2>🎓 Impara</h2>
+      <p>Qui inseriremo le schede didattiche.</p>
+    </section>
+
+    <section id="settings" class="screen">
+      <h2>⚙️ Impostazioni</h2>
+      <p>Qui gestiremo modalità base, professionista e ricerca.</p>
+    </section>
+
+    <nav class="bottomNav">
+      <button data-screen="home">🏠<span>Home</span></button>
+      <button data-screen="create">➕<span>Crea</span></button>
+      <button data-screen="library">📚<span>Libreria</span></button>
+      <button data-screen="learn">🎓<span>Impara</span></button>
+      <button data-screen="settings">⚙️<span>Setup</span></button>
+    </nav>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
