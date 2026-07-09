@@ -38,3 +38,16 @@ accordionHeaders.forEach(header=>{
 });
 
 showScreen("home");
+const finalityCards = document.querySelectorAll(".choiceCard");
+
+finalityCards.forEach(card => {
+  card.addEventListener("click", () => {
+    const value = card.dataset.finality;
+
+    const header = document.querySelector(".accordionHeader span");
+    header.textContent = value + " ▾";
+
+    const item = card.closest(".accordionItem");
+    item.classList.remove("open");
+  });
+});
