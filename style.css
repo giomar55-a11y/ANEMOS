@@ -1,4 +1,4 @@
-*{
+{
   margin:0;
   padding:0;
   box-sizing:border-box;
@@ -112,4 +112,21 @@ body{
 
 .accordionItem.open .accordionContent{
   display:block;
+}
+.backBtn{
+  display:none;
+  border:none;
+  background:white;
+  color:#0b2d56;
+  padding:12px 18px;
+  border-radius:999px;
+  font-size:16px;
+  font-weight:800;
+  box-shadow:0 4px 12px rgba(0,0,0,.08);
+  margin-bottom:20px;
+  cursor:pointer;
+}
+
+body:not(.homeActive) .backBtn{
+  display:inline-block;
 }
