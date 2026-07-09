@@ -22,6 +22,7 @@
         <button class="homeCard" data-screen="create">➕<span>Crea respirazione</span></button>
         <button class="homeCard" data-screen="library">📚<span>Libreria</span></button>
         <button class="homeCard" data-screen="learn">🎓<span>Impara</span></button>
+        <button class="homeCard" data-screen="settings">⚙️<span>Impostazioni</span></button>
       </div>
     </section>
 
@@ -32,7 +33,38 @@
 
     <section id="create" class="screen">
       <h2>➕ Crea respirazione</h2>
-      <p>Qui costruiremo il laboratorio ANEMOS.</p>
+
+      <div class="accordion">
+        <div class="accordionItem">
+          <button class="accordionHeader">🎯 Finalità <span>Nessuna ▾</span></button>
+          <div class="accordionContent"></div>
+        </div>
+
+        <div class="accordionItem">
+          <button class="accordionHeader">🌬️ Percorso <span>👃 → 👃 ▾</span></button>
+          <div class="accordionContent"></div>
+        </div>
+
+        <div class="accordionItem">
+          <button class="accordionHeader">⏱️ Tempi <span>0 • 0 • 0 • 0 ▾</span></button>
+          <div class="accordionContent"></div>
+        </div>
+
+        <div class="accordionItem">
+          <button class="accordionHeader">💨 Flusso <span>— ▾</span></button>
+          <div class="accordionContent"></div>
+        </div>
+
+        <div class="accordionItem">
+          <button class="accordionHeader">🫁 Distribuzione <span>Nessuna ▾</span></button>
+          <div class="accordionContent"></div>
+        </div>
+
+        <div class="accordionItem">
+          <button class="accordionHeader">📈 Anemoscopio <span>Non configurato ▾</span></button>
+          <div class="accordionContent"></div>
+        </div>
+      </div>
     </section>
 
     <section id="library" class="screen">
@@ -49,14 +81,6 @@
       <h2>⚙️ Impostazioni</h2>
       <p>Qui gestiremo modalità base, professionista e ricerca.</p>
     </section>
-
-    <nav class="bottomNav">
-      <button data-screen="home">🏠<span>Home</span></button>
-      <button data-screen="create">➕<span>Crea</span></button>
-      <button data-screen="library">📚<span>Libreria</span></button>
-      <button data-screen="learn">🎓<span>Impara</span></button>
-      <button data-screen="settings">⚙️<span>Setup</span></button>
-    </nav>
 
   </main>
 
