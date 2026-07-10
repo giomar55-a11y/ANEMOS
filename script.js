@@ -88,3 +88,57 @@ pathButtons.forEach(button => {
   });
 
 });
+const times = {
+  in: 4,
+  pauseIn: 0,
+  out: 4,
+  pauseOut: 0
+};
+
+const timeElementIds = {
+  in: "timeIn",
+  pauseIn: "timePauseIn",
+  out: "timeOut",
+  pauseOut: "timePauseOut"
+};
+
+function updateTimeDisplay() {
+  Object.entries(timeElementIds).forEach(([key, elementId]) => {
+    const element = document.getElementById(elementId);
+
+    if (element) {
+      element.textContent = times[key];
+    }
+  });
+
+  const summary = document.getElementById("timeSummary");
+
+  if (summary) {
+    summary.textContent =
+      `${times.in} • ${times.pauseIn} • ${times.out} • ${times.pauseOut} ▾`;
+  }
+}
+
+document.querySelectorAll(".timePlus").forEach(button => {
+  button.addEventListener("click", event => {
+    event.stopPropagation();
+
+    const target = button.dataset.target;
+    times[target] += 1;
+
+    updateTimeDisplay();
+  });
+});
+
+document.querySelectorAll(".timeMinus").forEach(button => {
+  button.addEventListener("click", event => {
+    event.stopPropagation();
+
+    const target = button.dataset.target;
+    times[target] = Math.max(0, times[target] - 1);
+
+    updateTimeDisplay();
+  });
+});
+
+updateTimeDisplay();
