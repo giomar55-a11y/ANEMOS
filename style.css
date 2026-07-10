@@ -154,3 +154,19 @@ body:not(.homeActive) .backBtn{
   font-size:15px;
   margin-top:8px;
 }
+.pathSection{
+  margin-bottom:24px;
+}
+
+.pathSection h3{
+  margin:0 0 12px;
+  font-size:16px;
+  color:#0b2d56;
+}
+
+.pathChoice.selected{
+  background:#0b84f3;
+  color:white;
+  transform:scale(1.03);
+  transition:.2s;
+}
