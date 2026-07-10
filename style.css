@@ -170,3 +170,40 @@ body:not(.homeActive) .backBtn{
   transform:scale(1.03);
   transition:.2s;
 }
+.timeRow{
+  display:grid;
+  grid-template-columns:1fr auto auto auto;
+  align-items:center;
+  gap:12px;
+  padding:14px 0;
+  border-bottom:1px solid #e8eef4;
+}
+
+.timeRow:last-child{
+  border-bottom:none;
+}
+
+.timeRow > span:first-child{
+  font-weight:800;
+  color:#0b2d56;
+}
+
+.timeRow button{
+  width:42px;
+  height:42px;
+  border:none;
+  border-radius:12px;
+  background:#eaf3ff;
+  color:#0b2d56;
+  font-size:24px;
+  font-weight:900;
+  cursor:pointer;
+}
+
+.timeRow span[id]{
+  min-width:34px;
+  text-align:center;
+  font-size:22px;
+  font-weight:900;
+  color:#18314f;
+}
