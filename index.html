@@ -55,10 +55,36 @@
 </div>
         </div>
 
-        <div class="accordionItem">
-          <button class="accordionHeader">🌬️ Percorso <span>👃 → 👃 ▾</span></button>
-          <div class="accordionContent"></div>
-        </div>
+       <div class="accordionItem" id="pathAccordion">
+  <button class="accordionHeader">
+    🌬️ Percorso
+    <span id="pathSummary">👃 → 👃 ▾</span>
+  </button>
+
+  <div class="accordionContent">
+    <div class="pathSection">
+      <h3>Inspirazione</h3>
+
+      <div class="choiceGrid">
+        <button class="pathChoice" data-phase="in" data-value="👃">👃<span>Entrambe</span></button>
+        <button class="pathChoice" data-phase="in" data-value="👃DX">👃<span>Destra</span></button>
+        <button class="pathChoice" data-phase="in" data-value="👃SN">👃<span>Sinistra</span></button>
+        <button class="pathChoice" data-phase="in" data-value="👄">👄<span>Bocca</span></button>
+      </div>
+    </div>
+
+    <div class="pathSection">
+      <h3>Espirazione</h3>
+
+      <div class="choiceGrid">
+        <button class="pathChoice" data-phase="es" data-value="👃">👃<span>Entrambe</span></button>
+        <button class="pathChoice" data-phase="es" data-value="👃DX">👃<span>Destra</span></button>
+        <button class="pathChoice" data-phase="es" data-value="👃SN">👃<span>Sinistra</span></button>
+        <button class="pathChoice" data-phase="es" data-value="👄">👄<span>Bocca</span></button>
+      </div>
+    </div>
+  </div>
+</div>
 
         <div class="accordionItem">
           <button class="accordionHeader">⏱️ Tempi <span>0 • 0 • 0 • 0 ▾</span></button>
