@@ -51,3 +51,40 @@ finalityCards.forEach(card => {
     item.classList.remove("open");
   });
 });
+let pathIn = "👃";
+let pathOut = "👃";
+
+const pathButtons = document.querySelectorAll(".pathChoice");
+const pathSummary = document.getElementById("pathSummary");
+
+pathButtons.forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    const phase = button.dataset.phase;
+    const value = button.dataset.value;
+
+    if (phase === "in") {
+      pathIn = value;
+
+      document.querySelectorAll('.pathChoice[data-phase="in"]').forEach(b=>{
+        b.classList.remove("selected");
+      });
+
+    } else {
+
+      pathOut = value;
+
+      document.querySelectorAll('.pathChoice[data-phase="es"]').forEach(b=>{
+        b.classList.remove("selected");
+      });
+
+    }
+
+    button.classList.add("selected");
+
+    pathSummary.textContent = `${pathIn} → ${pathOut} ▾`;
+
+  });
+
+});
