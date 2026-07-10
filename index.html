@@ -86,11 +86,56 @@
   </div>
 </div>
 
-        <div class="accordionItem">
-          <button class="accordionHeader">⏱️ Tempi <span>0 • 0 • 0 • 0 ▾</span></button>
-          <div class="accordionContent"></div>
-        </div>
+        <div class="accordionItem" id="timeAccordion">
+  <button class="accordionHeader">
+    ⏱️ Tempi
+    <span id="timeSummary">4 • 0 • 4 • 0 ▾</span>
+  </button>
 
+  <div class="accordionContent">
+
+    <div class="timeRow">
+      <span>Inspirazione</span>
+
+      <button class="timeMinus" data-target="in">−</button>
+
+      <span id="timeIn">4</span>
+
+      <button class="timePlus" data-target="in">+</button>
+    </div>
+
+    <div class="timeRow">
+      <span>Pausa IN</span>
+
+      <button class="timeMinus" data-target="pauseIn">−</button>
+
+      <span id="timePauseIn">0</span>
+
+      <button class="timePlus" data-target="pauseIn">+</button>
+    </div>
+
+    <div class="timeRow">
+      <span>Espirazione</span>
+
+      <button class="timeMinus" data-target="out">−</button>
+
+      <span id="timeOut">4</span>
+
+      <button class="timePlus" data-target="out">+</button>
+    </div>
+
+    <div class="timeRow">
+      <span>Pausa OUT</span>
+
+      <button class="timeMinus" data-target="pauseOut">−</button>
+
+      <span id="timePauseOut">0</span>
+
+      <button class="timePlus" data-target="pauseOut">+</button>
+    </div>
+
+  </div>
+</div>
         <div class="accordionItem">
           <button class="accordionHeader">💨 Flusso <span>— ▾</span></button>
           <div class="accordionContent"></div>
