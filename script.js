@@ -1,20 +1,63 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const state = {
-    finality: null,
+  const currentBreath = createEmptyBreath();
 
-    pathIn: null,
-    pathOut: null,
+  function createEmptyBreath() {
+    return {
+      id: null,
+      name: "",
+      description: "",
 
-    times: {
-      in: 0,
-      pauseIn: 0,
-      out: 0,
-      pauseOut: 0
-    },
+      finality: null,
 
-    flowIn: null,
-    flowOut: null
-  };
+      path: {
+        in: null,
+        out: null
+      },
+
+      timing: {
+        in: 0,
+        pauseIn: 0,
+        out: 0,
+        pauseOut: 0
+      },
+
+      flow: {
+        in: null,
+        out: null
+      },
+
+      distribution: {
+        mode: null,
+
+        essential: {
+          abdominal: null,
+          lowerThoracic: null,
+          upperThoracic: null
+        },
+
+        biomechanical: {}
+      },
+
+      anemoscope: {
+        enabled: false
+      },
+
+      coherence: {
+        physiological: null,
+        finality: null,
+        user: null
+      },
+
+      metadata: {
+        author: "",
+        version: 1,
+        createdAt: null,
+        modifiedAt: null,
+        notes: "",
+        tags: []
+      }
+    };
+  }
 
   // ========================================
   // NAVIGAZIONE
@@ -95,7 +138,7 @@ document.addEventListener("DOMContentLoaded", () => {
         event.stopPropagation();
 
         selectOnly(button, ".finalityChoice");
-        state.finality = button.dataset.value;
+        currentBreath.finality = button.dataset.value;
       });
     });
 
@@ -121,11 +164,11 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         if (phase === "in") {
-          state.pathIn = value;
+          currentBreath.path.in = value;
         }
 
         if (phase === "es") {
-          state.pathOut = value;
+          currentBreath.path.out = value;
         }
       });
     });
@@ -151,7 +194,8 @@ document.addEventListener("DOMContentLoaded", () => {
           document.getElementById(elementId);
 
         if (element) {
-          element.textContent = state.times[key];
+          element.textContent =
+            currentBreath.timing[key];
         }
       }
     );
@@ -165,8 +209,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const target = button.dataset.target;
 
-        if (target in state.times) {
-          state.times[target] += 1;
+        if (target in currentBreath.timing) {
+          currentBreath.timing[target] += 1;
           renderTimeValues();
         }
       });
@@ -180,10 +224,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const target = button.dataset.target;
 
-        if (target in state.times) {
-          state.times[target] = Math.max(
+        if (target in currentBreath.timing) {
+          currentBreath.timing[target] = Math.max(
             0,
-            state.times[target] - 1
+            currentBreath.timing[target] - 1
           );
 
           renderTimeValues();
@@ -213,11 +257,11 @@ document.addEventListener("DOMContentLoaded", () => {
         );
 
         if (phase === "in") {
-          state.flowIn = value;
+          currentBreath.flow.in = value;
         }
 
         if (phase === "es") {
-          state.flowOut = value;
+          currentBreath.flow.out = value;
         }
       });
     });
@@ -236,33 +280,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (section === "finality") {
           finalitySummary.textContent =
-            `${state.finality || "Nessuna"} ▾`;
+            `${currentBreath.finality || "Nessuna"} ▾`;
 
           closeAccordion("finalityAccordion");
         }
 
         if (section === "path") {
           pathSummary.textContent =
-            `${state.pathIn || "—"} → ` +
-            `${state.pathOut || "—"} ▾`;
+            `${currentBreath.path.in || "—"} → ` +
+            `${currentBreath.path.out || "—"} ▾`;
 
           closeAccordion("pathAccordion");
         }
 
         if (section === "times") {
-          const times = state.times;
+          const timing = currentBreath.timing;
 
           timeSummary.textContent =
-            `${times.in} • ${times.pauseIn} • ` +
-            `${times.out} • ${times.pauseOut} ▾`;
+            `${timing.in} • ${timing.pauseIn} • ` +
+            `${timing.out} • ${timing.pauseOut} ▾`;
 
           closeAccordion("timeAccordion");
         }
 
         if (section === "flow") {
           flowSummary.textContent =
-            `${state.flowIn || "—"} → ` +
-            `${state.flowOut || "—"} ▾`;
+            `${currentBreath.flow.in || "—"} → ` +
+            `${currentBreath.flow.out || "—"} ▾`;
 
           closeAccordion("flowAccordion");
         }
@@ -273,19 +317,14 @@ document.addEventListener("DOMContentLoaded", () => {
   // AZZERA TUTTO
   // ========================================
 
-  function resetAll() {
-    state.finality = null;
+  function resetCurrentBreath() {
+    const emptyBreath = createEmptyBreath();
 
-    state.pathIn = null;
-    state.pathOut = null;
+    Object.keys(currentBreath).forEach(key => {
+      delete currentBreath[key];
+    });
 
-    state.times.in = 0;
-    state.times.pauseIn = 0;
-    state.times.out = 0;
-    state.times.pauseOut = 0;
-
-    state.flowIn = null;
-    state.flowOut = null;
+    Object.assign(currentBreath, emptyBreath);
 
     document
       .querySelectorAll(".choiceButton.selected")
@@ -319,13 +358,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document
     .getElementById("resetAllButton")
-    ?.addEventListener("click", resetAll);
+    ?.addEventListener("click", resetCurrentBreath);
 
   // ========================================
   // AVVIO
   // ========================================
 
   renderTimeValues();
-  resetAll();
+  resetCurrentBreath();
   showScreen("home");
+
+  // Utile per controllare temporaneamente i dati
+  window.currentBreath = currentBreath;
 });
