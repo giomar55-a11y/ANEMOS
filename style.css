@@ -356,3 +356,55 @@ body:not(.homeActive) .backBtn{
     grid-template-columns:1fr;
   }
 }
+.sequenceVolumeButton{
+  display:none;
+  width:100%;
+  margin-top:12px;
+  border:2px solid #dfe8f2;
+  border-radius:16px;
+  padding:14px;
+  background:#f7fbff;
+  color:#0b2d56;
+  font-size:16px;
+  font-weight:900;
+  cursor:pointer;
+  text-align:left;
+}
+
+.sequenceVolumeButton.active{
+  background:#0b84f3;
+  border-color:#0b84f3;
+  color:white;
+}
+
+.sequenceNumber{
+  display:inline-flex;
+  width:30px;
+  height:30px;
+  margin-right:10px;
+  border-radius:50%;
+  align-items:center;
+  justify-content:center;
+  background:white;
+  color:#0b84f3;
+  font-weight:900;
+}
+
+.sequenceSummaryBox{
+  display:none;
+  margin-top:18px;
+  padding:16px;
+  border-radius:16px;
+  background:#eef6ff;
+  color:#0b2d56;
+  font-weight:800;
+  line-height:1.5;
+}
+
+body.sequenceMode .sequenceVolumeButton{
+  display:block;
+}
+
+body.sequenceMode .sequenceSummaryBox{
+  display:block;
+}
