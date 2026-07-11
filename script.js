@@ -1,4 +1,21 @@
 document.addEventListener("DOMContentLoaded", () => {
+
+  function createDistributionPhase() {
+    return {
+      mode: null,
+      organization: null,
+      sequence: [],
+
+      essential: {
+        abdominal: null,
+        lowerThoracic: null,
+        upperThoracic: null
+      },
+
+      biomechanical: {}
+    };
+  }
+
   function createEmptyBreath() {
     return {
       id: null,
@@ -24,17 +41,8 @@ document.addEventListener("DOMContentLoaded", () => {
       },
 
       distribution: {
-        mode: null,
-        organization: null,
-        sequence: [],
-
-        essential: {
-          abdominal: null,
-          lowerThoracic: null,
-          upperThoracic: null
-        },
-
-        biomechanical: {}
+        in: createDistributionPhase(),
+        out: createDistributionPhase()
       },
 
       anemoscope: {
@@ -166,13 +174,7 @@ document.addEventListener("DOMContentLoaded", () => {
           `.pathChoice[data-phase="${phase}"]`
         );
 
-        if (phase === "in") {
-          currentBreath.path.in = value;
-        }
-
-        if (phase === "es") {
-          currentBreath.path.out = value;
-        }
+        currentBreath.path[phase] = value;
       });
     });
 
@@ -259,34 +261,15 @@ document.addEventListener("DOMContentLoaded", () => {
           `.flowChoice[data-phase="${phase}"]`
         );
 
-        if (phase === "in") {
-          currentBreath.flow.in = value;
-        }
-
-        if (phase === "es") {
-          currentBreath.flow.out = value;
-        }
+        currentBreath.flow[phase] = value;
       });
     });
-
-  // ========================================
-  // DISTRIBUZIONE
+    // ========================================
+  // DISTRIBUZIONE IN / ES
   // ========================================
 
   const distributionSummary =
     document.getElementById("distributionSummary");
-
-  const essentialDistributionPanel =
-    document.getElementById("essentialDistributionPanel");
-
-  const biomechanicalDistributionPanel =
-    document.getElementById("biomechanicalDistributionPanel");
-
-  const sequenceInstruction =
-    document.getElementById("sequenceInstruction");
-
-  const sequenceSummaryBox =
-    document.getElementById("sequenceSummaryBox");
 
   const volumeLabels = {
     abdominal: "Addominale",
@@ -300,54 +283,99 @@ document.addEventListener("DOMContentLoaded", () => {
     full: "Completo"
   };
 
-  function clearSequenceVisuals() {
+  function getDistributionPhase(phase) {
+    return currentBreath.distribution[phase];
+  }
+
+  function getEssentialPanel(phase) {
+    return document.getElementById(
+      phase === "in"
+        ? "inEssentialDistributionPanel"
+        : "outEssentialDistributionPanel"
+    );
+  }
+
+  function getBiomechanicalPanel(phase) {
+    return document.getElementById(
+      phase === "in"
+        ? "inBiomechanicalDistributionPanel"
+        : "outBiomechanicalDistributionPanel"
+    );
+  }
+
+  function getSequenceInstruction(phase) {
+    return document.getElementById(
+      phase === "in"
+        ? "inSequenceInstruction"
+        : "outSequenceInstruction"
+    );
+  }
+
+  function getSequenceSummaryBox(phase) {
+    return document.getElementById(
+      phase === "in"
+        ? "inSequenceSummaryBox"
+        : "outSequenceSummaryBox"
+    );
+  }
+
+  function clearSequenceVisuals(phase) {
     document
-      .querySelectorAll(".distributionChoice")
+      .querySelectorAll(
+        `.distributionChoice[data-phase="${phase}"]`
+      )
       .forEach(button => {
         button.classList.remove("sequenceOrdered");
         button.removeAttribute("data-order");
       });
   }
 
-  function renderSequence() {
-    clearSequenceVisuals();
+  function renderSequence(phase) {
+    const distribution = getDistributionPhase(phase);
+    const summaryBox = getSequenceSummaryBox(phase);
 
-    currentBreath.distribution.sequence.forEach(
-      (volume, index) => {
-        const selectedButton = document.querySelector(
-          `.distributionChoice[data-volume="${volume}"].selected`
-        );
+    clearSequenceVisuals(phase);
 
-        if (selectedButton) {
-          selectedButton.classList.add("sequenceOrdered");
-          selectedButton.dataset.order = index + 1;
-        }
+    distribution.sequence.forEach((volume, index) => {
+      const selectedButton = document.querySelector(
+        `.distributionChoice[data-phase="${phase}"]` +
+        `[data-volume="${volume}"].selected`
+      );
+
+      if (selectedButton) {
+        selectedButton.classList.add("sequenceOrdered");
+        selectedButton.dataset.order = index + 1;
       }
-    );
+    });
 
-    if (!sequenceSummaryBox) {
+    if (!summaryBox) {
       return;
     }
 
-    if (
-      currentBreath.distribution.organization !==
-      "sequential"
-    ) {
-      sequenceSummaryBox.textContent =
-        "Organizzazione simultanea.";
+    if (distribution.organization === "simultaneous") {
+      summaryBox.style.display = "block";
+      summaryBox.textContent =
+        "I volumi selezionati lavorano simultaneamente.";
       return;
     }
 
-    if (
-      currentBreath.distribution.sequence.length === 0
-    ) {
-      sequenceSummaryBox.textContent =
-        "Nessuna sequenza impostata.";
+    if (distribution.organization !== "sequential") {
+      summaryBox.style.display = "none";
       return;
     }
 
-    sequenceSummaryBox.textContent =
-      currentBreath.distribution.sequence
+    summaryBox.style.display = "block";
+
+    if (distribution.sequence.length === 0) {
+      summaryBox.textContent =
+        phase === "in"
+          ? "Nessuna sequenza inspiratoria impostata."
+          : "Nessuna sequenza espiratoria impostata.";
+      return;
+    }
+
+    summaryBox.textContent =
+      distribution.sequence
         .map(
           (volume, index) =>
             `${index + 1}. ${volumeLabels[volume]}`
@@ -361,21 +389,23 @@ document.addEventListener("DOMContentLoaded", () => {
       button.addEventListener("click", event => {
         event.stopPropagation();
 
+        const phase = button.dataset.phase;
+        const mode = button.dataset.mode;
+        const distribution = getDistributionPhase(phase);
+
         selectOnly(
           button,
-          ".distributionModeChoice"
+          `.distributionModeChoice[data-phase="${phase}"]`
         );
 
-        const mode = button.dataset.mode;
+        distribution.mode = mode;
 
-        currentBreath.distribution.mode = mode;
-
-        essentialDistributionPanel?.classList.toggle(
+        getEssentialPanel(phase)?.classList.toggle(
           "active",
           mode === "essential"
         );
 
-        biomechanicalDistributionPanel?.classList.toggle(
+        getBiomechanicalPanel(phase)?.classList.toggle(
           "active",
           mode === "biomechanical"
         );
@@ -388,50 +418,41 @@ document.addEventListener("DOMContentLoaded", () => {
       button.addEventListener("click", event => {
         event.stopPropagation();
 
-        selectOnly(
-          button,
-          ".distributionOrganizationChoice"
-        );
-
+        const phase = button.dataset.phase;
         const organization =
           button.dataset.organization;
 
-        currentBreath.distribution.organization =
-          organization;
+        const distribution =
+          getDistributionPhase(phase);
 
-        const isSequential =
-          organization === "sequential";
-
-        document.body.classList.toggle(
-          "sequenceMode",
-          isSequential
+        selectOnly(
+          button,
+          `.distributionOrganizationChoice[data-phase="${phase}"]`
         );
 
-        if (sequenceInstruction) {
-          sequenceInstruction.textContent =
-            isSequential
+        distribution.organization = organization;
+        distribution.sequence = [];
+
+        const instruction =
+          getSequenceInstruction(phase);
+
+        if (instruction) {
+          instruction.textContent =
+            organization === "sequential"
               ? "Tocca i volumi nell’ordine desiderato."
               : "Seleziona il livello di ciascun volume.";
         }
 
-        if (!isSequential) {
-          currentBreath.distribution.sequence = [];
-          clearSequenceVisuals();
-        } else {
-          currentBreath.distribution.sequence = [];
-
-          Object.entries(
-            currentBreath.distribution.essential
-          ).forEach(([volume, level]) => {
-            if (level) {
-              currentBreath.distribution.sequence.push(
-                volume
-              );
-            }
-          });
+        if (organization === "sequential") {
+          Object.entries(distribution.essential)
+            .forEach(([volume, level]) => {
+              if (level) {
+                distribution.sequence.push(volume);
+              }
+            });
         }
 
-        renderSequence();
+        renderSequence(phase);
       });
     });
 
@@ -441,102 +462,97 @@ document.addEventListener("DOMContentLoaded", () => {
       button.addEventListener("click", event => {
         event.stopPropagation();
 
+        const phase = button.dataset.phase;
         const volume = button.dataset.volume;
         const level = button.dataset.level;
 
-        const currentLevel =
-          currentBreath.distribution.essential[volume];
+        const distribution =
+          getDistributionPhase(phase);
 
-        const isSameSelectedButton =
+        const currentLevel =
+          distribution.essential[volume];
+
+        const sameSelectedButton =
           button.classList.contains("selected") &&
           currentLevel === level;
 
         if (
-          currentBreath.distribution.organization ===
-          "sequential" &&
-          isSameSelectedButton
+          distribution.organization === "sequential" &&
+          sameSelectedButton
         ) {
           button.classList.remove("selected");
           button.classList.remove("sequenceOrdered");
           button.removeAttribute("data-order");
 
-          currentBreath.distribution.essential[volume] =
-            null;
+          distribution.essential[volume] = null;
 
-          currentBreath.distribution.sequence =
-            currentBreath.distribution.sequence.filter(
+          distribution.sequence =
+            distribution.sequence.filter(
               item => item !== volume
             );
 
-          renderSequence();
+          renderSequence(phase);
           return;
         }
 
         selectOnly(
           button,
-          `.distributionChoice[data-volume="${volume}"]`
+          `.distributionChoice[data-phase="${phase}"]` +
+          `[data-volume="${volume}"]`
         );
 
-        currentBreath.distribution.essential[volume] =
-          level;
+        distribution.essential[volume] = level;
 
         if (
-          currentBreath.distribution.organization ===
-          "sequential"
+          distribution.organization === "sequential" &&
+          !distribution.sequence.includes(volume)
         ) {
-          const alreadyPresent =
-            currentBreath.distribution.sequence.includes(
-              volume
-            );
-
-          if (!alreadyPresent) {
-            currentBreath.distribution.sequence.push(
-              volume
-            );
-          }
-
-          renderSequence();
+          distribution.sequence.push(volume);
         }
+
+        renderSequence(phase);
       });
     });
 
-  function getEssentialDistributionSummary() {
-    const values =
-      currentBreath.distribution.essential;
+  function getPhaseDistributionSummary(phase) {
+    const distribution =
+      getDistributionPhase(phase);
 
-    const configured = [
-      values.abdominal
-        ? `Addome ${levelLabels[values.abdominal]}`
-        : null,
-
-      values.lowerThoracic
-        ? `Torace inf. ${levelLabels[values.lowerThoracic]}`
-        : null,
-
-      values.upperThoracic
-        ? `Torace sup. ${levelLabels[values.upperThoracic]}`
-        : null
-    ].filter(Boolean);
-
-    if (configured.length === 0) {
-      return "Essenziale";
+    if (!distribution.mode) {
+      return "Nessuna";
     }
 
+    if (distribution.mode === "biomechanical") {
+      return "Biomeccanica Resplora";
+    }
+
+    const configured = Object.entries(
+      distribution.essential
+    )
+      .filter(([, level]) => level)
+      .map(
+        ([volume, level]) =>
+          `${volumeLabels[volume]} ${levelLabels[level]}`
+      );
+
     const organizationLabel =
-      currentBreath.distribution.organization ===
-      "sequential"
+      distribution.organization === "sequential"
         ? "Sequenziale"
-        : currentBreath.distribution.organization ===
-          "simultaneous"
+        : distribution.organization === "simultaneous"
         ? "Simultanea"
         : null;
+
+    if (configured.length === 0) {
+      return organizationLabel
+        ? `${organizationLabel} · Essenziale`
+        : "Essenziale";
+    }
 
     return organizationLabel
       ? `${organizationLabel} · ${configured.join(" · ")}`
       : configured.join(" · ");
   }
-
-  // ========================================
+    // ========================================
   // CONFERME MANUALI
   // ========================================
 
@@ -582,22 +598,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         if (section === "distribution") {
-          if (
-            currentBreath.distribution.mode ===
-            "essential"
-          ) {
-            distributionSummary.textContent =
-              `${getEssentialDistributionSummary()} ▾`;
-          } else if (
-            currentBreath.distribution.mode ===
-            "biomechanical"
-          ) {
-            distributionSummary.textContent =
-              "Biomeccanica Resplora ▾";
-          } else {
-            distributionSummary.textContent =
-              "Nessuna ▾";
-          }
+          const inSummary =
+            getPhaseDistributionSummary("in");
+
+          const outSummary =
+            getPhaseDistributionSummary("out");
+
+          distributionSummary.textContent =
+            `IN: ${inSummary} · ES: ${outSummary} ▾`;
 
           closeAccordion("distributionAccordion");
         }
@@ -632,25 +640,50 @@ document.addEventListener("DOMContentLoaded", () => {
         panel.classList.remove("active");
       });
 
-    document.body.classList.remove("sequenceMode");
+    clearSequenceVisuals("in");
+    clearSequenceVisuals("out");
 
-    clearSequenceVisuals();
+    const inInstruction =
+      getSequenceInstruction("in");
 
-    if (sequenceInstruction) {
-      sequenceInstruction.textContent =
-        "Seleziona il volume desiderato.";
+    const outInstruction =
+      getSequenceInstruction("out");
+
+    if (inInstruction) {
+      inInstruction.textContent =
+        "Seleziona il livello di ciascun volume.";
     }
 
-    if (sequenceSummaryBox) {
-      sequenceSummaryBox.textContent =
-        "Nessuna sequenza impostata.";
+    if (outInstruction) {
+      outInstruction.textContent =
+        "Seleziona il livello di ciascun volume.";
+    }
+
+    const inSequenceBox =
+      getSequenceSummaryBox("in");
+
+    const outSequenceBox =
+      getSequenceSummaryBox("out");
+
+    if (inSequenceBox) {
+      inSequenceBox.style.display = "none";
+      inSequenceBox.textContent =
+        "Nessuna sequenza inspiratoria impostata.";
+    }
+
+    if (outSequenceBox) {
+      outSequenceBox.style.display = "none";
+      outSequenceBox.textContent =
+        "Nessuna sequenza espiratoria impostata.";
     }
 
     finalitySummary.textContent = "Nessuna ▾";
     pathSummary.textContent = "— → — ▾";
     timeSummary.textContent = "0 • 0 • 0 • 0 ▾";
     flowSummary.textContent = "— → — ▾";
-    distributionSummary.textContent = "Nessuna ▾";
+
+    distributionSummary.textContent =
+      "IN: Nessuna · ES: Nessuna ▾";
 
     const anemoscopeSummary =
       document.getElementById("anemoscopeSummary");
