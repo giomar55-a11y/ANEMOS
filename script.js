@@ -62,46 +62,50 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
 
-  // =========================
-  // PERCORSO
-  // =========================
+ // =========================
+// PERCORSO
+// =========================
 
-  let pathIn = "👃";
-  let pathOut = "👃";
+let pathIn = "👃";
+let pathOut = "👃";
 
-  const pathSummary = document.getElementById("pathSummary");
+let pathInSelected = false;
+let pathOutSelected = false;
 
-  document.querySelectorAll(".pathChoice").forEach(button => {
-    button.addEventListener("click", event => {
-      event.stopPropagation();
+const pathSummary = document.getElementById("pathSummary");
 
-      const phase = button.dataset.phase;
-      const value = button.dataset.value;
+document.querySelectorAll(".pathChoice").forEach(button => {
+  button.addEventListener("click", event => {
+    event.stopPropagation();
 
-      document
-        .querySelectorAll(`.pathChoice[data-phase="${phase}"]`)
-        .forEach(item => item.classList.remove("selected"));
+    const phase = button.dataset.phase;
+    const value = button.dataset.value;
 
-      button.classList.add("selected");
+    document
+      .querySelectorAll(`.pathChoice[data-phase="${phase}"]`)
+      .forEach(item => item.classList.remove("selected"));
 
-      if (phase === "in") {
-        pathIn = value;
-      }
+    button.classList.add("selected");
 
-      if (phase === "es") {
-        pathOut = value;
-      }
+    if (phase === "in") {
+      pathIn = value;
+      pathInSelected = true;
+    }
 
-      if (pathSummary) {
-        pathSummary.textContent = `${pathIn} → ${pathOut} ▾`;
-      }
-    });
+    if (phase === "es") {
+      pathOut = value;
+      pathOutSelected = true;
+    }
+
+    if (pathSummary) {
+      pathSummary.textContent = `${pathIn} → ${pathOut} ▾`;
+    }
+
+    if (pathInSelected && pathOutSelected) {
+      document.getElementById("pathAccordion")?.classList.remove("open");
+    }
   });
-if (pathIn !== "👃" || pathOut !== "👃") {
-  const pathItem = document.getElementById("pathAccordion");
-  pathItem?.classList.remove("open");
-}
-
+});
   // =========================
   // TEMPI
   // =========================
@@ -160,46 +164,50 @@ if (pathIn !== "👃" || pathOut !== "👃") {
   });
 
 
-  // =========================
-  // FLUSSO
-  // =========================
+ // =========================
+// FLUSSO
+// =========================
 
-  let flowIn = "—";
-  let flowOut = "—";
+let flowIn = "—";
+let flowOut = "—";
 
-  const flowSummary = document.getElementById("flowSummary");
+let flowInSelected = false;
+let flowOutSelected = false;
 
-  document.querySelectorAll(".flowChoice").forEach(button => {
-    button.addEventListener("click", event => {
-      event.stopPropagation();
+const flowSummary = document.getElementById("flowSummary");
 
-      const phase = button.dataset.phase;
-      const value = button.dataset.value;
+document.querySelectorAll(".flowChoice").forEach(button => {
+  button.addEventListener("click", event => {
+    event.stopPropagation();
 
-      document
-        .querySelectorAll(`.flowChoice[data-phase="${phase}"]`)
-        .forEach(item => item.classList.remove("selected"));
+    const phase = button.dataset.phase;
+    const value = button.dataset.value;
 
-      button.classList.add("selected");
+    document
+      .querySelectorAll(`.flowChoice[data-phase="${phase}"]`)
+      .forEach(item => item.classList.remove("selected"));
 
-      if (phase === "in") {
-        flowIn = value;
-      }
+    button.classList.add("selected");
 
-      if (phase === "es") {
-        flowOut = value;
-      }
+    if (phase === "in") {
+      flowIn = value;
+      flowInSelected = true;
+    }
 
-      if (flowSummary) {
-        flowSummary.textContent = `${flowIn} → ${flowOut} ▾`;
-      }
-    });
+    if (phase === "es") {
+      flowOut = value;
+      flowOutSelected = true;
+    }
+
+    if (flowSummary) {
+      flowSummary.textContent = `${flowIn} → ${flowOut} ▾`;
+    }
+
+    if (flowInSelected && flowOutSelected) {
+      document.getElementById("flowAccordion")?.classList.remove("open");
+    }
   });
-if (flowIn !== "—" && flowOut !== "—") {
-  const flowItem = document.getElementById("flowAccordion");
-  flowItem?.classList.remove("open");
-}
-
+});
   // =========================
   // AVVIO
   // =========================
