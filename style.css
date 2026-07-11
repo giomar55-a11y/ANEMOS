@@ -319,3 +319,40 @@ body:not(.homeActive) .backBtn{
   color:#607080;
   line-height:1.5;
 }
+.distributionMode{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.distributionPanel{
+  display:none;
+}
+
+.distributionPanel.active{
+  display:block;
+}
+
+.distributionVolume{
+  margin-bottom:24px;
+}
+
+.distributionVolume h3{
+  margin:0 0 12px;
+  font-size:16px;
+  color:#0b2d56;
+}
+
+.distributionChoice.selected{
+  background:#0b84f3;
+  border-color:#0b84f3;
+  color:white;
+  transform:scale(1.02);
+}
+
+@media(max-width:650px){
+  .distributionMode{
+    grid-template-columns:1fr;
+  }
+}
