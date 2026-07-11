@@ -207,3 +207,27 @@ body:not(.homeActive) .backBtn{
   font-weight:900;
   color:#18314f;
 }
+.flowChoice{
+  border:none;
+  background:#f7fbff;
+  color:#0b2d56;
+  border-radius:16px;
+  padding:18px;
+  font-size:30px;
+  font-weight:800;
+  box-shadow:0 4px 12px rgba(0,0,0,.06);
+  cursor:pointer;
+}
+
+.flowChoice span{
+  display:block;
+  font-size:15px;
+  margin-top:8px;
+}
+
+.flowChoice.selected{
+  background:#0b84f3;
+  color:white;
+  transform:scale(1.03);
+  transition:.2s;
+}
