@@ -142,3 +142,41 @@ document.querySelectorAll(".timeMinus").forEach(button => {
 });
 
 updateTimeDisplay();
+let flowIn = "—";
+let flowOut = "—";
+
+const flowButtons = document.querySelectorAll(".flowChoice");
+const flowSummary = document.getElementById("flowSummary");
+
+flowButtons.forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    const phase = button.dataset.phase;
+    const value = button.dataset.value;
+
+    if (phase === "in") {
+
+      flowIn = value;
+
+      document.querySelectorAll('.flowChoice[data-phase="in"]').forEach(b=>{
+        b.classList.remove("selected");
+      });
+
+    } else {
+
+      flowOut = value;
+
+      document.querySelectorAll('.flowChoice[data-phase="es"]').forEach(b=>{
+        b.classList.remove("selected");
+      });
+
+    }
+
+    button.classList.add("selected");
+
+    flowSummary.textContent = `${flowIn} → ${flowOut} ▾`;
+
+  });
+
+});
