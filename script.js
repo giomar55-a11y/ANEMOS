@@ -1,18 +1,37 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const state = {
+    finality: null,
 
-  // =========================
+    pathIn: null,
+    pathOut: null,
+
+    times: {
+      in: 0,
+      pauseIn: 0,
+      out: 0,
+      pauseOut: 0
+    },
+
+    flowIn: null,
+    flowOut: null
+  };
+
+  // ========================================
   // NAVIGAZIONE
-  // =========================
+  // ========================================
 
-  const screenButtons = document.querySelectorAll("[data-screen]");
   const screens = document.querySelectorAll(".screen");
+  const screenButtons = document.querySelectorAll("[data-screen]");
 
   function showScreen(screenId) {
     screens.forEach(screen => {
       screen.classList.toggle("active", screen.id === screenId);
     });
 
-    document.body.classList.toggle("homeActive", screenId === "home");
+    document.body.classList.toggle(
+      "homeActive",
+      screenId === "home"
+    );
   }
 
   screenButtons.forEach(button => {
@@ -21,101 +40,99 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-
-  // =========================
+  // ========================================
   // FISARMONICHE
-  // =========================
+  // ========================================
 
-  document.querySelectorAll(".accordionHeader").forEach(header => {
-    header.addEventListener("click", () => {
-      const item = header.closest(".accordionItem");
+  const accordionItems =
+    document.querySelectorAll(".accordionItem");
 
-      if (item) {
-        item.classList.toggle("open");
-      }
+  document
+    .querySelectorAll(".accordionHeader")
+    .forEach(header => {
+      header.addEventListener("click", () => {
+        const item = header.closest(".accordionItem");
+
+        if (item) {
+          item.classList.toggle("open");
+        }
+      });
     });
-  });
 
+  function closeAccordion(id) {
+    document.getElementById(id)?.classList.remove("open");
+  }
 
-  // =========================
-  // FINALITÀ
-  // =========================
-
-  const finalityCards = document.querySelectorAll(".choiceCard");
-
-  finalityCards.forEach(card => {
-    card.addEventListener("click", event => {
-      event.stopPropagation();
-
-      const value = card.dataset.finality;
-      const item = card.closest(".accordionItem");
-      const summary = item?.querySelector(".accordionHeader span");
-
-      if (summary) {
-        summary.textContent = `${value} ▾`;
-      }
-
-      if (item) {
-        item.classList.remove("open");
-      }
+  function closeAllAccordions() {
+    accordionItems.forEach(item => {
+      item.classList.remove("open");
     });
-  });
+  }
 
+  // ========================================
+  // SELEZIONE VISIVA
+  // ========================================
 
- // =========================
-// PERCORSO
-// =========================
-
-let pathIn = "👃";
-let pathOut = "👃";
-
-let pathInSelected = false;
-let pathOutSelected = false;
-
-const pathSummary = document.getElementById("pathSummary");
-
-document.querySelectorAll(".pathChoice").forEach(button => {
-  button.addEventListener("click", event => {
-    event.stopPropagation();
-
-    const phase = button.dataset.phase;
-    const value = button.dataset.value;
-
-    document
-      .querySelectorAll(`.pathChoice[data-phase="${phase}"]`)
-      .forEach(item => item.classList.remove("selected"));
+  function selectOnly(button, selector) {
+    document.querySelectorAll(selector).forEach(item => {
+      item.classList.remove("selected");
+    });
 
     button.classList.add("selected");
+  }
 
-    if (phase === "in") {
-      pathIn = value;
-      pathInSelected = true;
-    }
+  // ========================================
+  // FINALITÀ
+  // ========================================
 
-    if (phase === "es") {
-      pathOut = value;
-      pathOutSelected = true;
-    }
+  const finalitySummary =
+    document.getElementById("finalitySummary");
 
-    if (pathSummary) {
-      pathSummary.textContent = `${pathIn} → ${pathOut} ▾`;
-    }
+  document
+    .querySelectorAll(".finalityChoice")
+    .forEach(button => {
+      button.addEventListener("click", event => {
+        event.stopPropagation();
 
-    if (pathInSelected && pathOutSelected) {
-      document.getElementById("pathAccordion")?.classList.remove("open");
-    }
-  });
-});
-  // =========================
+        selectOnly(button, ".finalityChoice");
+        state.finality = button.dataset.value;
+      });
+    });
+
+  // ========================================
+  // PERCORSO
+  // ========================================
+
+  const pathSummary =
+    document.getElementById("pathSummary");
+
+  document
+    .querySelectorAll(".pathChoice")
+    .forEach(button => {
+      button.addEventListener("click", event => {
+        event.stopPropagation();
+
+        const phase = button.dataset.phase;
+        const value = button.dataset.value;
+
+        selectOnly(
+          button,
+          `.pathChoice[data-phase="${phase}"]`
+        );
+
+        if (phase === "in") {
+          state.pathIn = value;
+        }
+
+        if (phase === "es") {
+          state.pathOut = value;
+        }
+      });
+    });
+
+  // ========================================
   // TEMPI
-  // =========================
-
-  const times = {
-    in: 4,
-    pauseIn: 0,
-    out: 4,
-    pauseOut: 0
-  };
+  // ========================================
 
   const timeElementIds = {
     in: "timeIn",
@@ -124,95 +141,191 @@ document.querySelectorAll(".pathChoice").forEach(button => {
     pauseOut: "timePauseOut"
   };
 
-  function updateTimeDisplay() {
-    Object.entries(timeElementIds).forEach(([key, elementId]) => {
-      const element = document.getElementById(elementId);
+  const timeSummary =
+    document.getElementById("timeSummary");
 
-      if (element) {
-        element.textContent = times[key];
+  function renderTimeValues() {
+    Object.entries(timeElementIds).forEach(
+      ([key, elementId]) => {
+        const element =
+          document.getElementById(elementId);
+
+        if (element) {
+          element.textContent = state.times[key];
+        }
       }
-    });
-
-    const summary = document.getElementById("timeSummary");
-
-    if (summary) {
-      summary.textContent =
-        `${times.in} • ${times.pauseIn} • ${times.out} • ${times.pauseOut} ▾`;
-    }
+    );
   }
 
-  document.querySelectorAll(".timePlus").forEach(button => {
-    button.addEventListener("click", event => {
-      event.stopPropagation();
+  document
+    .querySelectorAll(".timePlus")
+    .forEach(button => {
+      button.addEventListener("click", event => {
+        event.stopPropagation();
 
-      const target = button.dataset.target;
-      times[target] += 1;
+        const target = button.dataset.target;
 
-      updateTimeDisplay();
+        if (target in state.times) {
+          state.times[target] += 1;
+          renderTimeValues();
+        }
+      });
     });
-  });
 
-  document.querySelectorAll(".timeMinus").forEach(button => {
-    button.addEventListener("click", event => {
-      event.stopPropagation();
+  document
+    .querySelectorAll(".timeMinus")
+    .forEach(button => {
+      button.addEventListener("click", event => {
+        event.stopPropagation();
 
-      const target = button.dataset.target;
-      times[target] = Math.max(0, times[target] - 1);
+        const target = button.dataset.target;
 
-      updateTimeDisplay();
+        if (target in state.times) {
+          state.times[target] = Math.max(
+            0,
+            state.times[target] - 1
+          );
+
+          renderTimeValues();
+        }
+      });
     });
-  });
 
+  // ========================================
+  // FLUSSO
+  // ========================================
 
- // =========================
-// FLUSSO
-// =========================
+  const flowSummary =
+    document.getElementById("flowSummary");
 
-let flowIn = "—";
-let flowOut = "—";
+  document
+    .querySelectorAll(".flowChoice")
+    .forEach(button => {
+      button.addEventListener("click", event => {
+        event.stopPropagation();
 
-let flowInSelected = false;
-let flowOutSelected = false;
+        const phase = button.dataset.phase;
+        const value = button.dataset.value;
 
-const flowSummary = document.getElementById("flowSummary");
+        selectOnly(
+          button,
+          `.flowChoice[data-phase="${phase}"]`
+        );
 
-document.querySelectorAll(".flowChoice").forEach(button => {
-  button.addEventListener("click", event => {
-    event.stopPropagation();
+        if (phase === "in") {
+          state.flowIn = value;
+        }
 
-    const phase = button.dataset.phase;
-    const value = button.dataset.value;
+        if (phase === "es") {
+          state.flowOut = value;
+        }
+      });
+    });
+
+  // ========================================
+  // CONFERME MANUALI
+  // ========================================
+
+  document
+    .querySelectorAll(".confirmButton")
+    .forEach(button => {
+      button.addEventListener("click", event => {
+        event.stopPropagation();
+
+        const section = button.dataset.confirm;
+
+        if (section === "finality") {
+          finalitySummary.textContent =
+            `${state.finality || "Nessuna"} ▾`;
+
+          closeAccordion("finalityAccordion");
+        }
+
+        if (section === "path") {
+          pathSummary.textContent =
+            `${state.pathIn || "—"} → ` +
+            `${state.pathOut || "—"} ▾`;
+
+          closeAccordion("pathAccordion");
+        }
+
+        if (section === "times") {
+          const times = state.times;
+
+          timeSummary.textContent =
+            `${times.in} • ${times.pauseIn} • ` +
+            `${times.out} • ${times.pauseOut} ▾`;
+
+          closeAccordion("timeAccordion");
+        }
+
+        if (section === "flow") {
+          flowSummary.textContent =
+            `${state.flowIn || "—"} → ` +
+            `${state.flowOut || "—"} ▾`;
+
+          closeAccordion("flowAccordion");
+        }
+      });
+    });
+
+  // ========================================
+  // AZZERA TUTTO
+  // ========================================
+
+  function resetAll() {
+    state.finality = null;
+
+    state.pathIn = null;
+    state.pathOut = null;
+
+    state.times.in = 0;
+    state.times.pauseIn = 0;
+    state.times.out = 0;
+    state.times.pauseOut = 0;
+
+    state.flowIn = null;
+    state.flowOut = null;
 
     document
-      .querySelectorAll(`.flowChoice[data-phase="${phase}"]`)
-      .forEach(item => item.classList.remove("selected"));
+      .querySelectorAll(".choiceButton.selected")
+      .forEach(button => {
+        button.classList.remove("selected");
+      });
 
-    button.classList.add("selected");
+    finalitySummary.textContent = "Nessuna ▾";
+    pathSummary.textContent = "— → — ▾";
+    timeSummary.textContent = "0 • 0 • 0 • 0 ▾";
+    flowSummary.textContent = "— → — ▾";
 
-    if (phase === "in") {
-      flowIn = value;
-      flowInSelected = true;
+    const distributionSummary =
+      document.getElementById("distributionSummary");
+
+    const anemoscopeSummary =
+      document.getElementById("anemoscopeSummary");
+
+    if (distributionSummary) {
+      distributionSummary.textContent = "Nessuna ▾";
     }
 
-    if (phase === "es") {
-      flowOut = value;
-      flowOutSelected = true;
+    if (anemoscopeSummary) {
+      anemoscopeSummary.textContent =
+        "Non configurato ▾";
     }
 
-    if (flowSummary) {
-      flowSummary.textContent = `${flowIn} → ${flowOut} ▾`;
-    }
+    renderTimeValues();
+    closeAllAccordions();
+  }
 
-    if (flowInSelected && flowOutSelected) {
-      document.getElementById("flowAccordion")?.classList.remove("open");
-    }
-  });
-});
-  // =========================
+  document
+    .getElementById("resetAllButton")
+    ?.addEventListener("click", resetAll);
+
+  // ========================================
   // AVVIO
-  // =========================
+  // ========================================
 
-  updateTimeDisplay();
+  renderTimeValues();
+  resetAll();
   showScreen("home");
-
 });
