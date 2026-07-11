@@ -274,198 +274,400 @@
    <div class="accordionItem" id="distributionAccordion">
   <button class="accordionHeader">
     🫁 Distribuzione
-    <span id="distributionSummary">Nessuna ▾</span>
+    <span id="distributionSummary">IN: Nessuna · ES: Nessuna ▾</span>
   </button>
 
   <div class="accordionContent">
 
-    <div class="parameterSection">
-      <h3>Tipo di distribuzione</h3>
+    <!-- =========================
+         DISTRIBUZIONE IN
+    ========================== -->
 
-      <div class="distributionMode">
-        <button
-          class="choiceButton distributionModeChoice"
-          data-mode="essential"
-        >
-          🌬️
-          <span>Essenziale</span>
-        </button>
+    <div class="distributionPhase" data-distribution-phase="in">
+      <h3 class="distributionPhaseTitle">
+        ⬇️ Inspirazione
+      </h3>
 
-        <button
-          class="choiceButton distributionModeChoice"
-          data-mode="biomechanical"
+      <div class="parameterSection">
+        <h3>Tipo di distribuzione</h3>
+
+        <div class="distributionMode">
+          <button
+            class="choiceButton distributionModeChoice"
+            data-phase="in"
+            data-mode="essential"
+          >
+            🌬️
+            <span>Essenziale</span>
+          </button>
+
+          <button
+            class="choiceButton distributionModeChoice"
+            data-phase="in"
+            data-mode="biomechanical"
+          >
+            🧩
+            <span>Biomeccanica Resplora</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="parameterSection">
+        <h3>Organizzazione</h3>
+
+        <div class="distributionMode">
+          <button
+            class="choiceButton distributionOrganizationChoice"
+            data-phase="in"
+            data-organization="simultaneous"
+          >
+            ⭕
+            <span>Simultanea</span>
+          </button>
+
+          <button
+            class="choiceButton distributionOrganizationChoice"
+            data-phase="in"
+            data-organization="sequential"
+          >
+            🔄
+            <span>Sequenziale</span>
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="inEssentialDistributionPanel"
+        class="distributionPanel"
+      >
+        <p
+          id="inSequenceInstruction"
+          class="emptyMessage"
         >
-          🧩
-          <span>Biomeccanica Resplora</span>
-        </button>
+          Seleziona il livello di ciascun volume.
+        </p>
+
+        <div class="distributionVolume">
+          <h3>🎈 Addominale</h3>
+
+          <div class="choiceGrid">
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="in"
+              data-volume="abdominal"
+              data-level="reduced"
+            >
+              ➊
+              <span>Ridotto</span>
+            </button>
+
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="in"
+              data-volume="abdominal"
+              data-level="natural"
+            >
+              ➋
+              <span>Naturale</span>
+            </button>
+
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="in"
+              data-volume="abdominal"
+              data-level="full"
+            >
+              ➌
+              <span>Completo</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="distributionVolume">
+          <h3>🪭 Toracico inferiore/laterale</h3>
+
+          <div class="choiceGrid">
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="in"
+              data-volume="lowerThoracic"
+              data-level="reduced"
+            >
+              ➊
+              <span>Ridotto</span>
+            </button>
+
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="in"
+              data-volume="lowerThoracic"
+              data-level="natural"
+            >
+              ➋
+              <span>Naturale</span>
+            </button>
+
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="in"
+              data-volume="lowerThoracic"
+              data-level="full"
+            >
+              ➌
+              <span>Completo</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="distributionVolume">
+          <h3>🐚 Toracico superiore</h3>
+
+          <div class="choiceGrid">
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="in"
+              data-volume="upperThoracic"
+              data-level="reduced"
+            >
+              ➊
+              <span>Ridotto</span>
+            </button>
+
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="in"
+              data-volume="upperThoracic"
+              data-level="natural"
+            >
+              ➋
+              <span>Naturale</span>
+            </button>
+
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="in"
+              data-volume="upperThoracic"
+              data-level="full"
+            >
+              ➌
+              <span>Completo</span>
+            </button>
+          </div>
+        </div>
+
+        <div
+          id="inSequenceSummaryBox"
+          class="sequenceSummaryBox"
+        >
+          Nessuna sequenza inspiratoria impostata.
+        </div>
+      </div>
+
+      <div
+        id="inBiomechanicalDistributionPanel"
+        class="distributionPanel"
+      >
+        <p class="emptyMessage">
+          La distribuzione biomeccanica inspiratoria sarà
+          sviluppata nel modulo Biomeccanica Resplora.
+        </p>
       </div>
     </div>
 
-    <div class="parameterSection">
-      <h3>Organizzazione</h3>
 
-      <div class="distributionMode">
-        <button
-          class="choiceButton distributionOrganizationChoice"
-          data-organization="simultaneous"
-        >
-          ⭕
-          <span>Simultanea</span>
-        </button>
+    <!-- =========================
+         DISTRIBUZIONE ES
+    ========================== -->
 
-        <button
-          class="choiceButton distributionOrganizationChoice"
-          data-organization="sequential"
-        >
-          🔄
-          <span>Sequenziale</span>
-        </button>
-      </div>
-    </div>
+    <div class="distributionPhase" data-distribution-phase="out">
+      <h3 class="distributionPhaseTitle">
+        ⬆️ Espirazione
+      </h3>
 
-    <div id="essentialDistributionPanel" class="distributionPanel">
+      <div class="parameterSection">
+        <h3>Tipo di distribuzione</h3>
 
-      <p id="sequenceInstruction" class="emptyMessage">
-        Seleziona il volume desiderato.
-      </p>
-
-      <div class="distributionVolume">
-        <h3>🎈 Addominale</h3>
-
-        <div class="choiceGrid">
+        <div class="distributionMode">
           <button
-            class="choiceButton distributionChoice"
-            data-volume="abdominal"
-            data-level="reduced"
+            class="choiceButton distributionModeChoice"
+            data-phase="out"
+            data-mode="essential"
           >
-            ➊
-            <span>Ridotto</span>
+            🌬️
+            <span>Essenziale</span>
           </button>
 
           <button
-            class="choiceButton distributionChoice"
-            data-volume="abdominal"
-            data-level="natural"
+            class="choiceButton distributionModeChoice"
+            data-phase="out"
+            data-mode="biomechanical"
           >
-            ➋
-            <span>Naturale</span>
-          </button>
-
-          <button
-            class="choiceButton distributionChoice"
-            data-volume="abdominal"
-            data-level="full"
-          >
-            ➌
-            <span>Completo</span>
+            🧩
+            <span>Biomeccanica Resplora</span>
           </button>
         </div>
-
-        <button
-          class="sequenceVolumeButton"
-          data-sequence-volume="abdominal"
-        >
-          <span class="sequenceNumber"></span>
-          Addominale
-        </button>
       </div>
 
-      <div class="distributionVolume">
-        <h3>🪭 Toracico inferiore/laterale</h3>
+      <div class="parameterSection">
+        <h3>Organizzazione</h3>
 
-        <div class="choiceGrid">
+        <div class="distributionMode">
           <button
-            class="choiceButton distributionChoice"
-            data-volume="lowerThoracic"
-            data-level="reduced"
+            class="choiceButton distributionOrganizationChoice"
+            data-phase="out"
+            data-organization="simultaneous"
           >
-            ➊
-            <span>Ridotto</span>
+            ⭕
+            <span>Simultanea</span>
           </button>
 
           <button
-            class="choiceButton distributionChoice"
-            data-volume="lowerThoracic"
-            data-level="natural"
+            class="choiceButton distributionOrganizationChoice"
+            data-phase="out"
+            data-organization="sequential"
           >
-            ➋
-            <span>Naturale</span>
-          </button>
-
-          <button
-            class="choiceButton distributionChoice"
-            data-volume="lowerThoracic"
-            data-level="full"
-          >
-            ➌
-            <span>Completo</span>
+            🔄
+            <span>Sequenziale</span>
           </button>
         </div>
-
-        <button
-          class="sequenceVolumeButton"
-          data-sequence-volume="lowerThoracic"
-        >
-          <span class="sequenceNumber"></span>
-          Toracico inferiore/laterale
-        </button>
       </div>
 
-      <div class="distributionVolume">
-        <h3>🐚 Toracico superiore</h3>
+      <div
+        id="outEssentialDistributionPanel"
+        class="distributionPanel"
+      >
+        <p
+          id="outSequenceInstruction"
+          class="emptyMessage"
+        >
+          Seleziona il livello di ciascun volume.
+        </p>
 
-        <div class="choiceGrid">
-          <button
-            class="choiceButton distributionChoice"
-            data-volume="upperThoracic"
-            data-level="reduced"
-          >
-            ➊
-            <span>Ridotto</span>
-          </button>
+        <div class="distributionVolume">
+          <h3>🎈 Addominale</h3>
 
-          <button
-            class="choiceButton distributionChoice"
-            data-volume="upperThoracic"
-            data-level="natural"
-          >
-            ➋
-            <span>Naturale</span>
-          </button>
+          <div class="choiceGrid">
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="out"
+              data-volume="abdominal"
+              data-level="reduced"
+            >
+              ➊
+              <span>Ridotto</span>
+            </button>
 
-          <button
-            class="choiceButton distributionChoice"
-            data-volume="upperThoracic"
-            data-level="full"
-          >
-            ➌
-            <span>Completo</span>
-          </button>
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="out"
+              data-volume="abdominal"
+              data-level="natural"
+            >
+              ➋
+              <span>Naturale</span>
+            </button>
+
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="out"
+              data-volume="abdominal"
+              data-level="full"
+            >
+              ➌
+              <span>Completo</span>
+            </button>
+          </div>
         </div>
 
-        <button
-          class="sequenceVolumeButton"
-          data-sequence-volume="upperThoracic"
+        <div class="distributionVolume">
+          <h3>🪭 Toracico inferiore/laterale</h3>
+
+          <div class="choiceGrid">
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="out"
+              data-volume="lowerThoracic"
+              data-level="reduced"
+            >
+              ➊
+              <span>Ridotto</span>
+            </button>
+
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="out"
+              data-volume="lowerThoracic"
+              data-level="natural"
+            >
+              ➋
+              <span>Naturale</span>
+            </button>
+
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="out"
+              data-volume="lowerThoracic"
+              data-level="full"
+            >
+              ➌
+              <span>Completo</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="distributionVolume">
+          <h3>🐚 Toracico superiore</h3>
+
+          <div class="choiceGrid">
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="out"
+              data-volume="upperThoracic"
+              data-level="reduced"
+            >
+              ➊
+              <span>Ridotto</span>
+            </button>
+
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="out"
+              data-volume="upperThoracic"
+              data-level="natural"
+            >
+              ➋
+              <span>Naturale</span>
+            </button>
+
+            <button
+              class="choiceButton distributionChoice"
+              data-phase="out"
+              data-volume="upperThoracic"
+              data-level="full"
+            >
+              ➌
+              <span>Completo</span>
+            </button>
+          </div>
+        </div>
+
+        <div
+          id="outSequenceSummaryBox"
+          class="sequenceSummaryBox"
         >
-          <span class="sequenceNumber"></span>
-          Toracico superiore
-        </button>
+          Nessuna sequenza espiratoria impostata.
+        </div>
       </div>
 
-      <div id="sequenceSummaryBox" class="sequenceSummaryBox">
-        Nessuna sequenza impostata.
+      <div
+        id="outBiomechanicalDistributionPanel"
+        class="distributionPanel"
+      >
+        <p class="emptyMessage">
+          La distribuzione biomeccanica espiratoria sarà
+          sviluppata nel modulo Biomeccanica Resplora.
+        </p>
       </div>
-    </div>
-
-    <div
-      id="biomechanicalDistributionPanel"
-      class="distributionPanel"
-    >
-      <p class="emptyMessage">
-        La modalità Biomeccanica Resplora sarà sviluppata dopo aver
-        definito il modello definitivo dei compartimenti e delle
-        interazioni con il movimento.
-      </p>
     </div>
 
     <button class="confirmButton" data-confirm="distribution">
