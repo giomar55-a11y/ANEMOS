@@ -174,7 +174,8 @@ document.addEventListener("DOMContentLoaded", () => {
           `.pathChoice[data-phase="${phase}"]`
         );
 
-        currentBreath.path[phase] = value;
+        const phaseKey = phase === "es" ? "out" : phase;
+currentBreath.path[phaseKey] = value;
       });
     });
 
@@ -261,7 +262,8 @@ document.addEventListener("DOMContentLoaded", () => {
           `.flowChoice[data-phase="${phase}"]`
         );
 
-        currentBreath.flow[phase] = value;
+        const phaseKey = phase === "es" ? "out" : phase;
+currentBreath.flow[phaseKey] = value;
       });
     });
     // ========================================
