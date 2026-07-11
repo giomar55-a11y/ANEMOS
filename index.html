@@ -271,19 +271,144 @@
     </div>
 
     <!-- DISTRIBUZIONE -->
-    <div class="accordionItem" id="distributionAccordion">
-      <button class="accordionHeader">
-        🫁 Distribuzione
-        <span id="distributionSummary">Nessuna ▾</span>
+   <div class="accordionItem" id="distributionAccordion">
+  <button class="accordionHeader">
+    🫁 Distribuzione
+    <span id="distributionSummary">Nessuna ▾</span>
+  </button>
+
+  <div class="accordionContent">
+    <div class="distributionMode">
+      <button
+        class="choiceButton distributionModeChoice"
+        data-mode="essential"
+      >
+        🌬️
+        <span>Essenziale</span>
       </button>
 
-      <div class="accordionContent">
-        <p class="emptyMessage">
-          La distribuzione volumetrica sarà configurata nel prossimo sprint.
-        </p>
+      <button
+        class="choiceButton distributionModeChoice"
+        data-mode="biomechanical"
+      >
+        🧩
+        <span>Biomeccanica Resplora</span>
+      </button>
+    </div>
+
+    <div id="essentialDistributionPanel" class="distributionPanel">
+      <div class="distributionVolume">
+        <h3>🎈 Addominale</h3>
+
+        <div class="choiceGrid">
+          <button
+            class="choiceButton distributionChoice"
+            data-volume="abdominal"
+            data-level="reduced"
+          >
+            ➊
+            <span>Ridotto</span>
+          </button>
+
+          <button
+            class="choiceButton distributionChoice"
+            data-volume="abdominal"
+            data-level="natural"
+          >
+            ➋
+            <span>Naturale</span>
+          </button>
+
+          <button
+            class="choiceButton distributionChoice"
+            data-volume="abdominal"
+            data-level="full"
+          >
+            ➌
+            <span>Completo</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="distributionVolume">
+        <h3>🪭 Toracico inferiore/laterale</h3>
+
+        <div class="choiceGrid">
+          <button
+            class="choiceButton distributionChoice"
+            data-volume="lowerThoracic"
+            data-level="reduced"
+          >
+            ➊
+            <span>Ridotto</span>
+          </button>
+
+          <button
+            class="choiceButton distributionChoice"
+            data-volume="lowerThoracic"
+            data-level="natural"
+          >
+            ➋
+            <span>Naturale</span>
+          </button>
+
+          <button
+            class="choiceButton distributionChoice"
+            data-volume="lowerThoracic"
+            data-level="full"
+          >
+            ➌
+            <span>Completo</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="distributionVolume">
+        <h3>🐚 Toracico superiore</h3>
+
+        <div class="choiceGrid">
+          <button
+            class="choiceButton distributionChoice"
+            data-volume="upperThoracic"
+            data-level="reduced"
+          >
+            ➊
+            <span>Ridotto</span>
+          </button>
+
+          <button
+            class="choiceButton distributionChoice"
+            data-volume="upperThoracic"
+            data-level="natural"
+          >
+            ➋
+            <span>Naturale</span>
+          </button>
+
+          <button
+            class="choiceButton distributionChoice"
+            data-volume="upperThoracic"
+            data-level="full"
+          >
+            ➌
+            <span>Completo</span>
+          </button>
+        </div>
       </div>
     </div>
 
+    <div id="biomechanicalDistributionPanel" class="distributionPanel">
+      <p class="emptyMessage">
+        La modalità Biomeccanica Resplora sarà sviluppata dopo aver definito
+        il modello definitivo dei compartimenti e delle interazioni col movimento.
+      </p>
+    </div>
+
+    <button class="confirmButton" data-confirm="distribution">
+      ✅ Conferma distribuzione
+    </button>
+  </div>
+</div>
     <!-- ANEMOSCOPIO -->
     <div class="accordionItem" id="anemoscopeAccordion">
       <button class="accordionHeader">
