@@ -278,25 +278,57 @@
   </button>
 
   <div class="accordionContent">
-    <div class="distributionMode">
-      <button
-        class="choiceButton distributionModeChoice"
-        data-mode="essential"
-      >
-        🌬️
-        <span>Essenziale</span>
-      </button>
 
-      <button
-        class="choiceButton distributionModeChoice"
-        data-mode="biomechanical"
-      >
-        🧩
-        <span>Biomeccanica Resplora</span>
-      </button>
+    <div class="parameterSection">
+      <h3>Tipo di distribuzione</h3>
+
+      <div class="distributionMode">
+        <button
+          class="choiceButton distributionModeChoice"
+          data-mode="essential"
+        >
+          🌬️
+          <span>Essenziale</span>
+        </button>
+
+        <button
+          class="choiceButton distributionModeChoice"
+          data-mode="biomechanical"
+        >
+          🧩
+          <span>Biomeccanica Resplora</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="parameterSection">
+      <h3>Organizzazione</h3>
+
+      <div class="distributionMode">
+        <button
+          class="choiceButton distributionOrganizationChoice"
+          data-organization="simultaneous"
+        >
+          ⭕
+          <span>Simultanea</span>
+        </button>
+
+        <button
+          class="choiceButton distributionOrganizationChoice"
+          data-organization="sequential"
+        >
+          🔄
+          <span>Sequenziale</span>
+        </button>
+      </div>
     </div>
 
     <div id="essentialDistributionPanel" class="distributionPanel">
+
+      <p id="sequenceInstruction" class="emptyMessage">
+        Seleziona il volume desiderato.
+      </p>
+
       <div class="distributionVolume">
         <h3>🎈 Addominale</h3>
 
@@ -328,6 +360,14 @@
             <span>Completo</span>
           </button>
         </div>
+
+        <button
+          class="sequenceVolumeButton"
+          data-sequence-volume="abdominal"
+        >
+          <span class="sequenceNumber"></span>
+          Addominale
+        </button>
       </div>
 
       <div class="distributionVolume">
@@ -361,6 +401,14 @@
             <span>Completo</span>
           </button>
         </div>
+
+        <button
+          class="sequenceVolumeButton"
+          data-sequence-volume="lowerThoracic"
+        >
+          <span class="sequenceNumber"></span>
+          Toracico inferiore/laterale
+        </button>
       </div>
 
       <div class="distributionVolume">
@@ -394,13 +442,29 @@
             <span>Completo</span>
           </button>
         </div>
+
+        <button
+          class="sequenceVolumeButton"
+          data-sequence-volume="upperThoracic"
+        >
+          <span class="sequenceNumber"></span>
+          Toracico superiore
+        </button>
+      </div>
+
+      <div id="sequenceSummaryBox" class="sequenceSummaryBox">
+        Nessuna sequenza impostata.
       </div>
     </div>
 
-    <div id="biomechanicalDistributionPanel" class="distributionPanel">
+    <div
+      id="biomechanicalDistributionPanel"
+      class="distributionPanel"
+    >
       <p class="emptyMessage">
-        La modalità Biomeccanica Resplora sarà sviluppata dopo aver definito
-        il modello definitivo dei compartimenti e delle interazioni col movimento.
+        La modalità Biomeccanica Resplora sarà sviluppata dopo aver
+        definito il modello definitivo dei compartimenti e delle
+        interazioni con il movimento.
       </p>
     </div>
 
