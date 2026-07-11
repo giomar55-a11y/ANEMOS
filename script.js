@@ -25,6 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       distribution: {
         mode: null,
+        organization: null,
+        sequence: [],
 
         essential: {
           abdominal: null,
@@ -280,6 +282,79 @@ document.addEventListener("DOMContentLoaded", () => {
   const biomechanicalDistributionPanel =
     document.getElementById("biomechanicalDistributionPanel");
 
+  const sequenceInstruction =
+    document.getElementById("sequenceInstruction");
+
+  const sequenceSummaryBox =
+    document.getElementById("sequenceSummaryBox");
+
+  const volumeLabels = {
+    abdominal: "Addominale",
+    lowerThoracic: "Toracico inferiore/laterale",
+    upperThoracic: "Toracico superiore"
+  };
+
+  const levelLabels = {
+    reduced: "Ridotto",
+    natural: "Naturale",
+    full: "Completo"
+  };
+
+  function clearSequenceVisuals() {
+    document
+      .querySelectorAll(".distributionChoice")
+      .forEach(button => {
+        button.classList.remove("sequenceOrdered");
+        button.removeAttribute("data-order");
+      });
+  }
+
+  function renderSequence() {
+    clearSequenceVisuals();
+
+    currentBreath.distribution.sequence.forEach(
+      (volume, index) => {
+        const selectedButton = document.querySelector(
+          `.distributionChoice[data-volume="${volume}"].selected`
+        );
+
+        if (selectedButton) {
+          selectedButton.classList.add("sequenceOrdered");
+          selectedButton.dataset.order = index + 1;
+        }
+      }
+    );
+
+    if (!sequenceSummaryBox) {
+      return;
+    }
+
+    if (
+      currentBreath.distribution.organization !==
+      "sequential"
+    ) {
+      sequenceSummaryBox.textContent =
+        "Organizzazione simultanea.";
+      return;
+    }
+
+    if (
+      currentBreath.distribution.sequence.length === 0
+    ) {
+      sequenceSummaryBox.textContent =
+        "Nessuna sequenza impostata.";
+      return;
+    }
+
+    sequenceSummaryBox.textContent =
+      currentBreath.distribution.sequence
+        .map(
+          (volume, index) =>
+            `${index + 1}. ${volumeLabels[volume]}`
+        )
+        .join(" → ");
+  }
+
   document
     .querySelectorAll(".distributionModeChoice")
     .forEach(button => {
@@ -308,6 +383,59 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   document
+    .querySelectorAll(".distributionOrganizationChoice")
+    .forEach(button => {
+      button.addEventListener("click", event => {
+        event.stopPropagation();
+
+        selectOnly(
+          button,
+          ".distributionOrganizationChoice"
+        );
+
+        const organization =
+          button.dataset.organization;
+
+        currentBreath.distribution.organization =
+          organization;
+
+        const isSequential =
+          organization === "sequential";
+
+        document.body.classList.toggle(
+          "sequenceMode",
+          isSequential
+        );
+
+        if (sequenceInstruction) {
+          sequenceInstruction.textContent =
+            isSequential
+              ? "Tocca i volumi nell’ordine desiderato."
+              : "Seleziona il livello di ciascun volume.";
+        }
+
+        if (!isSequential) {
+          currentBreath.distribution.sequence = [];
+          clearSequenceVisuals();
+        } else {
+          currentBreath.distribution.sequence = [];
+
+          Object.entries(
+            currentBreath.distribution.essential
+          ).forEach(([volume, level]) => {
+            if (level) {
+              currentBreath.distribution.sequence.push(
+                volume
+              );
+            }
+          });
+        }
+
+        renderSequence();
+      });
+    });
+
+  document
     .querySelectorAll(".distributionChoice")
     .forEach(button => {
       button.addEventListener("click", event => {
@@ -316,6 +444,34 @@ document.addEventListener("DOMContentLoaded", () => {
         const volume = button.dataset.volume;
         const level = button.dataset.level;
 
+        const currentLevel =
+          currentBreath.distribution.essential[volume];
+
+        const isSameSelectedButton =
+          button.classList.contains("selected") &&
+          currentLevel === level;
+
+        if (
+          currentBreath.distribution.organization ===
+          "sequential" &&
+          isSameSelectedButton
+        ) {
+          button.classList.remove("selected");
+          button.classList.remove("sequenceOrdered");
+          button.removeAttribute("data-order");
+
+          currentBreath.distribution.essential[volume] =
+            null;
+
+          currentBreath.distribution.sequence =
+            currentBreath.distribution.sequence.filter(
+              item => item !== volume
+            );
+
+          renderSequence();
+          return;
+        }
+
         selectOnly(
           button,
           `.distributionChoice[data-volume="${volume}"]`
@@ -323,6 +479,24 @@ document.addEventListener("DOMContentLoaded", () => {
 
         currentBreath.distribution.essential[volume] =
           level;
+
+        if (
+          currentBreath.distribution.organization ===
+          "sequential"
+        ) {
+          const alreadyPresent =
+            currentBreath.distribution.sequence.includes(
+              volume
+            );
+
+          if (!alreadyPresent) {
+            currentBreath.distribution.sequence.push(
+              volume
+            );
+          }
+
+          renderSequence();
+        }
       });
     });
 
@@ -330,29 +504,36 @@ document.addEventListener("DOMContentLoaded", () => {
     const values =
       currentBreath.distribution.essential;
 
-    const labels = {
-      reduced: "Ridotto",
-      natural: "Naturale",
-      full: "Completo"
-    };
-
     const configured = [
       values.abdominal
-        ? `Addome ${labels[values.abdominal]}`
+        ? `Addome ${levelLabels[values.abdominal]}`
         : null,
 
       values.lowerThoracic
-        ? `Torace inf. ${labels[values.lowerThoracic]}`
+        ? `Torace inf. ${levelLabels[values.lowerThoracic]}`
         : null,
 
       values.upperThoracic
-        ? `Torace sup. ${labels[values.upperThoracic]}`
+        ? `Torace sup. ${levelLabels[values.upperThoracic]}`
         : null
     ].filter(Boolean);
 
-    return configured.length
-      ? configured.join(" · ")
-      : "Essenziale";
+    if (configured.length === 0) {
+      return "Essenziale";
+    }
+
+    const organizationLabel =
+      currentBreath.distribution.organization ===
+      "sequential"
+        ? "Sequenziale"
+        : currentBreath.distribution.organization ===
+          "simultaneous"
+        ? "Simultanea"
+        : null;
+
+    return organizationLabel
+      ? `${organizationLabel} · ${configured.join(" · ")}`
+      : configured.join(" · ");
   }
 
   // ========================================
@@ -402,7 +583,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (section === "distribution") {
           if (
-            currentBreath.distribution.mode === "essential"
+            currentBreath.distribution.mode ===
+            "essential"
           ) {
             distributionSummary.textContent =
               `${getEssentialDistributionSummary()} ▾`;
@@ -449,6 +631,20 @@ document.addEventListener("DOMContentLoaded", () => {
       .forEach(panel => {
         panel.classList.remove("active");
       });
+
+    document.body.classList.remove("sequenceMode");
+
+    clearSequenceVisuals();
+
+    if (sequenceInstruction) {
+      sequenceInstruction.textContent =
+        "Seleziona il volume desiderato.";
+    }
+
+    if (sequenceSummaryBox) {
+      sequenceSummaryBox.textContent =
+        "Nessuna sequenza impostata.";
+    }
 
     finalitySummary.textContent = "Nessuna ▾";
     pathSummary.textContent = "— → — ▾";
