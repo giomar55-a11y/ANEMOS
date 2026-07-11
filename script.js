@@ -97,7 +97,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-
+if (pathIn !== "👃" || pathOut !== "👃") {
+  const pathItem = document.getElementById("pathAccordion");
+  pathItem?.classList.remove("open");
+}
 
   // =========================
   // TEMPI
@@ -192,7 +195,10 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
   });
-
+if (flowIn !== "—" && flowOut !== "—") {
+  const flowItem = document.getElementById("flowAccordion");
+  flowItem?.classList.remove("open");
+}
 
   // =========================
   // AVVIO
