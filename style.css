@@ -408,3 +408,38 @@ body.sequenceMode .sequenceVolumeButton{
 body.sequenceMode .sequenceSummaryBox{
   display:block;
 }
+/* Sequenza direttamente sui pulsanti dei livelli */
+
+.sequenceVolumeButton{
+  display:none !important;
+}
+
+body.sequenceMode .sequenceVolumeButton{
+  display:none !important;
+}
+
+body.sequenceMode .sequenceSummaryBox{
+  display:block;
+}
+
+.distributionChoice{
+  position:relative;
+}
+
+.distributionChoice.sequenceOrdered::before{
+  content:attr(data-order);
+  position:absolute;
+  top:8px;
+  left:8px;
+  width:28px;
+  height:28px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  background:white;
+  color:#0b84f3;
+  font-size:14px;
+  font-weight:900;
+  box-shadow:0 2px 8px rgba(0,0,0,.12);
+}
