@@ -443,3 +443,38 @@ body.sequenceMode .sequenceSummaryBox{
   font-weight:900;
   box-shadow:0 2px 8px rgba(0,0,0,.12);
 }
+.distributionPhase{
+  padding:18px;
+  margin-bottom:22px;
+  border:1px solid #dfe8f2;
+  border-radius:18px;
+  background:#fbfdff;
+}
+
+.distributionPhase:last-of-type{
+  margin-bottom:0;
+}
+
+.distributionPhaseTitle{
+  margin:0 0 18px;
+  font-size:20px;
+  color:#0b2d56;
+}
+
+.distributionPhase .parameterSection{
+  margin-bottom:20px;
+}
+
+.distributionPhase .sequenceSummaryBox{
+  margin-top:18px;
+}
+
+.distributionPhase .distributionPanel{
+  margin-top:18px;
+}
+
+@media(max-width:650px){
+  .distributionPhase{
+    padding:14px;
+  }
+}
