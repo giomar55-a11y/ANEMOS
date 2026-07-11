@@ -275,7 +275,7 @@ currentBreath.flow[phaseKey] = value;
 
   const volumeLabels = {
     abdominal: "Addominale",
-    lowerThoracic: "Toracico inferiore/laterale",
+    lowerThoracic: "Toracica inferiore",
     upperThoracic: "Toracico superiore"
   };
 
