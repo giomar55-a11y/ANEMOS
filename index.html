@@ -35,181 +35,275 @@
       <p>Qui avvieremo respirazioni già pronte.</p>
     </section>
 
-    <section id="create" class="screen">
-      <h2>➕ Crea respirazione</h2>
+   <section id="create" class="screen">
+  <h2>➕ Crea respirazione</h2>
 
-      <div class="accordion">
-        <div class="accordionItem">
-          <button class="accordionHeader">🎯 Finalità <span>Nessuna ▾</span></button>
-          <div class="accordionContent">
-  <div class="choiceGrid">
-    <button class="choiceCard" data-finality="Rilassamento">🧘<span>Rilassamento</span></button>
-    <button class="choiceCard" data-finality="Attivazione">⚡<span>Attivazione</span></button>
-    <button class="choiceCard" data-finality="Coerenza">❤️<span>Coerenza</span></button>
-    <button class="choiceCard" data-finality="Recupero">🍃<span>Recupero</span></button>
-    <button class="choiceCard" data-finality="Performance">🏃<span>Performance</span></button>
-    <button class="choiceCard" data-finality="Sonno">😴<span>Sonno</span></button>
-    <button class="choiceCard" data-finality="Meditazione">🪷<span>Meditazione</span></button>
-    <button class="choiceCard" data-finality="Libera">➕<span>Libera</span></button>
-  </div>
-</div>
+  <div class="accordion">
+
+    <!-- FINALITÀ -->
+    <div class="accordionItem" id="finalityAccordion">
+      <button class="accordionHeader">
+        🎯 Finalità
+        <span id="finalitySummary">Nessuna ▾</span>
+      </button>
+
+      <div class="accordionContent">
+        <div class="choiceGrid">
+          <button class="choiceButton finalityChoice" data-value="Rilassamento">
+            🧘
+            <span>Rilassamento</span>
+          </button>
+
+          <button class="choiceButton finalityChoice" data-value="Attivazione">
+            ⚡
+            <span>Attivazione</span>
+          </button>
+
+          <button class="choiceButton finalityChoice" data-value="Coerenza">
+            ❤️
+            <span>Coerenza</span>
+          </button>
+
+          <button class="choiceButton finalityChoice" data-value="Recupero">
+            🍃
+            <span>Recupero</span>
+          </button>
+
+          <button class="choiceButton finalityChoice" data-value="Performance">
+            🏃
+            <span>Performance</span>
+          </button>
+
+          <button class="choiceButton finalityChoice" data-value="Sonno">
+            😴
+            <span>Sonno</span>
+          </button>
+
+          <button class="choiceButton finalityChoice" data-value="Meditazione">
+            🪷
+            <span>Meditazione</span>
+          </button>
+
+          <button class="choiceButton finalityChoice" data-value="Libera">
+            ➕
+            <span>Libera</span>
+          </button>
         </div>
 
-       <div class="accordionItem" id="pathAccordion">
-  <button class="accordionHeader">
-    🌬️ Percorso
-    <span id="pathSummary">👃 → 👃 ▾</span>
-  </button>
-
-  <div class="accordionContent">
-    <div class="pathSection">
-      <h3>Inspirazione</h3>
-
-      <div class="choiceGrid">
-        <button class="pathChoice" data-phase="in" data-value="👃">👃<span>Entrambe</span></button>
-        <button class="pathChoice" data-phase="in" data-value="👃DX">👃<span>Destra</span></button>
-        <button class="pathChoice" data-phase="in" data-value="👃SN">👃<span>Sinistra</span></button>
-        <button class="pathChoice" data-phase="in" data-value="👄">👄<span>Bocca</span></button>
-      </div>
-    </div>
-
-    <div class="pathSection">
-      <h3>Espirazione</h3>
-
-      <div class="choiceGrid">
-        <button class="pathChoice" data-phase="es" data-value="👃">👃<span>Entrambe</span></button>
-        <button class="pathChoice" data-phase="es" data-value="👃DX">👃<span>Destra</span></button>
-        <button class="pathChoice" data-phase="es" data-value="👃SN">👃<span>Sinistra</span></button>
-        <button class="pathChoice" data-phase="es" data-value="👄">👄<span>Bocca</span></button>
-      </div>
-    </div>
-  </div>
-</div>
-
-        <div class="accordionItem" id="timeAccordion">
-  <button class="accordionHeader">
-    ⏱️ Tempi
-    <span id="timeSummary">4 • 0 • 4 • 0 ▾</span>
-  </button>
-
-  <div class="accordionContent">
-
-    <div class="timeRow">
-      <span>Inspirazione</span>
-
-      <button class="timeMinus" data-target="in">−</button>
-
-      <span id="timeIn">4</span>
-
-      <button class="timePlus" data-target="in">+</button>
-    </div>
-
-    <div class="timeRow">
-      <span>Pausa IN</span>
-
-      <button class="timeMinus" data-target="pauseIn">−</button>
-
-      <span id="timePauseIn">0</span>
-
-      <button class="timePlus" data-target="pauseIn">+</button>
-    </div>
-
-    <div class="timeRow">
-      <span>Espirazione</span>
-
-      <button class="timeMinus" data-target="out">−</button>
-
-      <span id="timeOut">4</span>
-
-      <button class="timePlus" data-target="out">+</button>
-    </div>
-
-    <div class="timeRow">
-      <span>Pausa OUT</span>
-
-      <button class="timeMinus" data-target="pauseOut">−</button>
-
-      <span id="timePauseOut">0</span>
-
-      <button class="timePlus" data-target="pauseOut">+</button>
-    </div>
-
-  </div>
-</div>
-        <div class="accordionItem" id="flowAccordion">
-  <button class="accordionHeader">
-    💨 Flusso
-    <span id="flowSummary">— ▾</span>
-  </button>
-
-  <div class="accordionContent">
-
-    <div class="pathSection">
-      <h3>Inspirazione</h3>
-
-      <div class="choiceGrid">
-        <button class="flowChoice" data-phase="in" data-value="🕸️">
-          🕸️
-          <span>Trattenuto</span>
-        </button>
-
-        <button class="flowChoice" data-phase="in" data-value="☁️">
-          ☁️
-          <span>Delicato</span>
-        </button>
-
-        <button class="flowChoice" data-phase="in" data-value="💨">
-          💨
-          <span>Spontaneo</span>
-        </button>
-
-        <button class="flowChoice" data-phase="in" data-value="🌪️">
-          🌪️
-          <span>Forzato</span>
+        <button class="confirmButton" data-confirm="finality">
+          ✅ Conferma finalità
         </button>
       </div>
     </div>
 
-    <div class="pathSection">
-      <h3>Espirazione</h3>
+    <!-- PERCORSO -->
+    <div class="accordionItem" id="pathAccordion">
+      <button class="accordionHeader">
+        🌬️ Percorso
+        <span id="pathSummary">— → — ▾</span>
+      </button>
 
-      <div class="choiceGrid">
-        <button class="flowChoice" data-phase="es" data-value="🕸️">
-          🕸️
-          <span>Trattenuto</span>
-        </button>
+      <div class="accordionContent">
+        <div class="parameterSection">
+          <h3>Inspirazione</h3>
 
-        <button class="flowChoice" data-phase="es" data-value="☁️">
-          ☁️
-          <span>Delicato</span>
-        </button>
+          <div class="choiceGrid">
+            <button class="choiceButton pathChoice" data-phase="in" data-value="👃">
+              👃
+              <span>Entrambe</span>
+            </button>
 
-        <button class="flowChoice" data-phase="es" data-value="💨">
-          💨
-          <span>Spontaneo</span>
-        </button>
+            <button class="choiceButton pathChoice" data-phase="in" data-value="👃DX">
+              👃
+              <span>Destra</span>
+            </button>
 
-        <button class="flowChoice" data-phase="es" data-value="🌪️">
-          🌪️
-          <span>Forzato</span>
-        </button>
-      </div>
-    </div>
+            <button class="choiceButton pathChoice" data-phase="in" data-value="👃SN">
+              👃
+              <span>Sinistra</span>
+            </button>
 
-  </div>
-</div>
-        <div class="accordionItem">
-          <button class="accordionHeader">🫁 Distribuzione <span>Nessuna ▾</span></button>
-          <div class="accordionContent"></div>
+            <button class="choiceButton pathChoice" data-phase="in" data-value="👄">
+              👄
+              <span>Bocca</span>
+            </button>
+          </div>
         </div>
 
-        <div class="accordionItem">
-          <button class="accordionHeader">📈 Anemoscopio <span>Non configurato ▾</span></button>
-          <div class="accordionContent"></div>
-        </div>
-      </div>
-    </section>
+        <div class="parameterSection">
+          <h3>Espirazione</h3>
 
+          <div class="choiceGrid">
+            <button class="choiceButton pathChoice" data-phase="es" data-value="👃">
+              👃
+              <span>Entrambe</span>
+            </button>
+
+            <button class="choiceButton pathChoice" data-phase="es" data-value="👃DX">
+              👃
+              <span>Destra</span>
+            </button>
+
+            <button class="choiceButton pathChoice" data-phase="es" data-value="👃SN">
+              👃
+              <span>Sinistra</span>
+            </button>
+
+            <button class="choiceButton pathChoice" data-phase="es" data-value="👄">
+              👄
+              <span>Bocca</span>
+            </button>
+          </div>
+        </div>
+
+        <button class="confirmButton" data-confirm="path">
+          ✅ Conferma percorso
+        </button>
+      </div>
+    </div>
+
+    <!-- TEMPI -->
+    <div class="accordionItem" id="timeAccordion">
+      <button class="accordionHeader">
+        ⏱️ Tempi
+        <span id="timeSummary">0 • 0 • 0 • 0 ▾</span>
+      </button>
+
+      <div class="accordionContent">
+        <div class="timeRow">
+          <span class="timeLabel">Inspirazione</span>
+          <button class="timeButton timeMinus" data-target="in">−</button>
+          <span class="timeValue" id="timeIn">0</span>
+          <button class="timeButton timePlus" data-target="in">+</button>
+        </div>
+
+        <div class="timeRow">
+          <span class="timeLabel">Pausa IN</span>
+          <button class="timeButton timeMinus" data-target="pauseIn">−</button>
+          <span class="timeValue" id="timePauseIn">0</span>
+          <button class="timeButton timePlus" data-target="pauseIn">+</button>
+        </div>
+
+        <div class="timeRow">
+          <span class="timeLabel">Espirazione</span>
+          <button class="timeButton timeMinus" data-target="out">−</button>
+          <span class="timeValue" id="timeOut">0</span>
+          <button class="timeButton timePlus" data-target="out">+</button>
+        </div>
+
+        <div class="timeRow">
+          <span class="timeLabel">Pausa ES</span>
+          <button class="timeButton timeMinus" data-target="pauseOut">−</button>
+          <span class="timeValue" id="timePauseOut">0</span>
+          <button class="timeButton timePlus" data-target="pauseOut">+</button>
+        </div>
+
+        <button class="confirmButton" data-confirm="times">
+          ✅ Conferma tempi
+        </button>
+      </div>
+    </div>
+
+    <!-- FLUSSO -->
+    <div class="accordionItem" id="flowAccordion">
+      <button class="accordionHeader">
+        💨 Flusso
+        <span id="flowSummary">— → — ▾</span>
+      </button>
+
+      <div class="accordionContent">
+        <div class="parameterSection">
+          <h3>Inspirazione</h3>
+
+          <div class="choiceGrid">
+            <button class="choiceButton flowChoice" data-phase="in" data-value="🕸️">
+              🕸️
+              <span>Trattenuto</span>
+            </button>
+
+            <button class="choiceButton flowChoice" data-phase="in" data-value="☁️">
+              ☁️
+              <span>Delicato</span>
+            </button>
+
+            <button class="choiceButton flowChoice" data-phase="in" data-value="💨">
+              💨
+              <span>Spontaneo</span>
+            </button>
+
+            <button class="choiceButton flowChoice" data-phase="in" data-value="🌪️">
+              🌪️
+              <span>Forzato</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="parameterSection">
+          <h3>Espirazione</h3>
+
+          <div class="choiceGrid">
+            <button class="choiceButton flowChoice" data-phase="es" data-value="🕸️">
+              🕸️
+              <span>Trattenuto</span>
+            </button>
+
+            <button class="choiceButton flowChoice" data-phase="es" data-value="☁️">
+              ☁️
+              <span>Delicato</span>
+            </button>
+
+            <button class="choiceButton flowChoice" data-phase="es" data-value="💨">
+              💨
+              <span>Spontaneo</span>
+            </button>
+
+            <button class="choiceButton flowChoice" data-phase="es" data-value="🌪️">
+              🌪️
+              <span>Forzato</span>
+            </button>
+          </div>
+        </div>
+
+        <button class="confirmButton" data-confirm="flow">
+          ✅ Conferma flusso
+        </button>
+      </div>
+    </div>
+
+    <!-- DISTRIBUZIONE -->
+    <div class="accordionItem" id="distributionAccordion">
+      <button class="accordionHeader">
+        🫁 Distribuzione
+        <span id="distributionSummary">Nessuna ▾</span>
+      </button>
+
+      <div class="accordionContent">
+        <p class="emptyMessage">
+          La distribuzione volumetrica sarà configurata nel prossimo sprint.
+        </p>
+      </div>
+    </div>
+
+    <!-- ANEMOSCOPIO -->
+    <div class="accordionItem" id="anemoscopeAccordion">
+      <button class="accordionHeader">
+        📈 Anemoscopio
+        <span id="anemoscopeSummary">Non configurato ▾</span>
+      </button>
+
+      <div class="accordionContent">
+        <p class="emptyMessage">
+          L’Anemoscopio sarà configurato dopo la distribuzione.
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <button id="resetAllButton" class="resetButton">
+    🧹 Azzera tutto
+  </button>
+</section>
     <section id="library" class="screen">
       <h2>📚 Libreria</h2>
       <p>Qui salveremo le respirazioni create.</p>
