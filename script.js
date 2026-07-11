@@ -1,12 +1,9 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const currentBreath = createEmptyBreath();
-
   function createEmptyBreath() {
     return {
       id: null,
       name: "",
       description: "",
-
       finality: null,
 
       path: {
@@ -59,6 +56,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
   }
 
+  const currentBreath = createEmptyBreath();
+
   // ========================================
   // NAVIGAZIONE
   // ========================================
@@ -103,7 +102,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   function closeAccordion(id) {
-    document.getElementById(id)?.classList.remove("open");
+    document
+      .getElementById(id)
+      ?.classList.remove("open");
   }
 
   function closeAllAccordions() {
@@ -267,6 +268,94 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
   // ========================================
+  // DISTRIBUZIONE
+  // ========================================
+
+  const distributionSummary =
+    document.getElementById("distributionSummary");
+
+  const essentialDistributionPanel =
+    document.getElementById("essentialDistributionPanel");
+
+  const biomechanicalDistributionPanel =
+    document.getElementById("biomechanicalDistributionPanel");
+
+  document
+    .querySelectorAll(".distributionModeChoice")
+    .forEach(button => {
+      button.addEventListener("click", event => {
+        event.stopPropagation();
+
+        selectOnly(
+          button,
+          ".distributionModeChoice"
+        );
+
+        const mode = button.dataset.mode;
+
+        currentBreath.distribution.mode = mode;
+
+        essentialDistributionPanel?.classList.toggle(
+          "active",
+          mode === "essential"
+        );
+
+        biomechanicalDistributionPanel?.classList.toggle(
+          "active",
+          mode === "biomechanical"
+        );
+      });
+    });
+
+  document
+    .querySelectorAll(".distributionChoice")
+    .forEach(button => {
+      button.addEventListener("click", event => {
+        event.stopPropagation();
+
+        const volume = button.dataset.volume;
+        const level = button.dataset.level;
+
+        selectOnly(
+          button,
+          `.distributionChoice[data-volume="${volume}"]`
+        );
+
+        currentBreath.distribution.essential[volume] =
+          level;
+      });
+    });
+
+  function getEssentialDistributionSummary() {
+    const values =
+      currentBreath.distribution.essential;
+
+    const labels = {
+      reduced: "Ridotto",
+      natural: "Naturale",
+      full: "Completo"
+    };
+
+    const configured = [
+      values.abdominal
+        ? `Addome ${labels[values.abdominal]}`
+        : null,
+
+      values.lowerThoracic
+        ? `Torace inf. ${labels[values.lowerThoracic]}`
+        : null,
+
+      values.upperThoracic
+        ? `Torace sup. ${labels[values.upperThoracic]}`
+        : null
+    ].filter(Boolean);
+
+    return configured.length
+      ? configured.join(" · ")
+      : "Essenziale";
+  }
+
+  // ========================================
   // CONFERME MANUALI
   // ========================================
 
@@ -310,6 +399,29 @@ document.addEventListener("DOMContentLoaded", () => {
 
           closeAccordion("flowAccordion");
         }
+
+        if (section === "distribution") {
+          if (
+            currentBreath.distribution.mode === "essential"
+          ) {
+            distributionSummary.textContent =
+              `${getEssentialDistributionSummary()} ▾`;
+          } else if (
+            currentBreath.distribution.mode ===
+            "biomechanical"
+          ) {
+            distributionSummary.textContent =
+              "Biomeccanica Resplora ▾";
+          } else {
+            distributionSummary.textContent =
+              "Nessuna ▾";
+          }
+
+          closeAccordion("distributionAccordion");
+        }
+
+        currentBreath.metadata.modifiedAt =
+          new Date().toISOString();
       });
     });
 
@@ -332,20 +444,20 @@ document.addEventListener("DOMContentLoaded", () => {
         button.classList.remove("selected");
       });
 
+    document
+      .querySelectorAll(".distributionPanel")
+      .forEach(panel => {
+        panel.classList.remove("active");
+      });
+
     finalitySummary.textContent = "Nessuna ▾";
     pathSummary.textContent = "— → — ▾";
     timeSummary.textContent = "0 • 0 • 0 • 0 ▾";
     flowSummary.textContent = "— → — ▾";
-
-    const distributionSummary =
-      document.getElementById("distributionSummary");
+    distributionSummary.textContent = "Nessuna ▾";
 
     const anemoscopeSummary =
       document.getElementById("anemoscopeSummary");
-
-    if (distributionSummary) {
-      distributionSummary.textContent = "Nessuna ▾";
-    }
 
     if (anemoscopeSummary) {
       anemoscopeSummary.textContent =
@@ -358,7 +470,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document
     .getElementById("resetAllButton")
-    ?.addEventListener("click", resetCurrentBreath);
+    ?.addEventListener(
+      "click",
+      resetCurrentBreath
+    );
 
   // ========================================
   // AVVIO
@@ -368,6 +483,5 @@ document.addEventListener("DOMContentLoaded", () => {
   resetCurrentBreath();
   showScreen("home");
 
-  // Utile per controllare temporaneamente i dati
   window.currentBreath = currentBreath;
 });
