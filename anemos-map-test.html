@@ -159,66 +159,7 @@
 
       const selectedFields = new Set();
 
-      function updateOrderBadges() {
-  const svgDocument = getSvgDocument();
-
-  if (!svgDocument) {
-    return;
-  }
-
-  svgDocument
-    .querySelectorAll(".orderBadge")
-    .forEach(badge => badge.remove());
-
-  [...selectedFields].forEach((fieldId, index) => {
-    const field = svgDocument.getElementById(fieldId);
-
-    if (!field) {
-      return;
-    }
-
-    const box = field.getBBox();
-    const centerX = box.x + box.width / 2;
-    const centerY = box.y + box.height / 2;
-
-    const badge = svgDocument.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "g"
-    );
-
-    badge.classList.add("orderBadge");
-    badge.setAttribute("pointer-events", "none");
-
-    const circle = svgDocument.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "circle"
-    );
-
-    circle.setAttribute("cx", centerX);
-    circle.setAttribute("cy", centerY);
-    circle.setAttribute("r", "20");
-    circle.setAttribute("fill", "#0b84f3");
-    circle.setAttribute("stroke", "#ffffff");
-    circle.setAttribute("stroke-width", "4");
-
-    const number = svgDocument.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "text"
-    );
-
-    number.setAttribute("x", centerX);
-    number.setAttribute("y", centerY + 7);
-    number.setAttribute("text-anchor", "middle");
-    number.setAttribute("font-size", "20");
-    number.setAttribute("font-weight", "900");
-    number.setAttribute("fill", "#ffffff");
-    number.textContent = index + 1;
-
-    badge.append(circle, number);
-    svgDocument.documentElement.appendChild(badge);
-  });
-}
-
+      
 function updateOrderGraphics() {
   const svgDocument = getSvgDocument();
 
@@ -319,8 +260,6 @@ function updateSummary() {
   }
 
   updateOrderGraphics();
-}
-  updateOrderBadges();
 }
       function getSvgDocument() {
         return mapObject.contentDocument;
