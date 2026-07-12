@@ -1,1 +1,238 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
 
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1"
+  >
+
+  <title>Test mappa ANEMOS</title>
+
+  <style>
+    *{
+      box-sizing:border-box;
+    }
+
+    body{
+      margin:0;
+      min-height:100vh;
+      padding:24px;
+      background:#eef5f9;
+      color:#0b2d56;
+      font-family:Arial, Helvetica, sans-serif;
+    }
+
+    .testPage{
+      width:min(100%, 760px);
+      margin:0 auto;
+    }
+
+    h1{
+      margin:0 0 8px;
+      text-align:center;
+      font-size:28px;
+    }
+
+    .instruction{
+      margin:0 0 20px;
+      text-align:center;
+      color:#607080;
+      line-height:1.5;
+    }
+
+    .mapCard{
+      padding:18px;
+      border-radius:24px;
+      background:white;
+      box-shadow:0 10px 30px rgba(24,49,79,.12);
+    }
+
+    #anemosMap{
+      display:block;
+      width:100%;
+      min-height:600px;
+      border:none;
+    }
+
+    .selectionBox{
+      margin-top:18px;
+      padding:16px;
+      border-radius:16px;
+      background:#f7fbff;
+      font-weight:700;
+      line-height:1.5;
+    }
+
+    #selectedFields{
+      color:#0b84f3;
+    }
+
+    #resetMap{
+      width:100%;
+      margin-top:14px;
+      padding:15px;
+      border:2px solid #dfe8f2;
+      border-radius:16px;
+      background:white;
+      color:#0b2d56;
+      font-size:17px;
+      font-weight:800;
+      cursor:pointer;
+    }
+
+    @media(max-width:650px){
+      body{
+        padding:12px;
+      }
+
+      #anemosMap{
+        min-height:520px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="testPage">
+    <h1>Mappa respiratoria ANEMOS</h1>
+
+    <p class="instruction">
+      Tocca un campo per selezionarlo o deselezionarlo.
+      Questa pagina serve soltanto a collaudare il componente.
+    </p>
+
+    <section class="mapCard">
+      <object
+        id="anemosMap"
+        type="image/svg+xml"
+        data="anemos-map.svg"
+        aria-label="Mappa respiratoria biomeccanica ANEMOS"
+      ></object>
+
+      <div class="selectionBox">
+        Campi selezionati:
+        <span id="selectedFields">nessuno</span>
+      </div>
+
+      <button id="resetMap" type="button">
+        🧹 Azzera selezione
+      </button>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const mapObject =
+        document.getElementById("anemosMap");
+
+      const selectedFieldsElement =
+        document.getElementById("selectedFields");
+
+      const resetButton =
+        document.getElementById("resetMap");
+
+      const fieldIds = [
+        "sad",
+        "sas",
+        "spd",
+        "sps",
+        "ild",
+        "ils",
+        "ipd",
+        "ips",
+        "a"
+      ];
+
+      const labels = {
+        sad: "SAD",
+        sas: "SAS",
+        spd: "SPD",
+        sps: "SPS",
+        ild: "ILD",
+        ils: "ILS",
+        ipd: "IPD",
+        ips: "IPS",
+        a: "A"
+      };
+
+      const selectedFields = new Set();
+
+      function updateSummary() {
+        if (selectedFields.size === 0) {
+          selectedFieldsElement.textContent = "nessuno";
+          return;
+        }
+
+        selectedFieldsElement.textContent =
+          [...selectedFields]
+            .map(fieldId => labels[fieldId])
+            .join(" · ");
+      }
+
+      function getSvgDocument() {
+        return mapObject.contentDocument;
+      }
+
+      function resetSelection() {
+        const svgDocument = getSvgDocument();
+
+        if (!svgDocument) {
+          return;
+        }
+
+        fieldIds.forEach(fieldId => {
+          svgDocument
+            .getElementById(fieldId)
+            ?.classList.remove("selected");
+        });
+
+        selectedFields.clear();
+        updateSummary();
+      }
+
+      mapObject.addEventListener("load", () => {
+        const svgDocument = getSvgDocument();
+
+        if (!svgDocument) {
+          selectedFieldsElement.textContent =
+            "mappa non caricata";
+          return;
+        }
+
+        fieldIds.forEach(fieldId => {
+          const field =
+            svgDocument.getElementById(fieldId);
+
+          if (!field) {
+            return;
+          }
+
+          field.addEventListener("click", () => {
+            const isSelected =
+              selectedFields.has(fieldId);
+
+            if (isSelected) {
+              selectedFields.delete(fieldId);
+              field.classList.remove("selected");
+            } else {
+              selectedFields.add(fieldId);
+              field.classList.add("selected");
+            }
+
+            updateSummary();
+          });
+        });
+      });
+
+      resetButton.addEventListener(
+        "click",
+        resetSelection
+      );
+
+      updateSummary();
+    });
+  </script>
+</body>
+</html>
