@@ -1,1 +1,407 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 600 820"
+     role="img"
+     aria-labelledby="mapTitle mapDescription">
 
+  <title id="mapTitle">
+    Mappa respiratoria biomeccanica ANEMOS
+  </title>
+
+  <desc id="mapDescription">
+    Nove campi respiratori indipendenti disposti su un torace atletico:
+    superiore anteriore destro e sinistro,
+    superiore posteriore destro e sinistro,
+    inferiore laterale destro e sinistro,
+    inferiore posteriore destro e sinistro,
+    addominale.
+  </desc>
+
+  <defs>
+    <filter
+      id="fieldShadow"
+      x="-30%"
+      y="-30%"
+      width="160%"
+      height="160%"
+    >
+      <feDropShadow
+        dx="0"
+        dy="5"
+        stdDeviation="7"
+        flood-color="#18314f"
+        flood-opacity="0.16"
+      />
+    </filter>
+
+    <linearGradient
+      id="tealField"
+      x1="0"
+      y1="0"
+      x2="0"
+      y2="1"
+    >
+      <stop
+        offset="0%"
+        stop-color="#e8fbf8"
+      />
+
+      <stop
+        offset="100%"
+        stop-color="#8fd4cf"
+      />
+    </linearGradient>
+
+    <linearGradient
+      id="blueField"
+      x1="0"
+      y1="0"
+      x2="0"
+      y2="1"
+    >
+      <stop
+        offset="0%"
+        stop-color="#e7efff"
+      />
+
+      <stop
+        offset="100%"
+        stop-color="#8fb0e6"
+      />
+    </linearGradient>
+
+    <linearGradient
+      id="greenField"
+      x1="0"
+      y1="0"
+      x2="0"
+      y2="1"
+    >
+      <stop
+        offset="0%"
+        stop-color="#f0f7ec"
+      />
+
+      <stop
+        offset="100%"
+        stop-color="#a2c88d"
+      />
+    </linearGradient>
+
+    <linearGradient
+      id="purpleField"
+      x1="0"
+      y1="0"
+      x2="0"
+      y2="1"
+    >
+      <stop
+        offset="0%"
+        stop-color="#f3ebfb"
+      />
+
+      <stop
+        offset="100%"
+        stop-color="#b69ad7"
+      />
+    </linearGradient>
+
+    <linearGradient
+      id="goldField"
+      x1="0"
+      y1="0"
+      x2="0"
+      y2="1"
+    >
+      <stop
+        offset="0%"
+        stop-color="#fff7e8"
+      />
+
+      <stop
+        offset="100%"
+        stop-color="#dfbd87"
+      />
+    </linearGradient>
+
+    <style>
+      .guide{
+        fill:none;
+        stroke:#d8e2e8;
+        stroke-width:4;
+        stroke-linecap:round;
+        opacity:.7;
+      }
+
+      .field{
+        stroke-width:3;
+        cursor:pointer;
+        transform-box:fill-box;
+        transform-origin:center;
+        transition:
+          transform 180ms ease,
+          filter 180ms ease,
+          opacity 180ms ease;
+      }
+
+      .field:hover,
+      .field:focus{
+        transform:scale(1.035);
+        filter:url(#fieldShadow);
+        outline:none;
+      }
+
+      .field.selected{
+        transform:scale(1.06);
+        filter:url(#fieldShadow);
+      }
+
+      .center{
+        fill:#ffffff;
+        stroke-width:5;
+        pointer-events:none;
+      }
+
+      .midline{
+        stroke:#b7c8d4;
+        stroke-width:2;
+        stroke-dasharray:8 10;
+        opacity:.55;
+      }
+    </style>
+  </defs>
+
+  <!-- Riferimenti anatomici -->
+
+  <path
+    class="guide"
+    d="M120 105 C180 78 240 88 276 125"
+  />
+
+  <path
+    class="guide"
+    d="M480 105 C420 78 360 88 324 125"
+  />
+
+  <path
+    class="guide"
+    d="M150 135 C120 250 123 430 176 600"
+  />
+
+  <path
+    class="guide"
+    d="M450 135 C480 250 477 430 424 600"
+  />
+
+  <line
+    class="midline"
+    x1="300"
+    y1="108"
+    x2="300"
+    y2="752"
+  />
+    <!-- Superiore anteriore destro -->
+
+  <g id="sad-field" tabindex="0" aria-label="Superiore anteriore destro">
+    <path
+      id="sad"
+      class="field"
+      fill="url(#tealField)"
+      stroke="#3f9995"
+      d="M276 142
+         C248 116 202 116 171 139
+         C151 154 147 185 163 210
+         C184 239 230 247 269 225
+         C284 202 286 169 276 142 Z"
+    />
+    <circle
+      class="center"
+      cx="225"
+      cy="183"
+      r="8"
+      stroke="#3f9995"
+    />
+  </g>
+
+  <!-- Superiore anteriore sinistro -->
+
+  <g id="sas-field" tabindex="0" aria-label="Superiore anteriore sinistro">
+    <path
+      id="sas"
+      class="field"
+      fill="url(#tealField)"
+      stroke="#3f9995"
+      d="M324 142
+         C352 116 398 116 429 139
+         C449 154 453 185 437 210
+         C416 239 370 247 331 225
+         C316 202 314 169 324 142 Z"
+    />
+    <circle
+      class="center"
+      cx="375"
+      cy="183"
+      r="8"
+      stroke="#3f9995"
+    />
+  </g>
+
+  <!-- Superiore posteriore destro -->
+
+  <g id="spd-field" tabindex="0" aria-label="Superiore posteriore destro">
+    <path
+      id="spd"
+      class="field"
+      fill="url(#blueField)"
+      stroke="#4f79bf"
+      d="M271 258
+         C232 231 160 231 123 259
+         C102 277 104 315 130 341
+         C160 371 220 378 267 352
+         C281 324 283 285 271 258 Z"
+    />
+    <circle
+      class="center"
+      cx="198"
+      cy="303"
+      r="8"
+      stroke="#4f79bf"
+    />
+  </g>
+
+  <!-- Superiore posteriore sinistro -->
+
+  <g id="sps-field" tabindex="0" aria-label="Superiore posteriore sinistro">
+    <path
+      id="sps"
+      class="field"
+      fill="url(#blueField)"
+      stroke="#4f79bf"
+      d="M329 258
+         C368 231 440 231 477 259
+         C498 277 496 315 470 341
+         C440 371 380 378 333 352
+         C319 324 317 285 329 258 Z"
+    />
+    <circle
+      class="center"
+      cx="402"
+      cy="303"
+      r="8"
+      stroke="#4f79bf"
+    />
+  </g>
+    <!-- Inferiore laterale destro -->
+
+  <g id="ild-field" tabindex="0" aria-label="Inferiore laterale destro">
+    <path
+      id="ild"
+      class="field"
+      fill="url(#greenField)"
+      stroke="#71985d"
+      d="M265 386
+         C232 360 177 363 145 390
+         C126 407 128 444 153 468
+         C183 493 226 494 261 472
+         C277 446 279 411 265 386 Z"
+    />
+    <circle
+      class="center"
+      cx="207"
+      cy="425"
+      r="8"
+      stroke="#71985d"
+    />
+  </g>
+
+  <!-- Inferiore laterale sinistro -->
+
+  <g id="ils-field" tabindex="0" aria-label="Inferiore laterale sinistro">
+    <path
+      id="ils"
+      class="field"
+      fill="url(#greenField)"
+      stroke="#71985d"
+      d="M335 386
+         C368 360 423 363 455 390
+         C474 407 472 444 447 468
+         C417 493 374 494 339 472
+         C323 446 321 411 335 386 Z"
+    />
+    <circle
+      class="center"
+      cx="393"
+      cy="425"
+      r="8"
+      stroke="#71985d"
+    />
+  </g>
+
+  <!-- Inferiore posteriore destro -->
+
+  <g id="ipd-field" tabindex="0" aria-label="Inferiore posteriore destro">
+    <path
+      id="ipd"
+      class="field"
+      fill="url(#purpleField)"
+      stroke="#7651a3"
+      d="M271 504
+         C247 487 218 491 202 513
+         C185 537 193 581 219 613
+         C234 632 257 622 272 594
+         C281 564 281 529 271 504 Z"
+    />
+    <circle
+      class="center"
+      cx="241"
+      cy="553"
+      r="8"
+      stroke="#7651a3"
+    />
+  </g>
+
+  <!-- Inferiore posteriore sinistro -->
+
+  <g id="ips-field" tabindex="0" aria-label="Inferiore posteriore sinistro">
+    <path
+      id="ips"
+      class="field"
+      fill="url(#purpleField)"
+      stroke="#7651a3"
+      d="M329 504
+         C353 487 382 491 398 513
+         C415 537 407 581 381 613
+         C366 632 343 622 328 594
+         C319 564 319 529 329 504 Z"
+    />
+    <circle
+      class="center"
+      cx="359"
+      cy="553"
+      r="8"
+      stroke="#7651a3"
+    />
+  </g>
+    <!-- Addominale -->
+
+  <g id="a-field" tabindex="0" aria-label="Addominale">
+    <path
+      id="a"
+      class="field"
+      fill="url(#goldField)"
+      stroke="#b68242"
+      d="M300 592
+         C282 616 247 648 231 679
+         C217 705 243 735 300 744
+         C357 735 383 705 369 679
+         C353 648 318 616 300 592 Z"
+    />
+    <circle
+      class="center"
+      cx="300"
+      cy="682"
+      r="8"
+      stroke="#b68242"
+    />
+  </g>
+
+</svg>
