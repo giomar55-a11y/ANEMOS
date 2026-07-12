@@ -191,24 +191,7 @@ function updateOrderGraphics() {
   centers.slice(0, -1).forEach((center, index) => {
     const nextCenter = centers[index + 1];
 
-    const line = svgDocument.createElementNS(
-      "http://www.w3.org/2000/svg",
-      "line"
-    );
-
-    line.classList.add("orderGraphic");
-    line.setAttribute("x1", center.x);
-    line.setAttribute("y1", center.y);
-    line.setAttribute("x2", nextCenter.x);
-    line.setAttribute("y2", nextCenter.y);
-    line.setAttribute("stroke", "#0b84f3");
-    line.setAttribute("stroke-width", "3");
-    line.setAttribute("stroke-linecap", "round");
-    line.setAttribute("opacity", "0.45");
-    line.setAttribute("pointer-events", "none");
-
-    svgDocument.documentElement.appendChild(line);
-  });
+   HTML 9.5 - percorso curvo
 
   centers.forEach((center, index) => {
     const badge = svgDocument.createElementNS(
