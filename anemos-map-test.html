@@ -81,7 +81,23 @@
       font-weight:800;
       cursor:pointer;
     }
+#playSequence{
+  width:100%;
+  margin-top:12px;
+  padding:15px;
+  border:none;
+  border-radius:16px;
+  background:#0b84f3;
+  color:white;
+  font-size:17px;
+  font-weight:800;
+  cursor:pointer;
+}
 
+#playSequence:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
     @media(max-width:650px){
       body{
         padding:12px;
@@ -119,6 +135,9 @@
       <button id="resetMap" type="button">
         🧹 Azzera selezione
       </button>
+      <button id="playSequence" type="button">
+  ▶️ Simula sequenza
+</button>
     </section>
   </main>
 
@@ -132,7 +151,8 @@
 
       const resetButton =
         document.getElementById("resetMap");
-
+const playButton =
+  document.getElementById("playSequence");
       const fieldIds = [
         "sad",
         "sas",
@@ -274,7 +294,42 @@ function updateSummary() {
       function getSvgDocument() {
         return mapObject.contentDocument;
       }
+function wait(milliseconds) {
+  return new Promise(resolve => {
+    setTimeout(resolve, milliseconds);
+  });
+}
 
+async function playSequence() {
+  const svgDocument = getSvgDocument();
+  const orderedFields = [...selectedFields];
+
+  if (!svgDocument || orderedFields.length === 0) {
+    return;
+  }
+
+  playButton.disabled = true;
+
+  for (const fieldId of orderedFields) {
+    const field = svgDocument.getElementById(fieldId);
+
+    if (!field) {
+      continue;
+    }
+
+    field.style.transform = "scale(1.12)";
+    field.style.filter = "url(#fieldShadow)";
+
+    await wait(550);
+
+    field.style.transform = "";
+    field.style.filter = "";
+
+    await wait(180);
+  }
+
+  playButton.disabled = false;
+}
       function resetSelection() {
         const svgDocument = getSvgDocument();
 
@@ -330,7 +385,10 @@ function updateSummary() {
         "click",
         resetSelection
       );
-
+playButton.addEventListener(
+  "click",
+  playSequence
+);
       updateSummary();
     });
   </script>
