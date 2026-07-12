@@ -191,7 +191,35 @@ function updateOrderGraphics() {
   centers.slice(0, -1).forEach((center, index) => {
     const nextCenter = centers[index + 1];
 
-   HTML 9.5 - percorso curvo
+    const path = svgDocument.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "path"
+    );
+
+    const controlX =
+      (center.x + nextCenter.x) / 2;
+
+    const controlY =
+      (center.y + nextCenter.y) / 2 - 30;
+
+    path.classList.add("orderGraphic");
+
+    path.setAttribute(
+      "d",
+      `M ${center.x} ${center.y}
+       Q ${controlX} ${controlY}
+       ${nextCenter.x} ${nextCenter.y}`
+    );
+
+    path.setAttribute("fill", "none");
+    path.setAttribute("stroke", "#0b84f3");
+    path.setAttribute("stroke-width", "3");
+    path.setAttribute("stroke-linecap", "round");
+    path.setAttribute("opacity", "0.45");
+    path.setAttribute("pointer-events", "none");
+
+    svgDocument.documentElement.appendChild(path);
+  });
 
   centers.forEach((center, index) => {
     const badge = svgDocument.createElementNS(
@@ -231,7 +259,6 @@ function updateOrderGraphics() {
     svgDocument.documentElement.appendChild(badge);
   });
 }
-
 function updateSummary() {
   if (selectedFields.size === 0) {
     selectedFieldsElement.textContent = "nessuno";
