@@ -12,7 +12,23 @@ document.addEventListener("DOMContentLoaded", () => {
         upperThoracic: null
       },
 
-      biomechanical: {}
+      selective: {
+  upperAnteriorRight: null,
+  upperAnteriorLeft: null,
+
+  lowerLateralRight: null,
+  lowerLateralLeft: null,
+
+  abdominal: null,
+
+  upperPosteriorRight: null,
+  upperPosteriorLeft: null,
+
+  lowerPosteriorRight: null,
+  lowerPosteriorLeft: null,
+
+  lumbar: null
+}
     };
   }
 
@@ -524,8 +540,9 @@ currentBreath.flow[phaseKey] = value;
       return "Nessuna";
     }
 
-    if (distribution.mode === "biomechanical") {
-      return "Biomeccanica Resplora";
+   if (distribution.mode === "biomechanical") {
+  return "Selettiva";
+}
     }
 
     const configured = Object.entries(
