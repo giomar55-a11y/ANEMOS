@@ -475,63 +475,76 @@ currentBreath.flow[phaseKey] = value;
     });
 
   document
-    .querySelectorAll(".distributionChoice")
-    .forEach(button => {
-      button.addEventListener("click", event => {
-        event.stopPropagation();
+    document
+  .querySelectorAll(".essentialVolumeButton")
+  .forEach(button => {
+    button.addEventListener("click", event => {
+      event.stopPropagation();
 
-        const phase = button.dataset.phase;
-        const volume = button.dataset.volume;
-        const level = button.dataset.level;
+      const phase = button.dataset.phase;
+      const volume = button.dataset.volume;
+      const distribution = getDistributionPhase(phase);
 
-        const distribution =
-          getDistributionPhase(phase);
+      const states = [
+        null,
+        "reduced",
+        "natural",
+        "full"
+      ];
 
-        const currentLevel =
-          distribution.essential[volume];
+      const currentState =
+        distribution.essential[volume];
 
-        const sameSelectedButton =
-          button.classList.contains("selected") &&
-          currentLevel === level;
+      const currentIndex =
+        states.indexOf(currentState);
 
-        if (
-          distribution.organization === "sequential" &&
-          sameSelectedButton
-        ) {
-          button.classList.remove("selected");
-          button.classList.remove("sequenceOrdered");
-          button.removeAttribute("data-order");
+      const nextState =
+        states[(currentIndex + 1) % states.length];
 
-          distribution.essential[volume] = null;
+      distribution.essential[volume] = nextState;
 
-          distribution.sequence =
-            distribution.sequence.filter(
-              item => item !== volume
-            );
+      button.classList.remove(
+        "stateReduced",
+        "stateNatural",
+        "stateFull",
+        "sequenceOrdered"
+      );
 
-          renderSequence(phase);
-          return;
-        }
+      button.removeAttribute("data-order");
 
-        selectOnly(
-          button,
-          `.distributionChoice[data-phase="${phase}"]` +
-          `[data-volume="${volume}"]`
-        );
+      if (nextState === "reduced") {
+        button.classList.add("stateReduced");
+        button.querySelector("span").textContent =
+          `${volumeLabels[volume]} · Ridotto`;
+      } else if (nextState === "natural") {
+        button.classList.add("stateNatural");
+        button.querySelector("span").textContent =
+          `${volumeLabels[volume]} · Naturale`;
+      } else if (nextState === "full") {
+        button.classList.add("stateFull");
+        button.querySelector("span").textContent =
+          `${volumeLabels[volume]} · Completo`;
+      } else {
+        button.querySelector("span").textContent =
+          volumeLabels[volume];
+      }
 
-        distribution.essential[volume] = level;
+      if (
+        distribution.organization === "sequential"
+      ) {
+        distribution.sequence =
+          distribution.sequence.filter(
+            item => item !== volume
+          );
 
-        if (
-          distribution.organization === "sequential" &&
-          !distribution.sequence.includes(volume)
-        ) {
+        if (nextState) {
           distribution.sequence.push(volume);
         }
 
         renderSequence(phase);
-      });
+      }
     });
-
+  });
   function getPhaseDistributionSummary(phase) {
     const distribution =
       getDistributionPhase(phase);
