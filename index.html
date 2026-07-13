@@ -337,135 +337,62 @@
       </div>
 
       <div
-        id="inEssentialDistributionPanel"
-        class="distributionPanel"
-      >
-        <p
-          id="inSequenceInstruction"
-          class="emptyMessage"
-        >
-          Seleziona il livello di ciascun volume.
-        </p>
-
-        <div class="distributionVolume">
-          <h3>🎈 Addominale</h3>
-
-          <div class="choiceGrid">
-            <button
-              class="choiceButton distributionChoice"
-              data-phase="in"
-              data-volume="abdominal"
-              data-level="reduced"
-            >
-              ➊
-              <span>Ridotto</span>
-            </button>
-
-            <button
-              class="choiceButton distributionChoice"
-              data-phase="in"
-              data-volume="abdominal"
-              data-level="natural"
-            >
-              ➋
-              <span>Naturale</span>
-            </button>
-
-            <button
-              class="choiceButton distributionChoice"
-              data-phase="in"
-              data-volume="abdominal"
-              data-level="full"
-            >
-              ➌
-              <span>Completo</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="distributionVolume">
-          <h3>🪭 Toracico inferiore</h3>
-
-          <div class="choiceGrid">
-            <button
-              class="choiceButton distributionChoice"
-              data-phase="in"
-              data-volume="lowerThoracic"
-              data-level="reduced"
-            >
-              ➊
-              <span>Ridotto</span>
-            </button>
-
-            <button
-              class="choiceButton distributionChoice"
-              data-phase="in"
-              data-volume="lowerThoracic"
-              data-level="natural"
-            >
-              ➋
-              <span>Naturale</span>
-            </button>
-
-            <button
-              class="choiceButton distributionChoice"
-              data-phase="in"
-              data-volume="lowerThoracic"
-              data-level="full"
-            >
-              ➌
-              <span>Completo</span>
-            </button>
-          </div>
-        </div>
-
-        <div class="distributionVolume">
-          <h3>🐚 Toracico superiore</h3>
-
-          <div class="choiceGrid">
-            <button
-              class="choiceButton distributionChoice"
-              data-phase="in"
-              data-volume="upperThoracic"
-              data-level="reduced"
-            >
-              ➊
-              <span>Ridotto</span>
-            </button>
-
-            <button
-              class="choiceButton distributionChoice"
-              data-phase="in"
-              data-volume="upperThoracic"
-              data-level="natural"
-            >
-              ➋
-              <span>Naturale</span>
-            </button>
-
-            <button
-              class="choiceButton distributionChoice"
-              data-phase="in"
-              data-volume="upperThoracic"
-              data-level="full"
-            >
-              ➌
-              <span>Completo</span>
-            </button>
-          </div>
-        </div>
-
         <div
-          id="inSequenceSummaryBox"
-          class="sequenceSummaryBox"
-        >
-          Nessuna sequenza inspiratoria impostata.
-        </div>
-      </div>
+  id="inEssentialDistributionPanel"
+  class="distributionPanel"
+>
+  <p
+    id="inSequenceInstruction"
+    class="emptyMessage"
+  >
+    Tocca ogni volume per modificarne il livello.
+  </p>
 
-      <div
-        <div
-  id="inBiomechanicalDistributionPanel"
+  <div class="distributionVolume">
+    <button
+      class="choiceButton essentialVolumeButton"
+      data-phase="in"
+      data-volume="abdominal"
+      data-state="0"
+    >
+      🎈
+      <span>Addome</span>
+    </button>
+  </div>
+
+  <div class="distributionVolume">
+    <button
+      class="choiceButton essentialVolumeButton"
+      data-phase="in"
+      data-volume="lowerThoracic"
+      data-state="0"
+    >
+      🪭
+      <span>Torace inferiore</span>
+    </button>
+  </div>
+
+  <div class="distributionVolume">
+    <button
+      class="choiceButton essentialVolumeButton"
+      data-phase="in"
+      data-volume="upperThoracic"
+      data-state="0"
+    >
+      🐚
+      <span>Torace superiore</span>
+    </button>
+  </div>
+
+  <div
+    id="inSequenceSummaryBox"
+    class="sequenceSummaryBox"
+  >
+    Nessuna sequenza inspiratoria impostata.
+  </div>
+</div>
+
+<div
   class="distributionPanel"
 >
   <h3>Vista anteriore</h3>
