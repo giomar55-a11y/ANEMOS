@@ -543,8 +543,7 @@ currentBreath.flow[phaseKey] = value;
    if (distribution.mode === "biomechanical") {
   return "Selettiva";
 }
-    }
-
+    
     const configured = Object.entries(
       distribution.essential
     )
