@@ -489,7 +489,6 @@ currentBreath.flow[phaseKey] = value;
     });
 
   document
-    document
   .querySelectorAll(".volumeStateButton")
   .forEach(button => {
     button.addEventListener("click", event => {
