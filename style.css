@@ -512,3 +512,26 @@ body.sequenceMode .sequenceSummaryBox{
   border-color:#e74c3c;
   color:white;
 }
+.volumeStateButton{
+  width:100%;
+  height:120px;
+  min-height:120px;
+}
+
+.volumeStateButton.stateReduced{
+  background:#3cb371;
+  border-color:#3cb371;
+  color:white;
+}
+
+.volumeStateButton.stateNatural{
+  background:#f2c94c;
+  border-color:#f2c94c;
+  color:#18314f;
+}
+
+.volumeStateButton.stateFull{
+  background:#e74c3c;
+  border-color:#e74c3c;
+  color:white;
+}
