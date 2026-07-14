@@ -402,34 +402,48 @@ currentBreath.flow[phaseKey] = value;
   }
 
   document
-    .querySelectorAll(".distributionModeChoice")
-    .forEach(button => {
-      button.addEventListener("click", event => {
-        event.stopPropagation();
+  .querySelectorAll(".distributionGlobalModeChoice")
+  .forEach(button => {
 
-        const phase = button.dataset.phase;
-        const mode = button.dataset.mode;
-        const distribution = getDistributionPhase(phase);
+    button.addEventListener("click", event => {
 
-        selectOnly(
-          button,
-          `.distributionModeChoice[data-phase="${phase}"]`
-        );
+      event.stopPropagation();
 
-        distribution.mode = mode;
+      selectOnly(
+        button,
+        ".distributionGlobalModeChoice"
+      );
 
-        getEssentialPanel(phase)?.classList.toggle(
-          "active",
-          mode === "essential"
-        );
+      const mode = button.dataset.mode;
 
-        getBiomechanicalPanel(phase)?.classList.toggle(
-          "active",
-          mode === "biomechanical"
-        );
-      });
+      currentBreath.distribution.in.mode = mode;
+      currentBreath.distribution.out.mode = mode;
+
+      document
+        .querySelectorAll(
+          "#inEssentialDistributionPanel,#outEssentialDistributionPanel"
+        )
+        .forEach(panel=>{
+          panel.classList.toggle(
+            "active",
+            mode==="essential"
+          );
+        });
+
+      document
+        .querySelectorAll(
+          "#inSelectiveDistributionPanel,#outSelectiveDistributionPanel"
+        )
+        .forEach(panel=>{
+          panel.classList.toggle(
+            "active",
+            mode==="selective"
+          );
+        });
+
     });
 
+  });
   document
     .querySelectorAll(".distributionOrganizationChoice")
     .forEach(button => {
