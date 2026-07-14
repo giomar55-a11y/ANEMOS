@@ -526,22 +526,15 @@ currentBreath.flow[phaseKey] = value;
 
       button.removeAttribute("data-order");
 
-      if (nextState === "reduced") {
-        button.classList.add("stateReduced");
-        button.querySelector("span").textContent =
-          `${volumeLabels[volume]} · Ridotto`;
-      } else if (nextState === "natural") {
-        button.classList.add("stateNatural");
-        button.querySelector("span").textContent =
-          `${volumeLabels[volume]} · Naturale`;
-      } else if (nextState === "full") {
-        button.classList.add("stateFull");
-        button.querySelector("span").textContent =
-          `${volumeLabels[volume]} · Completo`;
-      } else {
-        button.querySelector("span").textContent =
-          volumeLabels[volume];
-      }
+      button.dataset.state = nextState || "0";
+
+if (nextState === "reduced") {
+  button.classList.add("stateReduced");
+} else if (nextState === "natural") {
+  button.classList.add("stateNatural");
+} else if (nextState === "full") {
+  button.classList.add("stateFull");
+}
 
       if (
         distribution.organization === "sequential"
