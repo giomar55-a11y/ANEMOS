@@ -671,7 +671,19 @@ if (nextState === "reduced") {
       .forEach(button => {
         button.classList.remove("selected");
       });
+document
+  .querySelectorAll(".essentialVolumeButton")
+  .forEach(button => {
 
+    button.dataset.state = "0";
+
+    button.classList.remove(
+      "stateReduced",
+      "stateNatural",
+      "stateFull"
+    );
+
+  });
     document
       .querySelectorAll(".distributionPanel")
       .forEach(panel => {
