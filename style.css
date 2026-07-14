@@ -247,7 +247,6 @@ body:not(.homeActive) .backBtn{
   color:#0b2d56;
   border-radius:16px;
   padding:18px;
-  min-height:92px;
   font-size:30px;
   font-weight:800;
   box-shadow:0 4px 12px rgba(0,0,0,.06);
