@@ -685,7 +685,7 @@ currentBreath.flow[phaseKey] = value;
         button.classList.remove("selected");
       });
 document
-  .querySelectorAll(".essentialVolumeButton")
+  .querySelectorAll(".volumeStateButton")
   .forEach(button => {
 
     button.dataset.state = "0";
