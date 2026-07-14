@@ -490,14 +490,25 @@ currentBreath.flow[phaseKey] = value;
 
   document
     document
-  .querySelectorAll(".essentialVolumeButton")
+  .querySelectorAll(".volumeStateButton")
   .forEach(button => {
     button.addEventListener("click", event => {
       event.stopPropagation();
 
       const phase = button.dataset.phase;
-      const volume = button.dataset.volume;
-      const distribution = getDistributionPhase(phase);
+
+      const volume =
+        button.dataset.volume ||
+        button.dataset.field;
+
+      const distribution =
+        getDistributionPhase(phase);
+
+      const values = button.classList.contains(
+        "selectiveVolumeButton"
+      )
+        ? distribution.selective
+        : distribution.essential;
 
       const states = [
         null,
@@ -506,8 +517,7 @@ currentBreath.flow[phaseKey] = value;
         "full"
       ];
 
-      const currentState =
-        distribution.essential[volume];
+      const currentState = values[volume];
 
       const currentIndex =
         states.indexOf(currentState);
@@ -515,7 +525,8 @@ currentBreath.flow[phaseKey] = value;
       const nextState =
         states[(currentIndex + 1) % states.length];
 
-      distribution.essential[volume] = nextState;
+      values[volume] = nextState;
+      button.dataset.state = nextState || "0";
 
       button.classList.remove(
         "stateReduced",
@@ -526,15 +537,17 @@ currentBreath.flow[phaseKey] = value;
 
       button.removeAttribute("data-order");
 
-      button.dataset.state = nextState || "0";
+      if (nextState === "reduced") {
+        button.classList.add("stateReduced");
+      }
 
-if (nextState === "reduced") {
-  button.classList.add("stateReduced");
-} else if (nextState === "natural") {
-  button.classList.add("stateNatural");
-} else if (nextState === "full") {
-  button.classList.add("stateFull");
-}
+      if (nextState === "natural") {
+        button.classList.add("stateNatural");
+      }
+
+      if (nextState === "full") {
+        button.classList.add("stateFull");
+      }
 
       if (
         distribution.organization === "sequential"
