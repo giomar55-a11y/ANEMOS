@@ -495,3 +495,20 @@ body.sequenceMode .sequenceSummaryBox{
   height:120px;
   min-height:120px;
 }
+.essentialVolumeButton.stateReduced{
+  background:#3cb371;
+  border-color:#3cb371;
+  color:white;
+}
+
+.essentialVolumeButton.stateNatural{
+  background:#f2c94c;
+  border-color:#f2c94c;
+  color:#18314f;
+}
+
+.essentialVolumeButton.stateFull{
+  background:#e74c3c;
+  border-color:#e74c3c;
+  color:white;
+}
