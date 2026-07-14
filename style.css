@@ -490,3 +490,8 @@ body.sequenceMode .sequenceSummaryBox{
     padding:14px;
   }
 }
+.essentialVolumeButton{
+  width:100%;
+  height:120px;
+  min-height:120px;
+}
