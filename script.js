@@ -667,6 +667,46 @@ document
       true
     );
   });
+  // ATTIVAZIONE DEL TRASCINAMENTO DALLA MANIGLIA
+
+document
+  .querySelectorAll(".dragHandle")
+  .forEach(handle => {
+    let draggedRow = null;
+
+    handle.style.touchAction = "none";
+
+    handle.addEventListener("pointerdown", event => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      draggedRow =
+        handle.closest(".distributionVolume");
+
+      if (!draggedRow) {
+        return;
+      }
+
+      draggedRow.classList.add("dragging");
+      handle.setPointerCapture(event.pointerId);
+    });
+
+    function finishDrag(event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      draggedRow?.classList.remove("dragging");
+      draggedRow = null;
+    }
+
+    handle.addEventListener("pointerup", finishDrag);
+    handle.addEventListener("pointercancel", finishDrag);
+
+    handle.addEventListener("click", event => {
+      event.preventDefault();
+      event.stopPropagation();
+    });
+  });
   function getPhaseDistributionSummary(phase) {
     const distribution =
       getDistributionPhase(phase);
