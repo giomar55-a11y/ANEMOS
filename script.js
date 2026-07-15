@@ -564,6 +564,99 @@ currentBreath.flow[phaseKey] = value;
       }
     });
   });
+  // RIORDINO DEI VOLUMI ESSENZIALI CON PRESSIONE PROLUNGATA
+
+document
+  .querySelectorAll(".essentialVolumeButton")
+  .forEach(button => {
+    let holdTimer = null;
+    let draggedRow = null;
+    let hasMoved = false;
+
+    button.addEventListener("pointerdown", event => {
+      const phase = button.dataset.phase;
+      const distribution = getDistributionPhase(phase);
+
+      if (distribution.organization !== "sequential") {
+        return;
+      }
+
+      holdTimer = setTimeout(() => {
+        draggedRow = button.closest(".distributionVolume");
+
+        if (!draggedRow) {
+          return;
+        }
+
+        hasMoved = false;
+        draggedRow.style.opacity = "0.55";
+        button.setPointerCapture(event.pointerId);
+      }, 350);
+    });
+
+    button.addEventListener("pointermove", event => {
+      if (!draggedRow) {
+        return;
+      }
+
+      const targetButton =
+        document
+          .elementFromPoint(event.clientX, event.clientY)
+          ?.closest(".essentialVolumeButton");
+
+      if (
+        !targetButton ||
+        targetButton === button ||
+        targetButton.dataset.phase !== button.dataset.phase
+      ) {
+        return;
+      }
+
+      const targetRow =
+        targetButton.closest(".distributionVolume");
+
+      if (!targetRow || targetRow.parentElement !== draggedRow.parentElement) {
+        return;
+      }
+
+      const targetBox = targetRow.getBoundingClientRect();
+
+      if (event.clientY < targetBox.top + targetBox.height / 2) {
+        targetRow.before(draggedRow);
+      } else {
+        targetRow.after(draggedRow);
+      }
+
+      hasMoved = true;
+    });
+
+    function finishDrag() {
+      clearTimeout(holdTimer);
+
+      if (draggedRow) {
+        draggedRow.style.opacity = "";
+      }
+
+      draggedRow = null;
+    }
+
+    button.addEventListener("pointerup", finishDrag);
+    button.addEventListener("pointercancel", finishDrag);
+
+    button.addEventListener(
+      "click",
+      event => {
+        if (!hasMoved) {
+          return;
+        }
+
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        hasMoved = false;
+      },
+      true
+    );
+  });
   function getPhaseDistributionSummary(phase) {
     const distribution =
       getDistributionPhase(phase);
