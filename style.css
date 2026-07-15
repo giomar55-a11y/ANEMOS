@@ -598,3 +598,17 @@ body.sequenceMode .sequenceSummaryBox{
 .volumeStateButton .dragHandle{
   display:flex;
 }
+/* Aspetto durante il trascinamento */
+
+.distributionVolume.dragging{
+  opacity:.75;
+  transform:scale(1.03);
+  transition:none;
+  z-index:1000;
+}
+
+.distributionVolume{
+  transition:
+    transform .18s ease,
+    opacity .18s ease;
+}
