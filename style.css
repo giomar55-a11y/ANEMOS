@@ -589,3 +589,12 @@ body.sequenceMode .sequenceSummaryBox{
 .volumeStateButton:active .dragHandle{
   transform:scale(1.15);
 }
+/* Maniglia nascosta di default */
+.dragHandle{
+  display:none;
+}
+
+/* La maniglia compare solo in modalità sequenziale */
+.distributionPhase.sequentialMode .dragHandle{
+  display:block;
+}
