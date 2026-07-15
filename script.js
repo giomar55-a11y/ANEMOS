@@ -464,6 +464,16 @@ currentBreath.flow[phaseKey] = value;
 
         distribution.organization = organization;
         distribution.sequence = [];
+        
+        const phaseContainer =
+  button.closest(".distributionPhase");
+
+if (phaseContainer) {
+  phaseContainer.classList.toggle(
+    "sequentialMode",
+    organization === "sequential"
+  );
+}
 
         const instruction =
           getSequenceInstruction(phase);
