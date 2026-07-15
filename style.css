@@ -535,3 +535,23 @@ body.sequenceMode .sequenceSummaryBox{
   border-color:#e74c3c;
   color:white;
 }
+.distributionVolume{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:10px;
+}
+
+.distributionPanel{
+  display:none;
+}
+
+.distributionPanel.active{
+  display:block;
+}
+
+.distributionList{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
