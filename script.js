@@ -691,13 +691,72 @@ document
       handle.setPointerCapture(event.pointerId);
     });
 
-    function finishDrag(event) {
-      event.preventDefault();
-      event.stopPropagation();
+    handle.addEventListener("pointermove", event => {
+  if (!draggedRow) {
+    return;
+  }
 
-      draggedRow?.classList.remove("dragging");
-      draggedRow = null;
-    }
+  event.preventDefault();
+  event.stopPropagation();
+
+  const targetRow =
+    document
+      .elementFromPoint(event.clientX, event.clientY)
+      ?.closest(".distributionVolume");
+
+  if (
+    !targetRow ||
+    targetRow === draggedRow ||
+    targetRow.parentElement !== draggedRow.parentElement
+  ) {
+    return;
+  }
+
+  const targetBox =
+    targetRow.getBoundingClientRect();
+
+  if (event.clientY < targetBox.top + targetBox.height / 2) {
+    targetRow.before(draggedRow);
+  } else {
+    targetRow.after(draggedRow);
+  }
+});
+
+function finishDrag(event) {
+  event.preventDefault();
+  event.stopPropagation();
+
+  if (!draggedRow) {
+    return;
+  }
+
+  const list = draggedRow.parentElement;
+
+  const volumeButton =
+    draggedRow.querySelector(".essentialVolumeButton");
+
+  const phase = volumeButton?.dataset.phase;
+
+  draggedRow.classList.remove("dragging");
+  draggedRow = null;
+
+  if (!list || !phase) {
+    return;
+  }
+
+  const distribution =
+    getDistributionPhase(phase);
+
+  distribution.sequence =
+    [...list.querySelectorAll(".essentialVolumeButton")]
+      .filter(button => {
+        const volume = button.dataset.volume;
+        return distribution.essential[volume];
+      })
+      .map(button => button.dataset.volume);
+
+  renderSequence(phase);
+}
 
     handle.addEventListener("pointerup", finishDrag);
     handle.addEventListener("pointercancel", finishDrag);
