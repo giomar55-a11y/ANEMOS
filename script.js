@@ -667,6 +667,59 @@ document
       true
     );
   });
+  // TRASCINAMENTO ESSENZIALE CON SORTABLEJS
+
+if (typeof Sortable !== "undefined") {
+  document
+    .querySelectorAll(
+      "#inEssentialDistributionPanel, #outEssentialDistributionPanel"
+    )
+    .forEach(panel => {
+      Sortable.create(panel, {
+        draggable: ".distributionVolume",
+        handle: ".dragHandle",
+        animation: 180,
+        forceFallback: true,
+        fallbackOnBody: true,
+        touchStartThreshold: 3,
+
+        onEnd: event => {
+          const movedButton =
+            event.item.querySelector(
+              ".essentialVolumeButton"
+            );
+
+          const phase =
+            movedButton?.dataset.phase;
+
+          if (!phase) {
+            return;
+          }
+
+          const distribution =
+            getDistributionPhase(phase);
+
+          distribution.sequence =
+            [...panel.querySelectorAll(
+              ".essentialVolumeButton"
+            )]
+              .filter(button => {
+                const volume =
+                  button.dataset.volume;
+
+                return Boolean(
+                  distribution.essential[volume]
+                );
+              })
+              .map(
+                button => button.dataset.volume
+              );
+
+          renderSequence(phase);
+        }
+      });
+    });
+}
     function getPhaseDistributionSummary(phase) {
     const distribution =
       getDistributionPhase(phase);
