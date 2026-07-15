@@ -516,6 +516,7 @@ body.sequenceMode .sequenceSummaryBox{
   width:100%;
   height:120px;
   min-height:120px;
+  position:relative;
 }
 
 .volumeStateButton.stateReduced{
@@ -560,4 +561,22 @@ body.sequenceMode .sequenceSummaryBox{
   user-select:none;
   -webkit-touch-callout:none;
   touch-action:manipulation;
+}
+.dragHandle{
+  position:absolute;
+  top:10px;
+  right:12px;
+  margin:0;
+  min-height:auto;
+  font-size:20px;
+  line-height:1;
+  opacity:.65;
+  cursor:grab;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-touch-callout:none;
+}
+
+.dragHandle:active{
+  cursor:grabbing;
 }
