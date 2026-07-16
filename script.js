@@ -720,6 +720,55 @@ if (typeof Sortable !== "undefined") {
       });
     });
 }
+  // TRASCINAMENTO SELETTIVA CON SORTABLEJS
+
+if (typeof Sortable !== "undefined") {
+  document
+    .querySelectorAll(
+      "#inSelectiveDistributionPanel, #outSelectiveDistributionPanel"
+    )
+    .forEach(panel => {
+      const phase =
+        panel.id.startsWith("in") ? "in" : "out";
+
+      panel
+        .querySelectorAll(".selectiveGrid")
+        .forEach(grid => {
+          Sortable.create(grid, {
+            group: `selective-${phase}`,
+            draggable: ".selectiveVolumeButton",
+            handle: ".dragHandle",
+            animation: 180,
+            forceFallback: true,
+            fallbackOnBody: true,
+            touchStartThreshold: 3,
+
+            onEnd: () => {
+              const distribution =
+                getDistributionPhase(phase);
+
+              distribution.sequence =
+                [...panel.querySelectorAll(
+                  ".selectiveVolumeButton"
+                )]
+                  .filter(button => {
+                    const volume =
+                      button.dataset.volume;
+
+                    return Boolean(
+                      distribution.selective[volume]
+                    );
+                  })
+                  .map(
+                    button => button.dataset.volume
+                  );
+
+              renderSequence(phase);
+            }
+          });
+        });
+    });
+}
     function getPhaseDistributionSummary(phase) {
     const distribution =
       getDistributionPhase(phase);
