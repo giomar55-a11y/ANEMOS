@@ -1,253 +1,706 @@
-// ANEMOS 3.0
-// Modello dati principale dell'applicazione
+/*
+ * ==========================================================
+ * ANEMOS 3.0
+ * Modello dati respiratorio
+ * ==========================================================
+ */
 
-export const VOLUME_KEYS = [
-  "abdominal",
-  "lowerThoracic",
-  "upperThoracic"
-];
+/*
+ * Settori respiratori disponibili
+ */
 
-export const VOLUME_DEFINITIONS = {
-  abdominal: {
-    id: "abdominal",
-    label: "Addome",
-    icon: "🎈"
-  },
+export const RESPIRATORY_SECTORS = {
+    abdomen: {
+        id: "abdomen",
+        label: "Addome"
+    },
 
-  lowerThoracic: {
-    id: "lowerThoracic",
-    label: "Torace inferiore",
-    icon: "🪭"
-  },
+    lowerChest: {
+        id: "lowerChest",
+        label: "Torace inferiore"
+    },
 
-  upperThoracic: {
-    id: "upperThoracic",
-    label: "Torace superiore",
-    icon: "🐚"
-  }
+    upperChest: {
+        id: "upperChest",
+        label: "Torace superiore"
+    }
 };
 
-export const LEVEL_OPTIONS = [
-  {
-    id: "excluded",
-    label: "Escluso",
-    value: 0
-  },
-  {
-    id: "reduced",
-    label: "Ridotto",
-    value: 1
-  },
-  {
-    id: "natural",
-    label: "Naturale",
-    value: 2
-  },
-  {
-    id: "complete",
-    label: "Completo",
-    value: 3
-  }
-];
 
-export const PATH_OPTIONS = [
-  {
-    id: "nose",
-    label: "Naso"
-  },
-  {
-    id: "mouth",
-    label: "Bocca"
-  }
-];
+/*
+ * Volumi respiratori
+ */
 
-export const FLOW_OPTIONS = [
-  {
-    id: "restrained",
-    label: "Trattenuto"
-  },
-  {
-    id: "delicate",
-    label: "Delicato"
-  },
-  {
-    id: "spontaneous",
-    label: "Spontaneo"
-  },
-  {
-    id: "forced",
-    label: "Forzato"
-  }
-];
-
-export const FINALITY_OPTIONS = [
-  {
-    id: "relaxation",
-    label: "Rilassamento"
-  },
-  {
-    id: "activation",
-    label: "Attivazione"
-  },
-  {
-    id: "coherence",
-    label: "Coerenza"
-  },
-  {
-    id: "recovery",
-    label: "Recupero"
-  },
-  {
-    id: "performance",
-    label: "Performance"
-  },
-  {
-    id: "sleep",
-    label: "Sonno"
-  },
-  {
-    id: "meditation",
-    label: "Meditazione"
-  },
-  {
-    id: "free",
-    label: "Libera"
-  }
-];
-
-export const ORGANIZATION_OPTIONS = [
-  {
-    id: "simultaneous",
-    label: "Simultanea"
-  },
-  {
-    id: "sequential",
-    label: "Sequenziale"
-  }
-];
-
-function createPhase() {
-  return {
-    path: null,
-    flow: null,
-    duration: 0
-  };
-}
-
-function createVolume() {
-  return {
-    enabled: false,
-    level: "excluded",
-
-    inhale: createPhase(),
-    pauseAfterInhale: 0,
-
-    exhale: createPhase(),
-    pauseAfterExhale: 0
-  };
-}
-
-function createCommonParameters() {
-  return {
-    inhale: createPhase(),
-    pauseAfterInhale: 0,
-
-    exhale: createPhase(),
-    pauseAfterExhale: 0
-  };
-}
-
-function createCoherenceState() {
-  return {
-    physiological: {
-      status: "not-evaluated",
-      score: null,
-      messages: []
+export const VOLUME_OPTIONS = {
+    reduced: {
+        id: "reduced",
+        label: "Ridotto"
     },
 
-    finality: {
-      status: "not-evaluated",
-      score: null,
-      messages: []
+    natural: {
+        id: "natural",
+        label: "Naturale"
     },
 
-    user: {
-      status: "not-evaluated",
-      score: null,
-      messages: []
-    },
-
-    overall: {
-      status: "not-evaluated",
-      score: null,
-      messages: []
+    complete: {
+        id: "complete",
+        label: "Completo"
     }
-  };
+};
+
+
+/*
+ * Percorsi dell’aria
+ */
+
+export const PATH_OPTIONS = {
+    nose: {
+        id: "nose",
+        label: "Naso"
+    },
+
+    mouth: {
+        id: "mouth",
+        label: "Bocca"
+    },
+
+    noseAndMouth: {
+        id: "noseAndMouth",
+        label: "Naso e bocca"
+    }
+};
+
+
+/*
+ * Fasi respiratorie principali
+ */
+
+export const PHASE_TYPES = {
+    inhale: {
+        id: "inhale",
+        label: "Inspirazione",
+        shortLabel: "IN"
+    },
+
+    exhale: {
+        id: "exhale",
+        label: "Espirazione",
+        shortLabel: "ES"
+    }
+};
+
+
+/*
+ * Organizzazione dichiarata dall’utente
+ */
+
+export const ORGANIZATION_TYPES = {
+    simultaneous: {
+        id: "simultaneous",
+        label: "Simultanea"
+    },
+
+    sequential: {
+        id: "sequential",
+        label: "Sequenziale"
+    }
+};
+
+
+/*
+ * Crea un settore inserito all’interno di un passaggio.
+ *
+ * Ogni settore mantiene un volume indipendente.
+ */
+
+export function createStepSector(
+    sectorId,
+    volume = "natural"
+) {
+    return {
+        sectorId,
+        volume
+    };
 }
+
+
+/*
+ * Crea un passaggio respiratorio.
+ *
+ * Un passaggio può contenere:
+ *
+ * - un solo settore;
+ * - due settori simultanei;
+ * - tutti e tre i settori simultanei.
+ *
+ * Percorso e tempo appartengono al passaggio.
+ */
+
+export function createBreathingStep({
+    id = crypto.randomUUID(),
+    path = "nose",
+    duration = 2,
+    sectors = []
+} = {}) {
+    return {
+        id,
+        path,
+        duration,
+        sectors
+    };
+}
+
+
+/*
+ * Crea una fase respiratoria.
+ *
+ * Una fase è composta da uno o più passaggi.
+ *
+ * Esempio simultaneo:
+ *
+ * IN
+ * Passaggio 1:
+ * Addome + Torace inferiore + Torace superiore
+ *
+ * Esempio sequenziale:
+ *
+ * IN
+ * Passaggio 1: Addome
+ * Passaggio 2: Torace inferiore + Torace superiore
+ */
+
+export function createBreathingPhase(
+    type = "inhale"
+) {
+    return {
+        type,
+        steps: []
+    };
+}
+
+
+/*
+ * Configurazione iniziale simultanea.
+ *
+ * È rappresentata da un unico passaggio,
+ * contenente tutti i settori attivi.
+ */
+
+export function createDefaultSimultaneousPhase(
+    type
+) {
+    return {
+        type,
+
+        steps: [
+            createBreathingStep({
+                path: "nose",
+
+                duration:
+                    type === "inhale"
+                        ? 4
+                        : 6,
+
+                sectors: [
+                    createStepSector(
+                        "abdomen",
+                        "natural"
+                    ),
+
+                    createStepSector(
+                        "lowerChest",
+                        "natural"
+                    ),
+
+                    createStepSector(
+                        "upperChest",
+                        "reduced"
+                    )
+                ]
+            })
+        ]
+    };
+}
+
+
+/*
+ * Configurazione iniziale sequenziale.
+ *
+ * Ogni settore occupa inizialmente
+ * un passaggio distinto.
+ */
+
+export function createDefaultSequentialPhase(
+    type
+) {
+    const defaultDuration = 2;
+
+    return {
+        type,
+
+        steps: [
+            createBreathingStep({
+                path: "nose",
+                duration: defaultDuration,
+
+                sectors: [
+                    createStepSector(
+                        "abdomen",
+                        "natural"
+                    )
+                ]
+            }),
+
+            createBreathingStep({
+                path: "nose",
+                duration: defaultDuration,
+
+                sectors: [
+                    createStepSector(
+                        "lowerChest",
+                        "natural"
+                    )
+                ]
+            }),
+
+            createBreathingStep({
+                path: "nose",
+                duration: defaultDuration,
+
+                sectors: [
+                    createStepSector(
+                        "upperChest",
+                        "reduced"
+                    )
+                ]
+            })
+        ]
+    };
+}
+
+
+/*
+ * Crea lo stato iniziale del Motore di Coerenza.
+ */
+
+export function createCoherenceState() {
+    return {
+        physiological: {
+            status: "neutral",
+            message:
+                "In attesa della configurazione."
+        },
+
+        purpose: {
+            status: "neutral",
+            message:
+                "Finalità non ancora configurata."
+        },
+
+        observations: []
+    };
+}
+
+
+/*
+ * Crea una respirazione vuota.
+ */
 
 export function createEmptyBreath() {
-  const now = new Date().toISOString();
+    const now = new Date().toISOString();
 
-  return {
-    id: null,
+    return {
+        id: crypto.randomUUID(),
 
-    identity: {
-      name: "",
-      description: ""
-    },
+        version: "3.0",
 
-    finality: null,
+        name: "",
 
-    organization: null,
+        organization: "simultaneous",
 
-    common: createCommonParameters(),
+        inhale:
+            createDefaultSimultaneousPhase(
+                "inhale"
+            ),
 
-    volumes: {
-      abdominal: createVolume(),
-      lowerThoracic: createVolume(),
-      upperThoracic: createVolume()
-    },
+        postInhalePause: 0,
 
-    sequence: [
-      "abdominal",
-      "lowerThoracic",
-      "upperThoracic"
-    ],
+        exhale:
+            createDefaultSimultaneousPhase(
+                "exhale"
+            ),
 
-    coherence: createCoherenceState(),
+        postExhalePause: 0,
 
-    metadata: {
-      version: "3.0",
-      createdAt: now,
-      updatedAt: now
+        purpose: null,
+
+        coherence:
+            createCoherenceState(),
+
+        createdAt: now,
+
+        updatedAt: now
+    };
+}
+
+
+/*
+ * Cambia l’organizzazione respiratoria.
+ *
+ * La respirazione simultanea usa un solo passaggio.
+ * La respirazione sequenziale usa più passaggi.
+ */
+
+export function setOrganization(
+    breath,
+    organization
+) {
+    if (
+        organization !== "simultaneous" &&
+        organization !== "sequential"
+    ) {
+        throw new Error(
+            "Organizzazione respiratoria non valida."
+        );
     }
-  };
+
+    breath.organization = organization;
+
+    if (organization === "simultaneous") {
+        breath.inhale =
+            createDefaultSimultaneousPhase(
+                "inhale"
+            );
+
+        breath.exhale =
+            createDefaultSimultaneousPhase(
+                "exhale"
+            );
+    }
+
+    if (organization === "sequential") {
+        breath.inhale =
+            createDefaultSequentialPhase(
+                "inhale"
+            );
+
+        breath.exhale =
+            createDefaultSequentialPhase(
+                "exhale"
+            );
+    }
+
+    updateTimestamp(breath);
+
+    return breath;
 }
 
-export function cloneBreath(breath) {
-  return structuredClone(breath);
+
+/*
+ * Aggiunge un nuovo passaggio a una fase.
+ */
+
+export function addStepToPhase(
+    breath,
+    phaseType,
+    step = createBreathingStep()
+) {
+    const phase = getPhase(
+        breath,
+        phaseType
+    );
+
+    phase.steps.push(step);
+
+    updateTimestamp(breath);
+
+    return step;
 }
 
-export function updateTimestamp(breath) {
-  breath.metadata.updatedAt = new Date().toISOString();
-  return breath;
+
+/*
+ * Rimuove un passaggio da una fase.
+ */
+
+export function removeStepFromPhase(
+    breath,
+    phaseType,
+    stepId
+) {
+    const phase = getPhase(
+        breath,
+        phaseType
+    );
+
+    phase.steps =
+        phase.steps.filter(
+            (step) => step.id !== stepId
+        );
+
+    updateTimestamp(breath);
 }
 
-export function resetCoherence(breath) {
-  breath.coherence = createCoherenceState();
-  return breath;
+
+/*
+ * Aggiunge un settore a un passaggio.
+ *
+ * È così possibile rendere simultanei
+ * due o tre settori all’interno
+ * di una sequenza.
+ */
+
+export function addSectorToStep(
+    breath,
+    phaseType,
+    stepId,
+    sectorId,
+    volume = "natural"
+) {
+    const step = getStep(
+        breath,
+        phaseType,
+        stepId
+    );
+
+    const alreadyPresent =
+        step.sectors.some(
+            (sector) =>
+                sector.sectorId === sectorId
+        );
+
+    if (alreadyPresent) {
+        return step;
+    }
+
+    step.sectors.push(
+        createStepSector(
+            sectorId,
+            volume
+        )
+    );
+
+    updateTimestamp(breath);
+
+    return step;
 }
 
-export function getActiveVolumes(breath) {
-  return VOLUME_KEYS.filter((volumeKey) => {
-    return breath.volumes[volumeKey].enabled;
-  });
+
+/*
+ * Rimuove un settore da un passaggio.
+ */
+
+export function removeSectorFromStep(
+    breath,
+    phaseType,
+    stepId,
+    sectorId
+) {
+    const step = getStep(
+        breath,
+        phaseType,
+        stepId
+    );
+
+    step.sectors =
+        step.sectors.filter(
+            (sector) =>
+                sector.sectorId !== sectorId
+        );
+
+    updateTimestamp(breath);
+
+    return step;
 }
 
-export function isSimultaneous(breath) {
-  return breath.organization === "simultaneous";
+
+/*
+ * Modifica il volume di un settore.
+ */
+
+export function updateSectorVolume(
+    breath,
+    phaseType,
+    stepId,
+    sectorId,
+    volume
+) {
+    const step = getStep(
+        breath,
+        phaseType,
+        stepId
+    );
+
+    const sector =
+        step.sectors.find(
+            (item) =>
+                item.sectorId === sectorId
+        );
+
+    if (!sector) {
+        throw new Error(
+            "Settore non presente nel passaggio."
+        );
+    }
+
+    sector.volume = volume;
+
+    updateTimestamp(breath);
+
+    return sector;
 }
 
-export function isSequential(breath) {
-  return breath.organization === "sequential";
+
+/*
+ * Modifica percorso e durata di un passaggio.
+ */
+
+export function updateStepParameters(
+    breath,
+    phaseType,
+    stepId,
+    {
+        path,
+        duration
+    }
+) {
+    const step = getStep(
+        breath,
+        phaseType,
+        stepId
+    );
+
+    if (path !== undefined) {
+        step.path = path;
+    }
+
+    if (duration !== undefined) {
+        step.duration = Number(duration);
+    }
+
+    updateTimestamp(breath);
+
+    return step;
+}
+
+
+/*
+ * Restituisce una fase.
+ */
+
+export function getPhase(
+    breath,
+    phaseType
+) {
+    if (phaseType === "inhale") {
+        return breath.inhale;
+    }
+
+    if (phaseType === "exhale") {
+        return breath.exhale;
+    }
+
+    throw new Error(
+        "Fase respiratoria non valida."
+    );
+}
+
+
+/*
+ * Restituisce un passaggio specifico.
+ */
+
+export function getStep(
+    breath,
+    phaseType,
+    stepId
+) {
+    const phase = getPhase(
+        breath,
+        phaseType
+    );
+
+    const step =
+        phase.steps.find(
+            (item) => item.id === stepId
+        );
+
+    if (!step) {
+        throw new Error(
+            "Passaggio respiratorio non trovato."
+        );
+    }
+
+    return step;
+}
+
+
+/*
+ * Calcola la durata totale
+ * di una fase respiratoria.
+ */
+
+export function getPhaseDuration(
+    phase
+) {
+    return phase.steps.reduce(
+        (total, step) =>
+            total + Number(step.duration || 0),
+        0
+    );
+}
+
+
+/*
+ * Calcola la durata totale
+ * di un ciclo respiratorio.
+ */
+
+export function getBreathCycleDuration(
+    breath
+) {
+    return (
+        getPhaseDuration(breath.inhale) +
+        Number(breath.postInhalePause || 0) +
+        getPhaseDuration(breath.exhale) +
+        Number(breath.postExhalePause || 0)
+    );
+}
+
+
+/*
+ * Crea una copia indipendente
+ * della respirazione.
+ */
+
+export function cloneBreath(
+    breath
+) {
+    return structuredClone(breath);
+}
+
+
+/*
+ * Aggiorna la data di modifica.
+ */
+
+export function updateTimestamp(
+    breath
+) {
+    breath.updatedAt =
+        new Date().toISOString();
+}
+
+
+/*
+ * Riporta il Motore di Coerenza
+ * allo stato neutro.
+ */
+
+export function resetCoherence(
+    breath
+) {
+    breath.coherence =
+        createCoherenceState();
+
+    updateTimestamp(breath);
 }
