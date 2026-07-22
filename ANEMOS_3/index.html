@@ -2,136 +2,1159 @@
 <html lang="it">
 
 <head>
+    <meta charset="UTF-8">
 
-<meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <meta
+        name="description"
+        content="ANEMOS 3.0 – Laboratorio del respiro"
+    >
 
-<title>ANEMOS 3.0</title>
+    <title>ANEMOS 3.0</title>
 
-<link rel="stylesheet"
-href="css/style.css">
-
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
 </head>
 
 <body>
 
-<div id="app">
+    <main id="app">
 
-    <!-- ===================================================== -->
-    <!-- HOME -->
-    <!-- ===================================================== -->
+        <!-- =====================================================
+             HOME
+        ====================================================== -->
 
-    <section id="homePage"
-             class="page active">
+        <section
+            id="homePage"
+            class="page active"
+            aria-labelledby="homeTitle"
+        >
 
-        <div class="hero">
+            <div class="hero">
 
-            <div class="heroIcon">
-                🌬️
+                <div
+                    class="heroIcon"
+                    aria-hidden="true"
+                >
+                    🌬️
+                </div>
+
+                <h1 id="homeTitle">
+                    ANEMOS
+                </h1>
+
+                <p class="heroSubtitle">
+                    Laboratorio del respiro
+                </p>
+
             </div>
 
-            <h1>
-                ANEMOS
-            </h1>
+            <nav
+                class="homeButtons"
+                aria-label="Menu principale"
+            >
 
-            <h2>
-                Laboratorio del respiro
-            </h2>
+                <button
+                    id="guidedButton"
+                    class="mainButton"
+                    type="button"
+                >
+                    Respirazione guidata
+                </button>
 
-        </div>
+                <button
+                    id="builderButton"
+                    class="mainButton"
+                    type="button"
+                >
+                    Crea respirazione
+                </button>
 
-        <div class="homeButtons">
+                <button
+                    id="libraryButton"
+                    class="mainButton"
+                    type="button"
+                >
+                    Libreria
+                </button>
 
-            <button id="guidedButton"
-                    class="mainButton">
+                <button
+                    id="learnButton"
+                    class="mainButton"
+                    type="button"
+                >
+                    Impara
+                </button>
 
-                Respirazione guidata
+                <button
+                    id="settingsButton"
+                    class="mainButton"
+                    type="button"
+                >
+                    Impostazioni
+                </button>
 
-            </button>
+            </nav>
 
-            <button id="builderButton"
-                    class="mainButton">
+        </section>
 
-                Crea respirazione
 
-            </button>
+        <!-- =====================================================
+             CREA RESPIRAZIONE
+        ====================================================== -->
 
-            <button id="libraryButton"
-                    class="mainButton">
+        <section
+            id="builderPage"
+            class="page"
+            aria-labelledby="builderTitle"
+        >
 
-                Libreria
+            <header class="pageHeader">
 
-            </button>
+                <button
+                    class="backButton"
+                    type="button"
+                    data-go-home
+                    aria-label="Torna alla Home"
+                >
+                    ←
+                </button>
 
-            <button id="learnButton"
-                    class="mainButton">
+                <div>
 
-                Impara
+                    <p class="pageEyebrow">
+                        ANEMOS 3.0
+                    </p>
 
-            </button>
+                    <h2 id="builderTitle">
+                        Crea respirazione
+                    </h2>
 
-            <button id="settingsButton"
-                    class="mainButton">
+                </div>
 
-                Impostazioni
+            </header>
 
-            </button>
 
-        </div>
+            <form
+                id="breathBuilderForm"
+                novalidate
+            >
 
-    </section>
+                <!-- Nome -->
 
-    <!-- ===================================================== -->
-    <!-- BUILDER -->
-    <!-- ===================================================== -->
+                <section class="builderCard">
 
-    <section id="builderPage"
-             class="page">
+                    <label
+                        class="fieldLabel"
+                        for="breathName"
+                    >
+                        Nome della respirazione
+                    </label>
 
-    </section>
+                    <input
+                        id="breathName"
+                        name="breathName"
+                        class="textInput"
+                        type="text"
+                        maxlength="80"
+                        placeholder="Es. Respiro di centratura"
+                        autocomplete="off"
+                    >
 
-    <!-- ===================================================== -->
-    <!-- GUIDED -->
-    <!-- ===================================================== -->
+                </section>
 
-    <section id="guidedPage"
-             class="page">
 
-    </section>
+                <!-- Organizzazione -->
 
-    <!-- ===================================================== -->
-    <!-- LIBRARY -->
-    <!-- ===================================================== -->
+                <section class="builderCard">
 
-    <section id="libraryPage"
-             class="page">
+                    <div class="sectionHeading">
 
-    </section>
+                        <div>
 
-    <!-- ===================================================== -->
-    <!-- LEARN -->
-    <!-- ===================================================== -->
+                            <p class="sectionNumber">
+                                1
+                            </p>
 
-    <section id="learnPage"
-             class="page">
+                            <h3>
+                                Organizzazione
+                            </h3>
 
-    </section>
+                        </div>
 
-    <!-- ===================================================== -->
-    <!-- SETTINGS -->
-    <!-- ===================================================== -->
+                        <p class="sectionDescription">
+                            Scegli come collaborano i tre settori respiratori.
+                        </p>
 
-    <section id="settingsPage"
-             class="page">
+                    </div>
 
-    </section>
+                    <div
+                        class="choiceGrid organizationChoice"
+                        role="radiogroup"
+                        aria-label="Organizzazione respiratoria"
+                    >
 
-</div>
+                        <label class="choiceCard">
 
-<script type="module"
-src="js/app.js"></script>
+                            <input
+                                type="radio"
+                                name="organization"
+                                value="simultaneous"
+                                checked
+                            >
+
+                            <span class="choiceCardContent">
+
+                                <strong>
+                                    Simultanea
+                                </strong>
+
+                                <small>
+                                    I settori selezionati si muovono insieme.
+                                </small>
+
+                            </span>
+
+                        </label>
+
+                        <label class="choiceCard">
+
+                            <input
+                                type="radio"
+                                name="organization"
+                                value="sequential"
+                            >
+
+                            <span class="choiceCardContent">
+
+                                <strong>
+                                    Sequenziale
+                                </strong>
+
+                                <small>
+                                    I settori sono organizzati in passaggi.
+                                </small>
+
+                            </span>
+
+                        </label>
+
+                    </div>
+
+                </section>
+
+
+                <!-- =================================================
+                     MODALITÀ SIMULTANEA
+                ================================================== -->
+
+                <div id="simultaneousEditor">
+
+                    <!-- Settori e volumi -->
+
+                    <section class="builderCard">
+
+                        <div class="sectionHeading">
+
+                            <div>
+
+                                <p class="sectionNumber">
+                                    2
+                                </p>
+
+                                <h3>
+                                    Settori e volumi
+                                </h3>
+
+                            </div>
+
+                            <p class="sectionDescription">
+                                Ogni settore può avere un volume diverso,
+                                pur muovendosi contemporaneamente agli altri.
+                            </p>
+
+                        </div>
+
+
+                        <!-- Addome -->
+
+                        <article
+                            class="sectorCard"
+                            data-sector="abdomen"
+                        >
+
+                            <div class="sectorHeader">
+
+                                <label class="sectorToggle">
+
+                                    <input
+                                        type="checkbox"
+                                        name="simultaneousSectors"
+                                        value="abdomen"
+                                        checked
+                                    >
+
+                                    <span>
+                                        Addome
+                                    </span>
+
+                                </label>
+
+                            </div>
+
+                            <fieldset class="volumeOptions">
+
+                                <legend>
+                                    Volume
+                                </legend>
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="simultaneousAbdomenVolume"
+                                        value="reduced"
+                                    >
+
+                                    <span>
+                                        Ridotto
+                                    </span>
+
+                                </label>
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="simultaneousAbdomenVolume"
+                                        value="natural"
+                                        checked
+                                    >
+
+                                    <span>
+                                        Naturale
+                                    </span>
+
+                                </label>
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="simultaneousAbdomenVolume"
+                                        value="complete"
+                                    >
+
+                                    <span>
+                                        Completo
+                                    </span>
+
+                                </label>
+
+                            </fieldset>
+
+                        </article>
+
+
+                        <!-- Torace inferiore -->
+
+                        <article
+                            class="sectorCard"
+                            data-sector="lowerChest"
+                        >
+
+                            <div class="sectorHeader">
+
+                                <label class="sectorToggle">
+
+                                    <input
+                                        type="checkbox"
+                                        name="simultaneousSectors"
+                                        value="lowerChest"
+                                        checked
+                                    >
+
+                                    <span>
+                                        Torace inferiore
+                                    </span>
+
+                                </label>
+
+                            </div>
+
+                            <fieldset class="volumeOptions">
+
+                                <legend>
+                                    Volume
+                                </legend>
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="simultaneousLowerChestVolume"
+                                        value="reduced"
+                                    >
+
+                                    <span>
+                                        Ridotto
+                                    </span>
+
+                                </label>
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="simultaneousLowerChestVolume"
+                                        value="natural"
+                                        checked
+                                    >
+
+                                    <span>
+                                        Naturale
+                                    </span>
+
+                                </label>
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="simultaneousLowerChestVolume"
+                                        value="complete"
+                                    >
+
+                                    <span>
+                                        Completo
+                                    </span>
+
+                                </label>
+
+                            </fieldset>
+
+                        </article>
+
+
+                        <!-- Torace superiore -->
+
+                        <article
+                            class="sectorCard"
+                            data-sector="upperChest"
+                        >
+
+                            <div class="sectorHeader">
+
+                                <label class="sectorToggle">
+
+                                    <input
+                                        type="checkbox"
+                                        name="simultaneousSectors"
+                                        value="upperChest"
+                                        checked
+                                    >
+
+                                    <span>
+                                        Torace superiore
+                                    </span>
+
+                                </label>
+
+                            </div>
+
+                            <fieldset class="volumeOptions">
+
+                                <legend>
+                                    Volume
+                                </legend>
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="simultaneousUpperChestVolume"
+                                        value="reduced"
+                                        checked
+                                    >
+
+                                    <span>
+                                        Ridotto
+                                    </span>
+
+                                </label>
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="simultaneousUpperChestVolume"
+                                        value="natural"
+                                    >
+
+                                    <span>
+                                        Naturale
+                                    </span>
+
+                                </label>
+
+                                <label>
+
+                                    <input
+                                        type="radio"
+                                        name="simultaneousUpperChestVolume"
+                                        value="complete"
+                                    >
+
+                                    <span>
+                                        Completo
+                                    </span>
+
+                                </label>
+
+                            </fieldset>
+
+                        </article>
+
+                    </section>
+
+
+                    <!-- Parametri comuni IN ed ES -->
+
+                    <section class="builderCard">
+
+                        <div class="sectionHeading">
+
+                            <div>
+
+                                <p class="sectionNumber">
+                                    3
+                                </p>
+
+                                <h3>
+                                    Parametri comuni
+                                </h3>
+
+                            </div>
+
+                            <p class="sectionDescription">
+                                Percorso e tempo sono condivisi dai settori,
+                                ma possono essere differenti tra IN ed ES.
+                            </p>
+
+                        </div>
+
+
+                        <div class="phaseGrid">
+
+                            <!-- IN -->
+
+                            <article class="phaseCard phaseIn">
+
+                                <header class="phaseHeader">
+
+                                    <span class="phaseSymbol">
+                                        IN
+                                    </span>
+
+                                    <h4>
+                                        Inspirazione
+                                    </h4>
+
+                                </header>
+
+                                <label
+                                    class="fieldLabel"
+                                    for="simultaneousInPath"
+                                >
+                                    Percorso
+                                </label>
+
+                                <select
+                                    id="simultaneousInPath"
+                                    name="simultaneousInPath"
+                                    class="selectInput"
+                                >
+
+                                    <option value="nose">
+                                        Naso
+                                    </option>
+
+                                    <option value="mouth">
+                                        Bocca
+                                    </option>
+
+                                    <option value="noseMouth">
+                                        Naso e bocca
+                                    </option>
+
+                                </select>
+
+                                <label
+                                    class="fieldLabel"
+                                    for="simultaneousInTime"
+                                >
+                                    Tempo
+                                </label>
+
+                                <div class="timeControl">
+
+                                    <button
+                                        type="button"
+                                        class="stepButton"
+                                        data-time-target="simultaneousInTime"
+                                        data-step="-0.5"
+                                        aria-label="Riduci tempo inspiratorio"
+                                    >
+                                        −
+                                    </button>
+
+                                    <input
+                                        id="simultaneousInTime"
+                                        name="simultaneousInTime"
+                                        class="timeInput"
+                                        type="number"
+                                        min="0.5"
+                                        max="60"
+                                        step="0.5"
+                                        value="4"
+                                        inputmode="decimal"
+                                    >
+
+                                    <span class="timeUnit">
+                                        s
+                                    </span>
+
+                                    <button
+                                        type="button"
+                                        class="stepButton"
+                                        data-time-target="simultaneousInTime"
+                                        data-step="0.5"
+                                        aria-label="Aumenta tempo inspiratorio"
+                                    >
+                                        +
+                                    </button>
+
+                                </div>
+
+                            </article>
+
+
+                            <!-- ES -->
+
+                            <article class="phaseCard phaseOut">
+
+                                <header class="phaseHeader">
+
+                                    <span class="phaseSymbol">
+                                        ES
+                                    </span>
+
+                                    <h4>
+                                        Espirazione
+                                    </h4>
+
+                                </header>
+
+                                <label
+                                    class="fieldLabel"
+                                    for="simultaneousOutPath"
+                                >
+                                    Percorso
+                                </label>
+
+                                <select
+                                    id="simultaneousOutPath"
+                                    name="simultaneousOutPath"
+                                    class="selectInput"
+                                >
+
+                                    <option value="nose">
+                                        Naso
+                                    </option>
+
+                                    <option value="mouth">
+                                        Bocca
+                                    </option>
+
+                                    <option value="noseMouth">
+                                        Naso e bocca
+                                    </option>
+
+                                </select>
+
+                                <label
+                                    class="fieldLabel"
+                                    for="simultaneousOutTime"
+                                >
+                                    Tempo
+                                </label>
+
+                                <div class="timeControl">
+
+                                    <button
+                                        type="button"
+                                        class="stepButton"
+                                        data-time-target="simultaneousOutTime"
+                                        data-step="-0.5"
+                                        aria-label="Riduci tempo espiratorio"
+                                    >
+                                        −
+                                    </button>
+
+                                    <input
+                                        id="simultaneousOutTime"
+                                        name="simultaneousOutTime"
+                                        class="timeInput"
+                                        type="number"
+                                        min="0.5"
+                                        max="60"
+                                        step="0.5"
+                                        value="6"
+                                        inputmode="decimal"
+                                    >
+
+                                    <span class="timeUnit">
+                                        s
+                                    </span>
+
+                                    <button
+                                        type="button"
+                                        class="stepButton"
+                                        data-time-target="simultaneousOutTime"
+                                        data-step="0.5"
+                                        aria-label="Aumenta tempo espiratorio"
+                                    >
+                                        +
+                                    </button>
+
+                                </div>
+
+                            </article>
+
+                        </div>
+
+                    </section>
+
+                </div>
+
+
+                <!-- =================================================
+                     MODALITÀ SEQUENZIALE
+                ================================================== -->
+
+                <div
+                    id="sequentialEditor"
+                    hidden
+                >
+
+                    <section class="builderCard">
+
+                        <div class="sectionHeading">
+
+                            <div>
+
+                                <p class="sectionNumber">
+                                    2
+                                </p>
+
+                                <h3>
+                                    Sequenza inspiratoria
+                                </h3>
+
+                            </div>
+
+                            <p class="sectionDescription">
+                                Ogni passaggio può contenere uno o due settori
+                                simultanei. Volume, percorso e tempo restano
+                                indipendenti.
+                            </p>
+
+                        </div>
+
+                        <div
+                            id="inSequenceSteps"
+                            class="sequenceSteps"
+                            aria-live="polite"
+                        >
+                        </div>
+
+                        <button
+                            id="addInStepButton"
+                            class="secondaryButton"
+                            type="button"
+                        >
+                            + Aggiungi passaggio IN
+                        </button>
+
+                    </section>
+
+
+                    <section class="builderCard">
+
+                        <div class="sectionHeading">
+
+                            <div>
+
+                                <p class="sectionNumber">
+                                    3
+                                </p>
+
+                                <h3>
+                                    Sequenza espiratoria
+                                </h3>
+
+                            </div>
+
+                            <p class="sectionDescription">
+                                L’espirazione può avere ordine e parametri
+                                completamente diversi dall’inspirazione.
+                            </p>
+
+                        </div>
+
+                        <div
+                            id="outSequenceSteps"
+                            class="sequenceSteps"
+                            aria-live="polite"
+                        >
+                        </div>
+
+                        <button
+                            id="addOutStepButton"
+                            class="secondaryButton"
+                            type="button"
+                        >
+                            + Aggiungi passaggio ES
+                        </button>
+
+                    </section>
+
+                </div>
+
+
+                <!-- Pause -->
+
+                <section class="builderCard">
+
+                    <div class="sectionHeading">
+
+                        <div>
+
+                            <h3>
+                                Pause
+                            </h3>
+
+                        </div>
+
+                        <p class="sectionDescription">
+                            Le pause sono facoltative.
+                        </p>
+
+                    </div>
+
+                    <div class="pauseGrid">
+
+                        <label class="pauseField">
+
+                            <span>
+                                Dopo IN
+                            </span>
+
+                            <div class="compactTime">
+
+                                <input
+                                    id="postInPause"
+                                    name="postInPause"
+                                    type="number"
+                                    min="0"
+                                    max="60"
+                                    step="0.5"
+                                    value="0"
+                                    inputmode="decimal"
+                                >
+
+                                <span>
+                                    s
+                                </span>
+
+                            </div>
+
+                        </label>
+
+                        <label class="pauseField">
+
+                            <span>
+                                Dopo ES
+                            </span>
+
+                            <div class="compactTime">
+
+                                <input
+                                    id="postOutPause"
+                                    name="postOutPause"
+                                    type="number"
+                                    min="0"
+                                    max="60"
+                                    step="0.5"
+                                    value="0"
+                                    inputmode="decimal"
+                                >
+
+                                <span>
+                                    s
+                                </span>
+
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Motore di coerenza -->
+
+                <section class="builderCard coherenceCard">
+
+                    <div class="sectionHeading">
+
+                        <div>
+
+                            <h3>
+                                Motore di coerenza
+                            </h3>
+
+                        </div>
+
+                        <p class="sectionDescription">
+                            Valuta la respirazione senza impedirti di crearla.
+                        </p>
+
+                    </div>
+
+                    <div
+                        id="coherenceSummary"
+                        class="coherenceSummary"
+                    >
+
+                        <div class="coherenceItem">
+
+                            <span
+                                class="coherenceIndicator neutral"
+                                aria-hidden="true"
+                            >
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Coerenza fisiologica
+                                </strong>
+
+                                <p id="physiologicalCoherenceText">
+                                    In attesa della configurazione.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="coherenceItem">
+
+                            <span
+                                class="coherenceIndicator neutral"
+                                aria-hidden="true"
+                            >
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Coerenza della finalità
+                                </strong>
+
+                                <p id="purposeCoherenceText">
+                                    La finalità sarà configurata in seguito.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="coherenceItem">
+
+                            <span
+                                class="coherenceIndicator neutral"
+                                aria-hidden="true"
+                            >
+                            </span>
+
+                            <div>
+
+                                <strong>
+                                    Osservazioni
+                                </strong>
+
+                                <p id="coherenceNotesText">
+                                    Nessuna osservazione disponibile.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- Azioni -->
+
+                <div class="builderActions">
+
+                    <button
+                        id="saveBreathButton"
+                        class="primaryAction"
+                        type="submit"
+                    >
+                        Salva respirazione
+                    </button>
+
+                    <button
+                        class="textButton"
+                        type="button"
+                        data-go-home
+                    >
+                        Annulla
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- =====================================================
+             ALTRE PAGINE
+        ====================================================== -->
+
+        <section
+            id="guidedPage"
+            class="page"
+            aria-labelledby="guidedTitle"
+        >
+
+            <header class="pageHeader">
+
+                <button
+                    class="backButton"
+                    type="button"
+                    data-go-home
+                    aria-label="Torna alla Home"
+                >
+                    ←
+                </button>
+
+                <h2 id="guidedTitle">
+                    Respirazione guidata
+                </h2>
+
+            </header>
+
+        </section>
+
+
+        <section
+            id="libraryPage"
+            class="page"
+            aria-labelledby="libraryTitle"
+        >
+
+            <header class="pageHeader">
+
+                <button
+                    class="backButton"
+                    type="button"
+                    data-go-home
+                    aria-label="Torna alla Home"
+                >
+                    ←
+                </button>
+
+                <h2 id="libraryTitle">
+                    Libreria
+                </h2>
+
+            </header>
+
+        </section>
+
+
+        <section
+            id="learnPage"
+            class="page"
+            aria-labelledby="learnTitle"
+        >
+
+            <header class="pageHeader">
+
+                <button
+                    class="backButton"
+                    type="button"
+                    data-go-home
+                    aria-label="Torna alla Home"
+                >
+                    ←
+                </button>
+
+                <h2 id="learnTitle">
+                    Impara
+                </h2>
+
+            </header>
+
+        </section>
+
+
+        <section
+            id="settingsPage"
+            class="page"
+            aria-labelledby="settingsTitle"
+        >
+
+            <header class="pageHeader">
+
+                <button
+                    class="backButton"
+                    type="button"
+                    data-go-home
+                    aria-label="Torna alla Home"
+                >
+                    ←
+                </button>
+
+                <h2 id="settingsTitle">
+                    Impostazioni
+                </h2>
+
+            </header>
+
+        </section>
+
+    </main>
+
+    <script
+        type="module"
+        src="js/app.js"
+    ></script>
 
 </body>
 
