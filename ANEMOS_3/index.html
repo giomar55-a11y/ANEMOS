@@ -1,1161 +1,1420 @@
 <!DOCTYPE html>
 <html lang="it">
-
 <head>
     <meta charset="UTF-8">
 
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0"
+        content="width=device-width, initial-scale=1, viewport-fit=cover"
     >
 
     <meta
-        name="description"
-        content="ANEMOS 3.0 – Laboratorio del respiro"
+        name="theme-color"
+        content="#f3f1eb"
     >
 
     <title>ANEMOS 3.0</title>
 
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
+    <style>
+        :root {
+            --background: #f3f1eb;
+            --surface: #ffffff;
+            --surface-soft: #e9e7df;
+            --text: #202723;
+            --text-soft: #68706b;
+            --line: #d8d7d0;
+
+            --in: #79b9d1;
+            --in-soft: #e3f2f7;
+
+            --es: #e0a15f;
+            --es-soft: #faecdc;
+
+            --dark: #26342e;
+            --danger: #a34444;
+
+            --radius-large: 24px;
+            --radius-medium: 17px;
+            --radius-small: 12px;
+
+            --shadow:
+                0 14px 34px rgba(28, 38, 33, 0.10);
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html,
+        body {
+            margin: 0;
+            min-height: 100%;
+            background: var(--background);
+            color: var(--text);
+            font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+        }
+
+        button,
+        input {
+            font: inherit;
+        }
+
+        button {
+            color: inherit;
+        }
+
+        .app {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100dvh;
+            padding:
+                max(18px, env(safe-area-inset-top))
+                16px
+                max(22px, env(safe-area-inset-bottom));
+        }
+
+        /* HEADER */
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 46px;
+            margin-bottom: 14px;
+        }
+
+        .brand-block {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .brand {
+            margin: 0;
+            font-size: 24px;
+            font-weight: 760;
+            letter-spacing: 0.08em;
+        }
+
+        .version {
+            font-size: 11px;
+            color: var(--text-soft);
+            letter-spacing: 0.12em;
+        }
+
+        .icon-button {
+            width: 42px;
+            height: 42px;
+            border: 0;
+            border-radius: 50%;
+            background: var(--surface);
+            box-shadow: 0 5px 16px rgba(28, 38, 33, 0.07);
+            cursor: pointer;
+        }
+
+        /* NOME RESPIRAZIONE */
+
+        .breath-name {
+            margin-bottom: 14px;
+        }
+
+        .breath-name label {
+            display: block;
+            margin: 0 0 6px 4px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--text-soft);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .breath-name input {
+            width: 100%;
+            height: 48px;
+            padding: 0 15px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-medium);
+            background: rgba(255, 255, 255, 0.72);
+            color: var(--text);
+            font-size: 16px;
+            outline: none;
+        }
+
+        .breath-name input:focus {
+            border-color: var(--dark);
+            background: var(--surface);
+        }
+
+        /* BUILDER */
+
+        .builder {
+            padding: 15px;
+            border: 1px solid rgba(216, 215, 208, 0.85);
+            border-radius: var(--radius-large);
+            background: rgba(255, 255, 255, 0.62);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(14px);
+        }
+
+        .phase-row {
+            display: grid;
+            grid-template-columns: 44px 1fr 42px;
+            align-items: center;
+            min-height: 66px;
+        }
+
+        .phase-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 13px;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.05em;
+        }
+
+        .phase-label.in {
+            background: var(--in-soft);
+            color: #34758c;
+        }
+
+        .phase-label.es {
+            background: var(--es-soft);
+            color: #985d27;
+        }
+
+        .timeline {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-width: 0;
+            overflow-x: auto;
+            padding: 5px 4px;
+            scrollbar-width: none;
+        }
+
+        .timeline::-webkit-scrollbar {
+            display: none;
+        }
+
+        .anemodromos {
+            position: relative;
+            flex: 0 0 auto;
+            width: 41px;
+            height: 41px;
+            border: 0;
+            border-radius: 50%;
+            background: var(--surface);
+            box-shadow:
+                0 3px 10px rgba(30, 40, 35, 0.10),
+                inset 0 0 0 2px var(--line);
+            font-size: 14px;
+            font-weight: 750;
+            cursor: pointer;
+        }
+
+        .anemodromos.in-active {
+            box-shadow:
+                0 4px 12px rgba(61, 139, 168, 0.18),
+                inset 0 0 0 3px var(--in);
+        }
+
+        .anemodromos.es-active {
+            box-shadow:
+                0 4px 12px rgba(183, 111, 49, 0.18),
+                inset 0 0 0 3px var(--es);
+        }
+
+        .anemodromos small {
+            position: absolute;
+            left: 50%;
+            bottom: -13px;
+            transform: translateX(-50%);
+            font-size: 9px;
+            font-weight: 650;
+            color: var(--text-soft);
+            white-space: nowrap;
+        }
+
+        .add-button {
+            width: 39px;
+            height: 39px;
+            border: 1px dashed #9ca29e;
+            border-radius: 50%;
+            background: transparent;
+            color: var(--text-soft);
+            font-size: 23px;
+            line-height: 1;
+            cursor: pointer;
+        }
+
+        .phase-summary {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 2px;
+            font-size: 11px;
+            color: var(--text-soft);
+        }
+
+        .phase-summary strong {
+            color: var(--text);
+            font-size: 15px;
+        }
+
+        .divider {
+            height: 1px;
+            margin: 1px 0;
+            background: var(--line);
+        }
+
+        /* PAUSE */
+
+        .pause-row {
+            display: grid;
+            grid-template-columns: 44px 1fr 58px;
+            align-items: center;
+            min-height: 51px;
+        }
+
+        .pause-symbol {
+            width: 38px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-soft);
+        }
+
+        .pause-label {
+            font-size: 13px;
+            color: var(--text-soft);
+        }
+
+        .pause-control {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 34px;
+            border-radius: 11px;
+            background: var(--surface-soft);
+            font-size: 13px;
+            font-weight: 750;
+        }
+
+        /* ANALISI */
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-top: 13px;
+            padding: 11px 13px;
+            border-radius: 15px;
+            background: #eef3ef;
+        }
+
+        .status-main {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-width: 0;
+        }
+
+        .status-dot {
+            flex: 0 0 auto;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #6ea37c;
+            box-shadow: 0 0 0 5px rgba(110, 163, 124, 0.13);
+        }
+
+        .status-text {
+            min-width: 0;
+        }
+
+        .status-text strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .status-text span {
+            display: block;
+            margin-top: 1px;
+            overflow: hidden;
+            color: var(--text-soft);
+            font-size: 11px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .status-score {
+            font-size: 13px;
+            font-weight: 800;
+            color: #4d7657;
+        }
+
+        /* AZIONI */
+
+        .primary-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .action-button {
+            min-height: 52px;
+            border: 0;
+            border-radius: var(--radius-medium);
+            font-size: 14px;
+            font-weight: 750;
+            cursor: pointer;
+        }
+
+        .action-button.preview {
+            background: var(--dark);
+            color: white;
+        }
+
+        .action-button.save {
+            background: var(--surface);
+            box-shadow: 0 5px 16px rgba(28, 38, 33, 0.08);
+        }
+
+        .secondary-actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 9px;
+        }
+
+        .secondary-button {
+            min-height: 47px;
+            padding: 7px 5px;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.44);
+            font-size: 11px;
+            font-weight: 690;
+            cursor: pointer;
+        }
+
+        .secondary-button span {
+            display: block;
+            margin-bottom: 3px;
+            font-size: 17px;
+        }
+
+        /* OVERLAY E BOTTOM SHEET */
+
+        .overlay {
+            position: fixed;
+            z-index: 20;
+            inset: 0;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-top: 30px;
+            background: rgba(20, 27, 24, 0.38);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 180ms ease;
+        }
+
+        .overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .sheet {
+            width: 100%;
+            max-width: 480px;
+            max-height: 88dvh;
+            overflow-y: auto;
+            padding:
+                10px
+                17px
+                max(22px, env(safe-area-inset-bottom));
+            border-radius: 27px 27px 0 0;
+            background: var(--background);
+            box-shadow: 0 -16px 40px rgba(20, 27, 24, 0.20);
+            transform: translateY(105%);
+            transition: transform 220ms ease;
+        }
+
+        .overlay.open .sheet {
+            transform: translateY(0);
+        }
+
+        .sheet-handle {
+            width: 44px;
+            height: 5px;
+            margin: 0 auto 13px;
+            border-radius: 999px;
+            background: #babdb9;
+        }
+
+        .sheet-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .sheet-title {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .sheet-subtitle {
+            margin: 3px 0 0;
+            color: var(--text-soft);
+            font-size: 12px;
+        }
+
+        .close-button {
+            width: 38px;
+            height: 38px;
+            border: 0;
+            border-radius: 50%;
+            background: var(--surface);
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .editor-card {
+            margin-bottom: 11px;
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-medium);
+            background: rgba(255, 255, 255, 0.70);
+        }
+
+        .editor-label {
+            display: block;
+            margin-bottom: 9px;
+            font-size: 11px;
+            font-weight: 800;
+            color: var(--text-soft);
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+        }
+
+        .segmented {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+            padding: 4px;
+            border-radius: 13px;
+            background: var(--surface-soft);
+        }
+
+        .segment {
+            min-height: 38px;
+            border: 0;
+            border-radius: 10px;
+            background: transparent;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .segment.selected {
+            background: var(--surface);
+            box-shadow: 0 2px 8px rgba(28, 38, 33, 0.10);
+        }
+
+        .duration-control {
+            display: grid;
+            grid-template-columns: 46px 1fr 46px;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .duration-button {
+            height: 42px;
+            border: 0;
+            border-radius: 12px;
+            background: var(--surface-soft);
+            font-size: 21px;
+            cursor: pointer;
+        }
+
+        .duration-value {
+            text-align: center;
+            font-size: 22px;
+            font-weight: 800;
+        }
+
+        .sector {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .sector:last-child {
+            border-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .sector:first-child {
+            padding-top: 0;
+        }
+
+        .sector-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 9px;
+        }
+
+        .sector-toggle {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .sector-toggle input {
+            width: 19px;
+            height: 19px;
+            accent-color: var(--dark);
+        }
+
+        .volume-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 5px;
+        }
+
+        .volume-button {
+            min-height: 35px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: transparent;
+            font-size: 11px;
+            font-weight: 680;
+            cursor: pointer;
+        }
+
+        .volume-button.selected {
+            border-color: var(--dark);
+            background: var(--dark);
+            color: white;
+        }
+
+        .sheet-actions {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 9px;
+            margin-top: 14px;
+        }
+
+        .delete-button,
+        .confirm-button {
+            min-height: 50px;
+            border: 0;
+            border-radius: 15px;
+            font-weight: 760;
+            cursor: pointer;
+        }
+
+        .delete-button {
+            background: #f1dddd;
+            color: var(--danger);
+        }
+
+        .confirm-button {
+            background: var(--dark);
+            color: white;
+        }
+
+        /* TELEFONI MOLTO PICCOLI */
+
+        @media (max-height: 720px) {
+            .app {
+                padding-top: 10px;
+            }
+
+            .topbar {
+                min-height: 39px;
+                margin-bottom: 8px;
+            }
+
+            .breath-name {
+                margin-bottom: 9px;
+            }
+
+            .breath-name input {
+                height: 43px;
+            }
+
+            .builder {
+                padding: 11px 13px;
+            }
+
+            .phase-row {
+                min-height: 59px;
+            }
+
+            .pause-row {
+                min-height: 44px;
+            }
+
+            .primary-actions {
+                margin-top: 10px;
+            }
+
+            .action-button {
+                min-height: 47px;
+            }
+
+            .secondary-button {
+                min-height: 42px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <main id="app">
+    <main class="app">
 
-        <!-- =====================================================
-             HOME
-        ====================================================== -->
+        <header class="topbar">
+            <div class="brand-block">
+                <h1 class="brand">ANEMOS</h1>
+                <span class="version">VERSIONE 3.0</span>
+            </div>
 
-        <section
-            id="homePage"
-            class="page active"
-            aria-labelledby="homeTitle"
-        >
+            <button
+                class="icon-button"
+                type="button"
+                aria-label="Menu"
+            >
+                ⋯
+            </button>
+        </header>
 
-            <div class="hero">
+        <section class="breath-name">
+            <label for="breathName">
+                Nome della respirazione
+            </label>
 
-                <div
-                    class="heroIcon"
-                    aria-hidden="true"
-                >
-                    🌬️
+            <input
+                id="breathName"
+                type="text"
+                value="Respiro diaframmatico"
+                autocomplete="off"
+            >
+        </section>
+
+        <section class="builder">
+
+            <div class="phase-row">
+
+                <div class="phase-label in">
+                    IN
                 </div>
 
-                <h1 id="homeTitle">
-                    ANEMOS
-                </h1>
+                <div
+                    class="timeline"
+                    id="inhaleTimeline"
+                >
+                    <button
+                        class="anemodromos in-active"
+                        type="button"
+                        data-phase="IN"
+                        data-number="1"
+                    >
+                        1
+                        <small>4 s</small>
+                    </button>
 
-                <p class="heroSubtitle">
-                    Laboratorio del respiro
-                </p>
+                    <button
+                        class="add-button"
+                        type="button"
+                        data-add-phase="IN"
+                        aria-label="Aggiungi Anemodromos inspiratorio"
+                    >
+                        +
+                    </button>
+                </div>
+
+                <div class="phase-summary">
+                    <strong id="inhaleTotal">4 s</strong>
+                    <span>totale</span>
+                </div>
 
             </div>
 
-            <nav
-                class="homeButtons"
-                aria-label="Menu principale"
-            >
+            <div class="divider"></div>
 
-                <button
-                    id="guidedButton"
-                    class="mainButton"
-                    type="button"
-                >
-                    Respirazione guidata
-                </button>
+            <div class="pause-row">
 
-                <button
-                    id="builderButton"
-                    class="mainButton"
-                    type="button"
-                >
-                    Crea respirazione
-                </button>
-
-                <button
-                    id="libraryButton"
-                    class="mainButton"
-                    type="button"
-                >
-                    Libreria
-                </button>
-
-                <button
-                    id="learnButton"
-                    class="mainButton"
-                    type="button"
-                >
-                    Impara
-                </button>
-
-                <button
-                    id="settingsButton"
-                    class="mainButton"
-                    type="button"
-                >
-                    Impostazioni
-                </button>
-
-            </nav>
-
-        </section>
-
-
-        <!-- =====================================================
-             CREA RESPIRAZIONE
-        ====================================================== -->
-
-        <section
-            id="builderPage"
-            class="page"
-            aria-labelledby="builderTitle"
-        >
-
-            <header class="pageHeader">
-
-                <button
-                    class="backButton"
-                    type="button"
-                    data-go-home
-                    aria-label="Torna alla Home"
-                >
-                    ←
-                </button>
-
-                <div>
-
-                    <p class="pageEyebrow">
-                        ANEMOS 3.0
-                    </p>
-
-                    <h2 id="builderTitle">
-                        Crea respirazione
-                    </h2>
-
+                <div class="pause-symbol">
+                    PI
                 </div>
 
-            </header>
-
-
-            <form
-                id="breathBuilderForm"
-                novalidate
-            >
-
-                <!-- Nome -->
-
-                <section class="builderCard">
-
-                    <label
-                        class="fieldLabel"
-                        for="breathName"
-                    >
-                        Nome della respirazione
-                    </label>
-
-                    <input
-                        id="breathName"
-                        name="breathName"
-                        class="textInput"
-                        type="text"
-                        maxlength="80"
-                        placeholder="Es. Respiro di centratura"
-                        autocomplete="off"
-                    >
-
-                </section>
-
-
-                <!-- Organizzazione -->
-
-                <section class="builderCard">
-
-                    <div class="sectionHeading">
-
-                        <div>
-
-                            <p class="sectionNumber">
-                                1
-                            </p>
-
-                            <h3>
-                                Organizzazione
-                            </h3>
-
-                        </div>
-
-                        <p class="sectionDescription">
-                            Scegli come collaborano i tre settori respiratori.
-                        </p>
-
-                    </div>
-
-                    <div
-                        class="choiceGrid organizationChoice"
-                        role="radiogroup"
-                        aria-label="Organizzazione respiratoria"
-                    >
-
-                        <label class="choiceCard">
-
-                            <input
-                                type="radio"
-                                name="organization"
-                                value="simultaneous"
-                                checked
-                            >
-
-                            <span class="choiceCardContent">
-
-                                <strong>
-                                    Simultanea
-                                </strong>
-
-                                <small>
-                                    I settori selezionati si muovono insieme.
-                                </small>
-
-                            </span>
-
-                        </label>
-
-                        <label class="choiceCard">
-
-                            <input
-                                type="radio"
-                                name="organization"
-                                value="sequential"
-                            >
-
-                            <span class="choiceCardContent">
-
-                                <strong>
-                                    Sequenziale
-                                </strong>
-
-                                <small>
-                                    I settori sono organizzati in passaggi.
-                                </small>
-
-                            </span>
-
-                        </label>
-
-                    </div>
-
-                </section>
-
-
-                <!-- =================================================
-                     MODALITÀ SIMULTANEA
-                ================================================== -->
-
-                <div id="simultaneousEditor">
-
-                    <!-- Settori e volumi -->
-
-                    <section class="builderCard">
-
-                        <div class="sectionHeading">
-
-                            <div>
-
-                                <p class="sectionNumber">
-                                    2
-                                </p>
-
-                                <h3>
-                                    Settori e volumi
-                                </h3>
-
-                            </div>
-
-                            <p class="sectionDescription">
-                                Ogni settore può avere un volume diverso,
-                                pur muovendosi contemporaneamente agli altri.
-                            </p>
-
-                        </div>
-
-
-                        <!-- Addome -->
-
-                        <article
-                            class="sectorCard"
-                            data-sector="abdomen"
-                        >
-
-                            <div class="sectorHeader">
-
-                                <label class="sectorToggle">
-
-                                    <input
-                                        type="checkbox"
-                                        name="simultaneousSectors"
-                                        value="abdomen"
-                                        checked
-                                    >
-
-                                    <span>
-                                        Addome
-                                    </span>
-
-                                </label>
-
-                            </div>
-
-                            <fieldset class="volumeOptions">
-
-                                <legend>
-                                    Volume
-                                </legend>
-
-                                <label>
-
-                                    <input
-                                        type="radio"
-                                        name="simultaneousAbdomenVolume"
-                                        value="reduced"
-                                    >
-
-                                    <span>
-                                        Ridotto
-                                    </span>
-
-                                </label>
-
-                                <label>
-
-                                    <input
-                                        type="radio"
-                                        name="simultaneousAbdomenVolume"
-                                        value="natural"
-                                        checked
-                                    >
-
-                                    <span>
-                                        Naturale
-                                    </span>
-
-                                </label>
-
-                                <label>
-
-                                    <input
-                                        type="radio"
-                                        name="simultaneousAbdomenVolume"
-                                        value="complete"
-                                    >
-
-                                    <span>
-                                        Completo
-                                    </span>
-
-                                </label>
-
-                            </fieldset>
-
-                        </article>
-
-
-                        <!-- Torace inferiore -->
-
-                        <article
-                            class="sectorCard"
-                            data-sector="lowerChest"
-                        >
-
-                            <div class="sectorHeader">
-
-                                <label class="sectorToggle">
-
-                                    <input
-                                        type="checkbox"
-                                        name="simultaneousSectors"
-                                        value="lowerChest"
-                                        checked
-                                    >
-
-                                    <span>
-                                        Torace inferiore
-                                    </span>
-
-                                </label>
-
-                            </div>
-
-                            <fieldset class="volumeOptions">
-
-                                <legend>
-                                    Volume
-                                </legend>
-
-                                <label>
-
-                                    <input
-                                        type="radio"
-                                        name="simultaneousLowerChestVolume"
-                                        value="reduced"
-                                    >
-
-                                    <span>
-                                        Ridotto
-                                    </span>
-
-                                </label>
-
-                                <label>
-
-                                    <input
-                                        type="radio"
-                                        name="simultaneousLowerChestVolume"
-                                        value="natural"
-                                        checked
-                                    >
-
-                                    <span>
-                                        Naturale
-                                    </span>
-
-                                </label>
-
-                                <label>
-
-                                    <input
-                                        type="radio"
-                                        name="simultaneousLowerChestVolume"
-                                        value="complete"
-                                    >
-
-                                    <span>
-                                        Completo
-                                    </span>
-
-                                </label>
-
-                            </fieldset>
-
-                        </article>
-
-
-                        <!-- Torace superiore -->
-
-                        <article
-                            class="sectorCard"
-                            data-sector="upperChest"
-                        >
-
-                            <div class="sectorHeader">
-
-                                <label class="sectorToggle">
-
-                                    <input
-                                        type="checkbox"
-                                        name="simultaneousSectors"
-                                        value="upperChest"
-                                        checked
-                                    >
-
-                                    <span>
-                                        Torace superiore
-                                    </span>
-
-                                </label>
-
-                            </div>
-
-                            <fieldset class="volumeOptions">
-
-                                <legend>
-                                    Volume
-                                </legend>
-
-                                <label>
-
-                                    <input
-                                        type="radio"
-                                        name="simultaneousUpperChestVolume"
-                                        value="reduced"
-                                        checked
-                                    >
-
-                                    <span>
-                                        Ridotto
-                                    </span>
-
-                                </label>
-
-                                <label>
-
-                                    <input
-                                        type="radio"
-                                        name="simultaneousUpperChestVolume"
-                                        value="natural"
-                                    >
-
-                                    <span>
-                                        Naturale
-                                    </span>
-
-                                </label>
-
-                                <label>
-
-                                    <input
-                                        type="radio"
-                                        name="simultaneousUpperChestVolume"
-                                        value="complete"
-                                    >
-
-                                    <span>
-                                        Completo
-                                    </span>
-
-                                </label>
-
-                            </fieldset>
-
-                        </article>
-
-                    </section>
-
-
-                    <!-- Parametri comuni IN ed ES -->
-
-                    <section class="builderCard">
-
-                        <div class="sectionHeading">
-
-                            <div>
-
-                                <p class="sectionNumber">
-                                    3
-                                </p>
-
-                                <h3>
-                                    Parametri comuni
-                                </h3>
-
-                            </div>
-
-                            <p class="sectionDescription">
-                                Percorso e tempo sono condivisi dai settori,
-                                ma possono essere differenti tra IN ed ES.
-                            </p>
-
-                        </div>
-
-
-                        <div class="phaseGrid">
-
-                            <!-- IN -->
-
-                            <article class="phaseCard phaseIn">
-
-                                <header class="phaseHeader">
-
-                                    <span class="phaseSymbol">
-                                        IN
-                                    </span>
-
-                                    <h4>
-                                        Inspirazione
-                                    </h4>
-
-                                </header>
-
-                                <label
-                                    class="fieldLabel"
-                                    for="simultaneousInPath"
-                                >
-                                    Percorso
-                                </label>
-
-                                <select
-                                    id="simultaneousInPath"
-                                    name="simultaneousInPath"
-                                    class="selectInput"
-                                >
-
-                                    <option value="nose">
-                                        Naso
-                                    </option>
-
-                                    <option value="mouth">
-                                        Bocca
-                                    </option>
-
-                                    <option value="noseMouth">
-                                        Naso e bocca
-                                    </option>
-
-                                </select>
-
-                                <label
-                                    class="fieldLabel"
-                                    for="simultaneousInTime"
-                                >
-                                    Tempo
-                                </label>
-
-                                <div class="timeControl">
-
-                                    <button
-                                        type="button"
-                                        class="stepButton"
-                                        data-time-target="simultaneousInTime"
-                                        data-step="-0.5"
-                                        aria-label="Riduci tempo inspiratorio"
-                                    >
-                                        −
-                                    </button>
-
-                                    <input
-                                        id="simultaneousInTime"
-                                        name="simultaneousInTime"
-                                        class="timeInput"
-                                        type="number"
-                                        min="0.5"
-                                        max="60"
-                                        step="0.5"
-                                        value="4"
-                                        inputmode="decimal"
-                                    >
-
-                                    <span class="timeUnit">
-                                        s
-                                    </span>
-
-                                    <button
-                                        type="button"
-                                        class="stepButton"
-                                        data-time-target="simultaneousInTime"
-                                        data-step="0.5"
-                                        aria-label="Aumenta tempo inspiratorio"
-                                    >
-                                        +
-                                    </button>
-
-                                </div>
-
-                            </article>
-
-
-                            <!-- ES -->
-
-                            <article class="phaseCard phaseOut">
-
-                                <header class="phaseHeader">
-
-                                    <span class="phaseSymbol">
-                                        ES
-                                    </span>
-
-                                    <h4>
-                                        Espirazione
-                                    </h4>
-
-                                </header>
-
-                                <label
-                                    class="fieldLabel"
-                                    for="simultaneousOutPath"
-                                >
-                                    Percorso
-                                </label>
-
-                                <select
-                                    id="simultaneousOutPath"
-                                    name="simultaneousOutPath"
-                                    class="selectInput"
-                                >
-
-                                    <option value="nose">
-                                        Naso
-                                    </option>
-
-                                    <option value="mouth">
-                                        Bocca
-                                    </option>
-
-                                    <option value="noseMouth">
-                                        Naso e bocca
-                                    </option>
-
-                                </select>
-
-                                <label
-                                    class="fieldLabel"
-                                    for="simultaneousOutTime"
-                                >
-                                    Tempo
-                                </label>
-
-                                <div class="timeControl">
-
-                                    <button
-                                        type="button"
-                                        class="stepButton"
-                                        data-time-target="simultaneousOutTime"
-                                        data-step="-0.5"
-                                        aria-label="Riduci tempo espiratorio"
-                                    >
-                                        −
-                                    </button>
-
-                                    <input
-                                        id="simultaneousOutTime"
-                                        name="simultaneousOutTime"
-                                        class="timeInput"
-                                        type="number"
-                                        min="0.5"
-                                        max="60"
-                                        step="0.5"
-                                        value="6"
-                                        inputmode="decimal"
-                                    >
-
-                                    <span class="timeUnit">
-                                        s
-                                    </span>
-
-                                    <button
-                                        type="button"
-                                        class="stepButton"
-                                        data-time-target="simultaneousOutTime"
-                                        data-step="0.5"
-                                        aria-label="Aumenta tempo espiratorio"
-                                    >
-                                        +
-                                    </button>
-
-                                </div>
-
-                            </article>
-
-                        </div>
-
-                    </section>
-
+                <div class="pause-label">
+                    Pausa post-inspiratoria
                 </div>
 
+                <div class="pause-control">
+                    2 s
+                </div>
 
-                <!-- =================================================
-                     MODALITÀ SEQUENZIALE
-                ================================================== -->
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="phase-row">
+
+                <div class="phase-label es">
+                    ES
+                </div>
 
                 <div
-                    id="sequentialEditor"
-                    hidden
+                    class="timeline"
+                    id="exhaleTimeline"
                 >
-
-                    <section class="builderCard">
-
-                        <div class="sectionHeading">
-
-                            <div>
-
-                                <p class="sectionNumber">
-                                    2
-                                </p>
-
-                                <h3>
-                                    Sequenza inspiratoria
-                                </h3>
-
-                            </div>
-
-                            <p class="sectionDescription">
-                                Ogni passaggio può contenere uno o due settori
-                                simultanei. Volume, percorso e tempo restano
-                                indipendenti.
-                            </p>
-
-                        </div>
-
-                        <div
-                            id="inSequenceSteps"
-                            class="sequenceSteps"
-                            aria-live="polite"
-                        >
-                        </div>
-
-                        <button
-                            id="addInStepButton"
-                            class="secondaryButton"
-                            type="button"
-                        >
-                            + Aggiungi passaggio IN
-                        </button>
-
-                    </section>
-
-
-                    <section class="builderCard">
-
-                        <div class="sectionHeading">
-
-                            <div>
-
-                                <p class="sectionNumber">
-                                    3
-                                </p>
-
-                                <h3>
-                                    Sequenza espiratoria
-                                </h3>
-
-                            </div>
-
-                            <p class="sectionDescription">
-                                L’espirazione può avere ordine e parametri
-                                completamente diversi dall’inspirazione.
-                            </p>
-
-                        </div>
-
-                        <div
-                            id="outSequenceSteps"
-                            class="sequenceSteps"
-                            aria-live="polite"
-                        >
-                        </div>
-
-                        <button
-                            id="addOutStepButton"
-                            class="secondaryButton"
-                            type="button"
-                        >
-                            + Aggiungi passaggio ES
-                        </button>
-
-                    </section>
-
-                </div>
-
-
-                <!-- Pause -->
-
-                <section class="builderCard">
-
-                    <div class="sectionHeading">
-
-                        <div>
-
-                            <h3>
-                                Pause
-                            </h3>
-
-                        </div>
-
-                        <p class="sectionDescription">
-                            Le pause sono facoltative.
-                        </p>
-
-                    </div>
-
-                    <div class="pauseGrid">
-
-                        <label class="pauseField">
-
-                            <span>
-                                Dopo IN
-                            </span>
-
-                            <div class="compactTime">
-
-                                <input
-                                    id="postInPause"
-                                    name="postInPause"
-                                    type="number"
-                                    min="0"
-                                    max="60"
-                                    step="0.5"
-                                    value="0"
-                                    inputmode="decimal"
-                                >
-
-                                <span>
-                                    s
-                                </span>
-
-                            </div>
-
-                        </label>
-
-                        <label class="pauseField">
-
-                            <span>
-                                Dopo ES
-                            </span>
-
-                            <div class="compactTime">
-
-                                <input
-                                    id="postOutPause"
-                                    name="postOutPause"
-                                    type="number"
-                                    min="0"
-                                    max="60"
-                                    step="0.5"
-                                    value="0"
-                                    inputmode="decimal"
-                                >
-
-                                <span>
-                                    s
-                                </span>
-
-                            </div>
-
-                        </label>
-
-                    </div>
-
-                </section>
-
-
-                <!-- Motore di coerenza -->
-
-                <section class="builderCard coherenceCard">
-
-                    <div class="sectionHeading">
-
-                        <div>
-
-                            <h3>
-                                Motore di coerenza
-                            </h3>
-
-                        </div>
-
-                        <p class="sectionDescription">
-                            Valuta la respirazione senza impedirti di crearla.
-                        </p>
-
-                    </div>
-
-                    <div
-                        id="coherenceSummary"
-                        class="coherenceSummary"
-                    >
-
-                        <div class="coherenceItem">
-
-                            <span
-                                class="coherenceIndicator neutral"
-                                aria-hidden="true"
-                            >
-                            </span>
-
-                            <div>
-
-                                <strong>
-                                    Coerenza fisiologica
-                                </strong>
-
-                                <p id="physiologicalCoherenceText">
-                                    In attesa della configurazione.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                        <div class="coherenceItem">
-
-                            <span
-                                class="coherenceIndicator neutral"
-                                aria-hidden="true"
-                            >
-                            </span>
-
-                            <div>
-
-                                <strong>
-                                    Coerenza della finalità
-                                </strong>
-
-                                <p id="purposeCoherenceText">
-                                    La finalità sarà configurata in seguito.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                        <div class="coherenceItem">
-
-                            <span
-                                class="coherenceIndicator neutral"
-                                aria-hidden="true"
-                            >
-                            </span>
-
-                            <div>
-
-                                <strong>
-                                    Osservazioni
-                                </strong>
-
-                                <p id="coherenceNotesText">
-                                    Nessuna osservazione disponibile.
-                                </p>
-
-                            </div>
-
-                        </div>
-
-                    </div>
-
-                </section>
-
-
-                <!-- Azioni -->
-
-                <div class="builderActions">
-
                     <button
-                        id="saveBreathButton"
-                        class="primaryAction"
-                        type="submit"
-                    >
-                        Salva respirazione
-                    </button>
-
-                    <button
-                        class="textButton"
+                        class="anemodromos es-active"
                         type="button"
-                        data-go-home
+                        data-phase="ES"
+                        data-number="1"
                     >
-                        Annulla
+                        1
+                        <small>6 s</small>
                     </button>
 
+                    <button
+                        class="add-button"
+                        type="button"
+                        data-add-phase="ES"
+                        aria-label="Aggiungi Anemodromos espiratorio"
+                    >
+                        +
+                    </button>
                 </div>
 
-            </form>
+                <div class="phase-summary">
+                    <strong id="exhaleTotal">6 s</strong>
+                    <span>totale</span>
+                </div>
+
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="pause-row">
+
+                <div class="pause-symbol">
+                    PE
+                </div>
+
+                <div class="pause-label">
+                    Pausa post-espiratoria
+                </div>
+
+                <div class="pause-control">
+                    0 s
+                </div>
+
+            </div>
+
+            <div class="status-bar">
+
+                <div class="status-main">
+                    <span class="status-dot"></span>
+
+                    <div class="status-text">
+                        <strong>Respirazione coerente</strong>
+                        <span>Rapporto IN–ES equilibrato</span>
+                    </div>
+                </div>
+
+                <div class="status-score">
+                    92%
+                </div>
+
+            </div>
 
         </section>
 
+        <section class="primary-actions">
 
-        <!-- =====================================================
-             ALTRE PAGINE
-        ====================================================== -->
+            <button
+                class="action-button preview"
+                type="button"
+            >
+                ▶ Prova
+            </button>
 
-        <section
-            id="guidedPage"
-            class="page"
-            aria-labelledby="guidedTitle"
-        >
-
-            <header class="pageHeader">
-
-                <button
-                    class="backButton"
-                    type="button"
-                    data-go-home
-                    aria-label="Torna alla Home"
-                >
-                    ←
-                </button>
-
-                <h2 id="guidedTitle">
-                    Respirazione guidata
-                </h2>
-
-            </header>
+            <button
+                class="action-button save"
+                type="button"
+            >
+                Salva
+            </button>
 
         </section>
 
+        <section class="secondary-actions">
 
-        <section
-            id="libraryPage"
-            class="page"
-            aria-labelledby="libraryTitle"
-        >
+            <button
+                class="secondary-button"
+                type="button"
+            >
+                <span>◉</span>
+                Coerenza
+            </button>
 
-            <header class="pageHeader">
+            <button
+                class="secondary-button"
+                type="button"
+            >
+                <span>◎</span>
+                Finalità
+            </button>
 
-                <button
-                    class="backButton"
-                    type="button"
-                    data-go-home
-                    aria-label="Torna alla Home"
-                >
-                    ←
-                </button>
-
-                <h2 id="libraryTitle">
-                    Libreria
-                </h2>
-
-            </header>
-
-        </section>
-
-
-        <section
-            id="learnPage"
-            class="page"
-            aria-labelledby="learnTitle"
-        >
-
-            <header class="pageHeader">
-
-                <button
-                    class="backButton"
-                    type="button"
-                    data-go-home
-                    aria-label="Torna alla Home"
-                >
-                    ←
-                </button>
-
-                <h2 id="learnTitle">
-                    Impara
-                </h2>
-
-            </header>
-
-        </section>
-
-
-        <section
-            id="settingsPage"
-            class="page"
-            aria-labelledby="settingsTitle"
-        >
-
-            <header class="pageHeader">
-
-                <button
-                    class="backButton"
-                    type="button"
-                    data-go-home
-                    aria-label="Torna alla Home"
-                >
-                    ←
-                </button>
-
-                <h2 id="settingsTitle">
-                    Impostazioni
-                </h2>
-
-            </header>
+            <button
+                class="secondary-button"
+                type="button"
+            >
+                <span>⌁</span>
+                Anemoscopio
+            </button>
 
         </section>
 
     </main>
 
-    <script
-        type="module"
-        src="js/app.js"
-    ></script>
+    <!-- EDITOR ANEMODROMOS -->
+
+    <div
+        class="overlay"
+        id="editorOverlay"
+        aria-hidden="true"
+    >
+
+        <section
+            class="sheet"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="editorTitle"
+        >
+
+            <div class="sheet-handle"></div>
+
+            <header class="sheet-header">
+
+                <div>
+                    <h2
+                        class="sheet-title"
+                        id="editorTitle"
+                    >
+                        Anemodromos 1
+                    </h2>
+
+                    <p
+                        class="sheet-subtitle"
+                        id="editorSubtitle"
+                    >
+                        Inspirazione
+                    </p>
+                </div>
+
+                <button
+                    class="close-button"
+                    id="closeEditor"
+                    type="button"
+                    aria-label="Chiudi editor"
+                >
+                    ×
+                </button>
+
+            </header>
+
+            <div class="editor-card">
+
+                <span class="editor-label">
+                    Durata
+                </span>
+
+                <div class="duration-control">
+
+                    <button
+                        class="duration-button"
+                        id="decreaseDuration"
+                        type="button"
+                    >
+                        −
+                    </button>
+
+                    <div
+                        class="duration-value"
+                        id="durationValue"
+                    >
+                        4,0 s
+                    </div>
+
+                    <button
+                        class="duration-button"
+                        id="increaseDuration"
+                        type="button"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="editor-card">
+
+                <span class="editor-label">
+                    Percorso dell’aria
+                </span>
+
+                <div
+                    class="segmented"
+                    data-single-selection
+                >
+
+                    <button
+                        class="segment selected"
+                        type="button"
+                    >
+                        Naso
+                    </button>
+
+                    <button
+                        class="segment"
+                        type="button"
+                    >
+                        Bocca
+                    </button>
+
+                    <button
+                        class="segment"
+                        type="button"
+                    >
+                        Entrambi
+                    </button>
+
+                </div>
+
+            </div>
+
+            <div class="editor-card">
+
+                <span class="editor-label">
+                    Settori e volumi
+                </span>
+
+                <div class="sector">
+
+                    <div class="sector-head">
+                        <label class="sector-toggle">
+                            <input
+                                type="checkbox"
+                                checked
+                            >
+                            Addome
+                        </label>
+                    </div>
+
+                    <div
+                        class="volume-options"
+                        data-single-selection
+                    >
+                        <button
+                            class="volume-button"
+                            type="button"
+                        >
+                            Ridotto
+                        </button>
+
+                        <button
+                            class="volume-button"
+                            type="button"
+                        >
+                            Naturale
+                        </button>
+
+                        <button
+                            class="volume-button selected"
+                            type="button"
+                        >
+                            Completo
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="sector">
+
+                    <div class="sector-head">
+                        <label class="sector-toggle">
+                            <input
+                                type="checkbox"
+                                checked
+                            >
+                            Torace inferiore
+                        </label>
+                    </div>
+
+                    <div
+                        class="volume-options"
+                        data-single-selection
+                    >
+                        <button
+                            class="volume-button"
+                            type="button"
+                        >
+                            Ridotto
+                        </button>
+
+                        <button
+                            class="volume-button selected"
+                            type="button"
+                        >
+                            Naturale
+                        </button>
+
+                        <button
+                            class="volume-button"
+                            type="button"
+                        >
+                            Completo
+                        </button>
+                    </div>
+
+                </div>
+
+                <div class="sector">
+
+                    <div class="sector-head">
+                        <label class="sector-toggle">
+                            <input
+                                type="checkbox"
+                                checked
+                            >
+                            Torace superiore
+                        </label>
+                    </div>
+
+                    <div
+                        class="volume-options"
+                        data-single-selection
+                    >
+                        <button
+                            class="volume-button selected"
+                            type="button"
+                        >
+                            Ridotto
+                        </button>
+
+                        <button
+                            class="volume-button"
+                            type="button"
+                        >
+                            Naturale
+                        </button>
+
+                        <button
+                            class="volume-button"
+                            type="button"
+                        >
+                            Completo
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="sheet-actions">
+
+                <button
+                    class="delete-button"
+                    type="button"
+                >
+                    Elimina
+                </button>
+
+                <button
+                    class="confirm-button"
+                    id="confirmEditor"
+                    type="button"
+                >
+                    Conferma
+                </button>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <script>
+        const overlay =
+            document.getElementById("editorOverlay");
+
+        const closeEditorButton =
+            document.getElementById("closeEditor");
+
+        const confirmEditorButton =
+            document.getElementById("confirmEditor");
+
+        const editorTitle =
+            document.getElementById("editorTitle");
+
+        const editorSubtitle =
+            document.getElementById("editorSubtitle");
+
+        const durationValue =
+            document.getElementById("durationValue");
+
+        let currentDuration = 4;
+
+        function openEditor(phase, number, duration) {
+            editorTitle.textContent =
+                `Anemodromos ${number}`;
+
+            editorSubtitle.textContent =
+                phase === "IN"
+                    ? "Inspirazione"
+                    : "Espirazione";
+
+            currentDuration = duration;
+
+            updateDurationDisplay();
+
+            overlay.classList.add("open");
+            overlay.setAttribute("aria-hidden", "false");
+
+            document.body.style.overflow = "hidden";
+        }
+
+        function closeEditor() {
+            overlay.classList.remove("open");
+            overlay.setAttribute("aria-hidden", "true");
+
+            document.body.style.overflow = "";
+        }
+
+        function updateDurationDisplay() {
+            durationValue.textContent =
+                currentDuration
+                    .toFixed(1)
+                    .replace(".", ",") + " s";
+        }
+
+        document.addEventListener(
+            "click",
+            function (event) {
+                const anemodromos =
+                    event.target.closest(
+                        ".anemodromos"
+                    );
+
+                if (anemodromos) {
+                    const phase =
+                        anemodromos.dataset.phase;
+
+                    const number =
+                        anemodromos.dataset.number;
+
+                    const durationText =
+                        anemodromos
+                            .querySelector("small")
+                            .textContent;
+
+                    const duration =
+                        Number(
+                            durationText.replace(
+                                " s",
+                                ""
+                            )
+                        );
+
+                    openEditor(
+                        phase,
+                        number,
+                        duration
+                    );
+
+                    return;
+                }
+
+                const addButton =
+                    event.target.closest(
+                        "[data-add-phase]"
+                    );
+
+                if (addButton) {
+                    addAnemodromos(
+                        addButton.dataset.addPhase
+                    );
+                }
+            }
+        );
+
+        function addAnemodromos(phase) {
+            const timeline =
+                phase === "IN"
+                    ? document.getElementById(
+                        "inhaleTimeline"
+                    )
+                    : document.getElementById(
+                        "exhaleTimeline"
+                    );
+
+            const addButton =
+                timeline.querySelector(
+                    ".add-button"
+                );
+
+            const existing =
+                timeline.querySelectorAll(
+                    ".anemodromos"
+                );
+
+            const number =
+                existing.length + 1;
+
+            const button =
+                document.createElement("button");
+
+            button.type = "button";
+            button.className =
+                phase === "IN"
+                    ? "anemodromos in-active"
+                    : "anemodromos es-active";
+
+            button.dataset.phase = phase;
+            button.dataset.number = number;
+
+            button.innerHTML =
+                `${number}<small>2 s</small>`;
+
+            timeline.insertBefore(
+                button,
+                addButton
+            );
+
+            openEditor(
+                phase,
+                number,
+                2
+            );
+        }
+
+        document
+            .getElementById(
+                "decreaseDuration"
+            )
+            .addEventListener(
+                "click",
+                function () {
+                    currentDuration =
+                        Math.max(
+                            0.5,
+                            currentDuration - 0.5
+                        );
+
+                    updateDurationDisplay();
+                }
+            );
+
+        document
+            .getElementById(
+                "increaseDuration"
+            )
+            .addEventListener(
+                "click",
+                function () {
+                    currentDuration =
+                        Math.min(
+                            30,
+                            currentDuration + 0.5
+                        );
+
+                    updateDurationDisplay();
+                }
+            );
+
+        document
+            .querySelectorAll(
+                "[data-single-selection]"
+            )
+            .forEach(function (group) {
+                group.addEventListener(
+                    "click",
+                    function (event) {
+                        const button =
+                            event.target.closest(
+                                "button"
+                            );
+
+                        if (!button) {
+                            return;
+                        }
+
+                        group
+                            .querySelectorAll(
+                                "button"
+                            )
+                            .forEach(
+                                function (item) {
+                                    item.classList.remove(
+                                        "selected"
+                                    );
+                                }
+                            );
+
+                        button.classList.add(
+                            "selected"
+                        );
+                    }
+                );
+            });
+
+        closeEditorButton.addEventListener(
+            "click",
+            closeEditor
+        );
+
+        confirmEditorButton.addEventListener(
+            "click",
+            closeEditor
+        );
+
+        overlay.addEventListener(
+            "click",
+            function (event) {
+                if (event.target === overlay) {
+                    closeEditor();
+                }
+            }
+        );
+    </script>
 
 </body>
-
 </html>
