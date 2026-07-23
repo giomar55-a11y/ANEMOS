@@ -704,3 +704,53 @@ export function resetCoherence(
 
     updateTimestamp(breath);
 }
+/*
+---------------------------------------
+Configurazione narici
+---------------------------------------
+*/
+
+const noseButton =
+    document.getElementById("noseButton");
+
+const noseModes = [
+
+    {
+        icon: "👃👃",
+        label: "Entrambe"
+    },
+
+    {
+        icon: "👃Dx",
+        label: "Destra"
+    },
+
+    {
+        icon: "👃Sn",
+        label: "Sinistra"
+    }
+
+];
+
+let currentNoseMode = 0;
+
+noseButton.addEventListener(
+    "click",
+    function () {
+
+        currentNoseMode++;
+
+        if (
+            currentNoseMode >=
+            noseModes.length
+        ) {
+
+            currentNoseMode = 0;
+
+        }
+
+        noseButton.textContent =
+            noseModes[currentNoseMode].icon;
+
+    }
+);
