@@ -186,6 +186,7 @@ function creaNodoAnemodromo(
     wrapper.className =
         "anemodromo-node";
 
+
     if (
         anemodromo.id ===
         anemodromoSelezionatoId
@@ -1068,9 +1069,7 @@ function creaBloccoSettori(
 
                         attivaSettore(
                             anemodromo,
-                            configurazione.valore,
-                            ANEMOS_VOLUMI
-                                .NATURALE
+                            configurazione.valore
                         );
 
                     }
@@ -1142,33 +1141,69 @@ function creaSelettoreVolume(
         "volume-opzioni";
 
 
-    const opzioni = [
+    let opzioni;
 
-        {
-            valore:
-                ANEMOS_VOLUMI
-                    .RIDOTTO,
-            etichetta:
-                "Ridotto"
-        },
 
-        {
-            valore:
-                ANEMOS_VOLUMI
-                    .NATURALE,
-            etichetta:
-                "Naturale"
-        },
+    if (
+        anemodromo.tipo ===
+        ANEMOS_TIPI.IN
+    ) {
 
-        {
-            valore:
-                ANEMOS_VOLUMI
-                    .COMPLETO,
-            etichetta:
-                "Completo"
-        }
+        opzioni = [
 
-    ];
+            {
+                valore:
+                    ANEMOS_VOLUMI.BASSO,
+                etichetta:
+                    "Basso"
+            },
+
+            {
+                valore:
+                    ANEMOS_VOLUMI
+                        .CONFORTEVOLE,
+                etichetta:
+                    "Confortevole"
+            },
+
+            {
+                valore:
+                    ANEMOS_VOLUMI.PIENO,
+                etichetta:
+                    "Pieno"
+            }
+
+        ];
+
+    } else {
+
+        opzioni = [
+
+            {
+                valore:
+                    ANEMOS_VOLUMI.BASSO,
+                etichetta:
+                    "Basso"
+            },
+
+            {
+                valore:
+                    ANEMOS_VOLUMI
+                        .CONFORTEVOLE,
+                etichetta:
+                    "Confortevole"
+            },
+
+            {
+                valore:
+                    ANEMOS_VOLUMI.VUOTO,
+                etichetta:
+                    "Vuoto"
+            }
+
+        ];
+
+    }
 
 
     opzioni.forEach(
@@ -1193,11 +1228,13 @@ function creaSelettoreVolume(
 
                     evento.stopPropagation();
 
+
                     impostaVolumeSettore(
                         anemodromo,
                         settore.nome,
                         opzione.valore
                     );
+
 
                     renderAnemos31();
 
