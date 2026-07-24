@@ -1,1 +1,477 @@
-<!-- ANEMOS 3.1 - nuova architettura -->
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <title>
+        ANEMOS 3.1
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style-3-1.css"
+    >
+
+</head>
+
+<body>
+
+    <main class="app">
+
+        <header class="topbar">
+
+            <div>
+
+                <h1 class="brand">
+                    ANEMOS
+                </h1>
+
+                <span class="version">
+                    VERSIONE 3.1
+                </span>
+
+            </div>
+
+            <button
+                class="menu-button"
+                type="button"
+                aria-label="Menu"
+            >
+                ⋯
+            </button>
+
+        </header>
+
+
+
+        <section class="nome-respirazione">
+
+            <label
+                for="nome-respirazione"
+            >
+                Nome respirazione
+            </label>
+
+            <input
+                id="nome-respirazione"
+                type="text"
+                value="Nuova respirazione"
+            >
+
+        </section>
+
+
+
+        <section class="builder">
+
+            <div class="builder-title">
+
+                <h2>
+                    Sequenza
+                </h2>
+
+                <span>
+                    Anemodromi
+                </span>
+
+            </div>
+
+
+
+            <div class="timeline-scroll">
+
+                <div
+                    id="timeline-anemodromi"
+                >
+                </div>
+
+            </div>
+
+
+
+            <div class="aggiungi-area">
+
+                <button
+                    id="aggiungi-in"
+                    class="aggiungi-anemodromo in"
+                    type="button"
+                >
+                    + IN
+                </button>
+
+                <button
+                    id="aggiungi-es"
+                    class="aggiungi-anemodromo es"
+                    type="button"
+                >
+                    + ES
+                </button>
+
+            </div>
+
+
+
+            <div class="riepilogo">
+
+                <span>
+                    Durata totale
+                </span>
+
+                <strong
+                    id="durata-totale"
+                >
+                    0 s
+                </strong>
+
+            </div>
+
+
+
+            <div class="azioni">
+
+                <button
+                    class="azione secondary"
+                    type="button"
+                >
+                    Salva
+                </button>
+
+                <button
+                    class="azione primary"
+                    type="button"
+                >
+                    Avvia
+                </button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+
+    <div
+        id="editor-anemodromo"
+    >
+
+        <div
+            class="editor-sheet"
+        >
+
+            <div
+                class="editor-handle"
+            >
+            </div>
+
+
+
+            <div
+                class="editor-header"
+            >
+
+                <h2
+                    id="editor-titolo"
+                >
+                    Anemodromo
+                </h2>
+
+                <button
+                    id="chiudi-editor"
+                    type="button"
+                    aria-label="Chiudi editor"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+
+            <div
+                id="editor-contenuto"
+            >
+            </div>
+
+
+
+            <div
+                class="editor-footer"
+            >
+
+                <button
+                    id="elimina-anemodromo"
+                    class="editor-elimina"
+                    type="button"
+                >
+                    Elimina
+                </button>
+
+                <button
+                    id="conferma-anemodromo"
+                    class="editor-conferma"
+                    type="button"
+                >
+                    Conferma
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <script
+        src="model-3-1.js"
+    ></script>
+
+    <script
+        src="ui-3-1.js"
+    ></script>
+
+
+
+    <script>
+
+        /*
+        =================================================
+        ANEMOS 3.1
+        COLLEGAMENTO DELLA PAGINA
+        =================================================
+        */
+
+
+        const pulsanteAggiungiIN =
+            document.getElementById(
+                "aggiungi-in"
+            );
+
+
+        const pulsanteAggiungiES =
+            document.getElementById(
+                "aggiungi-es"
+            );
+
+
+        const pulsanteElimina =
+            document.getElementById(
+                "elimina-anemodromo"
+            );
+
+
+        const pulsanteConferma =
+            document.getElementById(
+                "conferma-anemodromo"
+            );
+
+
+        const durataTotale =
+            document.getElementById(
+                "durata-totale"
+            );
+
+
+
+        /*
+        -----------------------------------------------
+        Aggiunta Anemodromi
+        -----------------------------------------------
+        */
+
+        pulsanteAggiungiIN
+            .addEventListener(
+                "click",
+                function () {
+
+                    const nuovo =
+                        aggiungiNuovoAnemodromo(
+                            ANEMOS_TIPI.IN
+                        );
+
+
+                    apriEditor(
+                        nuovo.id
+                    );
+
+
+                    aggiornaDurataTotale();
+
+                }
+            );
+
+
+        pulsanteAggiungiES
+            .addEventListener(
+                "click",
+                function () {
+
+                    const nuovo =
+                        aggiungiNuovoAnemodromo(
+                            ANEMOS_TIPI.ES
+                        );
+
+
+                    apriEditor(
+                        nuovo.id
+                    );
+
+
+                    aggiornaDurataTotale();
+
+                }
+            );
+
+
+
+        /*
+        -----------------------------------------------
+        Eliminazione Anemodromo
+        -----------------------------------------------
+        */
+
+        pulsanteElimina
+            .addEventListener(
+                "click",
+                function () {
+
+                    if (
+                        !anemodromoSelezionatoId
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    eliminaAnemodromo(
+                        anemos31,
+                        anemodromoSelezionatoId
+                    );
+
+
+                    chiudiEditorAnemodromo();
+
+
+                    aggiornaDurataTotale();
+
+                }
+            );
+
+
+
+        /*
+        -----------------------------------------------
+        Conferma editor
+        -----------------------------------------------
+        */
+
+        pulsanteConferma
+            .addEventListener(
+                "click",
+                function () {
+
+                    chiudiEditorAnemodromo();
+
+                    aggiornaDurataTotale();
+
+                }
+            );
+
+
+
+        /*
+        -----------------------------------------------
+        Durata totale
+        -----------------------------------------------
+        */
+
+        function aggiornaDurataTotale() {
+
+            let totale = 0;
+
+
+            const anemodromi =
+                ottieniAnemodromiOrdinati(
+                    anemos31
+                );
+
+
+            anemodromi.forEach(
+                function (
+                    anemodromo
+                ) {
+
+                    totale +=
+                        anemodromo.durata;
+
+                }
+            );
+
+
+            anemos31.apnee.forEach(
+                function (
+                    apnea
+                ) {
+
+                    totale +=
+                        apnea.durata;
+
+                }
+            );
+
+
+            durataTotale.textContent =
+                totale + " s";
+
+        }
+
+
+
+        /*
+        -----------------------------------------------
+        Aggiornamento automatico durata
+        -----------------------------------------------
+
+        Manteniamo il render originale,
+        aggiungendo il calcolo totale.
+        */
+
+        const renderOriginaleAnemos31 =
+            renderAnemos31;
+
+
+        renderAnemos31 =
+            function () {
+
+                renderOriginaleAnemos31();
+
+                aggiornaDurataTotale();
+
+            };
+
+
+
+        /*
+        -----------------------------------------------
+        Avvio applicazione
+        -----------------------------------------------
+        */
+
+        inizializzaUIAnemos31();
+
+        aggiornaDurataTotale();
+
+    </script>
+
+</body>
+
+</html>
