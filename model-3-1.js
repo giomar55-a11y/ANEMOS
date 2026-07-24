@@ -1082,10 +1082,12 @@ function settoreDisponibilePerEspirazione(
         );
 
 
-   return Boolean(
-    stato[nomeSettore]
-        .contieneAria
-);
+    return Boolean(
+        stato[nomeSettore]
+            .contieneAria
+    );
+
+}
 
 
 
@@ -1107,11 +1109,16 @@ function settoriDisponibiliPerEspirazione(
 
 
     return ANEMOS_ELENCO_SETTORI
-    .filter(
-        settore =>
-            stato[settore]
-                .contieneAria
-    );
+        .filter(
+            settore =>
+                stato[settore]
+                    .contieneAria
+        );
+
+}
+
+
+
 /*
 Verifica se un settore è disponibile
 per un nuovo Anemodromo IN.
@@ -1166,7 +1173,6 @@ function settoriDisponibiliPerInspirazione(
         );
 
 }
-
 
 /*
 Calcola lo stato finale dopo l'intera
