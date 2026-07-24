@@ -4,13 +4,18 @@ ANEMOS 3.1
 INTERFACCIA UTENTE
 =========================================================
 
-Questo file gestisce:
+Gestisce:
 
 - timeline degli Anemodromi
-- eventuali apnee tra Anemodromi
-- apertura editor
-- modifica dei parametri
-- aggiornamento grafico
+- apnee tra Anemodromi
+- editor
+- IN / ES
+- durata
+- percorso
+- flusso
+- settori
+- volume percettivo
+- coerenza dei settori espiratori
 
 Dipende da:
 model-3-1.js
@@ -87,13 +92,17 @@ function renderAnemos31() {
 
 function renderTimeline() {
 
-    const ui = ottieniElementiUI();
+    const ui =
+        ottieniElementiUI();
+
 
     if (!ui.timeline) {
         return;
     }
 
+
     ui.timeline.innerHTML = "";
+
 
     const anemodromi =
         ottieniAnemodromiOrdinati(
@@ -108,15 +117,19 @@ function renderTimeline() {
                 "div"
             );
 
+
         vuoto.className =
             "timeline-vuota";
+
 
         vuoto.textContent =
             "Nessun Anemodromo";
 
+
         ui.timeline.appendChild(
             vuoto
         );
+
 
         return;
 
@@ -134,6 +147,7 @@ function renderTimeline() {
                     anemodromo,
                     indice
                 );
+
 
             ui.timeline.appendChild(
                 nodo
@@ -153,6 +167,7 @@ function renderTimeline() {
                         anemodromo,
                         successivo
                     );
+
 
                 ui.timeline.appendChild(
                     collegamento
@@ -181,7 +196,10 @@ function creaNodoAnemodromo(
             "button"
         );
 
-    wrapper.type = "button";
+
+    wrapper.type =
+        "button";
+
 
     wrapper.className =
         "anemodromo-node";
@@ -216,8 +234,10 @@ function creaNodoAnemodromo(
             "span"
         );
 
+
     numero.className =
         "anemodromo-numero";
+
 
     numero.textContent =
         indice + 1;
@@ -228,8 +248,10 @@ function creaNodoAnemodromo(
             "span"
         );
 
+
     tipo.className =
         "anemodromo-tipo";
+
 
     tipo.textContent =
         anemodromo.tipo;
@@ -240,8 +262,10 @@ function creaNodoAnemodromo(
             "span"
         );
 
+
     durata.className =
         "anemodromo-durata";
+
 
     durata.textContent =
         anemodromo.durata +
@@ -252,9 +276,11 @@ function creaNodoAnemodromo(
         numero
     );
 
+
     wrapper.appendChild(
         tipo
     );
+
 
     wrapper.appendChild(
         durata
@@ -281,7 +307,10 @@ function creaCollegamento(
             "button"
         );
 
-    wrapper.type = "button";
+
+    wrapper.type =
+        "button";
+
 
     wrapper.className =
         "apnea-link";
@@ -300,6 +329,7 @@ function creaCollegamento(
         wrapper.classList.add(
             "attiva"
         );
+
 
         wrapper.textContent =
             "⏸ " +
@@ -352,9 +382,12 @@ function modificaApneaTra(
 
     let valoreIniziale = 0;
 
+
     if (esistente) {
+
         valoreIniziale =
             esistente.durata;
+
     }
 
 
@@ -414,20 +447,25 @@ function apriEditor(
     anemodromoSelezionatoId =
         anemodromoId;
 
+
     const ui =
         ottieniElementiUI();
+
 
     if (!ui.editor) {
         return;
     }
 
+
     ui.editor.classList.add(
         "aperto"
     );
 
+
     renderAnemos31();
 
 }
+
 
 
 function chiudiEditorAnemodromo() {
@@ -435,18 +473,70 @@ function chiudiEditorAnemodromo() {
     anemodromoSelezionatoId =
         null;
 
+
     const ui =
         ottieniElementiUI();
+
 
     if (!ui.editor) {
         return;
     }
 
+
     ui.editor.classList.remove(
         "aperto"
     );
 
+
     renderTimeline();
+
+}
+
+
+
+/* =====================================================
+   COERENZA DEI SETTORI ES
+===================================================== */
+
+/*
+Se un Anemodromo è ES, controlliamo che
+non conservi settori diventati impossibili.
+
+Questo può accadere, per esempio, se si modifica
+un Anemodromo precedente della timeline.
+
+I settori non più disponibili vengono rimossi
+automaticamente dall'Anemodromo ES.
+*/
+
+function normalizzaSettoriEspiratori(
+    anemodromo
+) {
+
+    if (
+        anemodromo.tipo !==
+        ANEMOS_TIPI.ES
+    ) {
+
+        return;
+
+    }
+
+
+    const disponibili =
+        settoriDisponibiliPerEspirazione(
+            anemos31,
+            anemodromo.id
+        );
+
+
+    anemodromo.settori =
+        anemodromo.settori.filter(
+            settore =>
+                disponibili.includes(
+                    settore.nome
+                )
+        );
 
 }
 
@@ -460,6 +550,7 @@ function renderEditor() {
 
     const ui =
         ottieniElementiUI();
+
 
     if (
         !ui.editorContenuto ||
@@ -481,6 +572,17 @@ function renderEditor() {
     if (!anemodromo) {
         return;
     }
+
+
+    /*
+    Prima di mostrare l'editor,
+    eliminiamo eventuali settori ES
+    diventati incoerenti.
+    */
+
+    normalizzaSettoriEspiratori(
+        anemodromo
+    );
 
 
     ui.editorTitolo.textContent =
@@ -543,6 +645,7 @@ function creaBloccoEditor(
             "section"
         );
 
+
     blocco.className =
         "editor-blocco";
 
@@ -552,8 +655,10 @@ function creaBloccoEditor(
             "div"
         );
 
+
     label.className =
         "editor-label";
+
 
     label.textContent =
         titolo;
@@ -589,23 +694,29 @@ function creaBloccoTipo(
             "div"
         );
 
+
     gruppo.className =
         "editor-opzioni";
 
 
     const opzioni = [
+
         {
             valore:
                 ANEMOS_TIPI.IN,
+
             etichetta:
                 "IN"
         },
+
         {
             valore:
                 ANEMOS_TIPI.ES,
+
             etichetta:
                 "ES"
         }
+
     ];
 
 
@@ -628,6 +739,18 @@ function creaBloccoTipo(
                         anemodromo,
                         opzione.valore
                     );
+
+
+                    /*
+                    Se passa a ES,
+                    controlliamo immediatamente
+                    quali settori può utilizzare.
+                    */
+
+                    normalizzaSettoriEspiratori(
+                        anemodromo
+                    );
+
 
                     renderAnemos31();
 
@@ -673,6 +796,7 @@ function creaBloccoDurata(
             "div"
         );
 
+
     riga.className =
         "durata-riga";
 
@@ -682,8 +806,13 @@ function creaBloccoDurata(
             "button"
         );
 
-    meno.type = "button";
-    meno.textContent = "−";
+
+    meno.type =
+        "button";
+
+
+    meno.textContent =
+        "−";
 
 
     const valore =
@@ -691,8 +820,10 @@ function creaBloccoDurata(
             "span"
         );
 
+
     valore.className =
         "durata-valore";
+
 
     valore.textContent =
         anemodromo.durata +
@@ -704,8 +835,13 @@ function creaBloccoDurata(
             "button"
         );
 
-    piu.type = "button";
-    piu.textContent = "+";
+
+    piu.type =
+        "button";
+
+
+    piu.textContent =
+        "+";
 
 
     meno.addEventListener(
@@ -719,6 +855,7 @@ function creaBloccoDurata(
                     anemodromo.durata - 1
                 )
             );
+
 
             renderAnemos31();
 
@@ -735,6 +872,7 @@ function creaBloccoDurata(
                 anemodromo.durata + 1
             );
 
+
             renderAnemos31();
 
         }
@@ -745,9 +883,11 @@ function creaBloccoDurata(
         meno
     );
 
+
     riga.appendChild(
         valore
     );
+
 
     riga.appendChild(
         piu
@@ -784,6 +924,7 @@ function creaBloccoPercorso(
             "div"
         );
 
+
     gruppo.className =
         "editor-opzioni percorso";
 
@@ -794,6 +935,7 @@ function creaBloccoPercorso(
             valore:
                 ANEMOS_PERCORSI
                     .NARICE_DESTRA,
+
             etichetta:
                 "👃 Dx"
         },
@@ -802,6 +944,7 @@ function creaBloccoPercorso(
             valore:
                 ANEMOS_PERCORSI
                     .NARICE_SINISTRA,
+
             etichetta:
                 "👃 Sn"
         },
@@ -810,6 +953,7 @@ function creaBloccoPercorso(
             valore:
                 ANEMOS_PERCORSI
                     .ENTRAMBE_NARICI,
+
             etichetta:
                 "👃"
         },
@@ -818,6 +962,7 @@ function creaBloccoPercorso(
             valore:
                 ANEMOS_PERCORSI
                     .BOCCA,
+
             etichetta:
                 "👄"
         }
@@ -844,6 +989,7 @@ function creaBloccoPercorso(
                         anemodromo,
                         opzione.valore
                     );
+
 
                     renderAnemos31();
 
@@ -889,6 +1035,7 @@ function creaBloccoFlusso(
             "div"
         );
 
+
     gruppo.className =
         "editor-opzioni flusso";
 
@@ -899,8 +1046,10 @@ function creaBloccoFlusso(
             valore:
                 ANEMOS_FLUSSI
                     .TRATTENUTO,
+
             icona:
                 "🕸️",
+
             nome:
                 "Trattenuto"
         },
@@ -909,8 +1058,10 @@ function creaBloccoFlusso(
             valore:
                 ANEMOS_FLUSSI
                     .DELICATO,
+
             icona:
                 "☁️",
+
             nome:
                 "Delicato"
         },
@@ -919,8 +1070,10 @@ function creaBloccoFlusso(
             valore:
                 ANEMOS_FLUSSI
                     .SPONTANEO,
+
             icona:
                 "💨",
+
             nome:
                 "Spontaneo"
         },
@@ -929,8 +1082,10 @@ function creaBloccoFlusso(
             valore:
                 ANEMOS_FLUSSI
                     .FORZATO,
+
             icona:
                 "🌪️",
+
             nome:
                 "Forzato"
         }
@@ -946,6 +1101,7 @@ function creaBloccoFlusso(
                     opzione.icona +
                     " " +
                     opzione.nome,
+
                     anemodromo.flusso ===
                         opzione.valore
                 );
@@ -959,6 +1115,7 @@ function creaBloccoFlusso(
                         anemodromo,
                         opzione.valore
                     );
+
 
                     renderAnemos31();
 
@@ -986,7 +1143,7 @@ function creaBloccoFlusso(
 
 
 /* =====================================================
-   SETTORI + VOLUME
+   SETTORI + COERENZA ES
 ===================================================== */
 
 function creaBloccoSettori(
@@ -1003,8 +1160,8 @@ function creaBloccoSettori(
 
         {
             valore:
-                ANEMOS_SETTORI
-                    .ADDOME,
+                ANEMOS_SETTORI.ADDOME,
+
             nome:
                 "Addome"
         },
@@ -1013,6 +1170,7 @@ function creaBloccoSettori(
             valore:
                 ANEMOS_SETTORI
                     .TORACE_INFERIORE,
+
             nome:
                 "Torace inferiore"
         },
@@ -1021,6 +1179,7 @@ function creaBloccoSettori(
             valore:
                 ANEMOS_SETTORI
                     .TORACE_SUPERIORE,
+
             nome:
                 "Torace superiore"
         }
@@ -1036,6 +1195,7 @@ function creaBloccoSettori(
                     "div"
                 );
 
+
             riga.className =
                 "settore-riga";
 
@@ -1047,6 +1207,31 @@ function creaBloccoSettori(
                 );
 
 
+            /*
+            Negli IN ogni settore è disponibile.
+
+            Negli ES viene interrogato il Motore
+            di Coerenza.
+            */
+
+            let disponibile = true;
+
+
+            if (
+                anemodromo.tipo ===
+                ANEMOS_TIPI.ES
+            ) {
+
+                disponibile =
+                    settoreDisponibilePerEspirazione(
+                        anemos31,
+                        anemodromo.id,
+                        configurazione.valore
+                    );
+
+            }
+
+
             const pulsanteSettore =
                 creaPulsanteOpzione(
                     configurazione.nome,
@@ -1054,31 +1239,58 @@ function creaBloccoSettori(
                 );
 
 
-            pulsanteSettore.addEventListener(
-                "click",
-                function () {
+            /*
+            Un settore vuoto rimane visibile,
+            ma non può essere selezionato.
+            */
 
-                    if (attivo) {
+            if (!disponibile) {
 
-                        disattivaSettore(
-                            anemodromo,
-                            configurazione.valore
-                        );
+                pulsanteSettore.disabled =
+                    true;
 
-                    } else {
 
-                        attivaSettore(
-                            anemodromo,
-                            configurazione.valore
-                        );
+                pulsanteSettore.setAttribute(
+                    "aria-disabled",
+                    "true"
+                );
+
+
+                pulsanteSettore.title =
+                    "Settore non disponibile: non contiene aria da espirare.";
+
+            }
+
+
+            if (disponibile) {
+
+                pulsanteSettore.addEventListener(
+                    "click",
+                    function () {
+
+                        if (attivo) {
+
+                            disattivaSettore(
+                                anemodromo,
+                                configurazione.valore
+                            );
+
+                        } else {
+
+                            attivaSettore(
+                                anemodromo,
+                                configurazione.valore
+                            );
+
+                        }
+
+
+                        renderAnemos31();
 
                     }
+                );
 
-
-                    renderAnemos31();
-
-                }
-            );
+            }
 
 
             riga.appendChild(
@@ -1086,7 +1298,15 @@ function creaBloccoSettori(
             );
 
 
-            if (attivo) {
+            /*
+            Il volume compare soltanto se
+            il settore è attivo e disponibile.
+            */
+
+            if (
+                attivo &&
+                disponibile
+            ) {
 
                 const settore =
                     anemodromo
@@ -1137,6 +1357,7 @@ function creaSelettoreVolume(
             "div"
         );
 
+
     gruppo.className =
         "volume-opzioni";
 
@@ -1154,6 +1375,7 @@ function creaSelettoreVolume(
             {
                 valore:
                     ANEMOS_VOLUMI.BASSO,
+
                 etichetta:
                     "Basso"
             },
@@ -1162,6 +1384,7 @@ function creaSelettoreVolume(
                 valore:
                     ANEMOS_VOLUMI
                         .CONFORTEVOLE,
+
                 etichetta:
                     "Confortevole"
             },
@@ -1169,6 +1392,7 @@ function creaSelettoreVolume(
             {
                 valore:
                     ANEMOS_VOLUMI.PIENO,
+
                 etichetta:
                     "Pieno"
             }
@@ -1182,6 +1406,7 @@ function creaSelettoreVolume(
             {
                 valore:
                     ANEMOS_VOLUMI.BASSO,
+
                 etichetta:
                     "Basso"
             },
@@ -1190,6 +1415,7 @@ function creaSelettoreVolume(
                 valore:
                     ANEMOS_VOLUMI
                         .CONFORTEVOLE,
+
                 etichetta:
                     "Confortevole"
             },
@@ -1197,6 +1423,7 @@ function creaSelettoreVolume(
             {
                 valore:
                     ANEMOS_VOLUMI.VUOTO,
+
                 etichetta:
                     "Vuoto"
             }
@@ -1270,8 +1497,10 @@ function creaPulsanteOpzione(
             "button"
         );
 
+
     pulsante.type =
         "button";
+
 
     pulsante.className =
         "opzione-button";
@@ -1335,9 +1564,7 @@ function inizializzaUIAnemos31() {
         ottieniElementiUI();
 
 
-    if (
-        ui.chiudiEditor
-    ) {
+    if (ui.chiudiEditor) {
 
         ui.chiudiEditor
             .addEventListener(
