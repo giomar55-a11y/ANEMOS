@@ -1143,7 +1143,7 @@ function creaBloccoFlusso(
 
 
 /* =====================================================
-   SETTORI + COERENZA ES
+   SETTORI + MOTORE DI COERENZA
 ===================================================== */
 
 function creaBloccoSettori(
@@ -1200,22 +1200,35 @@ function creaBloccoSettori(
                 "settore-riga";
 
 
-            const attivo =
-                settoreAttivo(
-                    anemodromo,
-                    configurazione.valore
-                );
+            let disponibile = true;
 
 
             /*
-            Negli IN ogni settore è disponibile.
-
-            Negli ES viene interrogato il Motore
-            di Coerenza.
+            IN:
+            indisponibile se il settore
+            risulta già pieno.
             */
 
-            let disponibile = true;
+            if (
+                anemodromo.tipo ===
+                ANEMOS_TIPI.IN
+            ) {
 
+                disponibile =
+                    settoreDisponibilePerInspirazione(
+                        anemos31,
+                        anemodromo.id,
+                        configurazione.valore
+                    );
+
+            }
+
+
+            /*
+            ES:
+            indisponibile se il settore
+            non contiene aria.
+            */
 
             if (
                 anemodromo.tipo ===
@@ -1232,6 +1245,35 @@ function creaBloccoSettori(
             }
 
 
+            /*
+            Se la timeline precedente è stata
+            modificata e rende incoerente un
+            settore già selezionato, lo rimuoviamo.
+            */
+
+            if (
+                !disponibile &&
+                settoreAttivo(
+                    anemodromo,
+                    configurazione.valore
+                )
+            ) {
+
+                disattivaSettore(
+                    anemodromo,
+                    configurazione.valore
+                );
+
+            }
+
+
+            const attivo =
+                settoreAttivo(
+                    anemodromo,
+                    configurazione.valore
+                );
+
+
             const pulsanteSettore =
                 creaPulsanteOpzione(
                     configurazione.nome,
@@ -1240,8 +1282,8 @@ function creaBloccoSettori(
 
 
             /*
-            Un settore vuoto rimane visibile,
-            ma non può essere selezionato.
+            Il pulsante rimane visibile
+            ma diventa inattivo.
             */
 
             if (!disponibile) {
@@ -1256,8 +1298,20 @@ function creaBloccoSettori(
                 );
 
 
-                pulsanteSettore.title =
-                    "Settore non disponibile: non contiene aria da espirare.";
+                if (
+                    anemodromo.tipo ===
+                    ANEMOS_TIPI.IN
+                ) {
+
+                    pulsanteSettore.title =
+                        "Settore non disponibile: è già pieno.";
+
+                } else {
+
+                    pulsanteSettore.title =
+                        "Settore non disponibile: non contiene aria da espirare.";
+
+                }
 
             }
 
@@ -1298,11 +1352,6 @@ function creaBloccoSettori(
             );
 
 
-            /*
-            Il volume compare soltanto se
-            il settore è attivo e disponibile.
-            */
-
             if (
                 attivo &&
                 disponibile
@@ -1314,8 +1363,7 @@ function creaBloccoSettori(
                         .find(
                             elemento =>
                                 elemento.nome ===
-                                configurazione
-                                    .valore
+                                configurazione.valore
                         );
 
 
@@ -1340,7 +1388,6 @@ function creaBloccoSettori(
     return blocco;
 
 }
-
 
 
 /* =====================================================
