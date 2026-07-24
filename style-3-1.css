@@ -1,0 +1,836 @@
+/* =====================================================
+   ANEMOS 3.1
+   STILE MOBILE
+===================================================== */
+
+:root {
+    --background: #f3f1eb;
+    --surface: #ffffff;
+    --surface-soft: #e9e7df;
+
+    --text: #202723;
+    --text-soft: #68706b;
+
+    --line: #d8d7d0;
+
+    --in: #79b9d1;
+    --in-soft: #e3f2f7;
+
+    --es: #e0a15f;
+    --es-soft: #faecdc;
+
+    --dark: #26342e;
+    --danger: #a34444;
+
+    --radius-large: 24px;
+    --radius-medium: 16px;
+    --radius-small: 11px;
+
+    --shadow:
+        0 12px 30px
+        rgba(28, 38, 33, 0.10);
+}
+
+
+/* =====================================================
+   BASE
+===================================================== */
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    margin: 0;
+    min-height: 100%;
+    background: var(--background);
+    color: var(--text);
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+button,
+input {
+    font: inherit;
+}
+
+button {
+    color: inherit;
+    cursor: pointer;
+}
+
+.app {
+    width: 100%;
+    max-width: 480px;
+    min-height: 100dvh;
+
+    padding:
+        max(14px, env(safe-area-inset-top))
+        14px
+        max(20px, env(safe-area-inset-bottom));
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    min-height: 45px;
+    margin-bottom: 12px;
+}
+
+.brand {
+    margin: 0;
+
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.version {
+    display: block;
+
+    margin-top: 2px;
+
+    color: var(--text-soft);
+
+    font-size: 10px;
+    letter-spacing: 0.13em;
+}
+
+.menu-button {
+    width: 40px;
+    height: 40px;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: var(--surface);
+
+    box-shadow:
+        0 4px 14px
+        rgba(28, 38, 33, 0.07);
+
+    font-size: 20px;
+}
+
+
+/* =====================================================
+   NOME RESPIRAZIONE
+===================================================== */
+
+.nome-respirazione {
+    margin-bottom: 12px;
+}
+
+.nome-respirazione label {
+    display: block;
+
+    margin: 0 0 5px 4px;
+
+    color: var(--text-soft);
+
+    font-size: 10px;
+    font-weight: 750;
+
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.nome-respirazione input {
+    width: 100%;
+    height: 45px;
+
+    padding: 0 14px;
+
+    border: 1px solid var(--line);
+    border-radius: var(--radius-medium);
+
+    outline: none;
+
+    background:
+        rgba(255, 255, 255, 0.72);
+
+    color: var(--text);
+
+    font-size: 15px;
+}
+
+.nome-respirazione input:focus {
+    border-color: var(--dark);
+    background: var(--surface);
+}
+
+
+/* =====================================================
+   BUILDER
+===================================================== */
+
+.builder {
+    padding: 14px;
+
+    border: 1px solid var(--line);
+    border-radius: var(--radius-large);
+
+    background:
+        rgba(255, 255, 255, 0.62);
+
+    box-shadow: var(--shadow);
+}
+
+.builder-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 12px;
+}
+
+.builder-title h2 {
+    margin: 0;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.builder-title span {
+    color: var(--text-soft);
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   TIMELINE
+===================================================== */
+
+.timeline-scroll {
+    width: 100%;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 7px 2px 16px;
+
+    scrollbar-width: none;
+}
+
+.timeline-scroll::-webkit-scrollbar {
+    display: none;
+}
+
+#timeline-anemodromi {
+    display: flex;
+    align-items: center;
+
+    min-width: max-content;
+
+    gap: 7px;
+}
+
+.timeline-vuota {
+    width: 100%;
+    min-width: 250px;
+
+    padding: 18px;
+
+    border: 1px dashed var(--line);
+    border-radius: 15px;
+
+    color: var(--text-soft);
+
+    text-align: center;
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   ANEMODROMO NELLA TIMELINE
+===================================================== */
+
+.anemodromo-node {
+    position: relative;
+
+    display: grid;
+    place-items: center;
+
+    flex: 0 0 auto;
+
+    width: 58px;
+    height: 58px;
+
+    padding: 4px;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: var(--surface);
+
+    box-shadow:
+        0 3px 10px
+        rgba(30, 40, 35, 0.10),
+        inset 0 0 0 2px var(--line);
+}
+
+.anemodromo-node.selezionato {
+    box-shadow:
+        0 4px 13px
+        rgba(38, 52, 46, 0.16),
+        inset 0 0 0 3px var(--dark);
+}
+
+.anemodromo-numero {
+    position: absolute;
+
+    top: -7px;
+    right: -3px;
+
+    display: grid;
+    place-items: center;
+
+    width: 19px;
+    height: 19px;
+
+    border-radius: 50%;
+
+    background: var(--dark);
+    color: white;
+
+    font-size: 9px;
+    font-weight: 800;
+}
+
+.anemodromo-tipo {
+    margin-top: 2px;
+
+    font-size: 14px;
+    font-weight: 850;
+}
+
+.anemodromo-durata {
+    margin-top: -7px;
+
+    color: var(--text-soft);
+
+    font-size: 10px;
+    font-weight: 650;
+}
+
+
+/* IN / ES */
+
+.anemodromo-node:has(
+    .anemodromo-tipo
+) {
+    transition:
+        transform 120ms ease,
+        box-shadow 120ms ease;
+}
+
+.anemodromo-node:active {
+    transform: scale(0.96);
+}
+
+
+/* =====================================================
+   APNEA TRA DUE ANEMODROMI
+===================================================== */
+
+.apnea-link {
+    flex: 0 0 auto;
+
+    min-width: 49px;
+    height: 30px;
+
+    padding: 0 7px;
+
+    border: 1px dashed #b8bab6;
+    border-radius: 999px;
+
+    background: transparent;
+
+    color: var(--text-soft);
+
+    font-size: 9px;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+.apnea-link.attiva {
+    border-style: solid;
+
+    background: var(--surface-soft);
+
+    color: var(--text);
+}
+
+
+/* =====================================================
+   AGGIUNTA ANEMODROMO
+===================================================== */
+
+.aggiungi-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+
+    margin-top: 5px;
+}
+
+.aggiungi-anemodromo {
+    min-height: 43px;
+
+    border: 1px solid var(--line);
+    border-radius: 13px;
+
+    background: var(--surface);
+
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.aggiungi-anemodromo.in {
+    background: var(--in-soft);
+}
+
+.aggiungi-anemodromo.es {
+    background: var(--es-soft);
+}
+
+
+/* =====================================================
+   RIEPILOGO
+===================================================== */
+
+.riepilogo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 8px;
+
+    margin-top: 11px;
+    padding: 10px 12px;
+
+    border-radius: 14px;
+
+    background: #eef1ed;
+
+    color: var(--text-soft);
+
+    font-size: 11px;
+}
+
+.riepilogo strong {
+    color: var(--text);
+
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   AZIONI PRINCIPALI
+===================================================== */
+
+.azioni {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 9px;
+
+    margin-top: 13px;
+}
+
+.azione {
+    min-height: 49px;
+
+    border: 0;
+    border-radius: 15px;
+
+    font-size: 13px;
+    font-weight: 780;
+}
+
+.azione.primary {
+    background: var(--dark);
+    color: white;
+}
+
+.azione.secondary {
+    background: var(--surface);
+
+    box-shadow:
+        0 4px 14px
+        rgba(28, 38, 33, 0.07);
+}
+
+
+/* =====================================================
+   OVERLAY EDITOR
+===================================================== */
+
+#editor-anemodromo {
+    position: fixed;
+
+    z-index: 50;
+    inset: 0;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    background:
+        rgba(20, 27, 24, 0.38);
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition:
+        opacity 180ms ease;
+}
+
+#editor-anemodromo.aperto {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+
+/* =====================================================
+   BOTTOM SHEET
+===================================================== */
+
+.editor-sheet {
+    width: 100%;
+    max-width: 480px;
+
+    max-height: 90dvh;
+
+    overflow-y: auto;
+
+    padding:
+        9px
+        15px
+        max(
+            20px,
+            env(safe-area-inset-bottom)
+        );
+
+    border-radius:
+        25px
+        25px
+        0
+        0;
+
+    background: var(--background);
+
+    box-shadow:
+        0 -15px 40px
+        rgba(20, 27, 24, 0.20);
+
+    transform:
+        translateY(105%);
+
+    transition:
+        transform 220ms ease;
+}
+
+#editor-anemodromo.aperto
+.editor-sheet {
+    transform:
+        translateY(0);
+}
+
+.editor-handle {
+    width: 42px;
+    height: 5px;
+
+    margin:
+        0 auto 11px;
+
+    border-radius: 999px;
+
+    background: #babdb9;
+}
+
+
+/* =====================================================
+   HEADER EDITOR
+===================================================== */
+
+.editor-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 10px;
+}
+
+#editor-titolo {
+    margin: 0;
+
+    font-size: 18px;
+    font-weight: 800;
+}
+
+#chiudi-editor {
+    width: 37px;
+    height: 37px;
+
+    border: 0;
+    border-radius: 50%;
+
+    background: var(--surface);
+
+    font-size: 19px;
+}
+
+
+/* =====================================================
+   BLOCCHI EDITOR
+===================================================== */
+
+#editor-contenuto {
+    display: grid;
+    gap: 8px;
+}
+
+.editor-blocco {
+    padding: 11px;
+
+    border: 1px solid var(--line);
+    border-radius: var(--radius-medium);
+
+    background:
+        rgba(255, 255, 255, 0.72);
+}
+
+.editor-label {
+    margin-bottom: 8px;
+
+    color: var(--text-soft);
+
+    font-size: 10px;
+    font-weight: 800;
+
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+}
+
+
+/* =====================================================
+   PULSANTI OPZIONI
+===================================================== */
+
+.editor-opzioni {
+    display: grid;
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 5px;
+}
+
+.editor-opzioni.percorso,
+.editor-opzioni.flusso {
+    grid-template-columns:
+        repeat(2, 1fr);
+}
+
+.opzione-button {
+    min-height: 37px;
+
+    padding: 6px;
+
+    border: 1px solid var(--line);
+    border-radius: 10px;
+
+    background: transparent;
+
+    font-size: 11px;
+    font-weight: 680;
+}
+
+.opzione-button.attiva {
+    border-color: var(--dark);
+
+    background: var(--dark);
+    color: white;
+}
+
+
+/* =====================================================
+   DURATA
+===================================================== */
+
+.durata-riga {
+    display: grid;
+    grid-template-columns:
+        45px 1fr 45px;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.durata-riga button {
+    height: 39px;
+
+    border: 0;
+    border-radius: 11px;
+
+    background: var(--surface-soft);
+
+    font-size: 20px;
+}
+
+.durata-valore {
+    text-align: center;
+
+    font-size: 20px;
+    font-weight: 820;
+}
+
+
+/* =====================================================
+   SETTORI
+===================================================== */
+
+.settore-riga {
+    padding: 8px 0;
+
+    border-bottom:
+        1px solid var(--line);
+}
+
+.settore-riga:last-child {
+    padding-bottom: 0;
+    border-bottom: 0;
+}
+
+.settore-riga >
+.opzione-button {
+    width: 100%;
+
+    min-height: 36px;
+
+    text-align: left;
+
+    padding-left: 11px;
+}
+
+
+/* =====================================================
+   VOLUME DEL SINGOLO SETTORE
+===================================================== */
+
+.volume-opzioni {
+    display: grid;
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 5px;
+
+    margin-top: 6px;
+}
+
+.volume-button {
+    min-height: 32px;
+
+    padding: 4px;
+
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   FOOTER EDITOR
+===================================================== */
+
+.editor-footer {
+    display: grid;
+    grid-template-columns:
+        1fr 2fr;
+
+    gap: 8px;
+
+    margin-top: 10px;
+}
+
+.editor-elimina,
+.editor-conferma {
+    min-height: 47px;
+
+    border: 0;
+    border-radius: 14px;
+
+    font-weight: 760;
+}
+
+.editor-elimina {
+    background: #f1dddd;
+    color: var(--danger);
+}
+
+.editor-conferma {
+    background: var(--dark);
+    color: white;
+}
+
+
+/* =====================================================
+   TELEFONI PICCOLI
+===================================================== */
+
+@media (max-height: 720px) {
+
+    .app {
+        padding-top: 9px;
+    }
+
+    .topbar {
+        min-height: 38px;
+        margin-bottom: 7px;
+    }
+
+    .nome-respirazione {
+        margin-bottom: 8px;
+    }
+
+    .nome-respirazione input {
+        height: 41px;
+    }
+
+    .builder {
+        padding: 11px;
+    }
+
+    .anemodromo-node {
+        width: 53px;
+        height: 53px;
+    }
+
+    .editor-blocco {
+        padding: 9px;
+    }
+
+    #editor-contenuto {
+        gap: 6px;
+    }
+
+}
