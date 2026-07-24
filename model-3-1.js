@@ -4,15 +4,13 @@ ANEMOS 3.1
 MODELLO DATI
 =========================================================
 
-Struttura fondamentale:
-
 ANEMODROMO
 - tipo: inspiratorio / espiratorio
 - durata: secondi interi
 - percorso
 - flusso
 - settori attivi
-- volume indipendente per ogni settore
+- volume percettivo indipendente per ogni settore
 
 APNEA
 - elemento temporale separato
@@ -24,13 +22,8 @@ APNEA
 
 
 /* =====================================================
-   VALORI DISPONIBILI
+   TIPO DI ANEMODROMO
 ===================================================== */
-
-
-/*
-TIPO DI ANEMODROMO
-*/
 
 const ANEMOS_TIPI = {
     IN: "IN",
@@ -38,15 +31,10 @@ const ANEMOS_TIPI = {
 };
 
 
-/*
-PERCORSO DELL'ARIA
 
-IN:
-indica da dove entra l'aria.
-
-ES:
-indica da dove esce l'aria.
-*/
+/* =====================================================
+   PERCORSO DELL'ARIA
+===================================================== */
 
 const ANEMOS_PERCORSI = {
     NARICE_DESTRA: "narice_destra",
@@ -56,12 +44,10 @@ const ANEMOS_PERCORSI = {
 };
 
 
-/*
-FLUSSO
 
-Il flusso è unico per tutto l'Anemodromo
-e quindi comune a tutti i settori attivi.
-*/
+/* =====================================================
+   FLUSSO
+===================================================== */
 
 const ANEMOS_FLUSSI = {
     TRATTENUTO: "trattenuto",
@@ -71,10 +57,6 @@ const ANEMOS_FLUSSI = {
 };
 
 
-/*
-ICONE UFFICIALI DEL FLUSSO
-*/
-
 const ANEMOS_ICONE_FLUSSO = {
     trattenuto: "🕸️",
     delicato: "☁️",
@@ -83,9 +65,10 @@ const ANEMOS_ICONE_FLUSSO = {
 };
 
 
-/*
-SETTORI RESPIRATORI
-*/
+
+/* =====================================================
+   SETTORI RESPIRATORI
+===================================================== */
 
 const ANEMOS_SETTORI = {
     ADDOME: "addome",
@@ -94,34 +77,117 @@ const ANEMOS_SETTORI = {
 };
 
 
+
+/* =====================================================
+   VOLUME PERCETTIVO
+===================================================== */
+
 /*
-VOLUME
+Il VOLUME non rappresenta una quantità numerica
+di aria.
 
-Il volume appartiene al singolo settore.
+Rappresenta la condizione percettiva verso cui
+viene portato il singolo settore.
 
-Settori differenti dello stesso Anemodromo
-possono quindi avere volumi differenti.
+INSPIRAZIONE:
+
+BASSO
+= riempimento volutamente contenuto.
+
+CONFORTEVOLE
+= riempimento fino a una sensazione confortevole.
+
+PIENO
+= riempimento fino alla sensazione di massima
+  espansione raggiungibile.
+
+
+ESPIRAZIONE:
+
+BASSO
+= svuotamento volutamente contenuto.
+
+CONFORTEVOLE
+= svuotamento fino a una sensazione confortevole.
+
+VUOTO
+= svuotamento fino alla sensazione di massimo
+  svuotamento raggiungibile.
 */
 
+
 const ANEMOS_VOLUMI = {
-    RIDOTTO: "ridotto",
-    NATURALE: "naturale",
-    COMPLETO: "completo"
+
+    BASSO: "basso",
+
+    CONFORTEVOLE: "confortevole",
+
+    PIENO: "pieno",
+
+    VUOTO: "vuoto"
+
 };
+
+
+
+/* =====================================================
+   VOLUMI DISPONIBILI SECONDO IL TIPO
+===================================================== */
+
+function ottieniVolumiPerTipo(tipo) {
+
+    if (tipo === ANEMOS_TIPI.ES) {
+
+        return [
+            ANEMOS_VOLUMI.BASSO,
+            ANEMOS_VOLUMI.CONFORTEVOLE,
+            ANEMOS_VOLUMI.VUOTO
+        ];
+
+    }
+
+
+    return [
+        ANEMOS_VOLUMI.BASSO,
+        ANEMOS_VOLUMI.CONFORTEVOLE,
+        ANEMOS_VOLUMI.PIENO
+    ];
+
+}
+
+
+
+/* =====================================================
+   VOLUME PREDEFINITO
+===================================================== */
+
+function volumePredefinitoPerTipo(tipo) {
+
+    return ANEMOS_VOLUMI.CONFORTEVOLE;
+
+}
+
+
+
+/* =====================================================
+   CONTROLLO VALIDITÀ VOLUME
+===================================================== */
+
+function volumeValidoPerTipo(
+    tipo,
+    volume
+) {
+
+    return ottieniVolumiPerTipo(tipo)
+        .includes(volume);
+
+}
 
 
 
 /* =====================================================
    UTILITÀ
 ===================================================== */
-
-
-/*
-Genera un identificatore semplice.
-
-Serve per distinguere Anemodromi e apnee
-anche quando vengono spostati o modificati.
-*/
 
 function creaId(prefisso = "elemento") {
 
@@ -138,13 +204,11 @@ function creaId(prefisso = "elemento") {
 }
 
 
-/*
-Converte un valore in secondi interi.
 
-Non sono ammesse frazioni di secondo.
-*/
-
-function normalizzaSecondi(valore, minimo = 0) {
+function normalizzaSecondi(
+    valore,
+    minimo = 0
+) {
 
     const numero = Number(valore);
 
@@ -165,16 +229,9 @@ function normalizzaSecondi(valore, minimo = 0) {
    SETTORE RESPIRATORIO
 ===================================================== */
 
-
-/*
-Crea un settore attivo.
-
-Ogni settore possiede il proprio volume.
-*/
-
 function creaSettore(
     nome,
-    volume = ANEMOS_VOLUMI.NATURALE
+    volume = ANEMOS_VOLUMI.CONFORTEVOLE
 ) {
 
     return {
@@ -190,34 +247,27 @@ function creaSettore(
    ANEMODROMO
 ===================================================== */
 
-
-/*
-Crea un nuovo Anemodromo.
-
-Non imponiamo settori di default:
-sarà l'utente a scegliere quali settori
-devono partecipare all'Anemodromo.
-
-La durata minima è 1 secondo.
-*/
-
 function creaAnemodromo(
     tipo = ANEMOS_TIPI.IN
 ) {
 
     return {
 
-        id: creaId("anemodromo"),
+        id: creaId(
+            "anemodromo"
+        ),
 
         tipo: tipo,
 
         durata: 1,
 
         percorso:
-            ANEMOS_PERCORSI.ENTRAMBE_NARICI,
+            ANEMOS_PERCORSI
+                .ENTRAMBE_NARICI,
 
         flusso:
-            ANEMOS_FLUSSI.SPONTANEO,
+            ANEMOS_FLUSSI
+                .SPONTANEO,
 
         settori: []
 
@@ -228,38 +278,30 @@ function creaAnemodromo(
 
 
 /* =====================================================
-   GESTIONE SETTORI DELL'ANEMODROMO
+   GESTIONE SETTORI
 ===================================================== */
-
-
-/*
-Verifica se un settore è già attivo.
-*/
 
 function settoreAttivo(
     anemodromo,
     nomeSettore
 ) {
 
-    return anemodromo.settori.some(
-        settore =>
-            settore.nome === nomeSettore
-    );
+    return anemodromo
+        .settori
+        .some(
+            settore =>
+                settore.nome ===
+                nomeSettore
+        );
 
 }
 
 
-/*
-Attiva un settore.
-
-Se il settore è già presente
-non viene duplicato.
-*/
 
 function attivaSettore(
     anemodromo,
     nomeSettore,
-    volume = ANEMOS_VOLUMI.NATURALE
+    volume = null
 ) {
 
     if (
@@ -268,24 +310,34 @@ function attivaSettore(
             nomeSettore
         )
     ) {
+
         return anemodromo;
+
     }
 
+
+    const volumeIniziale =
+        volume ||
+        volumePredefinitoPerTipo(
+            anemodromo.tipo
+        );
+
+
     anemodromo.settori.push(
+
         creaSettore(
             nomeSettore,
-            volume
+            volumeIniziale
         )
+
     );
+
 
     return anemodromo;
 
 }
 
 
-/*
-Disattiva un settore.
-*/
 
 function disattivaSettore(
     anemodromo,
@@ -295,20 +347,20 @@ function disattivaSettore(
     anemodromo.settori =
         anemodromo.settori.filter(
             settore =>
-                settore.nome !== nomeSettore
+                settore.nome !==
+                nomeSettore
         );
+
 
     return anemodromo;
 
 }
 
 
-/*
-Imposta il volume di un singolo settore.
 
-Il volume degli altri settori
-rimane invariato.
-*/
+/* =====================================================
+   MODIFICA VOLUME DEL SETTORE
+===================================================== */
 
 function impostaVolumeSettore(
     anemodromo,
@@ -316,17 +368,34 @@ function impostaVolumeSettore(
     volume
 ) {
 
+    if (
+        !volumeValidoPerTipo(
+            anemodromo.tipo,
+            volume
+        )
+    ) {
+
+        return false;
+
+    }
+
+
     const settore =
         anemodromo.settori.find(
             elemento =>
-                elemento.nome === nomeSettore
+                elemento.nome ===
+                nomeSettore
         );
+
 
     if (!settore) {
         return false;
     }
 
-    settore.volume = volume;
+
+    settore.volume =
+        volume;
+
 
     return true;
 
@@ -335,21 +404,84 @@ function impostaVolumeSettore(
 
 
 /* =====================================================
-   MODIFICA ANEMODROMO
+   MODIFICA TIPO
 ===================================================== */
 
+/*
+Quando un Anemodromo cambia da IN a ES
+o viceversa, eventuali valori incompatibili
+vengono convertiti.
+
+PIENO → VUOTO
+quando IN diventa ES.
+
+VUOTO → PIENO
+quando ES diventa IN.
+
+BASSO e CONFORTEVOLE restano invariati.
+*/
 
 function impostaTipo(
     anemodromo,
     tipo
 ) {
 
-    anemodromo.tipo = tipo;
+    const vecchioTipo =
+        anemodromo.tipo;
+
+
+    if (vecchioTipo === tipo) {
+
+        return anemodromo;
+
+    }
+
+
+    anemodromo.tipo =
+        tipo;
+
+
+    anemodromo.settori.forEach(
+        settore => {
+
+            if (
+                tipo ===
+                    ANEMOS_TIPI.ES &&
+                settore.volume ===
+                    ANEMOS_VOLUMI.PIENO
+            ) {
+
+                settore.volume =
+                    ANEMOS_VOLUMI.VUOTO;
+
+            }
+
+
+            if (
+                tipo ===
+                    ANEMOS_TIPI.IN &&
+                settore.volume ===
+                    ANEMOS_VOLUMI.VUOTO
+            ) {
+
+                settore.volume =
+                    ANEMOS_VOLUMI.PIENO;
+
+            }
+
+        }
+    );
+
 
     return anemodromo;
 
 }
 
+
+
+/* =====================================================
+   DURATA
+===================================================== */
 
 function impostaDurata(
     anemodromo,
@@ -362,10 +494,16 @@ function impostaDurata(
             1
         );
 
+
     return anemodromo;
 
 }
 
+
+
+/* =====================================================
+   PERCORSO
+===================================================== */
 
 function impostaPercorso(
     anemodromo,
@@ -375,10 +513,16 @@ function impostaPercorso(
     anemodromo.percorso =
         percorso;
 
+
     return anemodromo;
 
 }
 
+
+
+/* =====================================================
+   FLUSSO
+===================================================== */
 
 function impostaFlusso(
     anemodromo,
@@ -387,6 +531,7 @@ function impostaFlusso(
 
     anemodromo.flusso =
         flusso;
+
 
     return anemodromo;
 
@@ -398,27 +543,6 @@ function impostaFlusso(
    APNEA
 ===================================================== */
 
-
-/*
-L'apnea NON è contenuta nell'Anemodromo.
-
-È un elemento temporale autonomo
-posto tra due Anemodromi.
-
-Questo permette sequenze come:
-
-IN
-IN
-APNEA
-IN
-ES
-APNEA
-ES
-
-senza imporre automaticamente
-la classica sequenza respiratoria.
-*/
-
 function creaApnea(
     anemodromoPrecedenteId,
     anemodromoSuccessivoId,
@@ -427,7 +551,10 @@ function creaApnea(
 
     return {
 
-        id: creaId("apnea"),
+        id:
+            creaId(
+                "apnea"
+            ),
 
         precedente:
             anemodromoPrecedenteId,
@@ -451,23 +578,14 @@ function creaApnea(
    SEQUENZA ANEMOS
 ===================================================== */
 
-
-/*
-La sequenza mantiene separati:
-
-1. gli Anemodromi
-2. il loro ordine
-3. le eventuali apnee tra essi
-
-Questa separazione sarà utile soprattutto
-per la timeline grafica di ANEMOS 3.1.
-*/
-
 function creaSequenzaAnemos() {
 
     return {
 
-        id: creaId("sequenza"),
+        id:
+            creaId(
+                "sequenza"
+            ),
 
         anemodromi: [],
 
@@ -482,9 +600,8 @@ function creaSequenzaAnemos() {
 
 
 /* =====================================================
-   AGGIUNTA ANEMODROMI ALLA SEQUENZA
+   AGGIUNTA ANEMODROMO
 ===================================================== */
-
 
 function aggiungiAnemodromo(
     sequenza,
@@ -499,6 +616,7 @@ function aggiungiAnemodromo(
         anemodromo.id
     );
 
+
     return anemodromo;
 
 }
@@ -508,7 +626,6 @@ function aggiungiAnemodromo(
 /* =====================================================
    RICERCA ANEMODROMO
 ===================================================== */
-
 
 function trovaAnemodromo(
     sequenza,
@@ -527,14 +644,8 @@ function trovaAnemodromo(
 
 
 /* =====================================================
-   APNEA TRA DUE ANEMODROMI
+   RICERCA APNEA
 ===================================================== */
-
-
-/*
-Trova l'eventuale apnea già presente
-tra due Anemodromi.
-*/
 
 function trovaApneaTra(
     sequenza,
@@ -555,12 +666,10 @@ function trovaApneaTra(
 }
 
 
-/*
-Inserisce un'apnea.
 
-Tra la stessa coppia di Anemodromi
-può esistere una sola apnea.
-*/
+/* =====================================================
+   INSERIMENTO APNEA
+===================================================== */
 
 function inserisciApnea(
     sequenza,
@@ -576,6 +685,7 @@ function inserisciApnea(
             successivoId
         );
 
+
     if (esistente) {
 
         esistente.durata =
@@ -583,6 +693,7 @@ function inserisciApnea(
                 durata,
                 1
             );
+
 
         return esistente;
 
@@ -608,12 +719,9 @@ function inserisciApnea(
 
 
 
-/*
-Rimuove l'apnea tra due Anemodromi.
-
-I due Anemodromi restano direttamente
-consecutivi.
-*/
+/* =====================================================
+   RIMOZIONE APNEA
+===================================================== */
 
 function rimuoviApnea(
     sequenza,
@@ -640,15 +748,10 @@ function rimuoviApnea(
    ELIMINAZIONE ANEMODROMO
 ===================================================== */
 
-
 function eliminaAnemodromo(
     sequenza,
     anemodromoId
 ) {
-
-    /*
-    Rimuove l'Anemodromo.
-    */
 
     sequenza.anemodromi =
         sequenza.anemodromi.filter(
@@ -658,10 +761,6 @@ function eliminaAnemodromo(
         );
 
 
-    /*
-    Rimuove l'Anemodromo dall'ordine.
-    */
-
     sequenza.ordine =
         sequenza.ordine.filter(
             id =>
@@ -669,11 +768,6 @@ function eliminaAnemodromo(
                 anemodromoId
         );
 
-
-    /*
-    Elimina automaticamente eventuali
-    apnee collegate all'Anemodromo.
-    */
 
     sequenza.apnee =
         sequenza.apnee.filter(
@@ -689,20 +783,15 @@ function eliminaAnemodromo(
 
 
 /* =====================================================
-   LETTURA DELLA SEQUENZA
+   ANEMODROMI ORDINATI
 ===================================================== */
-
-
-/*
-Restituisce gli Anemodromi
-nell'ordine corretto.
-*/
 
 function ottieniAnemodromiOrdinati(
     sequenza
 ) {
 
     return sequenza.ordine
+
         .map(
             id =>
                 trovaAnemodromo(
@@ -710,6 +799,7 @@ function ottieniAnemodromiOrdinati(
                     id
                 )
         )
+
         .filter(Boolean);
 
 }
@@ -717,14 +807,8 @@ function ottieniAnemodromiOrdinati(
 
 
 /* =====================================================
-   VALIDAZIONE
+   VALIDAZIONE ANEMODROMO
 ===================================================== */
-
-
-/*
-Controlla che un Anemodromo
-sia completo e utilizzabile.
-*/
 
 function validaAnemodromo(
     anemodromo
@@ -762,7 +846,8 @@ function validaAnemodromo(
 
 
     if (
-        anemodromo.settori.length === 0
+        anemodromo.settori.length ===
+        0
     ) {
 
         errori.push(
@@ -770,6 +855,26 @@ function validaAnemodromo(
         );
 
     }
+
+
+    anemodromo.settori.forEach(
+        settore => {
+
+            if (
+                !volumeValidoPerTipo(
+                    anemodromo.tipo,
+                    settore.volume
+                )
+            ) {
+
+                errori.push(
+                    "Volume non compatibile con il tipo di Anemodromo."
+                );
+
+            }
+
+        }
+    );
 
 
     return {
@@ -787,19 +892,8 @@ function validaAnemodromo(
 
 
 /* =====================================================
-   STATO INIZIALE ANEMOS 3.1
+   STATO INIZIALE
 ===================================================== */
-
-
-/*
-Creiamo una sequenza vuota.
-
-Non aggiungiamo automaticamente
-alcun Anemodromo:
-
-sarà l'interfaccia a decidere
-quando crearne il primo.
-*/
 
 const anemos31 =
     creaSequenzaAnemos();
