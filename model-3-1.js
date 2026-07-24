@@ -795,19 +795,24 @@ function creaStatoSettoriVuoto() {
 
     return {
 
-        [ANEMOS_SETTORI.ADDOME]:
-            false,
+        [ANEMOS_SETTORI.ADDOME]: {
+            contieneAria: false,
+            pieno: false
+        },
 
-        [ANEMOS_SETTORI.TORACE_INFERIORE]:
-            false,
+        [ANEMOS_SETTORI.TORACE_INFERIORE]: {
+            contieneAria: false,
+            pieno: false
+        },
 
-        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
-            false
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]: {
+            contieneAria: false,
+            pieno: false
+        }
 
     };
 
 }
-
 
 
 /*
@@ -820,33 +825,61 @@ function copiaStatoSettori(
 
     return {
 
-        [ANEMOS_SETTORI.ADDOME]:
-            Boolean(
-                stato[
-                    ANEMOS_SETTORI.ADDOME
-                ]
-            ),
+        [ANEMOS_SETTORI.ADDOME]: {
+            contieneAria:
+                Boolean(
+                    stato[
+                        ANEMOS_SETTORI.ADDOME
+                    ].contieneAria
+                ),
 
-        [ANEMOS_SETTORI.TORACE_INFERIORE]:
-            Boolean(
-                stato[
-                    ANEMOS_SETTORI
-                        .TORACE_INFERIORE
-                ]
-            ),
+            pieno:
+                Boolean(
+                    stato[
+                        ANEMOS_SETTORI.ADDOME
+                    ].pieno
+                )
+        },
 
-        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
-            Boolean(
-                stato[
-                    ANEMOS_SETTORI
-                        .TORACE_SUPERIORE
-                ]
-            )
+        [ANEMOS_SETTORI.TORACE_INFERIORE]: {
+            contieneAria:
+                Boolean(
+                    stato[
+                        ANEMOS_SETTORI
+                            .TORACE_INFERIORE
+                    ].contieneAria
+                ),
+
+            pieno:
+                Boolean(
+                    stato[
+                        ANEMOS_SETTORI
+                            .TORACE_INFERIORE
+                    ].pieno
+                )
+        },
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]: {
+            contieneAria:
+                Boolean(
+                    stato[
+                        ANEMOS_SETTORI
+                            .TORACE_SUPERIORE
+                    ].contieneAria
+                ),
+
+            pieno:
+                Boolean(
+                    stato[
+                        ANEMOS_SETTORI
+                            .TORACE_SUPERIORE
+                    ].pieno
+                )
+        }
 
     };
 
 }
-
 
 
 /*
@@ -889,8 +922,25 @@ function applicaAnemodromoAlloStato(
                 ANEMOS_TIPI.IN
             ) {
 
-                nuovoStato[nome] =
-                    true;
+                nuovoStato[nome]
+                    .contieneAria = true;
+
+
+                if (
+                    settore.volume ===
+                    ANEMOS_VOLUMI.PIENO
+                ) {
+
+                    nuovoStato[nome]
+                        .pieno = true;
+
+                } else {
+
+                    nuovoStato[nome]
+                        .pieno = false;
+
+                }
+
 
                 return;
 
@@ -899,20 +949,12 @@ function applicaAnemodromoAlloStato(
 
             if (
                 anemodromo.tipo ===
-                    ANEMOS_TIPI.ES
+                ANEMOS_TIPI.ES
             ) {
-
-                /*
-                Se il settore era già vuoto,
-                rimane vuoto.
-
-                Questo controllo verrà poi
-                anticipato dall'interfaccia,
-                che impedirà la selezione.
-                */
 
                 if (
                     !nuovoStato[nome]
+                        .contieneAria
                 ) {
 
                     return;
@@ -920,18 +962,28 @@ function applicaAnemodromoAlloStato(
                 }
 
 
+                /*
+                Qualsiasi espirazione rende
+                nuovamente disponibile il settore
+                a una successiva inspirazione.
+                */
+
+                nuovoStato[nome]
+                    .pieno = false;
+
+
                 if (
                     settore.volume ===
                     ANEMOS_VOLUMI.VUOTO
                 ) {
 
-                    nuovoStato[nome] =
-                        false;
+                    nuovoStato[nome]
+                        .contieneAria = false;
 
                 } else {
 
-                    nuovoStato[nome] =
-                        true;
+                    nuovoStato[nome]
+                        .contieneAria = true;
 
                 }
 
@@ -944,7 +996,6 @@ function applicaAnemodromoAlloStato(
     return nuovoStato;
 
 }
-
 
 
 /*
@@ -1031,11 +1082,10 @@ function settoreDisponibilePerEspirazione(
         );
 
 
-    return Boolean(
-        stato[nomeSettore]
-    );
-
-}
+   return Boolean(
+    stato[nomeSettore]
+        .contieneAria
+);
 
 
 
@@ -1057,13 +1107,65 @@ function settoriDisponibiliPerEspirazione(
 
 
     return ANEMOS_ELENCO_SETTORI
-        .filter(
-            settore =>
-                stato[settore]
+    .filter(
+        settore =>
+            stato[settore]
+                .contieneAria
+    );
+/*
+Verifica se un settore è disponibile
+per un nuovo Anemodromo IN.
+
+È disponibile finché non risulta pieno.
+*/
+
+function settoreDisponibilePerInspirazione(
+    sequenza,
+    anemodromoId,
+    nomeSettore
+) {
+
+    const stato =
+        statoSettoriPrimaDi(
+            sequenza,
+            anemodromoId
         );
+
+
+    return !Boolean(
+        stato[nomeSettore]
+            .pieno
+    );
 
 }
 
+
+
+/*
+Restituisce tutti i settori ancora
+disponibili per una nuova inspirazione.
+*/
+
+function settoriDisponibiliPerInspirazione(
+    sequenza,
+    anemodromoId
+) {
+
+    const stato =
+        statoSettoriPrimaDi(
+            sequenza,
+            anemodromoId
+        );
+
+
+    return ANEMOS_ELENCO_SETTORI
+        .filter(
+            settore =>
+                !stato[settore]
+                    .pieno
+        );
+
+}
 
 
 /*
