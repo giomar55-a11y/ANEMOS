@@ -306,7 +306,11 @@ function aggiornaDisponibilitaAggiunta() {
                 "elimina-anemodromo"
             );
 
-
+        const pulsanteEliminaTutto =
+            document.getElementById(
+                "elimina-tutto"
+                
+    );
         const pulsanteConferma =
             document.getElementById(
                 "conferma-anemodromo"
@@ -404,7 +408,47 @@ function aggiornaDisponibilitaAggiunta() {
 
                 }
             );
+/*
+-----------------------------------------------
+Eliminazione intera sequenza
+-----------------------------------------------
+*/
 
+pulsanteEliminaTutto
+    .addEventListener(
+        "click",
+        function () {
+
+            const conferma =
+                window.confirm(
+                    "Eliminare tutti gli Anemodromi e tutte le apnee della sequenza?"
+                );
+
+            if (!conferma) {
+                return;
+            }
+
+            anemos31.anemodromi = [];
+            anemos31.ordine = [];
+            anemos31.apnee = [];
+
+            anemodromoSelezionatoId = null;
+
+            const editor =
+                document.getElementById(
+                    "editor-anemodromo"
+                );
+
+            if (editor) {
+                editor.classList.remove(
+                    "aperto"
+                );
+            }
+
+            renderAnemos31();
+
+        }
+    );
 
 
         /*
