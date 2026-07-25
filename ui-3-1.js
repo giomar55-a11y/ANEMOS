@@ -154,33 +154,34 @@ function renderTimeline() {
             );
 
 
-            const successivo =
-                anemodromi[
-                    indice + 1
-                ];
+           const successivo =
+    anemodromi[
+        indice + 1
+    ] || null;
 
 
-            if (successivo) {
+/*
+Dopo OGNI Anemodromo mostriamo
+il comando per l'eventuale apnea.
 
-                const collegamento =
-                    creaCollegamento(
-                        anemodromo,
-                        successivo
-                    );
+Se non esiste ancora un Anemodromo
+successivo, sarà un'apnea finale.
+*/
+
+const collegamento =
+    creaCollegamento(
+        anemodromo,
+        successivo
+    );
 
 
-                ui.timeline.appendChild(
-                    collegamento
-                );
-
-            }
-
+ui.timeline.appendChild(
+    collegamento
+);
         }
     );
 
 }
-
-
 
 /* =====================================================
    NODO ANEMODROMO
@@ -299,7 +300,7 @@ function creaNodoAnemodromo(
 
 function creaCollegamento(
     precedente,
-    successivo
+    successivo = null
 ) {
 
     const wrapper =
@@ -316,11 +317,17 @@ function creaCollegamento(
         "apnea-link";
 
 
+    const successivoId =
+        successivo
+            ? successivo.id
+            : null;
+
+
     const apnea =
         trovaApneaTra(
             anemos31,
             precedente.id,
-            successivo.id
+            successivoId
         );
 
 
@@ -343,6 +350,23 @@ function creaCollegamento(
 
     }
 
+
+    wrapper.addEventListener(
+        "click",
+        function () {
+
+            modificaApneaTra(
+                precedente.id,
+                successivoId
+            );
+
+        }
+    );
+
+
+    return wrapper;
+
+}
 
     wrapper.addEventListener(
         "click",
