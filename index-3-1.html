@@ -260,7 +260,46 @@
             document.getElementById(
                 "aggiungi-es"
             );
+function aggiornaDisponibilitaAggiunta() {
 
+    const stato =
+        statoSettoriFinale(
+            anemos31
+        );
+
+
+    const tuttiPieni =
+        stato[
+            ANEMOS_SETTORI.ADDOME
+        ] === 4 &&
+        stato[
+            ANEMOS_SETTORI.TORACE_INFERIORE
+        ] === 4 &&
+        stato[
+            ANEMOS_SETTORI.TORACE_SUPERIORE
+        ] === 4;
+
+
+    const tuttiVuoti =
+        stato[
+            ANEMOS_SETTORI.ADDOME
+        ] === 0 &&
+        stato[
+            ANEMOS_SETTORI.TORACE_INFERIORE
+        ] === 0 &&
+        stato[
+            ANEMOS_SETTORI.TORACE_SUPERIORE
+        ] === 0;
+
+
+    pulsanteAggiungiIN.disabled =
+        tuttiPieni;
+
+
+    pulsanteAggiungiES.disabled =
+        tuttiVuoti;
+
+}
 
         const pulsanteElimina =
             document.getElementById(
@@ -450,14 +489,15 @@
 
 
         renderAnemos31 =
-            function () {
+    function () {
 
-                renderOriginaleAnemos31();
+        renderOriginaleAnemos31();
 
-                aggiornaDurataTotale();
+        aggiornaDurataTotale();
 
-            };
+        aggiornaDisponibilitaAggiunta();
 
+    };
 
 
         /*
@@ -469,6 +509,8 @@
         inizializzaUIAnemos31();
 
         aggiornaDurataTotale();
+
+        aggiornaDisponibilitaAggiunta();
 
     </script>
 
