@@ -1408,7 +1408,162 @@ function etichettaVolume(
         volume;
 
 }
+/* =====================================================
+   ICONA GRAFICA DEL VOLUME
+===================================================== */
 
+/*
+Riprende il linguaggio grafico ANEMOS
+dei cerchi concentrici.
+
+0 = Vuoto
+1 = Scarso
+2 = Confortevole
+3 = Abbondante
+4 = Pieno
+*/
+
+function creaIconaVolume(
+    volume
+) {
+
+    const livello =
+        livelloVolume(
+            volume
+        );
+
+
+    const contenitore =
+        document.createElement(
+            "span"
+        );
+
+
+    contenitore.className =
+        "volume-icon";
+
+
+    /*
+    SVG monocromatico:
+    quattro livelli concentrici.
+    */
+
+    const svgNS =
+        "http://www.w3.org/2000/svg";
+
+
+    const svg =
+        document.createElementNS(
+            svgNS,
+            "svg"
+        );
+
+
+    svg.setAttribute(
+        "viewBox",
+        "0 0 40 40"
+    );
+
+
+    svg.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    const cerchi = [
+
+        {
+            r: 5,
+            livello: 1
+        },
+
+        {
+            r: 10,
+            livello: 2
+        },
+
+        {
+            r: 15,
+            livello: 3
+        },
+
+        {
+            r: 19,
+            livello: 4
+        }
+
+    ];
+
+
+    /*
+    Disegniamo dall'esterno verso l'interno
+    per mantenere visibili le separazioni.
+    */
+
+    [...cerchi]
+        .reverse()
+        .forEach(
+            configurazione => {
+
+                const cerchio =
+                    document.createElementNS(
+                        svgNS,
+                        "circle"
+                    );
+
+
+                cerchio.setAttribute(
+                    "cx",
+                    "20"
+                );
+
+
+                cerchio.setAttribute(
+                    "cy",
+                    "20"
+                );
+
+
+                cerchio.setAttribute(
+                    "r",
+                    configurazione.r
+                );
+
+
+                cerchio.classList.add(
+                    "volume-ring"
+                );
+
+
+                if (
+                    livello >=
+                    configurazione.livello
+                ) {
+
+                    cerchio.classList.add(
+                        "riempito"
+                    );
+
+                }
+
+
+                svg.appendChild(
+                    cerchio
+                );
+
+            }
+        );
+
+
+    contenitore.appendChild(
+        svg
+    );
+
+
+    return contenitore;
+
+}
 
 
 /* =====================================================
@@ -1465,20 +1620,56 @@ function creaSelettoreVolume(
         volume => {
 
             const pulsante =
-                creaPulsanteOpzione(
-                    etichettaVolume(
-                        volume
-                    ),
-
-                    settore.volume ===
-                        volume
-                );
+    creaPulsanteOpzione(
+        "",
+        settore.volume ===
+            volume
+    );
 
 
-            pulsante.classList.add(
-                "volume-button"
-            );
+pulsante.classList.add(
+    "volume-button"
+);
 
+
+/*
+Icona ANEMOS del livello.
+*/
+
+const icona =
+    creaIconaVolume(
+        volume
+    );
+
+
+/*
+Aggettivo del volume.
+*/
+
+const testo =
+    document.createElement(
+        "span"
+    );
+
+
+testo.className =
+    "volume-label";
+
+
+testo.textContent =
+    etichettaVolume(
+        volume
+    );
+
+
+pulsante.appendChild(
+    icona
+);
+
+
+pulsante.appendChild(
+    testo
+);
 
             const consentito =
                 disponibili.includes(
