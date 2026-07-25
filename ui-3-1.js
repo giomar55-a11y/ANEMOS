@@ -1427,10 +1427,38 @@ function creaIconaVolume(
     volume
 ) {
 
+    /*
+    Livelli grafici:
+
+    VUOTO        = 0
+    SCARSO       = 1
+    CONFORTEVOLE = 2
+    ABBONDANTE   = 3
+    PIENO        = 4
+    */
+
+    const livelli = {
+
+        [ANEMOS_VOLUMI.VUOTO]:
+            0,
+
+        [ANEMOS_VOLUMI.SCARSO]:
+            1,
+
+        [ANEMOS_VOLUMI.CONFORTEVOLE]:
+            2,
+
+        [ANEMOS_VOLUMI.ABBONDANTE]:
+            3,
+
+        [ANEMOS_VOLUMI.PIENO]:
+            4
+
+    };
+
+
     const livello =
-        livelloVolume(
-            volume
-        );
+        livelli[volume] ?? 0;
 
 
     const contenitore =
@@ -1442,11 +1470,6 @@ function creaIconaVolume(
     contenitore.className =
         "volume-icon";
 
-
-    /*
-    SVG monocromatico:
-    quattro livelli concentrici.
-    */
 
     const svgNS =
         "http://www.w3.org/2000/svg";
@@ -1471,89 +1494,106 @@ function creaIconaVolume(
     );
 
 
-    const cerchi = [
+    /*
+    Quattro anelli concentrici.
 
-        {
-            r: 5,
-            livello: 1
-        },
+    Non sono cerchi pieni sovrapposti:
+    ciascun livello è un anello distinto.
+    */
 
-        {
-            r: 10,
-            livello: 2
-        },
-
-        {
-            r: 15,
-            livello: 3
-        },
-
-        {
-            r: 19,
-            livello: 4
-        }
-
+    const raggi = [
+        4,
+        9,
+        14,
+        19
     ];
 
 
-    /*
-    Disegniamo dall'esterno verso l'interno
-    per mantenere visibili le separazioni.
-    */
+    raggi.forEach(
+        (
+            raggio,
+            indice
+        ) => {
 
-    [...cerchi]
-        .reverse()
-        .forEach(
-            configurazione => {
-
-                const cerchio =
-                    document.createElementNS(
-                        svgNS,
-                        "circle"
-                    );
-
-
-                cerchio.setAttribute(
-                    "cx",
-                    "20"
+            const cerchio =
+                document.createElementNS(
+                    svgNS,
+                    "circle"
                 );
 
 
+            cerchio.setAttribute(
+                "cx",
+                "20"
+            );
+
+
+            cerchio.setAttribute(
+                "cy",
+                "20"
+            );
+
+
+            cerchio.setAttribute(
+                "r",
+                raggio
+            );
+
+
+            cerchio.setAttribute(
+                "fill",
+                "none"
+            );
+
+
+            cerchio.setAttribute(
+                "stroke",
+                "currentColor"
+            );
+
+
+            /*
+            Livello raggiunto:
+            anello marcato.
+
+            Livello non raggiunto:
+            semplice circonferenza sottile.
+            */
+
+            if (
+                indice < livello
+            ) {
+
                 cerchio.setAttribute(
-                    "cy",
-                    "20"
+                    "stroke-width",
+                    "5"
                 );
 
-
-                cerchio.setAttribute(
-                    "r",
-                    configurazione.r
+                cerchio.classList.add(
+                    "volume-ring",
+                    "riempito"
                 );
 
+            } else {
+
+                cerchio.setAttribute(
+                    "stroke-width",
+                    "1.3"
+                );
 
                 cerchio.classList.add(
                     "volume-ring"
                 );
 
-
-                if (
-                    livello >=
-                    configurazione.livello
-                ) {
-
-                    cerchio.classList.add(
-                        "riempito"
-                    );
-
-                }
-
-
-                svg.appendChild(
-                    cerchio
-                );
-
             }
-        );
+
+
+            svg.appendChild(
+                cerchio
+            );
+
+        }
+    );
 
 
     contenitore.appendChild(
@@ -1564,8 +1604,6 @@ function creaIconaVolume(
     return contenitore;
 
 }
-
-
 /* =====================================================
    VOLUME SINGOLO SETTORE
 ===================================================== */
