@@ -367,23 +367,7 @@ function creaCollegamento(
     return wrapper;
 
 }
-
-    wrapper.addEventListener(
-        "click",
-        function () {
-
-            modificaApneaTra(
-                precedente.id,
-                successivo.id
-            );
-
-        }
-    );
-
-
-    return wrapper;
-
-}
+    
 
 
 
