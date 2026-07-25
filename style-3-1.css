@@ -835,103 +835,179 @@ button {
 
 }
 /* =====================================================
-   VOLUMI — ICONE ANEMOS + GRIGLIA 2 × 2
+   VOLUMI — ANEMOS
+   4 PULSANTI IN GRIGLIA 2 × 2
 ===================================================== */
 
 .volume-opzioni {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
+    display: grid !important;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        minmax(0, 1fr) !important;
+
+    gap: 7px !important;
+
     width: 100%;
-    margin-top: 8px;
+
+    margin-top: 7px;
 }
 
 
-/* Pulsante volume */
+/* =====================================================
+   PULSANTE VOLUME
+===================================================== */
 
-.volume-button {
-    min-width: 0;
-    min-height: 48px;
+.volume-opzioni .volume-button {
+    width: 100% !important;
+    min-width: 0 !important;
 
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
+    height: 50px !important;
+    min-height: 50px !important;
 
-    gap: 8px;
+    padding: 5px 10px !important;
 
-    padding: 7px 10px;
+    display: flex !important;
+
+    flex-direction: row !important;
+
+    align-items: center !important;
+
+    justify-content: flex-start !important;
+
+    gap: 9px !important;
 
     white-space: nowrap;
+
+    box-sizing: border-box;
 }
 
 
-/* Icona */
+/* =====================================================
+   ICONA
+===================================================== */
 
-.volume-icon {
-    width: 30px;
-    height: 30px;
+.volume-opzioni .volume-icon {
+    width: 34px !important;
+    height: 34px !important;
 
-    flex: 0 0 30px;
+    min-width: 34px !important;
+    max-width: 34px !important;
 
-    display: flex;
+    flex:
+        0 0 34px !important;
+
+    display: inline-flex !important;
+
     align-items: center;
     justify-content: center;
+
+    line-height: 0;
 }
 
 
-.volume-icon svg {
-    display: block;
+.volume-opzioni .volume-icon svg {
+    display: block !important;
 
-    width: 30px;
-    height: 30px;
+    width: 34px !important;
+    height: 34px !important;
+
+    min-width: 34px !important;
+    max-width: 34px !important;
 
     overflow: visible;
 }
 
 
-/* Cerchi concentrici */
+/* =====================================================
+   TESTO
+===================================================== */
 
-.volume-ring {
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.5;
-}
-
-
-/*
-I livelli raggiunti vengono riempiti.
-
-Manteniamo tutto monocromatico:
-nessuna scala di colori o intensità.
-*/
-
-.volume-ring.riempito {
-    fill: currentColor;
-}
-
-
-/* Testo */
-
-.volume-label {
+.volume-opzioni .volume-label {
     display: block;
 
     min-width: 0;
 
-    font-size: 13px;
-    line-height: 1.1;
+    font-size: 12px;
+
+    font-weight: 600;
+
+    line-height: 1;
 
     text-align: left;
 }
 
 
-/* Pulsanti non disponibili */
+/* =====================================================
+   STATO DISABILITATO
+===================================================== */
 
+.volume-opzioni
 .volume-button:disabled {
+
     cursor: default;
 }
 
 
 /* =====================================================
+   SCHERMI STRETTI
+===================================================== */
+
+@media (max-width: 390px) {
+
+    .volume-opzioni {
+
+        gap: 5px !important;
+
+    }
+
+
+    .volume-opzioni
+    .volume-button {
+
+        padding:
+            5px 7px !important;
+
+        gap: 6px !important;
+
+    }
+
+
+    .volume-opzioni
+    .volume-icon {
+
+        width: 30px !important;
+        height: 30px !important;
+
+        min-width: 30px !important;
+        max-width: 30px !important;
+
+        flex-basis:
+            30px !important;
+
+    }
+
+
+    .volume-opzioni
+    .volume-icon svg {
+
+        width: 30px !important;
+        height: 30px !important;
+
+        min-width: 30px !important;
+        max-width: 30px !important;
+
+    }
+
+
+    .volume-opzioni
+    .volume-label {
+
+        font-size: 11px;
+
+    }
+
+}/* =====================================================
    SCHERMI MOLTO STRETTI
 ===================================================== */
 
