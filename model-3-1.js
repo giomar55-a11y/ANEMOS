@@ -518,7 +518,7 @@ function impostaFlusso(
 
 function creaApnea(
     anemodromoPrecedenteId,
-    anemodromoSuccessivoId,
+    anemodromoSuccessivoId = null,
     durata = 1
 ) {
 
@@ -532,6 +532,14 @@ function creaApnea(
         precedente:
             anemodromoPrecedenteId,
 
+        /*
+        Se non esiste ancora un Anemodromo
+        successivo, il valore resta null.
+
+        In questo modo possiamo avere
+        un'apnea anche dopo l'ultimo
+        Anemodromo della timeline.
+        */
         successivo:
             anemodromoSuccessivoId,
 
@@ -544,7 +552,6 @@ function creaApnea(
     };
 
 }
-
 
 
 /* =====================================================
@@ -584,6 +591,49 @@ function aggiungiAnemodromo(
     anemodromo
 ) {
 
+    /*
+    Prima di aggiungere il nuovo Anemodromo
+    individuiamo quello che attualmente è
+    l'ultimo della timeline.
+    */
+
+    const precedenteId =
+        sequenza.ordine.length > 0
+            ? sequenza.ordine[
+                sequenza.ordine.length - 1
+            ]
+            : null;
+
+
+    /*
+    Se dopo l'ultimo Anemodromo esiste già
+    un'apnea finale, quando aggiungiamo
+    un nuovo Anemodromo quell'apnea diventa
+    automaticamente l'apnea tra i due.
+    */
+
+    if (precedenteId) {
+
+        const apneaFinale =
+            sequenza.apnee.find(
+                apnea =>
+                    apnea.precedente ===
+                        precedenteId &&
+                    apnea.successivo ===
+                        null
+            );
+
+
+        if (apneaFinale) {
+
+            apneaFinale.successivo =
+                anemodromo.id;
+
+        }
+
+    }
+
+
     sequenza.anemodromi.push(
         anemodromo
     );
@@ -597,7 +647,6 @@ function aggiungiAnemodromo(
     return anemodromo;
 
 }
-
 
 
 /* =====================================================
@@ -647,7 +696,7 @@ function trovaApneaTra(
 function inserisciApnea(
     sequenza,
     precedenteId,
-    successivoId,
+    successivoId = null,
     durata = 1
 ) {
 
