@@ -834,3 +834,138 @@ button {
     }
 
 }
+/* =====================================================
+   VOLUMI — ICONE ANEMOS + GRIGLIA 2 × 2
+===================================================== */
+
+.volume-opzioni {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+
+/* Pulsante volume */
+
+.volume-button {
+    min-width: 0;
+    min-height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 8px;
+
+    padding: 7px 10px;
+
+    white-space: nowrap;
+}
+
+
+/* Icona */
+
+.volume-icon {
+    width: 30px;
+    height: 30px;
+
+    flex: 0 0 30px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.volume-icon svg {
+    display: block;
+
+    width: 30px;
+    height: 30px;
+
+    overflow: visible;
+}
+
+
+/* Cerchi concentrici */
+
+.volume-ring {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+}
+
+
+/*
+I livelli raggiunti vengono riempiti.
+
+Manteniamo tutto monocromatico:
+nessuna scala di colori o intensità.
+*/
+
+.volume-ring.riempito {
+    fill: currentColor;
+}
+
+
+/* Testo */
+
+.volume-label {
+    display: block;
+
+    min-width: 0;
+
+    font-size: 13px;
+    line-height: 1.1;
+
+    text-align: left;
+}
+
+
+/* Pulsanti non disponibili */
+
+.volume-button:disabled {
+    cursor: default;
+}
+
+
+/* =====================================================
+   SCHERMI MOLTO STRETTI
+===================================================== */
+
+@media (max-width: 390px) {
+
+    .volume-opzioni {
+        gap: 6px;
+    }
+
+
+    .volume-button {
+        gap: 6px;
+
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+
+
+    .volume-icon {
+        width: 27px;
+        height: 27px;
+
+        flex-basis: 27px;
+    }
+
+
+    .volume-icon svg {
+        width: 27px;
+        height: 27px;
+    }
+
+
+    .volume-label {
+        font-size: 12px;
+    }
+
+}
