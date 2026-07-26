@@ -447,3 +447,251 @@ function ottieniAnemomeriPerAnemogramma(
     );
 
 }
+/* =====================================================
+   PANNELLO ANEMOGRAMMA
+===================================================== */
+
+function creaPannelloAnemogramma() {
+
+    const esistente =
+        document.getElementById(
+            "pannello-anemogramma"
+        );
+
+
+    if (esistente) {
+
+        esistente.remove();
+
+    }
+
+
+    const pannello =
+        document.createElement(
+            "div"
+        );
+
+
+    pannello.id =
+        "pannello-anemogramma";
+
+
+    /*
+    Stile provvisorio.
+    Verrà successivamente spostato nel CSS.
+    */
+
+    pannello.style.position =
+        "fixed";
+
+    pannello.style.inset =
+        "0";
+
+    pannello.style.background =
+        "#ffffff";
+
+    pannello.style.zIndex =
+        "9999";
+
+    pannello.style.overflowY =
+        "auto";
+
+    pannello.style.padding =
+        "20px";
+
+
+    /* =================================================
+       INTESTAZIONE
+    ================================================= */
+
+    const intestazione =
+        document.createElement(
+            "div"
+        );
+
+
+    intestazione.style.display =
+        "flex";
+
+    intestazione.style.alignItems =
+        "center";
+
+    intestazione.style.justifyContent =
+        "space-between";
+
+    intestazione.style.marginBottom =
+        "24px";
+
+
+    const titolo =
+        document.createElement(
+            "h2"
+        );
+
+
+    titolo.textContent =
+        "Anemogramma";
+
+
+    const chiudi =
+        document.createElement(
+            "button"
+        );
+
+
+    chiudi.type =
+        "button";
+
+    chiudi.textContent =
+        "×";
+
+    chiudi.setAttribute(
+        "aria-label",
+        "Chiudi Anemogramma"
+    );
+
+
+    chiudi.style.fontSize =
+        "28px";
+
+    chiudi.style.border =
+        "0";
+
+    chiudi.style.background =
+        "transparent";
+
+    chiudi.style.cursor =
+        "pointer";
+
+
+    chiudi.addEventListener(
+        "click",
+        function () {
+
+            pannello.remove();
+
+        }
+    );
+
+
+    intestazione.appendChild(
+        titolo
+    );
+
+
+    intestazione.appendChild(
+        chiudi
+    );
+
+
+    pannello.appendChild(
+        intestazione
+    );
+
+
+    /* =================================================
+       CONTENUTO
+    ================================================= */
+
+    const contenuto =
+        document.createElement(
+            "div"
+        );
+
+
+    contenuto.id =
+        "contenuto-anemogramma";
+
+
+    const anemomeri =
+        ottieniAnemomeriPerAnemogramma(
+            anemos31
+        );
+
+
+    if (
+        anemomeri.length === 0
+    ) {
+
+        const vuoto =
+            document.createElement(
+                "p"
+            );
+
+
+        vuoto.textContent =
+            "Nessun anemomero presente.";
+
+
+        contenuto.appendChild(
+            vuoto
+        );
+
+    } else {
+
+        anemomeri.forEach(
+            dati => {
+
+                contenuto.appendChild(
+                    creaAnemomeroAnemogramma(
+                        dati
+                    )
+                );
+
+            }
+        );
+
+    }
+
+
+    pannello.appendChild(
+        contenuto
+    );
+
+
+    document.body.appendChild(
+        pannello
+    );
+
+}
+
+
+/* =====================================================
+   COMANDO AVVIA
+===================================================== */
+
+function inizializzaAnemogramma() {
+
+    const pulsanteAvvia =
+        document.getElementById(
+            "avvia-anemos"
+        );
+
+
+    if (!pulsanteAvvia) {
+
+        return;
+
+    }
+
+
+    pulsanteAvvia.addEventListener(
+        "click",
+        function () {
+
+            creaPannelloAnemogramma();
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   AVVIO MODULO ANEMOGRAMMA
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    inizializzaAnemogramma
+);
