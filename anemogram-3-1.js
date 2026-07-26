@@ -786,59 +786,37 @@ function creaAnemomeroAnemogramma(
     -----------------------------------------
     */
 
-    const rigaPrincipale =
-        creaElementoAnemogramma(
-            "div",
-            "anemogramma-riga-principale"
-        );
-
-
-    const fase =
-        creaElementoAnemogramma(
-            "div",
-            "anemogramma-fase",
-            dati.fase
-        );
-
-
-    const tempo =
-        creaElementoAnemogramma(
-            "div",
-            "anemogramma-tempo",
-            dati.tempo
-        );
-
-
-    rigaPrincipale.appendChild(
-        fase
-    );
-
-
-    rigaPrincipale.appendChild(
-        tempo
-    );
-
-
-    scheda.appendChild(
-        rigaPrincipale
-    );
-
-
     /*
-    -----------------------------------------
-    RIGA 2
-    PERCORSO + FLUSSO
-    -----------------------------------------
-    */
+-----------------------------------------
+RIGA UNICA
+FASE + TEMPO + PERCORSO + FLUSSO
+-----------------------------------------
+*/
 
-    const rigaSecondaria =
-        creaElementoAnemogramma(
-            "div",
-            "anemogramma-riga-secondaria"
-        );
+const rigaPrincipale =
+    creaElementoAnemogramma(
+        "div",
+        "anemogramma-riga-principale"
+    );
 
 
-    const percorso =
+const fase =
+    creaElementoAnemogramma(
+        "div",
+        "anemogramma-fase",
+        dati.fase
+    );
+
+
+const tempo =
+    creaElementoAnemogramma(
+        "div",
+        "anemogramma-tempo",
+        dati.tempo
+    );
+
+
+const percorso =
     creaIconaPercorsoAnemogramma(
         dati.percorso
     );
@@ -849,20 +827,30 @@ const flusso =
         dati.flusso
     );
 
-    rigaSecondaria.appendChild(
-        percorso
-    );
+
+rigaPrincipale.appendChild(
+    fase
+);
 
 
-    rigaSecondaria.appendChild(
-        flusso
-    );
+rigaPrincipale.appendChild(
+    tempo
+);
 
 
-    scheda.appendChild(
-        rigaSecondaria
-    );
+rigaPrincipale.appendChild(
+    percorso
+);
 
+
+rigaPrincipale.appendChild(
+    flusso
+);
+
+
+scheda.appendChild(
+    rigaPrincipale
+);
 
     /*
     -----------------------------------------
