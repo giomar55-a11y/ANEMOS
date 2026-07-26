@@ -381,3 +381,69 @@ function creaAnemomeroAnemogramma(
     return scheda;
 
 }
+/* =====================================================
+   TRADUZIONE DATI REALI -> ANEMOGRAMMA
+===================================================== */
+
+function traduciAnemomeroPerAnemogramma(
+    anemomero
+) {
+
+    return {
+
+        fase:
+            anemomero.tipo,
+
+        tempo:
+            anemomero.durata + " s",
+
+        percorso:
+            anemomero.percorso,
+
+        flusso:
+            anemomero.flusso,
+
+        modalitaSettori:
+            "simultaneo",
+
+        settori:
+            anemomero.settori.map(
+                settore => {
+
+                    return {
+
+                        settore:
+                            settore.nome,
+
+                        volume:
+                            settore.volume
+
+                    };
+
+                }
+            )
+
+    };
+
+}
+
+
+/* =====================================================
+   ANEMOMERI ORDINATI DELL'ANEMODROMO
+===================================================== */
+
+function ottieniAnemomeriPerAnemogramma(
+    sequenza
+) {
+
+    return ottieniAnemodromiOrdinati(
+        sequenza
+    )
+    .map(
+        anemomero =>
+            traduciAnemomeroPerAnemogramma(
+                anemomero
+            )
+    );
+
+}
