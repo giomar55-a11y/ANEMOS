@@ -1162,7 +1162,128 @@ function creaBloccoFlusso(
 /* =====================================================
    SETTORI + MOTORE DI COERENZA
 ===================================================== */
+function creaIconaSettore(
+    settore
+) {
 
+    const ns =
+        "http://www.w3.org/2000/svg";
+
+
+    const svg =
+        document.createElementNS(
+            ns,
+            "svg"
+        );
+
+
+    svg.setAttribute(
+        "viewBox",
+        "0 0 48 60"
+    );
+
+    svg.setAttribute(
+        "width",
+        "22"
+    );
+
+    svg.setAttribute(
+        "height",
+        "28"
+    );
+
+    svg.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    svg.style.marginRight =
+        "8px";
+
+    svg.style.flexShrink =
+        "0";
+
+
+    const parti = [
+
+        {
+            nome:
+                ANEMOS_SETTORI
+                    .TORACE_SUPERIORE,
+
+            d:
+                "M12 5 C16 2 32 2 36 5 L40 18 L8 18 Z"
+        },
+
+        {
+            nome:
+                ANEMOS_SETTORI
+                    .TORACE_INFERIORE,
+
+            d:
+                "M8 18 L40 18 L37 36 L11 36 Z"
+        },
+
+        {
+            nome:
+                ANEMOS_SETTORI.ADDOME,
+
+            d:
+                "M11 36 L37 36 L34 55 L14 55 Z"
+        }
+
+    ];
+
+
+    parti.forEach(
+        parte => {
+
+            const path =
+                document.createElementNS(
+                    ns,
+                    "path"
+                );
+
+
+            path.setAttribute(
+                "d",
+                parte.d
+            );
+
+            path.setAttribute(
+                "fill",
+                parte.nome === settore
+                    ? "#000"
+                    : "#fff"
+            );
+
+            path.setAttribute(
+                "stroke",
+                "#000"
+            );
+
+            path.setAttribute(
+                "stroke-width",
+                "1.8"
+            );
+
+            path.setAttribute(
+                "stroke-linejoin",
+                "round"
+            );
+
+
+            svg.appendChild(
+                path
+            );
+
+        }
+    );
+
+
+    return svg;
+
+}
 function creaBloccoSettori(
     anemodromo
 ) {
@@ -1252,7 +1373,12 @@ function creaBloccoSettori(
                     configurazione.nome,
                     attivo
                 );
-
+            pulsanteSettore.insertBefore(
+                creaIconaSettore(
+                    configurazione.valore
+    ),
+    pulsanteSettore.firstChild
+);
 
             if (!disponibile) {
 
