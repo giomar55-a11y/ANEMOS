@@ -331,7 +331,7 @@ function creaIconaVolumeAnemogramma(
             cerchio.setAttribute(
                 "stroke-width",
                 indice < livello
-                    ? "5"
+                    ? "3.5"
                     : "1.3"
             );
 
