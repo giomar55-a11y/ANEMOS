@@ -307,7 +307,16 @@ function aggiornaDisponibilitaAggiunta() {
         anemos31.anemodromi.length >=
         ANEMOS_MAX_ANEMOMERI;
 
+pulsanteAggiungiIN.classList.toggle(
+    "limite-raggiunto",
+    limiteRaggiunto
+);
 
+
+pulsanteAggiungiES.classList.toggle(
+    "limite-raggiunto",
+    limiteRaggiunto
+);
     pulsanteAggiungiIN.disabled =
         tuttiPieni ||
         limiteRaggiunto;
