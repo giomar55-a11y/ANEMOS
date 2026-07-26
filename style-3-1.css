@@ -418,7 +418,7 @@ button {
    STATO PULSANTI DISABILITATI
 ===================================================== */
 
-.aggiungi-anemodromo:disabled {
+.aggiungi-anemodromo.limite-raggiunto {
     opacity: 0.35;
     filter: grayscale(1);
     cursor: not-allowed;
