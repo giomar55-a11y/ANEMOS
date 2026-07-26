@@ -223,30 +223,6 @@ function creaIconaVolumeAnemogramma(
     volume
 ) {
 
-    const livelli = {
-
-        [ANEMOS_VOLUMI.VUOTO]:
-            0,
-
-        [ANEMOS_VOLUMI.SCARSO]:
-            1,
-
-        [ANEMOS_VOLUMI.CONFORTEVOLE]:
-            2,
-
-        [ANEMOS_VOLUMI.ABBONDANTE]:
-            3,
-
-        [ANEMOS_VOLUMI.PIENO]:
-            4
-
-    };
-
-
-    const livello =
-        livelli[volume] ?? 0;
-
-
     const contenitore =
         creaElementoAnemogramma(
             "span",
@@ -277,70 +253,370 @@ function creaIconaVolumeAnemogramma(
     );
 
 
-    const raggi = [
-    4,
-    8.5,
-    13,
-    17.5
-];
+    /*
+    -----------------------------------------
+    VUOTO
+    Cerchio bianco
+    -----------------------------------------
+    */
 
-    raggi.forEach(
-        (
-            raggio,
-            indice
-        ) => {
+    if (
+        volume ===
+        ANEMOS_VOLUMI.VUOTO
+    ) {
 
-            const cerchio =
-                document.createElementNS(
-                    svgNS,
-                    "circle"
+        const cerchio =
+            document.createElementNS(
+                svgNS,
+                "circle"
+            );
+
+
+        cerchio.setAttribute(
+            "cx",
+            "20"
+        );
+
+        cerchio.setAttribute(
+            "cy",
+            "20"
+        );
+
+        cerchio.setAttribute(
+            "r",
+            "15"
+        );
+
+        cerchio.setAttribute(
+            "fill",
+            "#fff"
+        );
+
+        cerchio.setAttribute(
+            "stroke",
+            "#000"
+        );
+
+        cerchio.setAttribute(
+            "stroke-width",
+            "2"
+        );
+
+
+        svg.appendChild(
+            cerchio
+        );
+
+    }
+
+
+    /*
+    -----------------------------------------
+    SCARSO
+    Cerchio riempito per circa 1/4
+    -----------------------------------------
+    */
+
+    if (
+        volume ===
+        ANEMOS_VOLUMI.SCARSO
+    ) {
+
+        const cerchio =
+            document.createElementNS(
+                svgNS,
+                "circle"
+            );
+
+        cerchio.setAttribute(
+            "cx",
+            "20"
+        );
+
+        cerchio.setAttribute(
+            "cy",
+            "20"
+        );
+
+        cerchio.setAttribute(
+            "r",
+            "15"
+        );
+
+        cerchio.setAttribute(
+            "fill",
+            "#fff"
+        );
+
+        cerchio.setAttribute(
+            "stroke",
+            "#000"
+        );
+
+        cerchio.setAttribute(
+            "stroke-width",
+            "2"
+        );
+
+
+        const riempimento =
+            document.createElementNS(
+                svgNS,
+                "path"
+            );
+
+
+        riempimento.setAttribute(
+            "d",
+            "M5 20 A15 15 0 0 0 35 20 L35 27 A15 15 0 0 1 5 27 Z"
+        );
+
+        riempimento.setAttribute(
+            "fill",
+            "#000"
+        );
+
+
+        svg.appendChild(
+            cerchio
+        );
+
+        svg.appendChild(
+            riempimento
+        );
+
+    }
+
+
+    /*
+    -----------------------------------------
+    CONFORTEVOLE
+    Fiore
+    -----------------------------------------
+    */
+
+    if (
+        volume ===
+        ANEMOS_VOLUMI.CONFORTEVOLE
+    ) {
+
+        const petali = [
+            [20, 8],
+            [30, 14],
+            [30, 26],
+            [20, 32],
+            [10, 26],
+            [10, 14]
+        ];
+
+
+        petali.forEach(
+            coordinate => {
+
+                const petalo =
+                    document.createElementNS(
+                        svgNS,
+                        "circle"
+                    );
+
+
+                petalo.setAttribute(
+                    "cx",
+                    coordinate[0]
+                );
+
+                petalo.setAttribute(
+                    "cy",
+                    coordinate[1]
+                );
+
+                petalo.setAttribute(
+                    "r",
+                    "6"
+                );
+
+                petalo.setAttribute(
+                    "fill",
+                    "none"
+                );
+
+                petalo.setAttribute(
+                    "stroke",
+                    "#000"
+                );
+
+                petalo.setAttribute(
+                    "stroke-width",
+                    "2"
                 );
 
 
-            cerchio.setAttribute(
-                "cx",
-                "20"
+                svg.appendChild(
+                    petalo
+                );
+
+            }
+        );
+
+
+        const centro =
+            document.createElementNS(
+                svgNS,
+                "circle"
             );
 
 
-            cerchio.setAttribute(
-                "cy",
-                "20"
+        centro.setAttribute(
+            "cx",
+            "20"
+        );
+
+        centro.setAttribute(
+            "cy",
+            "20"
+        );
+
+        centro.setAttribute(
+            "r",
+            "5"
+        );
+
+        centro.setAttribute(
+            "fill",
+            "#000"
+        );
+
+
+        svg.appendChild(
+            centro
+        );
+
+    }
+
+
+    /*
+    -----------------------------------------
+    ABBONDANTE
+    Cerchio riempito per circa 3/4
+    -----------------------------------------
+    */
+
+    if (
+        volume ===
+        ANEMOS_VOLUMI.ABBONDANTE
+    ) {
+
+        const cerchio =
+            document.createElementNS(
+                svgNS,
+                "circle"
+            );
+
+        cerchio.setAttribute(
+            "cx",
+            "20"
+        );
+
+        cerchio.setAttribute(
+            "cy",
+            "20"
+        );
+
+        cerchio.setAttribute(
+            "r",
+            "15"
+        );
+
+        cerchio.setAttribute(
+            "fill",
+            "#000"
+        );
+
+        cerchio.setAttribute(
+            "stroke",
+            "#000"
+        );
+
+        cerchio.setAttribute(
+            "stroke-width",
+            "2"
+        );
+
+
+        const vuoto =
+            document.createElementNS(
+                svgNS,
+                "path"
             );
 
 
-            cerchio.setAttribute(
-                "r",
-                raggio
+        vuoto.setAttribute(
+            "d",
+            "M5 13 A15 15 0 0 1 35 13 L35 20 A15 15 0 0 0 5 20 Z"
+        );
+
+        vuoto.setAttribute(
+            "fill",
+            "#fff"
+        );
+
+
+        svg.appendChild(
+            cerchio
+        );
+
+        svg.appendChild(
+            vuoto
+        );
+
+    }
+
+
+    /*
+    -----------------------------------------
+    PIENO
+    Cerchio nero
+    -----------------------------------------
+    */
+
+    if (
+        volume ===
+        ANEMOS_VOLUMI.PIENO
+    ) {
+
+        const cerchio =
+            document.createElementNS(
+                svgNS,
+                "circle"
             );
 
 
-            cerchio.setAttribute(
-                "fill",
-                "none"
-            );
+        cerchio.setAttribute(
+            "cx",
+            "20"
+        );
+
+        cerchio.setAttribute(
+            "cy",
+            "20"
+        );
+
+        cerchio.setAttribute(
+            "r",
+            "15"
+        );
+
+        cerchio.setAttribute(
+            "fill",
+            "#000"
+        );
 
 
-            cerchio.setAttribute(
-                "stroke",
-                "currentColor"
-            );
+        svg.appendChild(
+            cerchio
+        );
 
-
-            cerchio.setAttribute(
-                "stroke-width",
-                indice < livello
-                    ? "3.5"
-                    : "1.3"
-            );
-
-
-            svg.appendChild(
-                cerchio
-            );
-
-        }
-    );
+    }
 
 
     contenitore.appendChild(
@@ -351,8 +627,6 @@ function creaIconaVolumeAnemogramma(
     return contenitore;
 
 }
-
-
 /* =====================================================
    SINGOLO SETTORE + VOLUME
 ===================================================== */
