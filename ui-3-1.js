@@ -1553,40 +1553,6 @@ function creaIconaVolume(
     volume
 ) {
 
-    /*
-    Livelli grafici:
-
-    VUOTO        = 0
-    SCARSO       = 1
-    CONFORTEVOLE = 2
-    ABBONDANTE   = 3
-    PIENO        = 4
-    */
-
-    const livelli = {
-
-        [ANEMOS_VOLUMI.VUOTO]:
-            0,
-
-        [ANEMOS_VOLUMI.SCARSO]:
-            1,
-
-        [ANEMOS_VOLUMI.CONFORTEVOLE]:
-            2,
-
-        [ANEMOS_VOLUMI.ABBONDANTE]:
-            3,
-
-        [ANEMOS_VOLUMI.PIENO]:
-            4
-
-    };
-
-
-    const livello =
-        livelli[volume] ?? 0;
-
-
     const contenitore =
         document.createElement(
             "span"
@@ -1620,106 +1586,374 @@ function creaIconaVolume(
     );
 
 
-    /*
-    Quattro anelli concentrici.
+    function creaCerchioBase(
+        riempimento = "#fff"
+    ) {
 
-    Non sono cerchi pieni sovrapposti:
-    ciascun livello è un anello distinto.
+        const cerchio =
+            document.createElementNS(
+                svgNS,
+                "circle"
+            );
+
+
+        cerchio.setAttribute(
+            "cx",
+            "20"
+        );
+
+        cerchio.setAttribute(
+            "cy",
+            "20"
+        );
+
+        cerchio.setAttribute(
+            "r",
+            "16"
+        );
+
+        cerchio.setAttribute(
+            "fill",
+            riempimento
+        );
+
+        cerchio.setAttribute(
+            "stroke",
+            "#000"
+        );
+
+        cerchio.setAttribute(
+            "stroke-width",
+            "2"
+        );
+
+
+        return cerchio;
+
+    }
+
+
+    /*
+    =====================================================
+    VUOTO
+    =====================================================
     */
 
-    const raggi = [
-        4,
-        9,
-        14,
-        19
-    ];
+    if (
+        volume ===
+        ANEMOS_VOLUMI.VUOTO
+    ) {
+
+        svg.appendChild(
+            creaCerchioBase(
+                "#fff"
+            )
+        );
+
+    }
 
 
-    raggi.forEach(
-        (
-            raggio,
-            indice
-        ) => {
+    /*
+    =====================================================
+    SCARSO
+    1/4 NERO
+    =====================================================
+    */
 
-            const cerchio =
-                document.createElementNS(
-                    svgNS,
-                    "circle"
-                );
+    if (
+        volume ===
+        ANEMOS_VOLUMI.SCARSO
+    ) {
+
+        svg.appendChild(
+            creaCerchioBase(
+                "#fff"
+            )
+        );
 
 
-            cerchio.setAttribute(
-                "cx",
-                "20"
+        const quarto =
+            document.createElementNS(
+                svgNS,
+                "path"
             );
 
 
-            cerchio.setAttribute(
-                "cy",
-                "20"
+        quarto.setAttribute(
+            "d",
+            [
+                "M 20 20",
+                "L 36 20",
+                "A 16 16 0 0 1 20 36",
+                "Z"
+            ].join(" ")
+        );
+
+
+        quarto.setAttribute(
+            "fill",
+            "#000"
+        );
+
+
+        svg.appendChild(
+            quarto
+        );
+
+    }
+
+
+    /*
+    =====================================================
+    CONFORTEVOLE
+    YIN-YANG
+    =====================================================
+    */
+
+    if (
+        volume ===
+        ANEMOS_VOLUMI.CONFORTEVOLE
+    ) {
+
+        svg.appendChild(
+            creaCerchioBase(
+                "#fff"
+            )
+        );
+
+
+        const metaNera =
+            document.createElementNS(
+                svgNS,
+                "path"
             );
 
 
-            cerchio.setAttribute(
-                "r",
-                raggio
+        metaNera.setAttribute(
+            "d",
+            [
+                "M 20 4",
+                "A 16 16 0 0 1 20 36",
+                "A 8 8 0 0 1 20 20",
+                "A 8 8 0 0 0 20 4",
+                "Z"
+            ].join(" ")
+        );
+
+
+        metaNera.setAttribute(
+            "fill",
+            "#000"
+        );
+
+
+        svg.appendChild(
+            metaNera
+        );
+
+
+        const biancoSuperiore =
+            document.createElementNS(
+                svgNS,
+                "circle"
             );
 
 
-            cerchio.setAttribute(
-                "fill",
-                "none"
+        biancoSuperiore.setAttribute(
+            "cx",
+            "20"
+        );
+
+        biancoSuperiore.setAttribute(
+            "cy",
+            "12"
+        );
+
+        biancoSuperiore.setAttribute(
+            "r",
+            "8"
+        );
+
+        biancoSuperiore.setAttribute(
+            "fill",
+            "#fff"
+        );
+
+
+        svg.appendChild(
+            biancoSuperiore
+        );
+
+
+        const neroInferiore =
+            document.createElementNS(
+                svgNS,
+                "circle"
             );
 
 
-            cerchio.setAttribute(
-                "stroke",
-                "currentColor"
+        neroInferiore.setAttribute(
+            "cx",
+            "20"
+        );
+
+        neroInferiore.setAttribute(
+            "cy",
+            "28"
+        );
+
+        neroInferiore.setAttribute(
+            "r",
+            "8"
+        );
+
+        neroInferiore.setAttribute(
+            "fill",
+            "#000"
+        );
+
+
+        svg.appendChild(
+            neroInferiore
+        );
+
+
+        const puntoNero =
+            document.createElementNS(
+                svgNS,
+                "circle"
             );
 
 
-            /*
-            Livello raggiunto:
-            anello marcato.
+        puntoNero.setAttribute(
+            "cx",
+            "20"
+        );
 
-            Livello non raggiunto:
-            semplice circonferenza sottile.
-            */
+        puntoNero.setAttribute(
+            "cy",
+            "12"
+        );
 
-            if (
-                indice < livello
-            ) {
+        puntoNero.setAttribute(
+            "r",
+            "2.5"
+        );
 
-                cerchio.setAttribute(
-                    "stroke-width",
-                    "5"
-                );
-
-                cerchio.classList.add(
-                    "volume-ring",
-                    "riempito"
-                );
-
-            } else {
-
-                cerchio.setAttribute(
-                    "stroke-width",
-                    "1.3"
-                );
-
-                cerchio.classList.add(
-                    "volume-ring"
-                );
-
-            }
+        puntoNero.setAttribute(
+            "fill",
+            "#000"
+        );
 
 
-            svg.appendChild(
-                cerchio
+        svg.appendChild(
+            puntoNero
+        );
+
+
+        const puntoBianco =
+            document.createElementNS(
+                svgNS,
+                "circle"
             );
 
-        }
-    );
+
+        puntoBianco.setAttribute(
+            "cx",
+            "20"
+        );
+
+        puntoBianco.setAttribute(
+            "cy",
+            "28"
+        );
+
+        puntoBianco.setAttribute(
+            "r",
+            "2.5"
+        );
+
+        puntoBianco.setAttribute(
+            "fill",
+            "#fff"
+        );
+
+
+        svg.appendChild(
+            puntoBianco
+        );
+
+    }
+
+
+    /*
+    =====================================================
+    ABBONDANTE
+    3/4 NERO
+    =====================================================
+    */
+
+    if (
+        volume ===
+        ANEMOS_VOLUMI.ABBONDANTE
+    ) {
+
+        svg.appendChild(
+            creaCerchioBase(
+                "#000"
+            )
+        );
+
+
+        const quartoBianco =
+            document.createElementNS(
+                svgNS,
+                "path"
+            );
+
+
+        quartoBianco.setAttribute(
+            "d",
+            [
+                "M 20 20",
+                "L 4 20",
+                "A 16 16 0 0 1 20 4",
+                "Z"
+            ].join(" ")
+        );
+
+
+        quartoBianco.setAttribute(
+            "fill",
+            "#fff"
+        );
+
+
+        svg.appendChild(
+            quartoBianco
+        );
+
+    }
+
+
+    /*
+    =====================================================
+    PIENO
+    =====================================================
+    */
+
+    if (
+        volume ===
+        ANEMOS_VOLUMI.PIENO
+    ) {
+
+        svg.appendChild(
+            creaCerchioBase(
+                "#000"
+            )
+        );
+
+    }
 
 
     contenitore.appendChild(
@@ -1729,8 +1963,7 @@ function creaIconaVolume(
 
     return contenitore;
 
-}
-/* =====================================================
+}/* =====================================================
    VOLUME SINGOLO SETTORE
 ===================================================== */
 
