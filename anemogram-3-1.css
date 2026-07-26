@@ -1,0 +1,256 @@
+/*
+=====================================================
+ANEMOS 3.1
+ANEMOGRAMMA
+=====================================================
+*/
+
+
+#pannello-anemogramma {
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    box-sizing:
+        border-box;
+
+    background:
+        #f7f7f4;
+
+    color:
+        #111;
+}
+
+
+#contenuto-anemogramma {
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        18px;
+}
+
+
+/* =====================================================
+   SINGOLO ANEMOMERO
+===================================================== */
+
+.anemogramma-anemomero {
+    background:
+        #fff;
+
+    border:
+        1px solid #d7d7d2;
+
+    border-radius:
+        18px;
+
+    padding:
+        16px;
+
+    box-sizing:
+        border-box;
+}
+
+
+/* =====================================================
+   RIGA 1
+   FASE + TEMPO
+===================================================== */
+
+.anemogramma-riga-principale {
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        10px;
+
+    margin-bottom:
+        10px;
+}
+
+
+.anemogramma-fase,
+.anemogramma-tempo {
+    border:
+        1px solid #d7d7d2;
+
+    border-radius:
+        12px;
+
+    padding:
+        10px 12px;
+
+    text-align:
+        center;
+
+    font-weight:
+        700;
+}
+
+
+/* =====================================================
+   RIGA 2
+   PERCORSO + FLUSSO
+===================================================== */
+
+.anemogramma-riga-secondaria {
+    display:
+        grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:
+        10px;
+
+    margin-bottom:
+        16px;
+}
+
+
+.anemogramma-percorso,
+.anemogramma-flusso {
+    border:
+        1px solid #d7d7d2;
+
+    border-radius:
+        12px;
+
+    padding:
+        10px 12px;
+
+    text-align:
+        center;
+}
+
+
+/* =====================================================
+   SETTORI
+===================================================== */
+
+.anemogramma-settori {
+    display:
+        flex;
+
+    gap:
+        12px;
+}
+
+
+/*
+Simultaneo:
+disposizione verticale
+*/
+
+.anemogramma-settori.simultaneo {
+    flex-direction:
+        column;
+}
+
+
+/*
+Sequenziale:
+disposizione orizzontale
+*/
+
+.anemogramma-settori.sequenziale {
+    flex-direction:
+        row;
+
+    overflow-x:
+        auto;
+}
+
+
+/* =====================================================
+   SINGOLO SETTORE
+===================================================== */
+
+.anemogramma-settore {
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    gap:
+        14px;
+
+    border:
+        1px solid #d7d7d2;
+
+    border-radius:
+        12px;
+
+    padding:
+        10px 12px;
+}
+
+
+/* =====================================================
+   ICONA SETTORE
+===================================================== */
+
+.anemogramma-icona-settore {
+    width:
+        28px;
+
+    height:
+        35px;
+
+    flex:
+        0 0 auto;
+}
+
+
+/* =====================================================
+   VOLUME
+===================================================== */
+
+.anemogramma-volume {
+    font-weight:
+        600;
+
+    text-transform:
+        capitalize;
+}
+
+
+/* =====================================================
+   SCHERMI PICCOLI
+===================================================== */
+
+@media (
+    max-width: 600px
+) {
+
+    #pannello-anemogramma {
+        padding:
+            16px !important;
+    }
+
+
+    .anemogramma-anemomero {
+        padding:
+            14px;
+    }
+
+
+    .anemogramma-icona-settore {
+        width:
+            24px;
+
+        height:
+            30px;
+    }
+
+}
