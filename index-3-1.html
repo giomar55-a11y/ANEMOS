@@ -298,15 +298,26 @@ function aggiornaDisponibilitaAggiunta() {
         ] === 0;
 
 
+    /*
+    Limite assoluto dell'Anemodromo:
+    massimo 12 Anemomeri.
+    */
+
+    const limiteRaggiunto =
+        anemos31.anemodromi.length >=
+        ANEMOS_MAX_ANEMOMERI;
+
+
     pulsanteAggiungiIN.disabled =
-        tuttiPieni;
+        tuttiPieni ||
+        limiteRaggiunto;
 
 
     pulsanteAggiungiES.disabled =
-        tuttiVuoti;
+        tuttiVuoti ||
+        limiteRaggiunto;
 
 }
-
         const pulsanteElimina =
             document.getElementById(
                 "elimina-anemodromo"
