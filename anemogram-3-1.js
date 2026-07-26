@@ -36,7 +36,71 @@ function creaElementoAnemogramma(
     return elemento;
 
 }
+/* =====================================================
+   ICONA PERCORSO
+===================================================== */
 
+function creaIconaPercorsoAnemogramma(
+    percorso
+) {
+
+    const icona =
+        creaElementoAnemogramma(
+            "div",
+            "anemogramma-icona-parametro"
+        );
+
+
+    const simboli = {
+
+        [ANEMOS_PERCORSI.NARICE_DESTRA]:
+            "👃 Dx",
+
+        [ANEMOS_PERCORSI.NARICE_SINISTRA]:
+            "👃 Sn",
+
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
+            "👃",
+
+        [ANEMOS_PERCORSI.BOCCA]:
+            "👄"
+
+    };
+
+
+    icona.textContent =
+        simboli[percorso] || "";
+
+
+    return icona;
+
+}
+
+
+/* =====================================================
+   ICONA FLUSSO
+===================================================== */
+
+function creaIconaFlussoAnemogramma(
+    flusso
+) {
+
+    const icona =
+        creaElementoAnemogramma(
+            "div",
+            "anemogramma-icona-parametro"
+        );
+
+
+    icona.textContent =
+        ANEMOS_ICONE_FLUSSO[
+            flusso
+        ] || "";
+
+
+    return icona;
+
+}
 
 /* =====================================================
    ICONA SETTORE
@@ -45,7 +109,143 @@ function creaElementoAnemogramma(
 function creaIconaSettoreAnemogramma(
     settore
 ) {
+/* =====================================================
+   ICONA VOLUME
+===================================================== */
 
+function creaIconaVolumeAnemogramma(
+    volume
+) {
+
+    const livelli = {
+
+        [ANEMOS_VOLUMI.VUOTO]:
+            0,
+
+        [ANEMOS_VOLUMI.SCARSO]:
+            1,
+
+        [ANEMOS_VOLUMI.CONFORTEVOLE]:
+            2,
+
+        [ANEMOS_VOLUMI.ABBONDANTE]:
+            3,
+
+        [ANEMOS_VOLUMI.PIENO]:
+            4
+
+    };
+
+
+    const livello =
+        livelli[volume] ?? 0;
+
+
+    const contenitore =
+        creaElementoAnemogramma(
+            "span",
+            "anemogramma-icona-volume"
+        );
+
+
+    const svgNS =
+        "http://www.w3.org/2000/svg";
+
+
+    const svg =
+        document.createElementNS(
+            svgNS,
+            "svg"
+        );
+
+
+    svg.setAttribute(
+        "viewBox",
+        "0 0 40 40"
+    );
+
+
+    svg.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    const raggi = [
+        4,
+        9,
+        14,
+        19
+    ];
+
+
+    raggi.forEach(
+        (
+            raggio,
+            indice
+        ) => {
+
+            const cerchio =
+                document.createElementNS(
+                    svgNS,
+                    "circle"
+                );
+
+
+            cerchio.setAttribute(
+                "cx",
+                "20"
+            );
+
+
+            cerchio.setAttribute(
+                "cy",
+                "20"
+            );
+
+
+            cerchio.setAttribute(
+                "r",
+                raggio
+            );
+
+
+            cerchio.setAttribute(
+                "fill",
+                "none"
+            );
+
+
+            cerchio.setAttribute(
+                "stroke",
+                "currentColor"
+            );
+
+
+            cerchio.setAttribute(
+                "stroke-width",
+                indice < livello
+                    ? "5"
+                    : "1.3"
+            );
+
+
+            svg.appendChild(
+                cerchio
+            );
+
+        }
+    );
+
+
+    contenitore.appendChild(
+        svg
+    );
+
+
+    return contenitore;
+
+}
     const ns =
         "http://www.w3.org/2000/svg";
 
@@ -176,12 +376,9 @@ function creaSettoreAnemogramma(
 
 
     const volume =
-        creaElementoAnemogramma(
-            "div",
-            "anemogramma-volume",
-            configurazione.volume
-        );
-
+    creaIconaVolumeAnemogramma(
+        configurazione.volume
+    );
 
     contenitore.appendChild(
         icona
@@ -334,20 +531,15 @@ function creaAnemomeroAnemogramma(
 
 
     const percorso =
-        creaElementoAnemogramma(
-            "div",
-            "anemogramma-percorso",
-            dati.percorso
-        );
+    creaIconaPercorsoAnemogramma(
+        dati.percorso
+    );
 
 
-    const flusso =
-        creaElementoAnemogramma(
-            "div",
-            "anemogramma-flusso",
-            dati.flusso
-        );
-
+const flusso =
+    creaIconaFlussoAnemogramma(
+        dati.flusso
+    );
 
     rigaSecondaria.appendChild(
         percorso
