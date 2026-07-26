@@ -278,12 +278,11 @@ function creaIconaVolumeAnemogramma(
 
 
     const raggi = [
-        4,
-        9,
-        14,
-        19
-    ];
-
+    4,
+    8.5,
+    13,
+    17.5
+];
 
     raggi.forEach(
         (
