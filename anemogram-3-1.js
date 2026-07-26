@@ -109,6 +109,112 @@ function creaIconaFlussoAnemogramma(
 function creaIconaSettoreAnemogramma(
     settore
 ) {
+    const ns =
+        "http://www.w3.org/2000/svg";
+
+
+    const svg =
+        document.createElementNS(
+            ns,
+            "svg"
+        );
+
+
+    svg.setAttribute(
+        "viewBox",
+        "0 0 48 60"
+    );
+
+    svg.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+    svg.classList.add(
+        "anemogramma-icona-settore"
+    );
+
+
+    const parti = [
+
+        {
+            nome:
+                "torace_superiore",
+
+            d:
+                "M12 5 C16 2 32 2 36 5 L40 18 L8 18 Z"
+        },
+
+        {
+            nome:
+                "torace_inferiore",
+
+            d:
+                "M8 18 L40 18 L37 36 L11 36 Z"
+        },
+
+        {
+            nome:
+                "addome",
+
+            d:
+                "M11 36 L37 36 L34 55 L14 55 Z"
+        }
+
+    ];
+
+
+    parti.forEach(
+        parte => {
+
+            const path =
+                document.createElementNS(
+                    ns,
+                    "path"
+                );
+
+
+            path.setAttribute(
+                "d",
+                parte.d
+            );
+
+
+            path.setAttribute(
+                "fill",
+                parte.nome === settore
+                    ? "#000"
+                    : "#fff"
+            );
+
+
+            path.setAttribute(
+                "stroke",
+                "#000"
+            );
+
+
+            path.setAttribute(
+                "stroke-width",
+                "1.8"
+            );
+
+
+            path.setAttribute(
+                "stroke-linejoin",
+                "round"
+            );
+
+
+            svg.appendChild(path);
+
+        }
+    );
+
+
+    return svg;
+
+}
 /* =====================================================
    ICONA VOLUME
 ===================================================== */
@@ -244,112 +350,6 @@ function creaIconaVolumeAnemogramma(
 
 
     return contenitore;
-
-}
-    const ns =
-        "http://www.w3.org/2000/svg";
-
-
-    const svg =
-        document.createElementNS(
-            ns,
-            "svg"
-        );
-
-
-    svg.setAttribute(
-        "viewBox",
-        "0 0 48 60"
-    );
-
-    svg.setAttribute(
-        "aria-hidden",
-        "true"
-    );
-
-    svg.classList.add(
-        "anemogramma-icona-settore"
-    );
-
-
-    const parti = [
-
-        {
-            nome:
-                "torace_superiore",
-
-            d:
-                "M12 5 C16 2 32 2 36 5 L40 18 L8 18 Z"
-        },
-
-        {
-            nome:
-                "torace_inferiore",
-
-            d:
-                "M8 18 L40 18 L37 36 L11 36 Z"
-        },
-
-        {
-            nome:
-                "addome",
-
-            d:
-                "M11 36 L37 36 L34 55 L14 55 Z"
-        }
-
-    ];
-
-
-    parti.forEach(
-        parte => {
-
-            const path =
-                document.createElementNS(
-                    ns,
-                    "path"
-                );
-
-
-            path.setAttribute(
-                "d",
-                parte.d
-            );
-
-
-            path.setAttribute(
-                "fill",
-                parte.nome === settore
-                    ? "#000"
-                    : "#fff"
-            );
-
-
-            path.setAttribute(
-                "stroke",
-                "#000"
-            );
-
-
-            path.setAttribute(
-                "stroke-width",
-                "1.8"
-            );
-
-
-            path.setAttribute(
-                "stroke-linejoin",
-                "round"
-            );
-
-
-            svg.appendChild(path);
-
-        }
-    );
-
-
-    return svg;
 
 }
 
