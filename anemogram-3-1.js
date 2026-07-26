@@ -254,10 +254,62 @@ function creaIconaVolumeAnemogramma(
 
 
     /*
-    -----------------------------------------
+    =====================================================
+    CERCHIO BASE
+    =====================================================
+    */
+
+    function creaCerchioBase(
+        riempimento = "#fff"
+    ) {
+
+        const cerchio =
+            document.createElementNS(
+                svgNS,
+                "circle"
+            );
+
+
+        cerchio.setAttribute(
+            "cx",
+            "20"
+        );
+
+        cerchio.setAttribute(
+            "cy",
+            "20"
+        );
+
+        cerchio.setAttribute(
+            "r",
+            "16"
+        );
+
+        cerchio.setAttribute(
+            "fill",
+            riempimento
+        );
+
+        cerchio.setAttribute(
+            "stroke",
+            "#000"
+        );
+
+        cerchio.setAttribute(
+            "stroke-width",
+            "2"
+        );
+
+
+        return cerchio;
+
+    }
+
+
+    /*
+    =====================================================
     VUOTO
-    Cerchio bianco
-    -----------------------------------------
+    =====================================================
     */
 
     if (
@@ -265,56 +317,21 @@ function creaIconaVolumeAnemogramma(
         ANEMOS_VOLUMI.VUOTO
     ) {
 
-        const cerchio =
-            document.createElementNS(
-                svgNS,
-                "circle"
-            );
-
-
-        cerchio.setAttribute(
-            "cx",
-            "20"
-        );
-
-        cerchio.setAttribute(
-            "cy",
-            "20"
-        );
-
-        cerchio.setAttribute(
-            "r",
-            "15"
-        );
-
-        cerchio.setAttribute(
-            "fill",
-            "#fff"
-        );
-
-        cerchio.setAttribute(
-            "stroke",
-            "#000"
-        );
-
-        cerchio.setAttribute(
-            "stroke-width",
-            "2"
-        );
-
-
         svg.appendChild(
-            cerchio
+            creaCerchioBase(
+                "#fff"
+            )
         );
 
     }
 
 
     /*
-    -----------------------------------------
+    =====================================================
     SCARSO
-    Cerchio riempito per circa 1/4
-    -----------------------------------------
+    1/4 NERO
+    QUADRANTE INFERIORE DESTRO
+    =====================================================
     */
 
     if (
@@ -322,77 +339,49 @@ function creaIconaVolumeAnemogramma(
         ANEMOS_VOLUMI.SCARSO
     ) {
 
-        const cerchio =
-            document.createElementNS(
-                svgNS,
-                "circle"
-            );
-
-        cerchio.setAttribute(
-            "cx",
-            "20"
-        );
-
-        cerchio.setAttribute(
-            "cy",
-            "20"
-        );
-
-        cerchio.setAttribute(
-            "r",
-            "15"
-        );
-
-        cerchio.setAttribute(
-            "fill",
-            "#fff"
-        );
-
-        cerchio.setAttribute(
-            "stroke",
-            "#000"
-        );
-
-        cerchio.setAttribute(
-            "stroke-width",
-            "2"
+        svg.appendChild(
+            creaCerchioBase(
+                "#fff"
+            )
         );
 
 
-        const riempimento =
+        const quarto =
             document.createElementNS(
                 svgNS,
                 "path"
             );
 
 
-        riempimento.setAttribute(
+        quarto.setAttribute(
             "d",
-            "M5 20 A15 15 0 0 0 35 20 L35 27 A15 15 0 0 1 5 27 Z"
+            [
+                "M 20 20",
+                "L 36 20",
+                "A 16 16 0 0 1 20 36",
+                "Z"
+            ].join(" ")
         );
 
-        riempimento.setAttribute(
+
+        quarto.setAttribute(
             "fill",
             "#000"
         );
 
 
         svg.appendChild(
-            cerchio
-        );
-
-        svg.appendChild(
-            riempimento
+            quarto
         );
 
     }
 
 
     /*
-    -----------------------------------------
+    =====================================================
     CONFORTEVOLE
-    Fiore
-    -----------------------------------------
+    YIN-YANG
+    =====================================================
     */
 
     if (
@@ -400,105 +389,207 @@ function creaIconaVolumeAnemogramma(
         ANEMOS_VOLUMI.CONFORTEVOLE
     ) {
 
-        const petali = [
-            [20, 8],
-            [30, 14],
-            [30, 26],
-            [20, 32],
-            [10, 26],
-            [10, 14]
-        ];
+        /*
+        Cerchio esterno.
+        */
 
-
-        petali.forEach(
-            coordinate => {
-
-                const petalo =
-                    document.createElementNS(
-                        svgNS,
-                        "circle"
-                    );
-
-
-                petalo.setAttribute(
-                    "cx",
-                    coordinate[0]
-                );
-
-                petalo.setAttribute(
-                    "cy",
-                    coordinate[1]
-                );
-
-                petalo.setAttribute(
-                    "r",
-                    "6"
-                );
-
-                petalo.setAttribute(
-                    "fill",
-                    "none"
-                );
-
-                petalo.setAttribute(
-                    "stroke",
-                    "#000"
-                );
-
-                petalo.setAttribute(
-                    "stroke-width",
-                    "2"
-                );
-
-
-                svg.appendChild(
-                    petalo
-                );
-
-            }
+        svg.appendChild(
+            creaCerchioBase(
+                "#fff"
+            )
         );
 
 
-        const centro =
+        /*
+        Metà destra nera.
+        */
+
+        const metaNera =
             document.createElementNS(
                 svgNS,
-                "circle"
+                "path"
             );
 
 
-        centro.setAttribute(
-            "cx",
-            "20"
+        metaNera.setAttribute(
+            "d",
+            [
+                "M 20 4",
+                "A 16 16 0 0 1 20 36",
+                "A 8 8 0 0 1 20 20",
+                "A 8 8 0 0 0 20 4",
+                "Z"
+            ].join(" ")
         );
 
-        centro.setAttribute(
-            "cy",
-            "20"
-        );
 
-        centro.setAttribute(
-            "r",
-            "5"
-        );
-
-        centro.setAttribute(
+        metaNera.setAttribute(
             "fill",
             "#000"
         );
 
 
         svg.appendChild(
-            centro
+            metaNera
+        );
+
+
+        /*
+        Parte bianca superiore.
+        */
+
+        const biancoSuperiore =
+            document.createElementNS(
+                svgNS,
+                "circle"
+            );
+
+
+        biancoSuperiore.setAttribute(
+            "cx",
+            "20"
+        );
+
+        biancoSuperiore.setAttribute(
+            "cy",
+            "12"
+        );
+
+        biancoSuperiore.setAttribute(
+            "r",
+            "8"
+        );
+
+        biancoSuperiore.setAttribute(
+            "fill",
+            "#fff"
+        );
+
+
+        svg.appendChild(
+            biancoSuperiore
+        );
+
+
+        /*
+        Parte nera inferiore.
+        */
+
+        const neroInferiore =
+            document.createElementNS(
+                svgNS,
+                "circle"
+            );
+
+
+        neroInferiore.setAttribute(
+            "cx",
+            "20"
+        );
+
+        neroInferiore.setAttribute(
+            "cy",
+            "28"
+        );
+
+        neroInferiore.setAttribute(
+            "r",
+            "8"
+        );
+
+        neroInferiore.setAttribute(
+            "fill",
+            "#000"
+        );
+
+
+        svg.appendChild(
+            neroInferiore
+        );
+
+
+        /*
+        Punto nero nella parte bianca.
+        */
+
+        const puntoNero =
+            document.createElementNS(
+                svgNS,
+                "circle"
+            );
+
+
+        puntoNero.setAttribute(
+            "cx",
+            "20"
+        );
+
+        puntoNero.setAttribute(
+            "cy",
+            "12"
+        );
+
+        puntoNero.setAttribute(
+            "r",
+            "2.5"
+        );
+
+        puntoNero.setAttribute(
+            "fill",
+            "#000"
+        );
+
+
+        svg.appendChild(
+            puntoNero
+        );
+
+
+        /*
+        Punto bianco nella parte nera.
+        */
+
+        const puntoBianco =
+            document.createElementNS(
+                svgNS,
+                "circle"
+            );
+
+
+        puntoBianco.setAttribute(
+            "cx",
+            "20"
+        );
+
+        puntoBianco.setAttribute(
+            "cy",
+            "28"
+        );
+
+        puntoBianco.setAttribute(
+            "r",
+            "2.5"
+        );
+
+        puntoBianco.setAttribute(
+            "fill",
+            "#fff"
+        );
+
+
+        svg.appendChild(
+            puntoBianco
         );
 
     }
 
 
     /*
-    -----------------------------------------
+    =====================================================
     ABBONDANTE
-    Cerchio riempito per circa 3/4
-    -----------------------------------------
+    3/4 NERO
+    QUADRANTE SUPERIORE SINISTRO BIANCO
+    =====================================================
     */
 
     if (
@@ -506,77 +597,48 @@ function creaIconaVolumeAnemogramma(
         ANEMOS_VOLUMI.ABBONDANTE
     ) {
 
-        const cerchio =
-            document.createElementNS(
-                svgNS,
-                "circle"
-            );
-
-        cerchio.setAttribute(
-            "cx",
-            "20"
-        );
-
-        cerchio.setAttribute(
-            "cy",
-            "20"
-        );
-
-        cerchio.setAttribute(
-            "r",
-            "15"
-        );
-
-        cerchio.setAttribute(
-            "fill",
-            "#000"
-        );
-
-        cerchio.setAttribute(
-            "stroke",
-            "#000"
-        );
-
-        cerchio.setAttribute(
-            "stroke-width",
-            "2"
+        svg.appendChild(
+            creaCerchioBase(
+                "#000"
+            )
         );
 
 
-        const vuoto =
+        const quartoBianco =
             document.createElementNS(
                 svgNS,
                 "path"
             );
 
 
-        vuoto.setAttribute(
+        quartoBianco.setAttribute(
             "d",
-            "M5 13 A15 15 0 0 1 35 13 L35 20 A15 15 0 0 0 5 20 Z"
+            [
+                "M 20 20",
+                "L 4 20",
+                "A 16 16 0 0 1 20 4",
+                "Z"
+            ].join(" ")
         );
 
-        vuoto.setAttribute(
+
+        quartoBianco.setAttribute(
             "fill",
             "#fff"
         );
 
 
         svg.appendChild(
-            cerchio
-        );
-
-        svg.appendChild(
-            vuoto
+            quartoBianco
         );
 
     }
 
 
     /*
-    -----------------------------------------
+    =====================================================
     PIENO
-    Cerchio nero
-    -----------------------------------------
+    =====================================================
     */
 
     if (
@@ -584,36 +646,10 @@ function creaIconaVolumeAnemogramma(
         ANEMOS_VOLUMI.PIENO
     ) {
 
-        const cerchio =
-            document.createElementNS(
-                svgNS,
-                "circle"
-            );
-
-
-        cerchio.setAttribute(
-            "cx",
-            "20"
-        );
-
-        cerchio.setAttribute(
-            "cy",
-            "20"
-        );
-
-        cerchio.setAttribute(
-            "r",
-            "15"
-        );
-
-        cerchio.setAttribute(
-            "fill",
-            "#000"
-        );
-
-
         svg.appendChild(
-            cerchio
+            creaCerchioBase(
+                "#000"
+            )
         );
 
     }
@@ -626,8 +662,7 @@ function creaIconaVolumeAnemogramma(
 
     return contenitore;
 
-}
-/* =====================================================
+}/* =====================================================
    SINGOLO SETTORE + VOLUME
 ===================================================== */
 
