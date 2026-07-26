@@ -37,7 +37,12 @@ const ANEMOS_TIPI = {
     ES: "ES"
 };
 
+/* =====================================================
+   LIMITE ANEMODROMO
+===================================================== */
 
+const ANEMOS_MAX_ANEMOMERI =
+    12;
 
 /* =====================================================
    PERCORSO
@@ -761,7 +766,14 @@ function aggiungiAnemodromo(
     sequenza,
     anemodromo
 ) {
+if (
+    sequenza.anemodromi.length >=
+    ANEMOS_MAX_ANEMOMERI
+) {
 
+    return null;
+
+}
     const precedenteId =
         sequenza.ordine.length > 0
 
@@ -846,7 +858,42 @@ function trovaAnemodromo(
 
 }
 
+/* =====================================================
+   ANEMOMERO PRECEDENTE
+===================================================== */
 
+function trovaAnemomeroPrecedente(
+    sequenza,
+    anemomeroId
+) {
+
+    const indice =
+        sequenza.ordine.indexOf(
+            anemomeroId
+        );
+
+
+    if (
+        indice <= 0
+    ) {
+
+        return null;
+
+    }
+
+
+    const precedenteId =
+        sequenza.ordine[
+            indice - 1
+        ];
+
+
+    return trovaAnemodromo(
+        sequenza,
+        precedenteId
+    );
+
+}
 
 /* =====================================================
    APNEE
@@ -1345,28 +1392,65 @@ function volumiDisponibiliPerSettore(
                 );
 
 
-            if (
-                tipo ===
-                ANEMOS_TIPI.IN
-            ) {
+           /*
+CONFORTEVOLE è uno stato speciale.
 
-                return (
-                    livello >
-                    livelloAttuale
-                );
+Può essere mantenuto allo stesso livello
+quando cambia la fase respiratoria:
 
-            }
+IN confortevole -> ES confortevole
+ES confortevole -> IN confortevole
+*/
+
+const precedente =
+    trovaAnemomeroPrecedente(
+        sequenza,
+        anemodromoId
+    );
 
 
-            return (
-                livello <
-                livelloAttuale
-            );
+const cambioFase =
+    precedente &&
+    precedente.tipo !==
+        tipo;
 
-        }
+
+const mantieneConfortevole =
+    livelloAttuale ===
+        ANEMOS_LIVELLI_VOLUME[
+            ANEMOS_VOLUMI.CONFORTEVOLE
+        ] &&
+    volume ===
+        ANEMOS_VOLUMI.CONFORTEVOLE &&
+    cambioFase;
+
+
+if (
+    mantieneConfortevole
+) {
+
+    return true;
+
+}
+
+
+if (
+    tipo ===
+    ANEMOS_TIPI.IN
+) {
+
+    return (
+        livello >
+        livelloAttuale
     );
 
 }
+
+
+return (
+    livello <
+    livelloAttuale
+);
 
 
 
