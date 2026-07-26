@@ -68,16 +68,33 @@ ANEMOGRAMMA
         grid;
 
     grid-template-columns:
-        1fr 1fr;
+        1fr 1fr auto auto;
 
     gap:
         10px;
 
+    align-items:
+        center;
+
     margin-bottom:
-        10px;
+        12px;
 }
+.anemogramma-icona-parametro {
+    display:
+        flex;
 
+    align-items:
+        center;
 
+    justify-content:
+        center;
+
+    min-width:
+        44px;
+
+    font-size:
+        22px;
+}
 .anemogramma-fase,
 .anemogramma-tempo {
     border:
