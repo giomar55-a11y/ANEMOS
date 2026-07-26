@@ -413,7 +413,15 @@ button {
 .aggiungi-anemodromo.es {
     background: var(--es-soft);
 }
+/* =====================================================
+   LIMITE 12 ANEMOMERI
+   STATO PULSANTI DISABILITATI
+===================================================== */
 
+.aggiungi-anemodromo:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
 
 /* =====================================================
    RIEPILOGO
