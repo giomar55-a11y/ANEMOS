@@ -228,6 +228,7 @@ disposizione orizzontale
     flex:
         0 0 auto;
 }
+
 /* =====================================================
    AVANZAMENTO ANIMATO
 ===================================================== */
@@ -253,26 +254,26 @@ disposizione orizzontale
 
     pointer-events:
         none;
+
+    transition-property:
+        width;
+
+    transition-timing-function:
+        linear;
 }
 
-transition-property:
-    width;
 
-transition-timing-function:
-    linear;
 .anemogramma-in .anemogramma-avanzamento {
+    left:
+        0;
+
+    right:
+        auto;
+
     background:
         rgba(90, 180, 255, 0.32);
 }
 
-.anemogramma-in .anemogramma-avanzamento {
-    left:
-        0;
-
-    right:
-        auto;
-}
-
 
 .anemogramma-es .anemogramma-avanzamento {
     right:
@@ -280,11 +281,11 @@ transition-timing-function:
 
     left:
         auto;
-}
-.anemogramma-es .anemogramma-avanzamento {
+
     background:
         rgba(255, 150, 70, 0.32);
 }
+
 
 .anemogramma-settore-contenuto {
     position:
