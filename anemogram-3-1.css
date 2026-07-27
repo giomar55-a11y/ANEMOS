@@ -503,3 +503,46 @@ parte dai lati e converge verso il centro.
     right:
         0;
 }
+/* =====================================================
+   ANIMAZIONE APNEA
+===================================================== */
+
+.anemogramma-apnea::before,
+.anemogramma-apnea::after {
+    transition-property:
+        width;
+
+    transition-duration:
+        var(--durata-apnea, 1s);
+
+    transition-timing-function:
+        linear;
+}
+
+
+/*
+APNEA DOPO IN
+
+Le due metà partono dal centro
+e raggiungono i due lati.
+*/
+
+.anemogramma-apnea.apnea-dopo-in.apnea-attiva::before,
+.anemogramma-apnea.apnea-dopo-in.apnea-attiva::after {
+    width:
+        50%;
+}
+
+
+/*
+APNEA DOPO ES
+
+Le due metà partono dai lati
+e convergono verso il centro.
+*/
+
+.anemogramma-apnea.apnea-dopo-es.apnea-attiva::before,
+.anemogramma-apnea.apnea-dopo-es.apnea-attiva::after {
+    width:
+        50%;
+}
