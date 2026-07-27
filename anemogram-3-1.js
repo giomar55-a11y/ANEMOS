@@ -1010,6 +1010,117 @@ function ottieniAnemomeriPerAnemogramma(
     );
 
 }
+
+/* =====================================================
+   TIMELINE COMPLETA ANEMOGRAMMA
+   ANEMOMERI + APNEE
+===================================================== */
+
+function ottieniTimelineAnemogramma(
+    sequenza
+) {
+
+    const timeline =
+        [];
+
+
+    const ordine =
+        sequenza.ordine;
+
+
+    ordine.forEach(
+        (
+            anemomeroId,
+            indice
+        ) => {
+
+            const anemomero =
+                trovaAnemodromo(
+                    sequenza,
+                    anemomeroId
+                );
+
+
+            if (!anemomero) {
+
+                return;
+
+            }
+
+
+            /*
+            Inserisce l'anemomero.
+            */
+
+            timeline.push({
+
+                tipo:
+                    "anemomero",
+
+                dati:
+                    traduciAnemomeroPerAnemogramma(
+                        anemomero
+                    ),
+
+                originale:
+                    anemomero
+
+            });
+
+
+            /*
+            Cerca l'eventuale apnea
+            immediatamente successiva.
+            */
+
+            const successivoId =
+                indice <
+                ordine.length - 1
+
+                    ? ordine[
+                        indice + 1
+                    ]
+
+                    : null;
+
+
+            const apnea =
+                sequenza.apnee.find(
+                    elemento =>
+                        elemento.precedente ===
+                            anemomeroId &&
+                        elemento.successivo ===
+                            successivoId
+                );
+
+
+            if (apnea) {
+
+                timeline.push({
+
+                    tipo:
+                        "apnea",
+
+                    durata:
+                        apnea.durata,
+
+                    fasePrecedente:
+                        anemomero.tipo,
+
+                    originale:
+                        apnea
+
+                });
+
+            }
+
+        }
+    );
+
+
+    return timeline;
+
+}
 /* =====================================================
    PANNELLO ANEMOGRAMMA
 ===================================================== */
