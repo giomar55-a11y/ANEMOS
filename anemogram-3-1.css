@@ -386,3 +386,120 @@ disposizione orizzontale
 
     display: block;
 }
+/* =====================================================
+   APNEA
+===================================================== */
+
+.anemogramma-apnea {
+    position:
+        relative;
+
+    width:
+        100%;
+
+    min-height:
+        34px;
+
+    border:
+        1px solid #d7d7d2;
+
+    border-radius:
+        12px;
+
+    overflow:
+        hidden;
+
+    box-sizing:
+        border-box;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+}
+
+
+/* =====================================================
+   TEMPO APNEA
+===================================================== */
+
+.anemogramma-apnea-tempo {
+    position:
+        relative;
+
+    z-index:
+        2;
+
+    font-weight:
+        700;
+}
+
+
+/* =====================================================
+   DUE META' DINAMICHE
+===================================================== */
+
+.anemogramma-apnea::before,
+.anemogramma-apnea::after {
+    content:
+        "";
+
+    position:
+        absolute;
+
+    top:
+        0;
+
+    bottom:
+        0;
+
+    width:
+        0%;
+
+    background:
+        rgba(150, 105, 210, 0.35);
+
+    z-index:
+        1;
+
+    pointer-events:
+        none;
+}
+
+
+/*
+Apnea dopo IN:
+parte dal centro e va verso i lati.
+*/
+
+.anemogramma-apnea.apnea-dopo-in::before {
+    right:
+        50%;
+}
+
+
+.anemogramma-apnea.apnea-dopo-in::after {
+    left:
+        50%;
+}
+
+
+/*
+Apnea dopo ES:
+parte dai lati e converge verso il centro.
+*/
+
+.anemogramma-apnea.apnea-dopo-es::before {
+    left:
+        0;
+}
+
+
+.anemogramma-apnea.apnea-dopo-es::after {
+    right:
+        0;
+}
