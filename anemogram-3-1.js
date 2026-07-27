@@ -1213,7 +1213,86 @@ function creaPannelloAnemogramma() {
     document.body.appendChild(
         pannello
     );
+/*
+=================================================
+TEST ANIMAZIONE PRIMO ANEMOMERO
+=================================================
+*/
 
+if (
+    anemomeri.length > 0
+) {
+
+    const primoAnemomero =
+        contenuto.querySelector(
+            ".anemogramma-anemomero"
+        );
+
+
+    if (
+        primoAnemomero
+    ) {
+
+        const settori =
+            primoAnemomero.querySelectorAll(
+                ".anemogramma-settore"
+            );
+
+
+        settori.forEach(
+            settore => {
+
+                const avanzamento =
+                    settore.querySelector(
+                        ".anemogramma-avanzamento"
+                    );
+
+
+                if (
+                    !avanzamento
+                ) {
+
+                    return;
+
+                }
+
+
+                const durata =
+                    Number(
+                        settore.dataset.durata
+                    );
+
+
+                avanzamento.style.transitionDuration =
+                    durata + "s";
+
+
+                /*
+                Aspettiamo un frame affinché
+                il browser registri width: 0%.
+                */
+
+                requestAnimationFrame(
+                    function () {
+
+                        requestAnimationFrame(
+                            function () {
+
+                                avanzamento.style.width =
+                                    "100%";
+
+                            }
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+    }
+
+}
 }
 
 
