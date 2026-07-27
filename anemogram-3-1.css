@@ -170,9 +170,11 @@ disposizione verticale
 
 .anemogramma-settori.simultaneo {
     flex-direction:
-        column;
-}
+        row;
 
+    flex-wrap:
+        wrap;
+}
 
 /*
 Sequenziale:
@@ -200,7 +202,7 @@ disposizione orizzontale
         center;
 
     gap:
-        14px;
+        8px;
 
     border:
         1px solid #d7d7d2;
@@ -209,9 +211,11 @@ disposizione orizzontale
         12px;
 
     padding:
-        10px 12px;
-}
+        8px 10px;
 
+    flex:
+        0 0 auto;
+}
 
 /* =====================================================
    ICONA SETTORE
