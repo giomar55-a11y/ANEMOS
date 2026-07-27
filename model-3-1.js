@@ -894,7 +894,63 @@ function trovaAnemomeroPrecedente(
     );
 
 }
+/* =====================================================
+   ULTIMO ANEMOMERO CHE HA MODIFICATO UN SETTORE
+===================================================== */
 
+function trovaUltimoAnemomeroSettorePrimaDi(
+    sequenza,
+    anemomeroId,
+    nomeSettore
+) {
+
+    const indice =
+        sequenza.ordine.indexOf(
+            anemomeroId
+        );
+
+
+    if (
+        indice <= 0
+    ) {
+
+        return null;
+
+    }
+
+
+    for (
+        let i = indice - 1;
+        i >= 0;
+        i--
+    ) {
+
+        const precedente =
+            trovaAnemodromo(
+                sequenza,
+                sequenza.ordine[i]
+            );
+
+
+        if (
+            precedente &&
+            precedente.settori.some(
+                settore =>
+                    settore.nome ===
+                    nomeSettore
+            )
+        ) {
+
+            return precedente;
+
+        }
+
+    }
+
+
+    return null;
+
+}
 /* =====================================================
    APNEE
 ===================================================== */
@@ -1402,18 +1458,18 @@ IN confortevole -> ES confortevole
 ES confortevole -> IN confortevole
 */
 
-const precedente =
-    trovaAnemomeroPrecedente(
+const precedenteSettore =
+    trovaUltimoAnemomeroSettorePrimaDi(
         sequenza,
-        anemodromoId
+        anemodromoId,
+        nomeSettore
     );
 
 
 const cambioFase =
-    precedente &&
-    precedente.tipo !==
+    precedenteSettore &&
+    precedenteSettore.tipo !==
         tipo;
-
 
 const mantieneConfortevole =
     livelloAttuale ===
