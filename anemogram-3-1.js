@@ -667,15 +667,46 @@ function creaIconaVolumeAnemogramma(
 ===================================================== */
 
 function creaSettoreAnemogramma(
-    configurazione
+    configurazione,
+    fase,
+    durata
 ) {
-
+   
     const contenitore =
         creaElementoAnemogramma(
             "div",
             "anemogramma-settore"
         );
+contenitore.dataset.fase =
+    fase;
 
+
+contenitore.dataset.durata =
+    durata;
+
+
+if (
+    fase ===
+    ANEMOS_TIPI.IN
+) {
+
+    contenitore.classList.add(
+        "anemogramma-in"
+    );
+
+}
+
+
+if (
+    fase ===
+    ANEMOS_TIPI.ES
+) {
+
+    contenitore.classList.add(
+        "anemogramma-es"
+    );
+
+}
 
     /*
     Strato di avanzamento.
@@ -748,9 +779,11 @@ function creaSettoreAnemogramma(
 
 function creaSettoriAnemogramma(
     settori,
-    modalita
+    modalita,
+    fase,
+    durata
 ) {
-
+   
     const contenitore =
         creaElementoAnemogramma(
             "div",
@@ -787,8 +820,10 @@ function creaSettoriAnemogramma(
 
             contenitore.appendChild(
                 creaSettoreAnemogramma(
-                    settore
-                )
+    settore,
+    fase,
+    durata
+)
             );
 
         }
@@ -895,12 +930,13 @@ scheda.appendChild(
     */
 
     scheda.appendChild(
-        creaSettoriAnemogramma(
-            dati.settori,
-            dati.modalitaSettori
-        )
-    );
-
+    creaSettoriAnemogramma(
+        dati.settori,
+        dati.modalitaSettori,
+        dati.fase,
+        dati.durata
+    )
+);
 
     return scheda;
 
@@ -920,7 +956,8 @@ function traduciAnemomeroPerAnemogramma(
 
         tempo:
             anemomero.durata + " s",
-
+        durata:
+            anemomero.durata, 
         percorso:
             anemomero.percorso,
 
