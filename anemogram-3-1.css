@@ -210,18 +210,72 @@ disposizione orizzontale
 ===================================================== */
 
 .anemogramma-settore {
+    position:
+        relative;
+
     min-width:
         92px;
+
+    min-height:
+        44px;
 
     padding:
         6px 8px;
 
-    gap:
-        8px;
+    overflow:
+        hidden;
 
     flex:
         0 0 auto;
 }
+/* =====================================================
+   AVANZAMENTO ANIMATO
+===================================================== */
+
+.anemogramma-avanzamento {
+    position:
+        absolute;
+
+    top:
+        0;
+
+    bottom:
+        0;
+
+    left:
+        0;
+
+    width:
+        0%;
+
+    z-index:
+        0;
+
+    pointer-events:
+        none;
+}
+
+
+.anemogramma-settore-contenuto {
+    position:
+        relative;
+
+    z-index:
+        1;
+
+    display:
+        flex;
+
+    align-items:
+        center;
+
+    justify-content:
+        center;
+
+    gap:
+        8px;
+}
+
 /* =====================================================
    ICONA SETTORE
 ===================================================== */
