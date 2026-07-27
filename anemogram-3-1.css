@@ -80,6 +80,35 @@ ANEMOGRAMMA
         12px;
 }
 .anemogramma-icona-parametro {
+    width:
+        54px;
+
+    min-width:
+        54px;
+
+    padding:
+        6px;
+
+    font-size:
+        22px;
+}
+
+.anemogramma-fase,
+.anemogramma-tempo,
+.anemogramma-icona-parametro,
+.anemogramma-settore {
+    min-height:
+        44px;
+
+    border:
+        1px solid #d7d7d2;
+
+    border-radius:
+        12px;
+
+    box-sizing:
+        border-box;
+
     display:
         flex;
 
@@ -88,32 +117,18 @@ ANEMOGRAMMA
 
     justify-content:
         center;
-
-    min-width:
-        44px;
-
-    font-size:
-        22px;
 }
 .anemogramma-fase,
 .anemogramma-tempo {
-    border:
-        1px solid #d7d7d2;
-
-    border-radius:
-        12px;
-
     padding:
-        10px 12px;
-
-    text-align:
-        center;
+        8px 10px;
 
     font-weight:
         700;
+
+    text-align:
+        center;
 }
-
-
 /* =====================================================
    RIGA 2
    PERCORSO + FLUSSO
@@ -195,28 +210,18 @@ disposizione orizzontale
 ===================================================== */
 
 .anemogramma-settore {
-    display:
-        flex;
+    min-width:
+        92px;
 
-    align-items:
-        center;
+    padding:
+        6px 8px;
 
     gap:
         8px;
 
-    border:
-        1px solid #d7d7d2;
-
-    border-radius:
-        12px;
-
-    padding:
-        8px 10px;
-
     flex:
         0 0 auto;
 }
-
 /* =====================================================
    ICONA SETTORE
 ===================================================== */
