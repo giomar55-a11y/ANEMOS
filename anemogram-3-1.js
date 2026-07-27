@@ -677,6 +677,32 @@ function creaSettoreAnemogramma(
         );
 
 
+    /*
+    Strato di avanzamento.
+
+    Rimane dietro alle icone e verrà
+    animato successivamente.
+    */
+
+    const avanzamento =
+        creaElementoAnemogramma(
+            "div",
+            "anemogramma-avanzamento"
+        );
+
+
+    /*
+    Contenuto visibile sopra
+    allo strato colorato.
+    */
+
+    const contenuto =
+        creaElementoAnemogramma(
+            "div",
+            "anemogramma-settore-contenuto"
+        );
+
+
     const icona =
         creaIconaSettoreAnemogramma(
             configurazione.settore
@@ -684,24 +710,34 @@ function creaSettoreAnemogramma(
 
 
     const volume =
-    creaIconaVolumeAnemogramma(
-        configurazione.volume
-    );
+        creaIconaVolumeAnemogramma(
+            configurazione.volume
+        );
 
-    contenitore.appendChild(
+
+    contenuto.appendChild(
         icona
     );
 
 
-    contenitore.appendChild(
+    contenuto.appendChild(
         volume
+    );
+
+
+    contenitore.appendChild(
+        avanzamento
+    );
+
+
+    contenitore.appendChild(
+        contenuto
     );
 
 
     return contenitore;
 
 }
-
 
 /* =====================================================
    BLOCCO SETTORI
