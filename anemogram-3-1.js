@@ -1124,7 +1124,74 @@ function ottieniTimelineAnemogramma(
 /* =====================================================
    PANNELLO ANEMOGRAMMA
 ===================================================== */
+/* =====================================================
+   BARRA APNEA
+===================================================== */
 
+function creaApneaAnemogramma(
+    dati
+) {
+
+    const barra =
+        creaElementoAnemogramma(
+            "div",
+            "anemogramma-apnea"
+        );
+
+
+    /*
+    Memorizza durata e fase precedente.
+    Serviranno per l'animazione.
+    */
+
+    barra.dataset.durata =
+        dati.durata;
+
+
+    barra.dataset.fasePrecedente =
+        dati.fasePrecedente;
+
+
+    if (
+        dati.fasePrecedente ===
+        ANEMOS_TIPI.IN
+    ) {
+
+        barra.classList.add(
+            "apnea-dopo-in"
+        );
+
+    }
+
+
+    if (
+        dati.fasePrecedente ===
+        ANEMOS_TIPI.ES
+    ) {
+
+        barra.classList.add(
+            "apnea-dopo-es"
+        );
+
+    }
+
+
+    const tempo =
+        creaElementoAnemogramma(
+            "div",
+            "anemogramma-apnea-tempo",
+            dati.durata + " s"
+        );
+
+
+    barra.appendChild(
+        tempo
+    );
+
+
+    return barra;
+
+}
 function creaPannelloAnemogramma() {
 
     const esistente =
@@ -1277,46 +1344,65 @@ function creaPannelloAnemogramma() {
         "contenuto-anemogramma";
 
 
-    const anemomeri =
-        ottieniAnemomeriPerAnemogramma(
-            anemos31
-        );
-
+    const timeline =
+    ottieniTimelineAnemogramma(
+        anemos31
+    );
 
     if (
-        anemomeri.length === 0
-    ) {
+    timeline.length === 0
+) {
 
-        const vuoto =
-            document.createElement(
-                "p"
-            );
-
-
-        vuoto.textContent =
-            "Nessun anemomero presente.";
-
-
-        contenuto.appendChild(
-            vuoto
+    const vuoto =
+        document.createElement(
+            "p"
         );
 
-    } else {
 
-        anemomeri.forEach(
-            dati => {
+    vuoto.textContent =
+        "Nessun anemomero presente.";
+
+
+    contenuto.appendChild(
+        vuoto
+    );
+
+} else {
+
+    timeline.forEach(
+        elemento => {
+
+            if (
+                elemento.tipo ===
+                "anemomero"
+            ) {
 
                 contenuto.appendChild(
                     creaAnemomeroAnemogramma(
-                        dati
+                        elemento.dati
                     )
                 );
 
             }
-        );
 
-    }
 
+            if (
+                elemento.tipo ===
+                "apnea"
+            ) {
+
+                contenuto.appendChild(
+                    creaApneaAnemogramma(
+                        elemento
+                    )
+                );
+
+            }
+
+        }
+    );
+
+}
 
     pannello.appendChild(
         contenuto
@@ -1333,9 +1419,8 @@ TEST ANIMAZIONE PRIMO ANEMOMERO
 */
 
 if (
-    anemomeri.length > 0
+    timeline.length > 0
 ) {
-
     const primoAnemomero =
         contenuto.querySelector(
             ".anemogramma-anemomero"
