@@ -1347,9 +1347,10 @@ async function attendiAnemogramma(
 ===================================================== */
 
 async function animaAnemomeroAnemogramma(
-    elemento
+    elemento,
+    esecuzione
 ) {
-
+   
     centraElementoAttivoAnemogramma(
         elemento
     );
@@ -1423,7 +1424,14 @@ async function animaAnemomeroAnemogramma(
     while (
         trascorso < durata
     ) {
+        if (
+            esecuzione !==
+            anemogrammaEsecuzione
+        ) {
 
+            return;
+
+        }
         if (
             anemogrammaInPausa
         ) {
@@ -1504,6 +1512,112 @@ async function animaApneaAnemogramma(
     esecuzione
 ) {
 
+    centraElementoAttivoAnemogramma(
+        elemento
+    );
+
+
+    const durata =
+        Number(
+            elemento.dataset.durata
+        ) * 1000;
+
+
+    const intervallo =
+        30;
+
+
+    let trascorso =
+        0;
+
+
+    elemento.classList.remove(
+        "apnea-attiva"
+    );
+
+
+    elemento.style.setProperty(
+        "--avanzamento-apnea",
+        "0%"
+    );
+
+
+    while (
+        trascorso < durata
+    ) {
+
+        if (
+            esecuzione !==
+            anemogrammaEsecuzione
+        ) {
+
+            elemento.style.setProperty(
+                "--avanzamento-apnea",
+                "0%"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            anemogrammaInPausa
+        ) {
+
+            await new Promise(
+                resolve => {
+
+                    setTimeout(
+                        resolve,
+                        intervallo
+                    );
+
+                }
+            );
+
+
+            continue;
+
+        }
+
+
+        trascorso =
+            Math.min(
+                trascorso + intervallo,
+                durata
+            );
+
+
+        const percentuale =
+            durata > 0
+                ? (
+                    trascorso /
+                    durata
+                ) * 100
+                : 100;
+
+
+        elemento.style.setProperty(
+            "--avanzamento-apnea",
+            percentuale + "%"
+        );
+
+
+        await new Promise(
+            resolve => {
+
+                setTimeout(
+                    resolve,
+                    intervallo
+                );
+
+            }
+        );
+
+    }
+
+}
     centraElementoAttivoAnemogramma(
         elemento
     );
@@ -1694,10 +1808,10 @@ async function eseguiTimelineAnemogramma(
             )
         ) {
 
-            await animaAnemomeroAnemogramma(
-                elemento
-            );
-
+          await animaAnemomeroAnemogramma(
+    elemento,
+    esecuzione
+);
         }
 
 
