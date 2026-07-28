@@ -1580,7 +1580,29 @@ function creaPannelloAnemogramma() {
         intestazione
     );
 
+/* =================================================
+   LINEA DEL PRESENTE
+================================================= */
 
+const lineaPresente =
+    document.createElement(
+        "div"
+    );
+
+
+lineaPresente.id =
+    "anemogramma-linea-presente";
+
+
+lineaPresente.setAttribute(
+    "aria-hidden",
+    "true"
+);
+
+
+pannello.appendChild(
+    lineaPresente
+);
     /* =================================================
        CONTENUTO
     ================================================= */
