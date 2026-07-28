@@ -37,6 +37,12 @@ function creaElementoAnemogramma(
 
 }
 /* =====================================================
+   STATO RIPRODUZIONE ANEMOGRAMMA
+===================================================== */
+
+let anemogrammaInPausa =
+    false;
+/* =====================================================
    ICONA PERCORSO
 ===================================================== */
 
@@ -1248,27 +1254,91 @@ function centraElementoAttivoAnemogramma(
 
     });
 
-}/* =====================================================
+}
+/* =====================================================
+   ATTESA DURANTE PAUSA
+===================================================== */
+
+async function attendiPausaAnemogramma() {
+
+    while (
+        anemogrammaInPausa
+    ) {
+
+        await new Promise(
+            resolve => {
+
+                setTimeout(
+                    resolve,
+                    50
+                );
+
+            }
+        );
+
+    }
+
+}
+/* =====================================================
    ATTESA
 ===================================================== */
 
-function attendiAnemogramma(
+async function attendiAnemogramma(
     millisecondi
 ) {
 
-    return new Promise(
-        resolve => {
+    const intervallo =
+        50;
 
-            setTimeout(
-                resolve,
-                millisecondi
+
+    let trascorso =
+        0;
+
+
+    while (
+        trascorso <
+        millisecondi
+    ) {
+
+        if (
+            anemogrammaInPausa
+        ) {
+
+            await new Promise(
+                resolve => {
+
+                    setTimeout(
+                        resolve,
+                        intervallo
+                    );
+
+                }
             );
 
+
+            continue;
+
         }
-    );
+
+
+        await new Promise(
+            resolve => {
+
+                setTimeout(
+                    resolve,
+                    intervallo
+                );
+
+            }
+        );
+
+
+        trascorso +=
+            intervallo;
+
+    }
 
 }
-
 
 /* =====================================================
    ANIMA ANEMOMERO
@@ -1414,7 +1484,7 @@ async function eseguiTimelineAnemogramma(
         const elemento
         of elementi
     ) {
-
+        await attendiPausaAnemogramma();
         if (
             elemento.classList.contains(
                 "anemogramma-anemomero"
@@ -1444,8 +1514,11 @@ async function eseguiTimelineAnemogramma(
 
 }
 function creaPannelloAnemogramma() {
-
-    const esistente =
+   
+   anemogrammaInPausa =
+        false;
+   
+   const esistente =
         document.getElementById(
             "pannello-anemogramma"
         );
@@ -1524,7 +1597,76 @@ function creaPannelloAnemogramma() {
     titolo.textContent =
         "Anemogramma";
 
+const playPausa =
+    document.createElement(
+        "button"
+    );
 
+
+playPausa.type =
+    "button";
+
+
+playPausa.textContent =
+    "⏸";
+
+
+playPausa.setAttribute(
+    "aria-label",
+    "Pausa Anemogramma"
+);
+
+
+playPausa.style.fontSize =
+    "24px";
+
+
+playPausa.style.border =
+    "0";
+
+
+playPausa.style.background =
+    "transparent";
+
+
+playPausa.style.cursor =
+    "pointer";
+
+
+playPausa.addEventListener(
+    "click",
+    function () {
+
+        anemogrammaInPausa =
+            !anemogrammaInPausa;
+
+
+        if (
+            anemogrammaInPausa
+        ) {
+
+            playPausa.textContent =
+                "▶";
+
+            playPausa.setAttribute(
+                "aria-label",
+                "Riprendi Anemogramma"
+            );
+
+        } else {
+
+            playPausa.textContent =
+                "⏸";
+
+            playPausa.setAttribute(
+                "aria-label",
+                "Pausa Anemogramma"
+            );
+
+        }
+
+    }
+);
     const chiudi =
         document.createElement(
             "button"
@@ -1570,7 +1712,10 @@ function creaPannelloAnemogramma() {
         titolo
     );
 
-
+intestazione.appendChild(
+    playPausa
+);
+   
     intestazione.appendChild(
         chiudi
     );
