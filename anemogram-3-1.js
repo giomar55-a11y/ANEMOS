@@ -1283,80 +1283,12 @@ async function attendiPausaAnemogramma() {
    ATTESA
 ===================================================== */
 
-async function animaAnemomeroAnemogramma(
-    elemento
+async function attendiAnemogramma(
+    millisecondi
 ) {
 
-    centraElementoAttivoAnemogramma(
-        elemento
-    );
-
-
-    const settori =
-        elemento.querySelectorAll(
-            ".anemogramma-settore"
-        );
-
-
-    if (
-        settori.length === 0
-    ) {
-
-        return;
-
-    }
-
-
-    const durata =
-        Number(
-            settori[0].dataset.durata
-        ) * 1000;
-
-
-    const avanzamenti =
-        [];
-
-
-    settori.forEach(
-        settore => {
-
-            const avanzamento =
-                settore.querySelector(
-                    ".anemogramma-avanzamento"
-                );
-
-
-            if (!avanzamento) {
-
-                return;
-
-            }
-
-
-            /*
-            Disattiva la transition CSS.
-            Da ora l'avanzamento viene
-            controllato dal JavaScript.
-            */
-
-            avanzamento.style.transition =
-                "none";
-
-
-            avanzamento.style.width =
-                "0%";
-
-
-            avanzamenti.push(
-                avanzamento
-            );
-
-        }
-    );
-
-
     const intervallo =
-        30;
+        50;
 
 
     let trascorso =
@@ -1364,7 +1296,8 @@ async function animaAnemomeroAnemogramma(
 
 
     while (
-        trascorso < durata
+        trascorso <
+        millisecondi
     ) {
 
         if (
@@ -1388,34 +1321,6 @@ async function animaAnemomeroAnemogramma(
         }
 
 
-        trascorso =
-            Math.min(
-                trascorso + intervallo,
-                durata
-            );
-
-
-        const percentuale =
-            durata > 0
-
-                ? (
-                    trascorso /
-                    durata
-                ) * 100
-
-                : 100;
-
-
-        avanzamenti.forEach(
-            avanzamento => {
-
-                avanzamento.style.width =
-                    percentuale + "%";
-
-            }
-        );
-
-
         await new Promise(
             resolve => {
 
@@ -1427,19 +1332,14 @@ async function animaAnemomeroAnemogramma(
             }
         );
 
+
+        trascorso +=
+            intervallo;
+
     }
 
-
-    avanzamenti.forEach(
-        avanzamento => {
-
-            avanzamento.style.width =
-                "100%";
-
-        }
-    );
-
-}/* =====================================================
+}
+/* =====================================================
    ANIMA ANEMOMERO
 ===================================================== */
 
