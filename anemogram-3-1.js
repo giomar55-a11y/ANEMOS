@@ -1192,23 +1192,63 @@ function creaApneaAnemogramma(
     return barra;
 
 }
-function centraElementoAttivoAnemogramma(elemento) {
-    if (!elemento) return;
+function centraElementoAttivoAnemogramma(
+    elemento
+) {
 
-    const rettangolo = elemento.getBoundingClientRect();
-    const posizioneElemento = window.scrollY + rettangolo.top;
+    if (!elemento) {
 
-    const altezzaFinestra = window.innerHeight;
+        return;
+
+    }
+
+
+    const pannello =
+        document.getElementById(
+            "pannello-anemogramma"
+        );
+
+
+    if (!pannello) {
+
+        return;
+
+    }
+
+
+    const rettangoloElemento =
+        elemento.getBoundingClientRect();
+
+
+    const rettangoloPannello =
+        pannello.getBoundingClientRect();
+
+
+    const posizioneElementoNelPannello =
+        pannello.scrollTop +
+        rettangoloElemento.top -
+        rettangoloPannello.top;
+
 
     const posizioneTarget =
-        posizioneElemento - altezzaFinestra * 0.28;
+        posizioneElementoNelPannello -
+        pannello.clientHeight * 0.28;
 
-    window.scrollTo({
-        top: Math.max(0, posizioneTarget),
-        behavior: "smooth"
+
+    pannello.scrollTo({
+
+        top:
+            Math.max(
+                0,
+                posizioneTarget
+            ),
+
+        behavior:
+            "smooth"
+
     });
-}
-/* =====================================================
+
+}/* =====================================================
    ATTESA
 ===================================================== */
 
