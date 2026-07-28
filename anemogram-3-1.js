@@ -1585,7 +1585,24 @@ function creaPannelloAnemogramma() {
 
     intestazione.style.marginBottom =
         "24px";
+intestazione.style.position =
+    "sticky";
 
+
+intestazione.style.top =
+    "0";
+
+
+intestazione.style.zIndex =
+    "100";
+
+
+intestazione.style.background =
+    "#ffffff";
+
+
+intestazione.style.padding =
+    "8px 0";
 
     const titolo =
         document.createElement(
