@@ -1500,8 +1500,97 @@ async function animaAnemomeroAnemogramma(
 ===================================================== */
 
 async function animaApneaAnemogramma(
-    elemento
+    elemento,
+    esecuzione
 ) {
+
+    centraElementoAttivoAnemogramma(
+        elemento
+    );
+
+
+    const durata =
+        Number(
+            elemento.dataset.durata
+        ) * 1000;
+
+
+    elemento.style.setProperty(
+        "--durata-apnea",
+        durata / 1000 + "s"
+    );
+
+
+    elemento.classList.add(
+        "apnea-attiva"
+    );
+
+
+    const intervallo =
+        50;
+
+
+    let trascorso =
+        0;
+
+
+    while (
+        trascorso < durata
+    ) {
+
+        if (
+            esecuzione !==
+            anemogrammaEsecuzione
+        ) {
+
+            elemento.classList.remove(
+                "apnea-attiva"
+            );
+
+            return;
+
+        }
+
+
+        if (
+            anemogrammaInPausa
+        ) {
+
+            await new Promise(
+                resolve => {
+
+                    setTimeout(
+                        resolve,
+                        intervallo
+                    );
+
+                }
+            );
+
+
+            continue;
+
+        }
+
+
+        await new Promise(
+            resolve => {
+
+                setTimeout(
+                    resolve,
+                    intervallo
+                );
+
+            }
+        );
+
+
+        trascorso +=
+            intervallo;
+
+    }
+
+}
    
 centraElementoAttivoAnemogramma(
     elemento
@@ -1530,7 +1619,50 @@ centraElementoAttivoAnemogramma(
 
 }
 
+/* =====================================================
+   AZZERA ANEMOGRAMMA
+===================================================== */
 
+function azzeraAnemogramma(
+    contenuto
+) {
+
+    const avanzamenti =
+        contenuto.querySelectorAll(
+            ".anemogramma-avanzamento"
+        );
+
+
+    avanzamenti.forEach(
+        avanzamento => {
+
+            avanzamento.style.transition =
+                "none";
+
+            avanzamento.style.width =
+                "0%";
+
+        }
+    );
+
+
+    const apnee =
+        contenuto.querySelectorAll(
+            ".anemogramma-apnea"
+        );
+
+
+    apnee.forEach(
+        apnea => {
+
+            apnea.classList.remove(
+                "apnea-attiva"
+            );
+
+        }
+    );
+
+}
 /* =====================================================
    ESEGUE TIMELINE
 ===================================================== */
@@ -1576,8 +1708,9 @@ async function eseguiTimelineAnemogramma(
         ) {
 
             await animaApneaAnemogramma(
-                elemento
-            );
+    elemento,
+    esecuzione
+);
 
         }
 
@@ -1806,7 +1939,9 @@ reset.style.cursor =
 
         anemogrammaInPausa =
             false;
-
+        azzeraAnemogramma(
+            contenuto
+        );
 
         playPausa.textContent =
             "⏸";
