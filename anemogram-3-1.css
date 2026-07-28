@@ -458,7 +458,9 @@ disposizione orizzontale
         0;
 
     width:
-        0%;
+        calc(
+            var(--avanzamento-apnea, 0%) / 2
+        );
 
     background:
         rgba(150, 105, 210, 0.35);
@@ -468,8 +470,10 @@ disposizione orizzontale
 
     pointer-events:
         none;
-}
 
+    transition:
+        none;
+}
 
 /*
 Apnea dopo IN:
