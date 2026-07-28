@@ -1346,11 +1346,12 @@ async function attendiAnemogramma(
 async function animaAnemomeroAnemogramma(
     elemento
 ) {
-   
-centraElementoAttivoAnemogramma(
-    elemento
-);
-   
+
+    centraElementoAttivoAnemogramma(
+        elemento
+    );
+
+
     const settori =
         elemento.querySelectorAll(
             ".anemogramma-settore"
@@ -1369,7 +1370,11 @@ centraElementoAttivoAnemogramma(
     const durata =
         Number(
             settori[0].dataset.durata
-        );
+        ) * 1000;
+
+
+    const avanzamenti =
+        [];
 
 
     settori.forEach(
@@ -1388,49 +1393,105 @@ centraElementoAttivoAnemogramma(
             }
 
 
-            avanzamento.style.transitionDuration =
-                durata + "s";
+            avanzamento.style.transition =
+                "none";
 
 
             avanzamento.style.width =
                 "0%";
 
+
+            avanzamenti.push(
+                avanzamento
+            );
+
         }
     );
 
 
-    await attendiAnemogramma(
-        30
-    );
+    const intervallo =
+        30;
 
 
-    settori.forEach(
-        settore => {
-
-            const avanzamento =
-                settore.querySelector(
-                    ".anemogramma-avanzamento"
-                );
+    let trascorso =
+        0;
 
 
-            if (avanzamento) {
+    while (
+        trascorso < durata
+    ) {
+
+        if (
+            anemogrammaInPausa
+        ) {
+
+            await new Promise(
+                resolve => {
+
+                    setTimeout(
+                        resolve,
+                        intervallo
+                    );
+
+                }
+            );
+
+
+            continue;
+
+        }
+
+
+        trascorso =
+            Math.min(
+                trascorso + intervallo,
+                durata
+            );
+
+
+        const percentuale =
+            durata > 0
+                ? (
+                    trascorso /
+                    durata
+                ) * 100
+                : 100;
+
+
+        avanzamenti.forEach(
+            avanzamento => {
 
                 avanzamento.style.width =
-                    "100%";
+                    percentuale + "%";
 
             }
+        );
+
+
+        await new Promise(
+            resolve => {
+
+                setTimeout(
+                    resolve,
+                    intervallo
+                );
+
+            }
+        );
+
+    }
+
+
+    avanzamenti.forEach(
+        avanzamento => {
+
+            avanzamento.style.width =
+                "100%";
 
         }
-    );
-
-
-    await attendiAnemogramma(
-        durata * 1000
     );
 
 }
-
-
 /* =====================================================
    ANIMA APNEA
 ===================================================== */
