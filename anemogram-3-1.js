@@ -1192,6 +1192,22 @@ function creaApneaAnemogramma(
     return barra;
 
 }
+function centraElementoAttivoAnemogramma(elemento) {
+    if (!elemento) return;
+
+    const rettangolo = elemento.getBoundingClientRect();
+    const posizioneElemento = window.scrollY + rettangolo.top;
+
+    const altezzaFinestra = window.innerHeight;
+
+    const posizioneTarget =
+        posizioneElemento - altezzaFinestra * 0.28;
+
+    window.scrollTo({
+        top: Math.max(0, posizioneTarget),
+        behavior: "smooth"
+    });
+}
 /* =====================================================
    ATTESA
 ===================================================== */
@@ -1221,7 +1237,11 @@ function attendiAnemogramma(
 async function animaAnemomeroAnemogramma(
     elemento
 ) {
-
+   
+centraElementoAttivoAnemogramma(
+    elemento
+);
+   
     const settori =
         elemento.querySelectorAll(
             ".anemogramma-settore"
@@ -1309,7 +1329,11 @@ async function animaAnemomeroAnemogramma(
 async function animaApneaAnemogramma(
     elemento
 ) {
-
+   
+centraElementoAttivoAnemogramma(
+    elemento
+);
+   
     const durata =
         Number(
             elemento.dataset.durata
