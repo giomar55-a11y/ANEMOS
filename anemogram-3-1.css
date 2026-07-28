@@ -546,26 +546,3 @@ e convergono verso il centro.
     width:
         50%;
 }
-/* =====================================================
-   LINEA DEL PRESENTE
-===================================================== */
-
-#anemogramma-linea-presente {
-    position: fixed;
-
-    left: 20px;
-    right: 20px;
-
-    top: 28vh;
-
-    height: 1px;
-
-    background:
-        rgba(0, 0, 0, 0.22);
-
-    z-index:
-        10001;
-
-    pointer-events:
-        none;
-}
