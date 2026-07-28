@@ -42,6 +42,9 @@ function creaElementoAnemogramma(
 
 let anemogrammaInPausa =
     false;
+
+let anemogrammaEsecuzione =
+    0;
 /* =====================================================
    ICONA PERCORSO
 ===================================================== */
@@ -1533,9 +1536,9 @@ centraElementoAttivoAnemogramma(
 ===================================================== */
 
 async function eseguiTimelineAnemogramma(
-    contenuto
+    contenuto,
+    esecuzione
 ) {
-
     const elementi =
         contenuto.children;
 
@@ -1544,6 +1547,14 @@ async function eseguiTimelineAnemogramma(
         const elemento
         of elementi
     ) {
+               if (
+            esecuzione !==
+            anemogrammaEsecuzione
+        ) {
+
+            return;
+
+        }
         await attendiPausaAnemogramma();
         if (
             elemento.classList.contains(
@@ -1744,6 +1755,100 @@ playPausa.addEventListener(
 
     }
 );
+   const reset =
+    document.createElement(
+        "button"
+    );
+
+
+reset.type =
+    "button";
+
+
+reset.textContent =
+    "↺";
+
+
+reset.setAttribute(
+    "aria-label",
+    "Riavvia Anemogramma"
+);
+
+
+reset.style.fontSize =
+    "24px";
+
+
+reset.style.border =
+    "0";
+
+
+reset.style.background =
+    "transparent";
+
+
+reset.style.cursor =
+    "pointer";
+   reset.addEventListener(
+    "click",
+    function () {
+
+        /*
+        Invalida l'esecuzione attuale.
+        */
+
+        anemogrammaEsecuzione++;
+
+
+        /*
+        Toglie l'eventuale pausa.
+        */
+
+        anemogrammaInPausa =
+            false;
+
+
+        playPausa.textContent =
+            "⏸";
+
+
+        playPausa.setAttribute(
+            "aria-label",
+            "Pausa Anemogramma"
+        );
+
+
+        /*
+        Riporta il pannello all'inizio.
+        */
+
+        pannello.scrollTo({
+
+            top:
+                0,
+
+            behavior:
+                "smooth"
+
+        });
+
+
+        /*
+        Crea una nuova esecuzione
+        della timeline.
+        */
+
+        const nuovaEsecuzione =
+            ++anemogrammaEsecuzione;
+
+
+        eseguiTimelineAnemogramma(
+            contenuto,
+            nuovaEsecuzione
+        );
+
+    }
+);
     const chiudi =
         document.createElement(
             "button"
@@ -1785,18 +1890,24 @@ playPausa.addEventListener(
     );
 
 
-    intestazione.appendChild(
-        titolo
-    );
+   intestazione.appendChild(
+    titolo
+);
+
 
 intestazione.appendChild(
     playPausa
 );
-   
-    intestazione.appendChild(
-        chiudi
-    );
 
+
+intestazione.appendChild(
+    reset
+);
+
+
+intestazione.appendChild(
+    chiudi
+);
 
     pannello.appendChild(
         intestazione
@@ -1887,8 +1998,13 @@ intestazione.appendChild(
 requestAnimationFrame(
     function () {
 
+        const esecuzione =
+            ++anemogrammaEsecuzione;
+
+
         eseguiTimelineAnemogramma(
-            contenuto
+            contenuto,
+            esecuzione
         );
 
     }
