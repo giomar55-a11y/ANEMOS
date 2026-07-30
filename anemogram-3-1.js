@@ -1998,6 +1998,9 @@ requestAnimationFrame(
 
     }
 );
+       }
+);
+
     const chiudi =
         document.createElement(
             "button"
