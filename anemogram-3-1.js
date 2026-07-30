@@ -1927,39 +1927,41 @@ reset.style.background =
 
 reset.style.cursor =
     "pointer";
-   reset.addEventListener(
+     
+reset.addEventListener(
     "click",
     function () {
 
         /*
-        Invalida l'esecuzione attuale.
+        Invalida immediatamente
+        l'esecuzione corrente e crea
+        l'identificatore della nuova.
         */
 
-        anemogrammaEsecuzione++;
+        const nuovaEsecuzione =
+            ++anemogrammaEsecuzione;
 
 
         /*
-        Toglie l'eventuale pausa.
+        Dopo Reset l'Anemogramma
+        deve restare fermo.
         */
 
         anemogrammaInPausa =
-            false;
+            true;
+
+
+        /*
+        Azzera tutte le barre.
+        */
+
         azzeraAnemogramma(
             contenuto
         );
 
-        playPausa.textContent =
-            "⏸";
-
-
-        playPausa.setAttribute(
-            "aria-label",
-            "Pausa Anemogramma"
-        );
-
 
         /*
-        Riporta il pannello all'inizio.
+        Riporta lo scroll all'inizio.
         */
 
         pannello.scrollTo({
@@ -1974,33 +1976,35 @@ reset.style.cursor =
 
 
         /*
-        Crea una nuova esecuzione
-        della timeline.
+        Mostra PLAY perché
+        siamo fermi.
         */
 
-      const nuovaEsecuzione =
-    ++anemogrammaEsecuzione;
+        playPausa.textContent =
+            "▶";
 
 
-requestAnimationFrame(
-    function () {
+        playPausa.setAttribute(
+            "aria-label",
+            "Avvia Anemogramma"
+        );
 
-        requestAnimationFrame(
-            function () {
 
-                eseguiTimelineAnemogramma(
-                    contenuto,
-                    nuovaEsecuzione
-                );
+        /*
+        Prepara una nuova timeline
+        dall'inizio, ma essendo in pausa
+        resterà ferma finché non si
+        preme PLAY.
+        */
 
-            }
+        eseguiTimelineAnemogramma(
+            contenuto,
+            nuovaEsecuzione
         );
 
     }
 );
-       }
-);
-
+   
     const chiudi =
         document.createElement(
             "button"
