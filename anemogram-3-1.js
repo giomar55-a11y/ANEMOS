@@ -1653,15 +1653,20 @@ function azzeraAnemogramma(
 
 
     apnee.forEach(
-        apnea => {
+    apnea => {
 
-            apnea.classList.remove(
-                "apnea-attiva"
-            );
+        apnea.classList.remove(
+            "apnea-attiva"
+        );
 
-        }
-    );
 
+        apnea.style.setProperty(
+            "--avanzamento-apnea",
+            "0%"
+        );
+
+    }
+);
 }
 /* =====================================================
    ESEGUE TIMELINE
@@ -1973,13 +1978,22 @@ reset.style.cursor =
         della timeline.
         */
 
-        const nuovaEsecuzione =
-            ++anemogrammaEsecuzione;
+      const nuovaEsecuzione =
+    ++anemogrammaEsecuzione;
 
 
-        eseguiTimelineAnemogramma(
-            contenuto,
-            nuovaEsecuzione
+requestAnimationFrame(
+    function () {
+
+        requestAnimationFrame(
+            function () {
+
+                eseguiTimelineAnemogramma(
+                    contenuto,
+                    nuovaEsecuzione
+                );
+
+            }
         );
 
     }
