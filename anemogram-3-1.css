@@ -474,7 +474,22 @@ disposizione orizzontale
     transition:
         none;
 }
+/* Apnea piena dopo IN: giallo tenue */
 
+.anemogramma-apnea.apnea-dopo-in::before,
+.anemogramma-apnea.apnea-dopo-in::after {
+    background:
+        rgba(245, 205, 70, 0.30);
+}
+
+
+/* Apnea vuota dopo ES: verde tenue */
+
+.anemogramma-apnea.apnea-dopo-es::before,
+.anemogramma-apnea.apnea-dopo-es::after {
+    background:
+        rgba(90, 185, 120, 0.30);
+}
 /*
 Apnea dopo IN:
 parte dal centro e va verso i lati.
