@@ -99,10 +99,38 @@ function calcolaCaricoRespiratorio(
     return carico;
 
 }
+
+
+/* =====================================================
+   CALCOLO INDICE ANEMOS
+===================================================== */
+
+function calcolaIndiceAnemos(
+    carico,
+    durata
+) {
+
+    if (
+        durata <= 0
+    ) {
+
+        return 0;
+
+    }
+
+
+    return Number(
+        (
+            carico /
+            durata
+        ).toFixed(2)
+    );
+
+}
+
 /* =====================================================
    TEST CARICO RESPIRATORIO
 ===================================================== */
-
 const testCarico =
     calcolaCaricoRespiratorio([
 
@@ -122,4 +150,19 @@ const testCarico =
 console.log(
     "Carico respiratorio:",
     testCarico
+);
+/* =====================================================
+   TEST INDICE ANEMOS
+===================================================== */
+
+const testIndice =
+    calcolaIndiceAnemos(
+        testCarico,
+        4
+    );
+
+
+console.log(
+    "Indice ANEMOS:",
+    testIndice
 );
