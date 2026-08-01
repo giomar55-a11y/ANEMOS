@@ -59,6 +59,57 @@ const ANEMOS_VALORI_VOLUME = {
         4
 
 };
+
+/* =====================================================
+   MATRICE FLUSSI
+===================================================== */
+
+const ANEMOS_MATRICE_FLUSSI = {
+
+    trattenuto: {
+
+        indiceVerdeMin:
+            0.05,
+
+        indiceVerdeMax:
+            0.30
+
+    },
+
+
+    delicato: {
+
+        indiceVerdeMin:
+            0.20,
+
+        indiceVerdeMax:
+            0.70
+
+    },
+
+
+    spontaneo: {
+
+        indiceVerdeMin:
+            0.50,
+
+        indiceVerdeMax:
+            1.50
+
+    },
+
+
+    forzato: {
+
+        indiceVerdeMin:
+            1.20,
+
+        indiceVerdeMax:
+            4.00
+
+    }
+
+};7
 /* =====================================================
    CALCOLO CARICO RESPIRATORIO
 ===================================================== */
