@@ -597,3 +597,153 @@ console.log(
     "Valutazione coerenza:",
     testCoerenza
 );
+/* =====================================================
+   STRUMENTO DI TEST DEL MOTORE
+===================================================== */
+
+function eseguiTestMotore(
+    configurazione
+) {
+
+    const indice =
+        calcolaIndiceAnemos(
+            configurazione.carico,
+            configurazione.durata
+        );
+
+
+    const valutazione =
+        valutaCoerenzaFlusso(
+            indice,
+            configurazione.flusso
+        );
+
+
+    console.log(
+        "--------------------------------"
+    );
+
+
+    console.log(
+        configurazione.nome
+    );
+
+
+    console.log(
+        "Carico:",
+        configurazione.carico
+    );
+
+
+    console.log(
+        "Durata:",
+        configurazione.durata
+    );
+
+
+    console.log(
+        "Flusso:",
+        configurazione.flusso
+    );
+
+
+    console.log(
+        "Indice:",
+        indice
+    );
+
+
+    console.log(
+        "Valutazione:",
+        valutazione
+    );
+
+
+    return valutazione;
+
+}
+/* =====================================================
+   TEST FLUSSO SPONTANEO
+===================================================== */
+
+eseguiTestMotore({
+
+    nome:
+        "Spontaneo ideale",
+
+    carico:
+        4,
+
+    durata:
+        4,
+
+    flusso:
+        "spontaneo"
+
+});
+
+
+eseguiTestMotore({
+
+    nome:
+        "Spontaneo lento",
+
+    carico:
+        4,
+
+    durata:
+        8,
+
+    flusso:
+        "spontaneo"
+
+});
+
+
+eseguiTestMotore({
+
+    nome:
+        "Spontaneo rapido",
+
+    carico:
+        4,
+
+    durata:
+        2,
+
+    flusso:
+        "spontaneo"
+
+});
+eseguiTestMotore({
+
+    nome:
+        "Spontaneo molto lento",
+
+    carico:
+        4,
+
+    durata:
+        16,
+
+    flusso:
+        "spontaneo"
+
+});
+
+
+eseguiTestMotore({
+
+    nome:
+        "Spontaneo molto rapido",
+
+    carico:
+        4,
+
+    durata:
+        1,
+
+    flusso:
+        "spontaneo"
+
+});
