@@ -61,55 +61,137 @@ const ANEMOS_VALORI_VOLUME = {
 };
 
 /* =====================================================
-   MATRICE FLUSSI
+   MATRICE DEGLI OBIETTIVI DI FLUSSO
+
+   Valori sperimentali provvisori.
+
+   ideale:
+   valore atteso dell'Indice ANEMOS.
+
+   lento:
+   tolleranze quando l'indice reale
+   è inferiore all'ideale.
+
+   rapido:
+   tolleranze quando l'indice reale
+   è superiore all'ideale.
 ===================================================== */
 
 const ANEMOS_MATRICE_FLUSSI = {
 
     trattenuto: {
 
-        indiceVerdeMin:
-            0.05,
+        ideale:
+            0.175,
 
-        indiceVerdeMax:
-            0.30
+        lento: {
+
+            verde:
+                0.125,
+
+            giallo:
+                0.175
+
+        },
+
+        rapido: {
+
+            verde:
+                0.125,
+
+            giallo:
+                0.250
+
+        }
 
     },
 
 
     delicato: {
 
-        indiceVerdeMin:
-            0.20,
+        ideale:
+            0.45,
 
-        indiceVerdeMax:
-            0.70
+        lento: {
+
+            verde:
+                0.25,
+
+            giallo:
+                0.40
+
+        },
+
+        rapido: {
+
+            verde:
+                0.25,
+
+            giallo:
+                0.50
+
+        }
 
     },
 
 
     spontaneo: {
 
-        indiceVerdeMin:
-            0.50,
+        ideale:
+            1.00,
 
-        indiceVerdeMax:
-            1.50
+        lento: {
+
+            verde:
+                0.50,
+
+            giallo:
+                0.80
+
+        },
+
+        rapido: {
+
+            verde:
+                0.50,
+
+            giallo:
+                1.00
+
+        }
 
     },
 
 
     forzato: {
 
-        indiceVerdeMin:
-            1.20,
+        ideale:
+            2.60,
 
-        indiceVerdeMax:
-            4.00
+        lento: {
+
+            verde:
+                0.80,
+
+            giallo:
+                1.60
+
+        },
+
+        rapido: {
+
+            verde:
+                1.40,
+
+            giallo:
+                2.80
+
+        }
 
     }
 
-};7
+};
+
 /* =====================================================
    CALCOLO CARICO RESPIRATORIO
 ===================================================== */
@@ -180,6 +262,289 @@ function calcolaIndiceAnemos(
 }
 
 /* =====================================================
+   VALUTAZIONE COERENZA DEL FLUSSO
+===================================================== */
+
+function valutaCoerenzaFlusso(
+    indice,
+    flusso
+) {
+
+    const obiettivo =
+        ANEMOS_MATRICE_FLUSSI[
+            flusso
+        ];
+
+
+    if (!obiettivo) {
+
+        return {
+
+            valido:
+                false,
+
+            punteggio:
+                0,
+
+            semaforo:
+                "rosso",
+
+            motivazione:
+                "Flusso non riconosciuto."
+
+        };
+
+    }
+
+
+    const ideale =
+        obiettivo.ideale;
+
+
+    const errore =
+        indice -
+        ideale;
+
+
+    let direzione =
+        "coerente";
+
+
+    if (
+        errore < 0
+    ) {
+
+        direzione =
+            "lento";
+
+    }
+
+
+    if (
+        errore > 0
+    ) {
+
+        direzione =
+            "rapido";
+
+    }
+
+
+    const scostamento =
+        Math.abs(
+            errore
+        );
+
+
+    const profilo =
+        errore <= 0
+
+            ? obiettivo.lento
+
+            : obiettivo.rapido;
+
+
+    const tolleranzaVerde =
+        profilo.verde;
+
+
+    const tolleranzaGialla =
+        profilo.giallo;
+
+
+    let punteggio =
+        0;
+
+
+    let semaforo =
+        "rosso";
+
+
+    if (
+        scostamento <=
+        tolleranzaVerde
+    ) {
+
+        const rapporto =
+            tolleranzaVerde > 0
+
+                ? scostamento /
+                    tolleranzaVerde
+
+                : 0;
+
+
+        punteggio =
+            Math.round(
+                100 -
+                rapporto * 20
+            );
+
+
+        semaforo =
+            "verde";
+
+    } else if (
+        scostamento <=
+        tolleranzaGialla
+    ) {
+
+        const ampiezzaGialla =
+            tolleranzaGialla -
+            tolleranzaVerde;
+
+
+        const rapporto =
+            ampiezzaGialla > 0
+
+                ? (
+                    scostamento -
+                    tolleranzaVerde
+                ) /
+                    ampiezzaGialla
+
+                : 1;
+
+
+        punteggio =
+            Math.round(
+                79 -
+                rapporto * 19
+            );
+
+
+        semaforo =
+            "giallo";
+
+    } else {
+
+        const eccesso =
+            scostamento -
+            tolleranzaGialla;
+
+
+        const rapporto =
+            tolleranzaGialla > 0
+
+                ? eccesso /
+                    tolleranzaGialla
+
+                : 1;
+
+
+        punteggio =
+            Math.max(
+                0,
+                Math.round(
+                    59 -
+                    rapporto * 59
+                )
+            );
+
+
+        semaforo =
+            "rosso";
+
+    }
+
+
+    let motivazione =
+        "Indice coerente con l'obiettivo del flusso.";
+
+
+    if (
+        semaforo ===
+            "giallo" &&
+        direzione ===
+            "lento"
+    ) {
+
+        motivazione =
+            "Movimento leggermente più lento rispetto all'obiettivo del flusso.";
+
+    }
+
+
+    if (
+        semaforo ===
+            "giallo" &&
+        direzione ===
+            "rapido"
+    ) {
+
+        motivazione =
+            "Movimento leggermente più rapido rispetto all'obiettivo del flusso.";
+
+    }
+
+
+    if (
+        semaforo ===
+            "rosso" &&
+        direzione ===
+            "lento"
+    ) {
+
+        motivazione =
+            "Movimento molto più lento rispetto all'obiettivo del flusso.";
+
+    }
+
+
+    if (
+        semaforo ===
+            "rosso" &&
+        direzione ===
+            "rapido"
+    ) {
+
+        motivazione =
+            "Movimento molto più rapido rispetto all'obiettivo del flusso.";
+
+    }
+
+
+    return {
+
+        valido:
+            true,
+
+        indice:
+            indice,
+
+        flusso:
+            flusso,
+
+        ideale:
+            ideale,
+
+        errore:
+            Number(
+                errore.toFixed(3)
+            ),
+
+        direzione:
+            direzione,
+
+        scostamento:
+            Number(
+                scostamento.toFixed(3)
+            ),
+
+        punteggio:
+            punteggio,
+
+        semaforo:
+            semaforo,
+
+        motivazione:
+            motivazione
+
+    };
+
+}
+
+/* =====================================================
    TEST CARICO RESPIRATORIO
 ===================================================== */
 const testCarico =
@@ -216,4 +581,19 @@ const testIndice =
 console.log(
     "Indice ANEMOS:",
     testIndice
+);
+/* =====================================================
+   TEST COERENZA FLUSSO
+===================================================== */
+
+const testCoerenza =
+    valutaCoerenzaFlusso(
+        testIndice,
+        "spontaneo"
+    );
+
+
+console.log(
+    "Valutazione coerenza:",
+    testCoerenza
 );
