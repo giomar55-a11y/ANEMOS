@@ -676,7 +676,7 @@ eseguiTestMotore({
         4,
 
     durata:
-        4,
+        8,
 
     flusso:
         "spontaneo"
