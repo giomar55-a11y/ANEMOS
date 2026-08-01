@@ -676,7 +676,7 @@ eseguiTestMotore({
         4,
 
     durata:
-        6,
+        4,
 
     flusso:
         "spontaneo"
@@ -790,4 +790,150 @@ aggiungiAnemodromo(
 console.log(
     "Sequenza reale:",
     sequenzaTest
+);
+/* =====================================================
+   VALUTA UN ANEMOMERO REALE DELLA SEQUENZA
+===================================================== */
+
+function valutaAnemomeroReale(
+    sequenza,
+    anemomero
+) {
+
+    /*
+    Lo stato iniziale viene ricavato
+    direttamente dal modello ANEMOS.
+    */
+
+    const statoIniziale =
+        statoSettoriPrimaDi(
+            sequenza,
+            anemomero.id
+        );
+
+
+    /*
+    Anche lo stato finale viene calcolato
+    usando la funzione già presente
+    nel modello.
+    */
+
+    const statoFinale =
+        applicaAnemodromoAlloStato(
+            statoIniziale,
+            anemomero
+        );
+
+
+    let variazioneTotale =
+        0;
+
+
+    const variazioniSettori =
+        [];
+
+
+    anemomero.settori.forEach(
+        settore => {
+
+            const livelloIniziale =
+                statoIniziale[
+                    settore.nome
+                ];
+
+
+            const livelloFinale =
+                statoFinale[
+                    settore.nome
+                ];
+
+
+            const variazione =
+                Math.abs(
+                    livelloFinale -
+                    livelloIniziale
+                );
+
+
+            variazioneTotale +=
+                variazione;
+
+
+            variazioniSettori.push({
+
+                settore:
+                    settore.nome,
+
+                iniziale:
+                    livelloIniziale,
+
+                finale:
+                    livelloFinale,
+
+                variazione:
+                    variazione
+
+            });
+
+        }
+    );
+
+
+    const indice =
+        calcolaIndiceAnemos(
+            variazioneTotale,
+            anemomero.durata
+        );
+
+
+    const valutazione =
+        valutaCoerenzaFlusso(
+            indice,
+            anemomero.flusso
+        );
+
+
+    return {
+
+        id:
+            anemomero.id,
+
+        tipo:
+            anemomero.tipo,
+
+        durata:
+            anemomero.durata,
+
+        percorso:
+            anemomero.percorso,
+
+        flusso:
+            anemomero.flusso,
+
+        variazioneTotale:
+            variazioneTotale,
+
+        variazioniSettori:
+            variazioniSettori,
+
+        ...valutazione
+
+    };
+
+}
+
+/* =====================================================
+   TEST DEL PRIMO ANEMOMERO REALE
+===================================================== */
+
+const valutazioneAnemomero1 =
+    valutaAnemomeroReale(
+        sequenzaTest,
+        anemomero1
+    );
+
+
+console.log(
+    "Valutazione:",
+    valutazioneAnemomero1
 );
