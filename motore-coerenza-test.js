@@ -748,3 +748,46 @@ eseguiTestMotore({
         "spontaneo"
 
 });
+/* =====================================================
+   COSTRUZIONE DI UNA SEQUENZA REALE
+===================================================== */
+
+const sequenzaTest =
+    creaSequenzaAnemos();
+
+
+const anemomero1 =
+    creaAnemodromo(
+        ANEMOS_TIPI.IN
+    );
+
+
+impostaDurata(
+    anemomero1,
+    4
+);
+
+
+impostaFlusso(
+    anemomero1,
+    ANEMOS_FLUSSI.SPONTANEO
+);
+
+
+attivaSettore(
+    anemomero1,
+    ANEMOS_SETTORI.ADDOME,
+    ANEMOS_VOLUMI.PIENO
+);
+
+
+aggiungiAnemodromo(
+    sequenzaTest,
+    anemomero1
+);
+
+
+console.log(
+    "Sequenza reale:",
+    sequenzaTest
+);
