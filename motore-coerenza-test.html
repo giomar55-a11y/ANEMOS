@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+
+<html lang="it">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        ANEMOS – Test Motore di Coerenza
+    </title>
+
+    <style>
+
+        body {
+            margin:
+                0;
+
+            padding:
+                20px;
+
+            font-family:
+                Arial,
+                sans-serif;
+
+            background:
+                #f5f5f2;
+
+            color:
+                #111;
+        }
+
+
+        h1 {
+            margin-top:
+                0;
+
+            font-size:
+                26px;
+        }
+
+
+        #risultati {
+            display:
+                grid;
+
+            gap:
+                14px;
+        }
+
+
+        .test-card {
+            background:
+                #fff;
+
+            border:
+                1px solid #d8d8d2;
+
+            border-radius:
+                14px;
+
+            padding:
+                16px;
+
+            box-sizing:
+                border-box;
+        }
+
+
+        .test-card h2 {
+            margin:
+                0 0 12px;
+
+            font-size:
+                18px;
+        }
+
+
+        .riga {
+            display:
+                flex;
+
+            justify-content:
+                space-between;
+
+            gap:
+                16px;
+
+            padding:
+                4px 0;
+
+            border-bottom:
+                1px solid #eeeeea;
+        }
+
+
+        .riga:last-child {
+            border-bottom:
+                0;
+        }
+
+
+        .etichetta {
+            font-weight:
+                700;
+        }
+
+
+        .semaforo {
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            font-weight:
+                700;
+        }
+
+
+        .pallino {
+            width:
+                14px;
+
+            height:
+                14px;
+
+            border-radius:
+                50%;
+        }
+
+
+        .verde {
+            background:
+                #70b88a;
+        }
+
+
+        .giallo {
+            background:
+                #e3c65e;
+        }
+
+
+        .rosso {
+            background:
+                #cf6f6f;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <h1>
+        Motore di Coerenza ANEMOS
+    </h1>
+
+
+    <p>
+        Banco di prova indipendente.
+    </p>
+
+
+    <div id="risultati"></div>
+
+
+    <script>
+
+        const risultatiTest =
+            [];
+
+
+        const consoleOriginale =
+            console.log;
+
+
+        console.log =
+            function (...argomenti) {
+
+                consoleOriginale(
+                    ...argomenti
+                );
+
+
+                if (
+                    argomenti[0] ===
+                    "Valutazione:"
+                ) {
+
+                    risultatiTest.push(
+                        argomenti[1]
+                    );
+
+                }
+
+            };
+
+    </script>
+
+
+    <script src="motore-coerenza-test.js"></script>
+
+
+    <script>
+
+        const contenitore =
+            document.getElementById(
+                "risultati"
+            );
+
+
+        risultatiTest.forEach(
+            (
+                risultato,
+                indice
+            ) => {
+
+                const card =
+                    document.createElement(
+                        "section"
+                    );
+
+
+                card.className =
+                    "test-card";
+
+
+                const titolo =
+                    document.createElement(
+                        "h2"
+                    );
+
+
+                titolo.textContent =
+                    "Test " +
+                    (
+                        indice + 1
+                    );
+
+
+                card.appendChild(
+                    titolo
+                );
+
+
+                const dati = {
+
+                    Indice:
+                        risultato.indice,
+
+                    Ideale:
+                        risultato.ideale,
+
+                    Errore:
+                        risultato.errore,
+
+                    Direzione:
+                        risultato.direzione,
+
+                    Punteggio:
+                        risultato.punteggio,
+
+                    Motivazione:
+                        risultato.motivazione
+
+                };
+
+
+                Object.entries(
+                    dati
+                ).forEach(
+                    ([chiave, valore]) => {
+
+                        const riga =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        riga.className =
+                            "riga";
+
+
+                        riga.innerHTML =
+                            `
+                            <span class="etichetta">
+                                ${chiave}
+                            </span>
+
+                            <span>
+                                ${valore}
+                            </span>
+                            `;
+
+
+                        card.appendChild(
+                            riga
+                        );
+
+                    }
+                );
+
+
+                const semaforo =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                semaforo.className =
+                    "riga";
+
+
+                semaforo.innerHTML =
+                    `
+                    <span class="etichetta">
+                        Semaforo
+                    </span>
+
+                    <span class="semaforo">
+                        <span
+                            class="pallino ${risultato.semaforo}"
+                        ></span>
+
+                        ${risultato.semaforo}
+                    </span>
+                    `;
+
+
+                card.appendChild(
+                    semaforo
+                );
+
+
+                contenitore.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+        if (
+            risultatiTest.length === 0
+        ) {
+
+            contenitore.textContent =
+                "Nessun risultato rilevato.";
+
+        }
+
+    </script>
+
+</body>
+
+</html>
