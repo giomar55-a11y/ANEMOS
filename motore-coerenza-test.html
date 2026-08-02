@@ -273,6 +273,26 @@
      "Motivazione percorso":
         risultato.motivazionePercorso ?? "-",
 
+                    "Biomeccanica valida":
+    risultato.biomeccanicaValida ?? "-",
+
+"Punteggio biomeccanica":
+    risultato.punteggioBiomeccanica ?? "-",
+
+"Errori biomeccanica":
+    Array.isArray(
+        risultato.erroriBiomeccanica
+    )
+        ? (
+            risultato.erroriBiomeccanica.length > 0
+                ? risultato.erroriBiomeccanica.join(" | ")
+                : "Nessun errore"
+        )
+        : "-",
+
+"Motivazione biomeccanica":
+    risultato.motivazioneBiomeccanica ?? "-",
+
                     "Distribuzione settori valida":
     risultato.distribuzioneSettoriValida ?? "-",
 
