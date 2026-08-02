@@ -787,6 +787,39 @@ aggiungiAnemodromo(
     anemomero1
 );
 
+/* =====================================================
+   SECONDO ANEMOMERO REALE
+===================================================== */
+
+const anemomero2 =
+    creaAnemodromo(
+        ANEMOS_TIPI.ES
+    );
+
+
+impostaDurata(
+    anemomero2,
+    4
+);
+
+
+impostaFlusso(
+    anemomero2,
+    ANEMOS_FLUSSI.SPONTANEO
+);
+
+
+attivaSettore(
+    anemomero2,
+    ANEMOS_SETTORI.ADDOME,
+    ANEMOS_VOLUMI.VUOTO
+);
+
+
+aggiungiAnemodromo(
+    sequenzaTest,
+    anemomero2
+);
 
 console.log(
     "Sequenza reale:",
