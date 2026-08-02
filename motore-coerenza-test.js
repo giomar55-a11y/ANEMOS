@@ -961,6 +961,75 @@ function valutaCoerenzaBiomeccanica(
 }
 
 /* =====================================================
+   VALUTAZIONE COERENZA TEMPORALE
+===================================================== */
+
+function valutaCoerenzaTemporale(
+    durata,
+    variazioneTotale
+) {
+
+    const indiceTemporale =
+        variazioneTotale /
+        durata;
+
+
+    let punteggio =
+        100;
+
+
+    let motivazione =
+        "Durata coerente con la variazione respiratoria.";
+
+
+    if (
+        indiceTemporale > 2
+    ) {
+
+        punteggio =
+            40;
+
+        motivazione =
+            "Durata troppo breve rispetto alla variazione.";
+
+    }
+
+
+    if (
+        indiceTemporale < 0.20 &&
+        variazioneTotale > 0
+    ) {
+
+        punteggio =
+            60;
+
+        motivazione =
+            "Durata molto lunga rispetto alla variazione.";
+
+    }
+
+
+    return {
+
+        valido:
+            punteggio >= 60,
+
+        punteggio:
+            punteggio,
+
+        indiceTemporale:
+            Number(
+                indiceTemporale.toFixed(2)
+            ),
+
+        motivazione:
+            motivazione
+
+    };
+
+}
+
+/* =====================================================
    ANALISI DELLA DISTRIBUZIONE DEI SETTORI
 ===================================================== */
 
@@ -1175,6 +1244,13 @@ function valutaAnemomeroReale(
         anemomero,
         variazioniSettori
     );
+
+
+const valutazioneTemporale =
+    valutaCoerenzaTemporale(
+        anemomero.durata,
+        variazioneTotale
+    );
     return {
 
         id:
@@ -1217,6 +1293,19 @@ function valutaAnemomeroReale(
 
         motivazioneBiomeccanica:
             valutazioneBiomeccanica.motivazione,
+
+        temporaleValida:
+            valutazioneTemporale.valido,
+
+        punteggioTemporale:
+            valutazioneTemporale.punteggio,
+
+        indiceTemporale:
+            valutazioneTemporale.indiceTemporale,
+
+        motivazioneTemporale:
+            valutazioneTemporale.motivazione,
+       
         distribuzioneSettoriValida:
             analisiSettori.valido,
 
