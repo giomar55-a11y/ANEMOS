@@ -255,26 +255,40 @@
 
                 const dati = {
 
-                    Indice:
-                        risultato.indice,
+    Tipo:
+        risultato.tipo ?? "-",
 
-                    Ideale:
-                        risultato.ideale,
+    Durata:
+        risultato.durata ?? "-",
 
-                    Errore:
-                        risultato.errore,
+    Percorso:
+        risultato.percorso ?? "-",
 
-                    Direzione:
-                        risultato.direzione,
+    Flusso:
+        risultato.flusso ?? "-",
 
-                    Punteggio:
-                        risultato.punteggio,
+    "Variazione totale":
+        risultato.variazioneTotale ?? "-",
 
-                    Motivazione:
-                        risultato.motivazione
+    Indice:
+        risultato.indice,
 
-                };
+    Ideale:
+        risultato.ideale,
 
+    Errore:
+        risultato.errore,
+
+    Direzione:
+        risultato.direzione,
+
+    Punteggio:
+        risultato.punteggio,
+
+    Motivazione:
+        risultato.motivazione
+
+};
 
                 Object.entries(
                     dati
