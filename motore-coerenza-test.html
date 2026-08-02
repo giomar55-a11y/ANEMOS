@@ -272,7 +272,32 @@
 
      "Motivazione percorso":
         risultato.motivazionePercorso ?? "-",
-                    
+
+                    "Distribuzione settori valida":
+    risultato.distribuzioneSettoriValida ?? "-",
+
+"Distribuzione settori":
+    risultato.distribuzioneSettori ?? "-",
+
+"Numero settori coinvolti":
+    risultato.numeroSettoriCoinvolti ?? "-",
+
+"Settori coinvolti":
+    Array.isArray(
+        risultato.settoriCoinvolti
+    )
+        ? risultato.settoriCoinvolti.join(", ")
+        : "-",
+
+"Settori dominanti":
+    Array.isArray(
+        risultato.settoriDominanti
+    )
+        ? risultato.settoriDominanti.join(", ")
+        : "-",
+
+"Motivazione settori":
+    risultato.motivazioneSettori ?? "-",
     Flusso:
         risultato.flusso ?? "-",
 
