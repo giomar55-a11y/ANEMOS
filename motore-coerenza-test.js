@@ -992,5 +992,81 @@ valutazioniSequenzaTest.forEach(
             valutazione
         );
 
+
+        console.log(
+            "================================"
+        );
+
+
+        console.log(
+            "Anemodromo:",
+            valutazione.id
+        );
+
+
+        console.log(
+            valutazione.tipo,
+            "-",
+            valutazione.durata + " s",
+            "-",
+            valutazione.flusso
+        );
+
+
+        valutazione.variazioniSettori.forEach(
+            settore => {
+
+                const segno =
+                    settore.finale >
+                    settore.iniziale
+
+                        ? "+"
+
+                        : settore.finale <
+                          settore.iniziale
+
+                            ? "-"
+
+                            : "=";
+
+
+                console.log(
+                    settore.settore + ":",
+                    settore.iniziale +
+                        " → " +
+                        settore.finale,
+                    "(" +
+                        segno +
+                        settore.variazione +
+                        ")"
+                );
+
+            }
+        );
+
+
+        console.log(
+            "Carico:",
+            valutazione.variazioneTotale
+        );
+
+
+        console.log(
+            "Indice:",
+            valutazione.indice
+        );
+
+
+        console.log(
+            "Semaforo:",
+            valutazione.semaforo
+        );
+
+
+        console.log(
+            "Punteggio:",
+            valutazione.punteggio
+        );
+
     }
 );
