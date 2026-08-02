@@ -1140,6 +1140,139 @@ function analizzaDistribuzioneSettori(
     };
 
 }
+
+/* =====================================================
+   VALUTAZIONE COMPLESSIVA DELL'ANEMOMERO
+===================================================== */
+
+function valutaCoerenzaComplessivaAnemomero(
+    valutazioneFlusso,
+    valutazionePercorso,
+    valutazioneBiomeccanica,
+    valutazioneTemporale
+) {
+
+    const punteggi = [
+
+        valutazioneFlusso.punteggio,
+
+        valutazionePercorso.punteggio,
+
+        valutazioneBiomeccanica.punteggio,
+
+        valutazioneTemporale.punteggio
+
+    ];
+
+
+    const punteggioComplessivo =
+        Math.round(
+            punteggi.reduce(
+                (
+                    totale,
+                    punteggio
+                ) =>
+                    totale + punteggio,
+                0
+            ) /
+            punteggi.length
+        );
+
+
+    let semaforoComplessivo =
+        "rosso";
+
+
+    if (
+        punteggioComplessivo >= 80
+    ) {
+
+        semaforoComplessivo =
+            "verde";
+
+    } else if (
+        punteggioComplessivo >= 60
+    ) {
+
+        semaforoComplessivo =
+            "giallo";
+
+    }
+
+
+    const criticita =
+        [];
+
+
+    if (
+        valutazioneFlusso.punteggio < 60
+    ) {
+
+        criticita.push(
+            "flusso"
+        );
+
+    }
+
+
+    if (
+        valutazionePercorso.punteggio < 60
+    ) {
+
+        criticita.push(
+            "percorso"
+        );
+
+    }
+
+
+    if (
+        valutazioneBiomeccanica.punteggio < 60
+    ) {
+
+        criticita.push(
+            "biomeccanica"
+        );
+
+    }
+
+
+    if (
+        valutazioneTemporale.punteggio < 60
+    ) {
+
+        criticita.push(
+            "temporalità"
+        );
+
+    }
+
+
+    return {
+
+        punteggio:
+            punteggioComplessivo,
+
+        semaforo:
+            semaforoComplessivo,
+
+        criticita:
+            criticita,
+
+        valido:
+            criticita.length === 0,
+
+        motivazione:
+            criticita.length === 0
+
+                ? "Anemomero complessivamente coerente."
+
+                : "Sono presenti criticità nella coerenza dell'Anemomero."
+
+    };
+
+}
+
 /* =====================================================
    VALUTA UN ANEMOMERO REALE DELLA SEQUENZA
 ===================================================== */
@@ -1251,6 +1384,15 @@ const valutazioneTemporale =
         anemomero.durata,
         variazioneTotale
     );
+
+const valutazioneComplessiva =
+    valutaCoerenzaComplessivaAnemomero(
+        valutazione,
+        valutazionePercorso,
+        valutazioneBiomeccanica,
+        valutazioneTemporale
+    );
+   
     return {
 
         id:
@@ -1321,13 +1463,30 @@ const valutazioneTemporale =
         settoriDominanti:
             analisiSettori.settoriDominanti,
 
-        motivazioneSettori:
-            analisiSettori.motivazione,
-        ...valutazione
+       motivazioneSettori:
+    analisiSettori.motivazione,
+
+coerenzaComplessivaValida:
+    valutazioneComplessiva.valido,
+
+punteggioComplessivo:
+    valutazioneComplessiva.punteggio,
+
+semaforoComplessivo:
+    valutazioneComplessiva.semaforo,
+
+criticitaComplessive:
+    valutazioneComplessiva.criticita,
+
+motivazioneComplessiva:
+    valutazioneComplessiva.motivazione,
+
+...valutazione
 
     };
 
 }
+
 /* =====================================================
    VALUTA TUTTI GLI ANEMOMERI DELLA SEQUENZA
 ===================================================== */
