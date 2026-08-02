@@ -831,7 +831,63 @@ console.log(
     "Sequenza reale:",
     sequenzaTest
 );
+/* =====================================================
+   VALUTAZIONE COERENZA DEL PERCORSO
+===================================================== */
 
+function valutaCoerenzaPercorso(
+    anemomero
+) {
+
+    const percorsiValidi = [
+
+        ANEMOS_PERCORSI.NARICE_DESTRA,
+
+        ANEMOS_PERCORSI.NARICE_SINISTRA,
+
+        ANEMOS_PERCORSI.ENTRAMBE_NARICI,
+
+        ANEMOS_PERCORSI.BOCCA
+
+    ];
+
+
+    if (
+        !percorsiValidi.includes(
+            anemomero.percorso
+        )
+    ) {
+
+        return {
+
+            valido:
+                false,
+
+            punteggio:
+                0,
+
+            motivazione:
+                "Percorso respiratorio non riconosciuto."
+
+        };
+
+    }
+
+
+    return {
+
+        valido:
+            true,
+
+        punteggio:
+            100,
+
+        motivazione:
+            "Percorso respiratorio riconosciuto."
+
+    };
+
+}
 /* =====================================================
    VALUTA UN ANEMOMERO REALE DELLA SEQUENZA
 ===================================================== */
@@ -922,7 +978,10 @@ function valutaAnemomeroReale(
             anemomero.flusso
         );
 
-
+    const valutazionePercorso =
+        valutaCoerenzaPercorso(
+        anemomero
+    );
     return {
 
         id:
@@ -945,7 +1004,16 @@ function valutaAnemomeroReale(
 
         variazioniSettori:
             variazioniSettori,
+       
+        percorsoValido:
+            valutazionePercorso.valido,
 
+        punteggioPercorso:
+            valutazionePercorso.punteggio,
+
+        motivazionePercorso:
+            valutazionePercorso.motivazione,
+       
         ...valutazione
 
     };
