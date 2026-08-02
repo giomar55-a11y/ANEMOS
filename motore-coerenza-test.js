@@ -925,3 +925,137 @@ console.log(
     "Valutazione:",
     valutazioneAnemomero1
 );
+/* =====================================================
+   VALUTA UN ANEMOMERO REALE DELLA SEQUENZA
+===================================================== */
+
+function valutaAnemomeroReale(
+    sequenza,
+    anemomero
+) {
+
+    const statoIniziale =
+        statoSettoriPrimaDi(
+            sequenza,
+            anemomero.id
+        );
+
+
+    const statoFinale =
+        applicaAnemodromoAlloStato(
+            statoIniziale,
+            anemomero
+        );
+
+
+    let variazioneTotale =
+        0;
+
+
+    const variazioniSettori =
+        [];
+
+
+    anemomero.settori.forEach(
+        settore => {
+
+            const livelloIniziale =
+                statoIniziale[
+                    settore.nome
+                ];
+
+
+            const livelloFinale =
+                statoFinale[
+                    settore.nome
+                ];
+
+
+            const variazione =
+                Math.abs(
+                    livelloFinale -
+                    livelloIniziale
+                );
+
+
+            variazioneTotale +=
+                variazione;
+
+
+            variazioniSettori.push({
+
+                settore:
+                    settore.nome,
+
+                iniziale:
+                    livelloIniziale,
+
+                finale:
+                    livelloFinale,
+
+                variazione:
+                    variazione
+
+            });
+
+        }
+    );
+
+
+    const indice =
+        calcolaIndiceAnemos(
+            variazioneTotale,
+            anemomero.durata
+        );
+
+
+    const valutazione =
+        valutaCoerenzaFlusso(
+            indice,
+            anemomero.flusso
+        );
+
+
+    return {
+
+        id:
+            anemomero.id,
+
+        tipo:
+            anemomero.tipo,
+
+        durata:
+            anemomero.durata,
+
+        percorso:
+            anemomero.percorso,
+
+        flusso:
+            anemomero.flusso,
+
+        variazioneTotale:
+            variazioneTotale,
+
+        variazioniSettori:
+            variazioniSettori,
+
+        ...valutazione
+
+    };
+
+}
+/* =====================================================
+   TEST DEL PRIMO ANEMOMERO REALE
+===================================================== */
+
+const valutazioneAnemomero1 =
+    valutaAnemomeroReale(
+        sequenzaTest,
+        anemomero1
+    );
+
+
+console.log(
+    "Valutazione:",
+    valutazioneAnemomero1
+);
