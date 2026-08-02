@@ -912,17 +912,45 @@ function valutaAnemomeroReale(
 
 }
 /* =====================================================
-   TEST DEL PRIMO ANEMOMERO REALE
+   VALUTA TUTTI GLI ANEMOMERI DELLA SEQUENZA
 ===================================================== */
 
-const valutazioneAnemomero1 =
-    valutaAnemomeroReale(
-        sequenzaTest,
-        anemomero1
+function valutaSequenzaReale(
+    sequenza
+) {
+
+    const anemomeri =
+        ottieniAnemodromiOrdinati(
+            sequenza
+        );
+
+
+    return anemomeri.map(
+        anemomero =>
+            valutaAnemomeroReale(
+                sequenza,
+                anemomero
+            )
+    );
+
+}
+/* =====================================================
+   TEST DELL'INTERA SEQUENZA REALE
+===================================================== */
+
+const valutazioniSequenzaTest =
+    valutaSequenzaReale(
+        sequenzaTest
     );
 
 
-console.log(
-    "Valutazione:",
-    valutazioneAnemomero1
+valutazioniSequenzaTest.forEach(
+    valutazione => {
+
+        console.log(
+            "Valutazione:",
+            valutazione
+        );
+
+    }
 );
