@@ -290,40 +290,125 @@
 
 };
 
-                Object.entries(
-                    dati
-                ).forEach(
-                    ([chiave, valore]) => {
+ Object.entries(
+    dati
+).forEach(
+    ([chiave, valore]) => {
 
-                        const riga =
-                            document.createElement(
-                                "div"
-                            );
-
-
-                        riga.className =
-                            "riga";
+        const riga =
+            document.createElement(
+                "div"
+            );
 
 
-                        riga.innerHTML =
-                            `
-                            <span class="etichetta">
-                                ${chiave}
-                            </span>
-
-                            <span>
-                                ${valore}
-                            </span>
-                            `;
+        riga.className =
+            "riga";
 
 
-                        card.appendChild(
-                            riga
-                        );
+        riga.innerHTML =
+            `
+            <span class="etichetta">
+                ${chiave}
+            </span>
 
-                    }
+            <span>
+                ${valore}
+            </span>
+            `;
+
+
+        card.appendChild(
+            riga
+        );
+
+    }
+);               
+
+                /* =====================================================
+   DETTAGLIO DEI SETTORI
+===================================================== */
+
+if (
+    Array.isArray(
+        risultato.variazioniSettori
+    ) &&
+    risultato.variazioniSettori.length > 0
+) {
+
+    const titoloSettori =
+        document.createElement(
+            "h3"
+        );
+
+
+    titoloSettori.textContent =
+        "Settori";
+
+
+    titoloSettori.style.margin =
+        "16px 0 8px";
+
+
+    titoloSettori.style.fontSize =
+        "16px";
+
+
+    card.appendChild(
+        titoloSettori
+    );
+
+
+    risultato.variazioniSettori.forEach(
+        settore => {
+
+            const rigaSettore =
+                document.createElement(
+                    "div"
                 );
 
+
+            rigaSettore.className =
+                "riga";
+
+
+            const segno =
+                settore.finale >
+                settore.iniziale
+
+                    ? "+"
+
+                    : settore.finale <
+                      settore.iniziale
+
+                        ? "−"
+
+                        : "=";
+
+
+            rigaSettore.innerHTML =
+                `
+                <span class="etichetta">
+                    ${settore.settore}
+                </span>
+
+                <span>
+                    ${settore.iniziale}
+                    →
+                    ${settore.finale}
+
+                    (${segno}${settore.variazione})
+                </span>
+                `;
+
+
+            card.appendChild(
+                rigaSettore
+            );
+
+        }
+    );
+
+}
 
                 const semaforo =
                     document.createElement(
