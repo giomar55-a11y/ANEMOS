@@ -889,6 +889,78 @@ function valutaCoerenzaPercorso(
 
 }
 /* =====================================================
+   VALUTAZIONE COERENZA BIOMECCANICA
+===================================================== */
+
+function valutaCoerenzaBiomeccanica(
+    anemomero,
+    variazioniSettori
+) {
+
+    let errori = [];
+
+
+    variazioniSettori.forEach(
+        settore => {
+
+            if (
+                anemomero.tipo ===
+                ANEMOS_TIPI.IN &&
+                settore.finale <
+                settore.iniziale
+            ) {
+
+                errori.push(
+                    settore.settore +
+                    " diminuisce durante inspirazione."
+                );
+
+            }
+
+
+            if (
+                anemomero.tipo ===
+                ANEMOS_TIPI.ES &&
+                settore.finale >
+                settore.iniziale
+            ) {
+
+                errori.push(
+                    settore.settore +
+                    " aumenta durante espirazione."
+                );
+
+            }
+
+        }
+    );
+
+
+    return {
+
+        valido:
+            errori.length === 0,
+
+        punteggio:
+            errori.length === 0
+                ? 100
+                : 0,
+
+        errori:
+            errori,
+
+        motivazione:
+            errori.length === 0
+
+                ? "Biomeccanica coerente."
+
+                : "Sono presenti incoerenze biomeccaniche."
+
+    };
+
+}
+
+/* =====================================================
    ANALISI DELLA DISTRIBUZIONE DEI SETTORI
 ===================================================== */
 
@@ -1098,7 +1170,11 @@ function valutaAnemomeroReale(
     analizzaDistribuzioneSettori(
         variazioniSettori
     );
-   
+   const valutazioneBiomeccanica =
+    valutaCoerenzaBiomeccanica(
+        anemomero,
+        variazioniSettori
+    );
     return {
 
         id:
@@ -1130,23 +1206,33 @@ function valutaAnemomeroReale(
 
         motivazionePercorso:
             valutazionePercorso.motivazione,
+        biomeccanicaValida:
+            valutazioneBiomeccanica.valido,
 
-       distribuzioneSettoriValida:
+        punteggioBiomeccanica:
+            valutazioneBiomeccanica.punteggio,
+
+        erroriBiomeccanica:
+            valutazioneBiomeccanica.errori,
+
+        motivazioneBiomeccanica:
+            valutazioneBiomeccanica.motivazione,
+        distribuzioneSettoriValida:
             analisiSettori.valido,
 
-       distribuzioneSettori:
+        distribuzioneSettori:
             analisiSettori.distribuzione,
 
-       numeroSettoriCoinvolti:
+        numeroSettoriCoinvolti:
             analisiSettori.numeroSettoriCoinvolti,
 
-       settoriCoinvolti:
+        settoriCoinvolti:
             analisiSettori.settoriCoinvolti,
 
-       settoriDominanti:
+        settoriDominanti:
             analisiSettori.settoriDominanti,
 
-       motivazioneSettori:
+        motivazioneSettori:
             analisiSettori.motivazione,
         ...valutazione
 
