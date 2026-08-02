@@ -750,81 +750,88 @@ eseguiTestMotore({
 });
 
 /* =====================================================
-   COSTRUZIONE DI UNA SEQUENZA REALE
+   LETTURA DELLA SEQUENZA CREATA IN ANEMOS 3.1
 ===================================================== */
+
+function caricaSequenzaSalvata() {
+
+    const datiSalvati =
+        localStorage.getItem(
+            "ANEMOS_SEQUENZA_TEST"
+        );
+
+
+    if (!datiSalvati) {
+
+        console.log(
+            "Nessuna sequenza ANEMOS salvata."
+        );
+
+
+        return creaSequenzaAnemos();
+
+    }
+
+
+    try {
+
+        const sequenza =
+            JSON.parse(
+                datiSalvati
+            );
+
+
+        const strutturaValida =
+            sequenza &&
+            Array.isArray(
+                sequenza.anemodromi
+            ) &&
+            Array.isArray(
+                sequenza.ordine
+            ) &&
+            Array.isArray(
+                sequenza.apnee
+            );
+
+
+        if (!strutturaValida) {
+
+            console.log(
+                "La sequenza salvata non è valida."
+            );
+
+
+            return creaSequenzaAnemos();
+
+        }
+
+
+        return sequenza;
+
+    } catch (errore) {
+
+        console.log(
+            "Errore nella lettura della sequenza salvata:",
+            errore
+        );
+
+
+        return creaSequenzaAnemos();
+
+    }
+
+}
+
 
 const sequenzaTest =
-    creaSequenzaAnemos();
+    caricaSequenzaSalvata();
 
-
-const anemomero1 =
-    creaAnemodromo(
-        ANEMOS_TIPI.IN
-    );
-
-
-impostaDurata(
-    anemomero1,
-    4
-);
-
-
-impostaFlusso(
-    anemomero1,
-    ANEMOS_FLUSSI.SPONTANEO
-);
-
-
-attivaSettore(
-    anemomero1,
-    ANEMOS_SETTORI.ADDOME,
-    ANEMOS_VOLUMI.PIENO
-);
-
-
-aggiungiAnemodromo(
-    sequenzaTest,
-    anemomero1
-);
-
-/* =====================================================
-   SECONDO ANEMOMERO REALE
-===================================================== */
-
-const anemomero2 =
-    creaAnemodromo(
-        ANEMOS_TIPI.ES
-    );
-
-
-impostaDurata(
-    anemomero2,
-    4
-);
-
-
-impostaFlusso(
-    anemomero2,
-    ANEMOS_FLUSSI.SPONTANEO
-);
-
-
-attivaSettore(
-    anemomero2,
-    ANEMOS_SETTORI.ADDOME,
-    ANEMOS_VOLUMI.VUOTO
-);
-
-
-aggiungiAnemodromo(
-    sequenzaTest,
-    anemomero2
-);
 
 console.log(
     "Sequenza reale:",
     sequenzaTest
 );
+
 /* =====================================================
    VALUTA UN ANEMOMERO REALE DELLA SEQUENZA
 ===================================================== */
