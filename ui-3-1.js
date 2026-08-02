@@ -2198,6 +2198,10 @@ function aggiungiNuovoAnemodromo(
         nuovo
     );
 
+   localStorage.setItem(
+    "ANEMOS_SEQUENZA_TEST",
+    JSON.stringify(anemos31)
+);
 
     renderAnemos31();
 
