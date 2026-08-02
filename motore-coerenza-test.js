@@ -889,6 +889,117 @@ function valutaCoerenzaPercorso(
 
 }
 /* =====================================================
+   ANALISI DELLA DISTRIBUZIONE DEI SETTORI
+===================================================== */
+
+function analizzaDistribuzioneSettori(
+    variazioniSettori
+) {
+
+    const settoriCoinvolti =
+        variazioniSettori.filter(
+            settore =>
+                settore.variazione > 0
+        );
+
+
+    const numeroSettoriCoinvolti =
+        settoriCoinvolti.length;
+
+
+    let distribuzione =
+        "assente";
+
+
+    if (
+        numeroSettoriCoinvolti === 1
+    ) {
+
+        distribuzione =
+            "selettiva";
+
+    }
+
+
+    if (
+        numeroSettoriCoinvolti === 2
+    ) {
+
+        distribuzione =
+            "combinata";
+
+    }
+
+
+    if (
+        numeroSettoriCoinvolti === 3
+    ) {
+
+        distribuzione =
+            "globale";
+
+    }
+
+
+    const variazioneMassima =
+        settoriCoinvolti.length > 0
+
+            ? Math.max(
+                ...settoriCoinvolti.map(
+                    settore =>
+                        settore.variazione
+                )
+            )
+
+            : 0;
+
+
+    const settoriDominanti =
+        settoriCoinvolti
+
+            .filter(
+                settore =>
+                    settore.variazione ===
+                    variazioneMassima
+            )
+
+            .map(
+                settore =>
+                    settore.settore
+            );
+
+
+    return {
+
+        valido:
+            numeroSettoriCoinvolti > 0,
+
+        distribuzione:
+            distribuzione,
+
+        numeroSettoriCoinvolti:
+            numeroSettoriCoinvolti,
+
+        settoriCoinvolti:
+            settoriCoinvolti.map(
+                settore =>
+                    settore.settore
+            ),
+
+        settoriDominanti:
+            settoriDominanti,
+
+        motivazione:
+            numeroSettoriCoinvolti > 0
+
+                ? "Distribuzione dei settori rilevata."
+
+                : "Nessuna variazione respiratoria rilevata."
+
+    };
+
+}
+/* =====================================================
    VALUTA UN ANEMOMERO REALE DELLA SEQUENZA
 ===================================================== */
 
@@ -982,6 +1093,12 @@ function valutaAnemomeroReale(
         valutaCoerenzaPercorso(
         anemomero
     );
+   
+   const analisiSettori =
+    analizzaDistribuzioneSettori(
+        variazioniSettori
+    );
+   
     return {
 
         id:
@@ -1013,7 +1130,24 @@ function valutaAnemomeroReale(
 
         motivazionePercorso:
             valutazionePercorso.motivazione,
-       
+
+       distribuzioneSettoriValida:
+            analisiSettori.valido,
+
+       distribuzioneSettori:
+            analisiSettori.distribuzione,
+
+       numeroSettoriCoinvolti:
+            analisiSettori.numeroSettoriCoinvolti,
+
+       settoriCoinvolti:
+            analisiSettori.settoriCoinvolti,
+
+       settoriDominanti:
+            analisiSettori.settoriDominanti,
+
+       motivazioneSettori:
+            analisiSettori.motivazione,
         ...valutazione
 
     };
