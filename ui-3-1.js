@@ -873,7 +873,10 @@ function creaBloccoDurata(
                 )
             );
 
-
+localStorage.setItem(
+    "ANEMOS_SEQUENZA_TEST",
+    JSON.stringify(anemos31)
+);
             renderAnemos31();
 
         }
@@ -881,20 +884,25 @@ function creaBloccoDurata(
 
 
     piu.addEventListener(
-        "click",
-        function () {
+    "click",
+    function () {
 
-            impostaDurata(
-                anemodromo,
-                anemodromo.durata + 1
-            );
+        impostaDurata(
+            anemodromo,
+            anemodromo.durata + 1
+        );
 
 
-            renderAnemos31();
+        localStorage.setItem(
+            "ANEMOS_SEQUENZA_TEST",
+            JSON.stringify(anemos31)
+        );
 
-        }
-    );
 
+        renderAnemos31();
+
+    }
+);
 
     riga.appendChild(
         meno
