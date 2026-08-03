@@ -1142,6 +1142,195 @@ function analizzaDistribuzioneSettori(
 }
 
 /* =====================================================
+   VALUTAZIONE DI UN'APNEA
+===================================================== */
+
+function valutaApneaReale(
+    sequenza,
+    apnea
+) {
+
+    const precedente =
+        trovaAnemodromo(
+            sequenza,
+            apnea.precedente
+        );
+
+
+    const successivo =
+        apnea.successivo
+
+            ? trovaAnemodromo(
+                sequenza,
+                apnea.successivo
+            )
+
+            : null;
+
+
+    const durataValida =
+        Number.isInteger(
+            apnea.durata
+        ) &&
+        apnea.durata >= 1;
+
+
+    const precedenteValido =
+        precedente !== null;
+
+
+    const successivoValido =
+        apnea.successivo === null ||
+        successivo !== null;
+
+
+    let posizioneValida =
+        false;
+
+
+    if (
+        precedenteValido &&
+        apnea.successivo === null
+    ) {
+
+        posizioneValida =
+            sequenza.ordine[
+                sequenza.ordine.length - 1
+            ] === apnea.precedente;
+
+    }
+
+
+    if (
+        precedenteValido &&
+        successivoValido &&
+        apnea.successivo !== null
+    ) {
+
+        const indicePrecedente =
+            sequenza.ordine.indexOf(
+                apnea.precedente
+            );
+
+
+        const indiceSuccessivo =
+            sequenza.ordine.indexOf(
+                apnea.successivo
+            );
+
+
+        posizioneValida =
+            indiceSuccessivo ===
+            indicePrecedente + 1;
+
+    }
+
+
+    const errori =
+        [];
+
+
+    if (!durataValida) {
+
+        errori.push(
+            "Durata dell'apnea non valida."
+        );
+
+    }
+
+
+    if (!precedenteValido) {
+
+        errori.push(
+            "Anemomero precedente non trovato."
+        );
+
+    }
+
+
+    if (!successivoValido) {
+
+        errori.push(
+            "Anemomero successivo non trovato."
+        );
+
+    }
+
+
+    if (!posizioneValida) {
+
+        errori.push(
+            "Posizione dell'apnea non coerente con la sequenza."
+        );
+
+    }
+
+
+    return {
+
+        id:
+            apnea.id,
+
+        tipoEvento:
+            "apnea",
+
+        durata:
+            apnea.durata,
+
+        precedente:
+            apnea.precedente,
+
+        successivo:
+            apnea.successivo,
+
+        durataValida:
+            durataValida,
+
+        posizioneValida:
+            posizioneValida,
+
+        valido:
+            errori.length === 0,
+
+        punteggio:
+            errori.length === 0
+                ? 100
+                : 0,
+
+        errori:
+            errori,
+
+        motivazione:
+            errori.length === 0
+
+                ? "Apnea correttamente inserita nella sequenza."
+
+                : "Sono presenti incoerenze nella configurazione dell'apnea."
+
+    };
+
+}
+
+
+/* =====================================================
+   VALUTA TUTTE LE APNEE DELLA SEQUENZA
+===================================================== */
+
+function valutaApneeSequenza(
+    sequenza
+) {
+
+    return sequenza.apnee.map(
+        apnea =>
+            valutaApneaReale(
+                sequenza,
+                apnea
+            )
+    );
+
+}
+
+/* =====================================================
    VALUTAZIONE COMPLESSIVA DELL'ANEMOMERO
 ===================================================== */
 
@@ -1520,7 +1709,22 @@ const valutazioniSequenzaTest =
         sequenzaTest
     );
 
+const valutazioniApneeTest =
+    valutaApneeSequenza(
+        sequenzaTest
+    );
 
+
+valutazioniApneeTest.forEach(
+    valutazioneApnea => {
+
+        console.log(
+            "Valutazione apnea:",
+            valutazioneApnea
+        );
+
+    }
+);
 valutazioniSequenzaTest.forEach(
     valutazione => {
 
