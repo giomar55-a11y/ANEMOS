@@ -352,7 +352,30 @@
         risultato.punteggio,
 
     Motivazione:
-        risultato.motivazione
+        risultato.motivazione,
+
+"Coerenza complessiva":
+    risultato.coerenzaComplessivaValida ?? "-",
+
+"Punteggio complessivo":
+    risultato.punteggioComplessivo ?? "-",
+
+"Semaforo complessivo":
+    risultato.semaforoComplessivo ?? "-",
+
+"Criticità":
+    Array.isArray(
+        risultato.criticitaComplessive
+    )
+        ? (
+            risultato.criticitaComplessive.length > 0
+                ? risultato.criticitaComplessive.join(" | ")
+                : "Nessuna"
+        )
+        : "-",
+
+"Motivazione complessiva":
+    risultato.motivazioneComplessiva ?? "-"
 
 };
 
