@@ -1179,27 +1179,6 @@ function valutaCoerenzaComplessivaAnemomero(
         );
 
 
-    let semaforoComplessivo =
-        "rosso";
-
-
-    if (
-        punteggioComplessivo >= 80
-    ) {
-
-        semaforoComplessivo =
-            "verde";
-
-    } else if (
-        punteggioComplessivo >= 60
-    ) {
-
-        semaforoComplessivo =
-            "giallo";
-
-    }
-
-
     const criticita =
         [];
 
@@ -1248,6 +1227,29 @@ function valutaCoerenzaComplessivaAnemomero(
     }
 
 
+    let semaforoComplessivo =
+        "rosso";
+
+
+    if (
+        criticita.length === 0 &&
+        punteggioComplessivo >= 80
+    ) {
+
+        semaforoComplessivo =
+            "verde";
+
+    } else if (
+        criticita.length === 0 &&
+        punteggioComplessivo >= 60
+    ) {
+
+        semaforoComplessivo =
+            "giallo";
+
+    }
+
+
     return {
 
         punteggio:
@@ -1272,7 +1274,6 @@ function valutaCoerenzaComplessivaAnemomero(
     };
 
 }
-
 /* =====================================================
    VALUTA UN ANEMOMERO REALE DELLA SEQUENZA
 ===================================================== */
