@@ -18,54 +18,38 @@
     <style>
 
         body {
-            margin:
-                0;
-
-            padding:
-                20px;
+            margin: 0;
+            padding: 20px;
 
             font-family:
                 Arial,
                 sans-serif;
 
-            background:
-                #f5f5f2;
-
-            color:
-                #111;
+            background: #f5f5f2;
+            color: #111;
         }
 
 
         h1 {
-            margin-top:
-                0;
-
-            font-size:
-                26px;
+            margin-top: 0;
+            font-size: 26px;
         }
 
 
         #risultati {
-            display:
-                grid;
-
-            gap:
-                14px;
+            display: grid;
+            gap: 14px;
         }
 
 
         .test-card {
-            background:
-                #fff;
+            background: #fff;
 
             border:
                 1px solid #d8d8d2;
 
-            border-radius:
-                14px;
-
-            padding:
-                16px;
+            border-radius: 14px;
+            padding: 16px;
 
             box-sizing:
                 border-box;
@@ -76,20 +60,28 @@
             margin:
                 0 0 12px;
 
-            font-size:
-                18px;
+            font-size: 18px;
+        }
+
+
+        .test-card h3 {
+            margin:
+                16px 0 8px;
+
+            font-size: 16px;
         }
 
 
         .riga {
-            display:
-                flex;
+            display: flex;
 
             justify-content:
                 space-between;
 
-            gap:
-                16px;
+            align-items:
+                flex-start;
+
+            gap: 16px;
 
             padding:
                 4px 0;
@@ -100,14 +92,17 @@
 
 
         .riga:last-child {
-            border-bottom:
-                0;
+            border-bottom: 0;
         }
 
 
         .etichetta {
-            font-weight:
-                700;
+            font-weight: 700;
+        }
+
+
+        .valore {
+            text-align: right;
         }
 
 
@@ -118,23 +113,21 @@
             align-items:
                 center;
 
-            gap:
-                8px;
+            gap: 8px;
 
-            font-weight:
-                700;
+            font-weight: 700;
         }
 
 
         .pallino {
-            width:
-                14px;
-
-            height:
-                14px;
+            width: 14px;
+            height: 14px;
 
             border-radius:
                 50%;
+
+            flex:
+                0 0 auto;
         }
 
 
@@ -153,6 +146,35 @@
         .rosso {
             background:
                 #cf6f6f;
+        }
+
+
+        @media (
+            max-width: 700px
+        ) {
+
+            body {
+                padding: 12px;
+            }
+
+
+            .riga {
+                gap: 10px;
+            }
+
+
+            .etichetta {
+                max-width: 48%;
+            }
+
+
+            .valore {
+                max-width: 52%;
+
+                overflow-wrap:
+                    anywhere;
+            }
+
         }
 
     </style>
@@ -180,6 +202,10 @@
             [];
 
 
+        const risultatiApnee =
+            [];
+
+
         const consoleOriginale =
             console.log;
 
@@ -203,12 +229,28 @@
 
                 }
 
+
+                if (
+                    argomenti[0] ===
+                    "Valutazione apnea:"
+                ) {
+
+                    risultatiApnee.push(
+                        argomenti[1]
+                    );
+
+                }
+
             };
 
     </script>
 
+
     <script src="model-3-1.js"></script>
-    <script src="motore-coerenza-test.js?v=47"></script>
+
+    <script
+        src="motore-coerenza-test.js?v=48"
+    ></script>
 
 
     <script>
@@ -218,6 +260,206 @@
                 "risultati"
             );
 
+
+        function aggiungiRiga(
+            card,
+            chiave,
+            valore
+        ) {
+
+            const riga =
+                document.createElement(
+                    "div"
+                );
+
+
+            riga.className =
+                "riga";
+
+
+            const etichetta =
+                document.createElement(
+                    "span"
+                );
+
+
+            etichetta.className =
+                "etichetta";
+
+
+            etichetta.textContent =
+                chiave;
+
+
+            const contenuto =
+                document.createElement(
+                    "span"
+                );
+
+
+            contenuto.className =
+                "valore";
+
+
+            contenuto.textContent =
+                valore ?? "-";
+
+
+            riga.appendChild(
+                etichetta
+            );
+
+
+            riga.appendChild(
+                contenuto
+            );
+
+
+            card.appendChild(
+                riga
+            );
+
+        }
+
+
+        function aggiungiSemaforo(
+            card,
+            colore,
+            etichetta = "Semaforo"
+        ) {
+
+            const coloreValido =
+                [
+                    "verde",
+                    "giallo",
+                    "rosso"
+                ].includes(
+                    colore
+                )
+
+                    ? colore
+
+                    : "rosso";
+
+
+            const riga =
+                document.createElement(
+                    "div"
+                );
+
+
+            riga.className =
+                "riga";
+
+
+            const nome =
+                document.createElement(
+                    "span"
+                );
+
+
+            nome.className =
+                "etichetta";
+
+
+            nome.textContent =
+                etichetta;
+
+
+            const semaforo =
+                document.createElement(
+                    "span"
+                );
+
+
+            semaforo.className =
+                "semaforo";
+
+
+            const pallino =
+                document.createElement(
+                    "span"
+                );
+
+
+            pallino.className =
+                "pallino " +
+                coloreValido;
+
+
+            const testo =
+                document.createElement(
+                    "span"
+                );
+
+
+            testo.textContent =
+                coloreValido;
+
+
+            semaforo.appendChild(
+                pallino
+            );
+
+
+            semaforo.appendChild(
+                testo
+            );
+
+
+            riga.appendChild(
+                nome
+            );
+
+
+            riga.appendChild(
+                semaforo
+            );
+
+
+            card.appendChild(
+                riga
+            );
+
+        }
+
+
+        function valoreLista(
+            valore,
+            separatore = ", ",
+            vuoto = "-"
+        ) {
+
+            if (
+                !Array.isArray(
+                    valore
+                )
+            ) {
+
+                return vuoto;
+
+            }
+
+
+            if (
+                valore.length === 0
+            ) {
+
+                return vuoto;
+
+            }
+
+
+            return valore.join(
+                separatore
+            );
+
+        }
+
+
+        /* =====================================================
+           RISULTATI DEGLI ANEMOMERI
+        ===================================================== */
 
         risultatiTest.forEach(
             (
@@ -255,278 +497,366 @@
 
                 const dati = {
 
-    Tipo:
-        risultato.tipo ?? "-",
+                    Tipo:
+                        risultato.tipo ?? "-",
 
-    Durata:
-        risultato.durata ?? "-",
+                    Durata:
+                        risultato.durata ?? "-",
 
-    Percorso:
-        risultato.percorso ?? "-",
+                    Percorso:
+                        risultato.percorso ?? "-",
 
                     "Percorso valido":
-        risultato.percorsoValido ?? "-",
+                        risultato.percorsoValido ?? "-",
 
-    "Punteggio percorso":
-        risultato.punteggioPercorso ?? "-",
+                    "Punteggio percorso":
+                        risultato.punteggioPercorso ?? "-",
 
-     "Motivazione percorso":
-        risultato.motivazionePercorso ?? "-",
+                    "Motivazione percorso":
+                        risultato.motivazionePercorso ?? "-",
 
                     "Biomeccanica valida":
-    risultato.biomeccanicaValida ?? "-",
+                        risultato.biomeccanicaValida ?? "-",
 
-"Punteggio biomeccanica":
-    risultato.punteggioBiomeccanica ?? "-",
+                    "Punteggio biomeccanica":
+                        risultato.punteggioBiomeccanica ?? "-",
 
-"Errori biomeccanica":
-    Array.isArray(
-        risultato.erroriBiomeccanica
-    )
-        ? (
-            risultato.erroriBiomeccanica.length > 0
-                ? risultato.erroriBiomeccanica.join(" | ")
-                : "Nessun errore"
-        )
-        : "-",
+                    "Errori biomeccanica":
+                        Array.isArray(
+                            risultato.erroriBiomeccanica
+                        )
 
-"Motivazione biomeccanica":
-    risultato.motivazioneBiomeccanica ?? "-",
+                            ? (
+                                risultato
+                                    .erroriBiomeccanica
+                                    .length > 0
+
+                                    ? risultato
+                                        .erroriBiomeccanica
+                                        .join(
+                                            " | "
+                                        )
+
+                                    : "Nessun errore"
+                            )
+
+                            : "-",
+
+                    "Motivazione biomeccanica":
+                        risultato.motivazioneBiomeccanica ?? "-",
 
                     "Temporale valida":
-    risultato.temporaleValida ?? "-",
+                        risultato.temporaleValida ?? "-",
 
-"Punteggio temporale":
-    risultato.punteggioTemporale ?? "-",
+                    "Punteggio temporale":
+                        risultato.punteggioTemporale ?? "-",
 
-"Indice temporale":
-    risultato.indiceTemporale ?? "-",
+                    "Indice temporale":
+                        risultato.indiceTemporale ?? "-",
 
-"Motivazione temporale":
-    risultato.motivazioneTemporale ?? "-",
+                    "Motivazione temporale":
+                        risultato.motivazioneTemporale ?? "-",
 
                     "Distribuzione settori valida":
-    risultato.distribuzioneSettoriValida ?? "-",
+                        risultato.distribuzioneSettoriValida ?? "-",
 
-"Distribuzione settori":
-    risultato.distribuzioneSettori ?? "-",
+                    "Distribuzione settori":
+                        risultato.distribuzioneSettori ?? "-",
 
-"Numero settori coinvolti":
-    risultato.numeroSettoriCoinvolti ?? "-",
+                    "Numero settori coinvolti":
+                        risultato.numeroSettoriCoinvolti ?? "-",
 
-"Settori coinvolti":
-    Array.isArray(
-        risultato.settoriCoinvolti
-    )
-        ? risultato.settoriCoinvolti.join(", ")
-        : "-",
+                    "Settori coinvolti":
+                        valoreLista(
+                            risultato.settoriCoinvolti
+                        ),
 
-"Settori dominanti":
-    Array.isArray(
-        risultato.settoriDominanti
-    )
-        ? risultato.settoriDominanti.join(", ")
-        : "-",
+                    "Settori dominanti":
+                        valoreLista(
+                            risultato.settoriDominanti
+                        ),
 
-"Motivazione settori":
-    risultato.motivazioneSettori ?? "-",
-    Flusso:
-        risultato.flusso ?? "-",
+                    "Motivazione settori":
+                        risultato.motivazioneSettori ?? "-",
 
-    "Variazione totale":
-        risultato.variazioneTotale ?? "-",
+                    Flusso:
+                        risultato.flusso ?? "-",
 
-    Indice:
-        risultato.indice,
+                    "Variazione totale":
+                        risultato.variazioneTotale ?? "-",
 
-    Ideale:
-        risultato.ideale,
+                    Indice:
+                        risultato.indice ?? "-",
 
-    Errore:
-        risultato.errore,
+                    Ideale:
+                        risultato.ideale ?? "-",
 
-    Direzione:
-        risultato.direzione,
+                    Errore:
+                        risultato.errore ?? "-",
 
-    Punteggio:
-        risultato.punteggio,
+                    Direzione:
+                        risultato.direzione ?? "-",
 
-    Motivazione:
-        risultato.motivazione,
+                    Punteggio:
+                        risultato.punteggio ?? "-",
 
-"Coerenza complessiva":
-    risultato.coerenzaComplessivaValida ?? "-",
+                    Motivazione:
+                        risultato.motivazione ?? "-",
 
-"Punteggio complessivo":
-    risultato.punteggioComplessivo ?? "-",
+                    "Coerenza complessiva":
+                        risultato.coerenzaComplessivaValida ?? "-",
 
-"Semaforo complessivo":
-    risultato.semaforoComplessivo ?? "-",
+                    "Punteggio complessivo":
+                        risultato.punteggioComplessivo ?? "-",
 
-"Criticità":
-    Array.isArray(
-        risultato.criticitaComplessive
-    )
-        ? (
-            risultato.criticitaComplessive.length > 0
-                ? risultato.criticitaComplessive.join(" | ")
-                : "Nessuna"
-        )
-        : "-",
+                    "Semaforo complessivo":
+                        risultato.semaforoComplessivo ?? "-",
 
-"Motivazione complessiva":
-    risultato.motivazioneComplessiva ?? "-"
+                    "Criticità":
+                        Array.isArray(
+                            risultato.criticitaComplessive
+                        )
 
-};
+                            ? (
+                                risultato
+                                    .criticitaComplessive
+                                    .length > 0
 
- Object.entries(
-    dati
-).forEach(
-    ([chiave, valore]) => {
+                                    ? risultato
+                                        .criticitaComplessive
+                                        .join(
+                                            " | "
+                                        )
 
-        const riga =
-            document.createElement(
-                "div"
-            );
+                                    : "Nessuna"
+                            )
+
+                            : "-",
+
+                    "Motivazione complessiva":
+                        risultato.motivazioneComplessiva ?? "-"
+
+                };
 
 
-        riga.className =
-            "riga";
+                Object.entries(
+                    dati
+                ).forEach(
+                    (
+                        [
+                            chiave,
+                            valore
+                        ]
+                    ) => {
 
+                        aggiungiRiga(
+                            card,
+                            chiave,
+                            valore
+                        );
 
-        riga.innerHTML =
-            `
-            <span class="etichetta">
-                ${chiave}
-            </span>
-
-            <span>
-                ${valore}
-            </span>
-            `;
-
-
-        card.appendChild(
-            riga
-        );
-
-    }
-);               
-
-                /* =====================================================
-   DETTAGLIO DEI SETTORI
-===================================================== */
-
-if (
-    Array.isArray(
-        risultato.variazioniSettori
-    ) &&
-    risultato.variazioniSettori.length > 0
-) {
-
-    const titoloSettori =
-        document.createElement(
-            "h3"
-        );
-
-
-    titoloSettori.textContent =
-        "Settori";
-
-
-    titoloSettori.style.margin =
-        "16px 0 8px";
-
-
-    titoloSettori.style.fontSize =
-        "16px";
-
-
-    card.appendChild(
-        titoloSettori
-    );
-
-
-    risultato.variazioniSettori.forEach(
-        settore => {
-
-            const rigaSettore =
-                document.createElement(
-                    "div"
+                    }
                 );
 
 
-            rigaSettore.className =
-                "riga";
+                if (
+                    Array.isArray(
+                        risultato.variazioniSettori
+                    ) &&
+                    risultato
+                        .variazioniSettori
+                        .length > 0
+                ) {
+
+                    const titoloSettori =
+                        document.createElement(
+                            "h3"
+                        );
 
 
-            const segno =
-                settore.finale >
-                settore.iniziale
-
-                    ? "+"
-
-                    : settore.finale <
-                      settore.iniziale
-
-                        ? "−"
-
-                        : "=";
+                    titoloSettori.textContent =
+                        "Settori";
 
 
-            rigaSettore.innerHTML =
-                `
-                <span class="etichetta">
-                    ${settore.settore}
-                </span>
-
-                <span>
-                    ${settore.iniziale}
-                    →
-                    ${settore.finale}
-
-                    (${segno}${settore.variazione})
-                </span>
-                `;
-
-
-            card.appendChild(
-                rigaSettore
-            );
-
-        }
-    );
-
-}
-
-                const semaforo =
-                    document.createElement(
-                        "div"
+                    card.appendChild(
+                        titoloSettori
                     );
 
 
-                semaforo.className =
-                    "riga";
+                    risultato
+                        .variazioniSettori
+                        .forEach(
+                            settore => {
+
+                                const segno =
+                                    settore.finale >
+                                    settore.iniziale
+
+                                        ? "+"
+
+                                        : settore.finale <
+                                          settore.iniziale
+
+                                            ? "−"
+
+                                            : "=";
 
 
-                semaforo.innerHTML =
-                    `
-                    <span class="etichetta">
-                        Semaforo
-                    </span>
+                                const descrizione =
+                                    settore.iniziale +
+                                    " → " +
+                                    settore.finale +
+                                    " (" +
+                                    segno +
+                                    settore.variazione +
+                                    ")";
 
-                    <span class="semaforo">
-                        <span
-                            class="pallino ${risultato.semaforo}"
-                        ></span>
 
-                        ${risultato.semaforo}
-                    </span>
-                    `;
+                                aggiungiRiga(
+                                    card,
+                                    settore.settore,
+                                    descrizione
+                                );
+
+                            }
+                        );
+
+                }
+
+
+                aggiungiSemaforo(
+                    card,
+                    risultato.semaforo
+                );
+
+
+                contenitore.appendChild(
+                    card
+                );
+
+            }
+        );
+
+
+        /* =====================================================
+           RISULTATI DELLE APNEE
+        ===================================================== */
+
+        risultatiApnee.forEach(
+            (
+                risultato,
+                indice
+            ) => {
+
+                const card =
+                    document.createElement(
+                        "section"
+                    );
+
+
+                card.className =
+                    "test-card";
+
+
+                const titolo =
+                    document.createElement(
+                        "h2"
+                    );
+
+
+                titolo.textContent =
+                    "Apnea " +
+                    (
+                        indice + 1
+                    );
 
 
                 card.appendChild(
-                    semaforo
+                    titolo
+                );
+
+
+                const datiApnea = {
+
+                    Durata:
+                        risultato.durata ?? "-",
+
+                    Precedente:
+                        risultato.precedente ?? "-",
+
+                    Successivo:
+                        risultato.successivo ?? "Finale",
+
+                    "Durata valida":
+                        risultato.durataValida ?? "-",
+
+                    "Posizione valida":
+                        risultato.posizioneValida ?? "-",
+
+                    Valida:
+                        risultato.valido ?? "-",
+
+                    Punteggio:
+                        risultato.punteggio ?? "-",
+
+                    Errori:
+                        Array.isArray(
+                            risultato.errori
+                        )
+
+                            ? (
+                                risultato
+                                    .errori
+                                    .length > 0
+
+                                    ? risultato
+                                        .errori
+                                        .join(
+                                            " | "
+                                        )
+
+                                    : "Nessun errore"
+                            )
+
+                            : "-",
+
+                    Motivazione:
+                        risultato.motivazione ?? "-"
+
+                };
+
+
+                Object.entries(
+                    datiApnea
+                ).forEach(
+                    (
+                        [
+                            chiave,
+                            valore
+                        ]
+                    ) => {
+
+                        aggiungiRiga(
+                            card,
+                            chiave,
+                            valore
+                        );
+
+                    }
+                );
+
+
+                const coloreApnea =
+                    risultato.valido
+
+                        ? "verde"
+
+                        : "rosso";
+
+
+                aggiungiSemaforo(
+                    card,
+                    coloreApnea
                 );
 
 
@@ -539,7 +869,8 @@ if (
 
 
         if (
-            risultatiTest.length === 0
+            risultatiTest.length === 0 &&
+            risultatiApnee.length === 0
         ) {
 
             contenitore.textContent =
