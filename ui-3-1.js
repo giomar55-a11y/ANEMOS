@@ -435,11 +435,17 @@ function modificaApneaTra(
     }
 
 
+    localStorage.setItem(
+        "ANEMOS_SEQUENZA_TEST",
+        JSON.stringify(
+            anemos31
+        )
+    );
+
+
     renderAnemos31();
 
 }
-
-
 
 /* =====================================================
    APERTURA / CHIUSURA EDITOR
@@ -2246,9 +2252,6 @@ function inizializzaUIAnemos31() {
     renderAnemos31();
 
 }
-
-
-
 /*
 =========================================================
 FINE UI ANEMOS 3.1
