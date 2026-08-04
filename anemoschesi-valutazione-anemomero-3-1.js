@@ -150,21 +150,80 @@ function calcolaPunteggioAffinitaAnemoschesi(
             : [];
 
 
-    const preferiti =
-        Array.isArray(
-            profiloIntento.preferiti
+   /*
+Descrittori che il profilo del singolo
+Anemomero è realmente in grado di produrre.
+
+Gli altri descrittori dell'Intento
+saranno valutati successivamente
+sull'intero Anemodromo.
+*/
+
+const descrittoriValutabiliAnemomero = [
+
+    ANEMOSCHESI_DESCRITTORI.LENTO,
+
+    ANEMOSCHESI_DESCRITTORI.RAPIDO,
+
+    ANEMOSCHESI_DESCRITTORI.MODERATO,
+
+    ANEMOSCHESI_DESCRITTORI.CONTINUO,
+
+    ANEMOSCHESI_DESCRITTORI.INTERMITTENTE,
+
+    ANEMOSCHESI_DESCRITTORI.DELICATO,
+
+    ANEMOSCHESI_DESCRITTORI.INTENSO,
+
+    ANEMOSCHESI_DESCRITTORI.LOCALIZZATO,
+
+    ANEMOSCHESI_DESCRITTORI.REGIONALE,
+
+    ANEMOSCHESI_DESCRITTORI.GLOBALE,
+
+    ANEMOSCHESI_DESCRITTORI.ESPANSIVO,
+
+    ANEMOSCHESI_DESCRITTORI.COMPRESSIVO,
+
+    ANEMOSCHESI_DESCRITTORI.ECONOMICO,
+
+    ANEMOSCHESI_DESCRITTORI.DISPENDIOSO,
+
+    ANEMOSCHESI_DESCRITTORI.NEUTRO,
+
+    ANEMOSCHESI_DESCRITTORI.SEMPLICE,
+
+    ANEMOSCHESI_DESCRITTORI.COMPLESSO,
+
+    ANEMOSCHESI_DESCRITTORI.EQUILIBRATO
+
+];
+
+
+const preferiti =
+    Array.isArray(
+        profiloIntento.preferiti
+    )
+        ? profiloIntento.preferiti.filter(
+            descrittore =>
+                descrittoriValutabiliAnemomero.includes(
+                    descrittore
+                )
         )
-            ? profiloIntento.preferiti
-            : [];
+        : [];
 
 
-    const sconsigliati =
-        Array.isArray(
-            profiloIntento.sconsigliati
+const sconsigliati =
+    Array.isArray(
+        profiloIntento.sconsigliati
+    )
+        ? profiloIntento.sconsigliati.filter(
+            descrittore =>
+                descrittoriValutabiliAnemomero.includes(
+                    descrittore
+                )
         )
-            ? profiloIntento.sconsigliati
-            : [];
-
+        : [];
 
     const preferitiPresenti =
         intersezioneDescrittoriAnemoschesi(
