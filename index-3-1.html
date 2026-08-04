@@ -618,90 +618,108 @@ pulsanteEliminaTutto
         );
 
 
-    function popolaSelettoreIntenti() {
+   function popolaSelettoreIntenti() {
 
-        if (
-            !selettoreIntento
-        ) {
+    if (
+        !selettoreIntento
+    ) {
 
-            return;
-
-        }
-
-
-        selettoreIntento.innerHTML =
-            "";
-
-
-        const opzioneLibera =
-            document.createElement(
-                "option"
-            );
-
-
-        opzioneLibera.value =
-            "";
-
-
-        opzioneLibera.textContent =
-            "Nessun intento";
-
-
-        selettoreIntento.appendChild(
-            opzioneLibera
-        );
-
-
-        intentiAnemoschesiDisponibili.forEach(
-            intento => {
-
-                const opzione =
-                    document.createElement(
-                        "option"
-                    );
-
-
-                opzione.value =
-                    intento.id;
-
-
-                opzione.textContent =
-                    intento.nome ??
-                    intento.etichetta ??
-                    intento.id;
-
-
-                selettoreIntento.appendChild(
-                    opzione
-                );
-
-            }
-        );
-
-
-        const intentoSalvato =
-            localStorage.getItem(
-                "ANEMOS_INTENTO_SELEZIONATO"
-            );
-
-
-        if (
-            intentoSalvato
-        ) {
-
-            impostaIntento(
-                anemos31,
-                intentoSalvato
-            );
-
-
-            selettoreIntento.value =
-                intentoSalvato;
-
-        }
+        return;
 
     }
 
+
+    selettoreIntento.innerHTML =
+        "";
+
+
+    const opzioneLibera =
+        document.createElement(
+            "option"
+        );
+
+
+    opzioneLibera.value =
+        "";
+
+
+    opzioneLibera.textContent =
+        "Nessun intento";
+
+
+    selettoreIntento.appendChild(
+        opzioneLibera
+    );
+
+
+    ANEMOSCHESI_ELENCO_MACROAREE.forEach(
+        macroarea => {
+
+            const gruppo =
+                document.createElement(
+                    "optgroup"
+                );
+
+
+            gruppo.label =
+                macroarea.nome;
+
+
+            macroarea.intenti.forEach(
+                intento => {
+
+                    const opzione =
+                        document.createElement(
+                            "option"
+                        );
+
+
+                    opzione.value =
+                        intento.id;
+
+
+                    opzione.textContent =
+                        intento.nome;
+
+
+                    gruppo.appendChild(
+                        opzione
+                    );
+
+                }
+            );
+
+
+            selettoreIntento.appendChild(
+                gruppo
+            );
+
+        }
+    );
+
+
+    const intentoSalvato =
+        localStorage.getItem(
+            "ANEMOS_INTENTO_SELEZIONATO"
+        );
+
+
+    if (
+        intentoSalvato
+    ) {
+
+        impostaIntento(
+            anemos31,
+            intentoSalvato
+        );
+
+
+        selettoreIntento.value =
+            intentoSalvato;
+
+    }
+
+}
 
     selettoreIntento.addEventListener(
         "change",
@@ -746,10 +764,6 @@ pulsanteEliminaTutto
         }
     );
 
-
-  console.log(
-    intentiAnemoschesiDisponibili
-);
 
 popolaSelettoreIntenti();
 </script>
