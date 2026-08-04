@@ -68,7 +68,86 @@ function ottieniElementiUI() {
 
 }
 
+/* =====================================================
+   RIEPILOGO COMPLESSIVO ANEMOSCHESI
+===================================================== */
 
+function renderRiepilogoAnemoschesi() {
+
+    const contenitore =
+        document.getElementById(
+            "anemoschesi-riepilogo"
+        );
+
+
+    const esito =
+        document.getElementById(
+            "anemoschesi-esito"
+        );
+
+
+    if (
+        !contenitore ||
+        !esito
+    ) {
+
+        return;
+
+    }
+
+
+    contenitore.classList.remove(
+        "anemoschesi-verde",
+        "anemoschesi-giallo",
+        "anemoschesi-rosso"
+    );
+
+
+    const valutazione =
+        valutaAnemodromoPerIntentoAnemoschesi(
+            anemos31
+        );
+
+
+    if (
+        !valutazione ||
+        !valutazione.valido
+    ) {
+
+        esito.textContent =
+            "—";
+
+
+        contenitore.removeAttribute(
+            "title"
+        );
+
+
+        return;
+
+    }
+
+
+    esito.textContent =
+        valutazione
+            .punteggioComplessivo +
+        "%";
+
+
+    contenitore.classList.add(
+        "anemoschesi-" +
+        valutazione.semaforo
+    );
+
+
+    contenitore.title =
+        "Coerenza complessiva con l'Intento " +
+        valutazione.intentoNome +
+        ": " +
+        valutazione.punteggioComplessivo +
+        "%.";
+
+}
 
 /* =====================================================
    RENDER PRINCIPALE
@@ -77,7 +156,8 @@ function ottieniElementiUI() {
 function renderAnemos31() {
 
     renderTimeline();
-
+    renderRiepilogoAnemoschesi();
+   
     if (
         anemodromoSelezionatoId
     ) {
