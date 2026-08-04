@@ -183,7 +183,50 @@ function renderTimeline() {
 
 }
 
+/* =====================================================
+   VALUTAZIONE ANEMOSCHESI DEL NODO
+===================================================== */
 
+function ottieniValutazioneNodoAnemoschesi(
+    anemodromo
+) {
+
+    const intentoId =
+        ottieniIntento(
+            anemos31
+        );
+
+
+    if (
+        !intentoId
+    ) {
+
+        return null;
+
+    }
+
+
+    const valutazione =
+        valutaAnemomeroPerIntentoAnemoschesi(
+            anemos31,
+            anemodromo,
+            intentoId
+        );
+
+
+    if (
+        !valutazione ||
+        !valutazione.valido
+    ) {
+
+        return null;
+
+    }
+
+
+    return valutazione;
+
+}
 
 /* =====================================================
    NODO ANEMODROMO
@@ -207,6 +250,33 @@ function creaNodoAnemodromo(
     wrapper.className =
         "anemodromo-node";
 
+   const valutazioneAnemoschesi =
+    ottieniValutazioneNodoAnemoschesi(
+        anemodromo
+    );
+
+
+if (
+    valutazioneAnemoschesi
+) {
+
+    wrapper.classList.add(
+        "anemoschesi-" +
+        valutazioneAnemoschesi.semaforo
+    );
+
+
+    wrapper.dataset
+        .anemoschesiPunteggio =
+            valutazioneAnemoschesi
+                .punteggio;
+
+
+    wrapper.title =
+        valutazioneAnemoschesi
+            .motivazione;
+
+}
 
     if (
         anemodromo.id ===
