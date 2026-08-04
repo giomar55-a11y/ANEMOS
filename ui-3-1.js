@@ -27,7 +27,8 @@ model-3-1.js
 ===================================================== */
 
 let anemodromoSelezionatoId = null;
-
+let intentiAnemoschesiDisponibili =
+    [];
 
 
 /* =====================================================
@@ -2236,6 +2237,10 @@ function inizializzaUIAnemos31() {
         ottieniElementiUI();
 
 
+    intentiAnemoschesiDisponibili =
+        elencoIntentiAnemoschesi();
+
+
     if (
         ui.chiudiEditor
     ) {
@@ -2252,6 +2257,8 @@ function inizializzaUIAnemos31() {
     renderAnemos31();
 
 }
+
+
 /*
 =========================================================
 FINE UI ANEMOS 3.1
