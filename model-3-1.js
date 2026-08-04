@@ -1554,39 +1554,28 @@ function primoVolumeDisponibilePerSettore(
    STATO FINALE
 ===================================================== */
 
-function statoSettoriFinale(
-    sequenza
+function impostaIntento(
+    sequenza,
+    intentoId
 ) {
 
-    let stato =
-        creaStatoSettoriVuoto();
+    if (
+        intentoId !== null &&
+        !intentoAnemoschesiValido(
+            intentoId
+        )
+    ) {
 
+        return sequenza;
 
-    const anemodromi =
-        ottieniAnemodromiOrdinati(
-            sequenza
-        );
+    }
 
+    sequenza.intento =
+        intentoId;
 
-    anemodromi.forEach(
-        anemodromo => {
-
-            stato =
-                applicaAnemodromoAlloStato(
-                    stato,
-                    anemodromo
-                );
-
-        }
-    );
-
-
-    return stato;
+    return sequenza;
 
 }
-
-
-
 /* =====================================================
    VALIDAZIONE ANEMODROMO
 ===================================================== */
