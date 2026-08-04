@@ -1683,7 +1683,57 @@ const anemos31 =
     creaSequenzaAnemos();
 
 
+/* =====================================================
+   INTENTO DELLA SEQUENZA
+===================================================== */
 
+function impostaIntento(
+    sequenza,
+    intentoId
+) {
+
+    sequenza.intento =
+        intentoId;
+
+
+    return sequenza;
+
+}
+
+
+
+function ottieniIntento(
+    sequenza
+) {
+
+    return (
+        sequenza.intento ??
+        null
+    );
+
+}
+
+
+
+/* =====================================================
+   INTENTI DISPONIBILI
+===================================================== */
+
+function elencoIntentiAnemoschesi() {
+
+    if (
+        typeof ANEMOSCHESI_ELENCO_INTENTI ===
+        "undefined"
+    ) {
+
+        return [];
+
+    }
+
+
+    return ANEMOSCHESI_ELENCO_INTENTI;
+
+}
 /*
 =========================================================
 FINE MODELLO ANEMOS 3.1
