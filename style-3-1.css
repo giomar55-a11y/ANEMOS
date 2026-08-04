@@ -1056,3 +1056,41 @@ button {
     }
 
 }
+/* =====================================================
+   ANEMOSCHESI — SEMAFORO DEGLI ANEMOMERI
+===================================================== */
+
+.anemodromo-node.anemoschesi-verde {
+    background-color: #dcefe3;
+    border-color: #69ad82;
+}
+
+
+.anemodromo-node.anemoschesi-giallo {
+    background-color: #f7edc6;
+    border-color: #d5b94f;
+}
+
+
+.anemodromo-node.anemoschesi-rosso {
+    background-color: #f3d5d5;
+    border-color: #ca7474;
+}
+
+
+/*
+La selezione dell'Anemomero
+deve restare riconoscibile anche
+quando è presente il semaforo.
+*/
+
+.anemodromo-node.selezionato {
+    box-shadow:
+        0 0 0 3px
+        rgba(
+            31,
+            56,
+            47,
+            0.22
+        );
+}
