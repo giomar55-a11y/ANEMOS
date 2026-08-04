@@ -604,7 +604,152 @@ pulsanteEliminaTutto
         aggiornaDisponibilitaAggiunta();
 
     </script>
+<script>
 
+    /*
+    =================================================
+    SELETTORE INTENTO ANEMOSCHESI
+    =================================================
+    */
+
+    const selettoreIntento =
+        document.getElementById(
+            "selettore-intento"
+        );
+
+
+    function popolaSelettoreIntenti() {
+
+        if (
+            !selettoreIntento
+        ) {
+
+            return;
+
+        }
+
+
+        selettoreIntento.innerHTML =
+            "";
+
+
+        const opzioneLibera =
+            document.createElement(
+                "option"
+            );
+
+
+        opzioneLibera.value =
+            "";
+
+
+        opzioneLibera.textContent =
+            "Nessun intento";
+
+
+        selettoreIntento.appendChild(
+            opzioneLibera
+        );
+
+
+        intentiAnemoschesiDisponibili.forEach(
+            intento => {
+
+                const opzione =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                opzione.value =
+                    intento.id;
+
+
+                opzione.textContent =
+                    intento.nome ??
+                    intento.etichetta ??
+                    intento.id;
+
+
+                selettoreIntento.appendChild(
+                    opzione
+                );
+
+            }
+        );
+
+
+        const intentoSalvato =
+            localStorage.getItem(
+                "ANEMOS_INTENTO_SELEZIONATO"
+            );
+
+
+        if (
+            intentoSalvato
+        ) {
+
+            impostaIntento(
+                anemos31,
+                intentoSalvato
+            );
+
+
+            selettoreIntento.value =
+                intentoSalvato;
+
+        }
+
+    }
+
+
+    selettoreIntento.addEventListener(
+        "change",
+        function () {
+
+            const intentoId =
+                selettoreIntento.value ||
+                null;
+
+
+            impostaIntento(
+                anemos31,
+                intentoId
+            );
+
+
+            if (
+                intentoId
+            ) {
+
+                localStorage.setItem(
+                    "ANEMOS_INTENTO_SELEZIONATO",
+                    intentoId
+                );
+
+            } else {
+
+                localStorage.removeItem(
+                    "ANEMOS_INTENTO_SELEZIONATO"
+                );
+
+            }
+
+
+            localStorage.setItem(
+                "ANEMOS_SEQUENZA_TEST",
+                JSON.stringify(
+                    anemos31
+                )
+            );
+
+        }
+    );
+
+
+    popolaSelettoreIntenti();
+
+</script>
 </body>
 
 </html>
