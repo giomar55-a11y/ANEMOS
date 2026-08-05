@@ -30,30 +30,20 @@ function semaforoGuidaAnemoschesi(
     punteggioSimulato
 ) {
 
-    if (
-        punteggioSimulato >
-        punteggioAttuale
-    ) {
+    /*
+    Il colore indica il risultato
+    che si otterrà premendo il comando.
 
-        return "verde";
+    punteggioAttuale resta tra gli argomenti
+    perché la funzione è già richiamata così,
+    ma in questa versione non serve.
+    */
 
-    }
-
-
-    if (
-        punteggioSimulato ===
-        punteggioAttuale
-    ) {
-
-        return "giallo";
-
-    }
-
-
-    return "rosso";
+    return determinaSemaforoAnemoschesi(
+        punteggioSimulato
+    );
 
 }
-
 /* =====================================================
    COPIA TEMPORANEA DELL'ANEMOMERO
 ===================================================== */
