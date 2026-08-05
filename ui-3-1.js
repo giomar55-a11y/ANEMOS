@@ -1017,7 +1017,53 @@ function creaBloccoDurata(
     piu.textContent =
         "+";
 
+const guidaDurata =
+    creaGuidaDurataAnemoschesi(
+        anemos31,
+        anemodromo
+    );
 
+
+if (
+    guidaDurata
+) {
+
+    if (
+        guidaDurata.meno.disponibile &&
+        guidaDurata.meno.semaforo
+    ) {
+
+        meno.classList.add(
+            "anemoschesi-" +
+            guidaDurata.meno.semaforo
+        );
+
+        meno.title =
+            "Riduci durata: " +
+            guidaDurata.meno.punteggio +
+            "%";
+
+    }
+
+
+    if (
+        guidaDurata.piu.disponibile &&
+        guidaDurata.piu.semaforo
+    ) {
+
+        piu.classList.add(
+            "anemoschesi-" +
+            guidaDurata.piu.semaforo
+        );
+
+        piu.title =
+            "Aumenta durata: " +
+            guidaDurata.piu.punteggio +
+            "%";
+
+    }
+
+}
     meno.addEventListener(
         "click",
         function () {
