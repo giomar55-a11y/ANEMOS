@@ -350,7 +350,238 @@ function variazioneVolumeAnemomeroAnemoschesi(
     return variazioneTotale;
 
 }
+/* =====================================================
+   VELOCITÀ VOLUMETRICA INTERNA
+===================================================== */
 
+/*
+Indica quanti livelli complessivi di volume
+vengono modificati per secondo.
+
+Non rappresenta litri/secondo reali.
+*/
+
+function velocitaVolumetricaAnemoschesi(
+    sequenza,
+    anemomero
+) {
+
+    const variazione =
+        variazioneVolumeAnemomeroAnemoschesi(
+            sequenza,
+            anemomero
+        );
+
+
+    const durata =
+        Number(
+            anemomero?.durata
+        );
+
+
+    if (
+        typeof variazione !== "number" ||
+        !Number.isFinite(
+            durata
+        ) ||
+        durata <= 0
+    ) {
+
+        return null;
+
+    }
+
+
+    return (
+        variazione /
+        durata
+    );
+
+}
+
+
+/* =====================================================
+   FASCE DI VELOCITÀ PER FLUSSO
+===================================================== */
+
+/*
+Fasce interne iniziali ANEMOSCHESI.
+
+Più il flusso è intenso,
+maggiore deve essere la quantità di volume
+modificata nell'unità di tempo.
+
+Le fasce saranno calibrate successivamente
+sulla base del comportamento reale
+del sistema.
+*/
+
+const ANEMOSCHESI_FASCE_FLUSSO = {
+
+    [ANEMOS_FLUSSI.TRATTENUTO]: {
+
+        minimo:
+            0.05,
+
+        idealeMin:
+            0.10,
+
+        idealeMax:
+            0.40,
+
+        massimo:
+            0.60
+
+    },
+
+
+    [ANEMOS_FLUSSI.DELICATO]: {
+
+        minimo:
+            0.10,
+
+        idealeMin:
+            0.20,
+
+        idealeMax:
+            0.70,
+
+        massimo:
+            1.00
+
+    },
+
+
+    [ANEMOS_FLUSSI.SPONTANEO]: {
+
+        minimo:
+            0.20,
+
+        idealeMin:
+            0.35,
+
+        idealeMax:
+            1.10,
+
+        massimo:
+            1.50
+
+    },
+
+
+    [ANEMOS_FLUSSI.FORZATO]: {
+
+        minimo:
+            0.40,
+
+        idealeMin:
+            0.70,
+
+        idealeMax:
+            2.00,
+
+        massimo:
+            3.00
+
+    }
+
+};
+
+
+/* =====================================================
+   COERENZA TRA VOLUME, DURATA E FLUSSO
+===================================================== */
+
+function valutaCoerenzaFlussoAnemoschesi(
+    sequenza,
+    anemomero
+) {
+
+    if (
+        !sequenza ||
+        !anemomero
+    ) {
+
+        return creaEsitoFisiologicoAnemoschesi(
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .VALIDO,
+            "FLUSSO_NON_VALUTABILE",
+            "Relazione tra flusso, volume e durata non valutabile."
+        );
+
+    }
+
+
+    const velocita =
+        velocitaVolumetricaAnemoschesi(
+            sequenza,
+            anemomero
+        );
+
+
+    const fascia =
+        ANEMOSCHESI_FASCE_FLUSSO[
+            anemomero.flusso
+        ];
+
+
+    if (
+        velocita === null ||
+        !fascia
+    ) {
+
+        return creaEsitoFisiologicoAnemoschesi(
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .VALIDO,
+            "FLUSSO_NON_VALUTABILE",
+            "Relazione tra flusso, volume e durata non valutabile."
+        );
+
+    }
+
+
+    if (
+        velocita <
+            fascia.minimo ||
+        velocita >
+            fascia.massimo
+    ) {
+
+        return creaEsitoFisiologicoAnemoschesi(
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .CRITICO,
+            "FLUSSO_INCOERENTE",
+            "Flusso incoerente con durata e variazione di volume."
+        );
+
+    }
+
+
+    if (
+        velocita <
+            fascia.idealeMin ||
+        velocita >
+            fascia.idealeMax
+    ) {
+
+        return creaEsitoFisiologicoAnemoschesi(
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .ATTENZIONE,
+            "FLUSSO_LIMITE",
+            "Flusso vicino al limite di coerenza con durata e volume."
+        );
+
+    }
+
+
+    return creaEsitoFisiologicoAnemoschesi(
+        ANEMOSCHESI_ESITI_FISIOLOGICI
+            .VALIDO,
+        "FLUSSO_COHERENTE",
+        "Flusso coerente con durata e variazione di volume."
+    );
+
+}
 /* =====================================================
    VALUTAZIONE FISIOLOGICA DELL'ANEMOMERO
 ===================================================== */
