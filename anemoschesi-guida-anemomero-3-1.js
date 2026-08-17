@@ -108,14 +108,85 @@ function simulaDurataAnemomeroAnemoschesi(
         nuovaDurata;
 
 
-    return valutaAnemomeroPerIntentoAnemoschesi(
+   const valutazioneIntento =
+    valutaAnemomeroPerIntentoAnemoschesi(
         sequenza,
         simulato
     );
 
+
+const valutazioneFisiologica =
+    valutaFisiologiaAnemomeroAnemoschesi(
+        simulato
+    );
+
+
+return {
+
+    ...valutazioneIntento,
+
+    fisiologia:
+        valutazioneFisiologica
+
+};
 }
 
+/* =====================================================
+   PRECEDENZA FISIOLOGICA DELLA GUIDA
+===================================================== */
 
+function semaforoGuidaDurataAnemoschesi(
+    punteggioAttuale,
+    valutazioneSimulata
+) {
+
+    if (
+        !valutazioneSimulata
+    ) {
+
+        return null;
+
+    }
+
+
+    const fisiologia =
+        valutazioneSimulata.fisiologia;
+
+
+    if (
+        fisiologia
+    ) {
+
+        if (
+            fisiologia.livello ===
+                ANEMOSCHESI_ESITI_FISIOLOGICI.ERRORE ||
+            fisiologia.livello ===
+                ANEMOSCHESI_ESITI_FISIOLOGICI.CRITICO
+        ) {
+
+            return "rosso";
+
+        }
+
+
+        if (
+            fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.ATTENZIONE
+        ) {
+
+            return "giallo";
+
+        }
+
+    }
+
+
+    return semaforoGuidaAnemoschesi(
+        punteggioAttuale,
+        valutazioneSimulata.punteggio
+    );
+
+}
 /* =====================================================
    GUIDA DEI COMANDI − E +
 ===================================================== */
@@ -187,14 +258,13 @@ function creaGuidaDurataAnemoschesi(
                     ? valutazioneMeno.punteggio
                     : null,
 
-            semaforo:
-                valutazioneMeno
-                    ? semaforoGuidaAnemoschesi(
-                        valutazioneAttuale.punteggio,
-                        valutazioneMeno.punteggio
-                    )
-                    : null
-
+           semaforo:
+    valutazioneMeno
+        ? semaforoGuidaDurataAnemoschesi(
+            valutazioneAttuale.punteggio,
+            valutazioneMeno
+        )
+        : null
         },
 
         piu: {
@@ -207,14 +277,13 @@ function creaGuidaDurataAnemoschesi(
                     ? valutazionePiu.punteggio
                     : null,
 
-            semaforo:
-                valutazionePiu
-                    ? semaforoGuidaAnemoschesi(
-                        valutazioneAttuale.punteggio,
-                        valutazionePiu.punteggio
-                    )
-                    : null
-
+           semaforo:
+    valutazionePiu
+        ? semaforoGuidaDurataAnemoschesi(
+            valutazioneAttuale.punteggio,
+            valutazionePiu
+        )
+        : null
         }
 
     };
