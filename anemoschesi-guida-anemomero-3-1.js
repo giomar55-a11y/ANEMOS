@@ -117,9 +117,9 @@ function simulaDurataAnemomeroAnemoschesi(
 
 const valutazioneFisiologica =
     valutaFisiologiaAnemomeroAnemoschesi(
+        sequenza,
         simulato
     );
-
 
 return {
 
