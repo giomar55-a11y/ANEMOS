@@ -587,8 +587,36 @@ function valutaCoerenzaFlussoAnemoschesi(
 ===================================================== */
 
 function valutaFisiologiaAnemomeroAnemoschesi(
-    anemomero
+    sequenza,
+    anemomero = null
 ) {
+
+    /*
+    Compatibilità con i richiami precedenti:
+
+    valutaFisiologiaAnemomeroAnemoschesi(
+        anemomero
+    )
+
+    continua a funzionare.
+
+    Quando viene fornita anche la sequenza,
+    viene valutata inoltre la relazione
+    volume × durata × flusso.
+    */
+
+    if (
+        anemomero === null
+    ) {
+
+        anemomero =
+            sequenza;
+
+        sequenza =
+            null;
+
+    }
+
 
     const controlli = [
 
@@ -597,6 +625,20 @@ function valutaFisiologiaAnemomeroAnemoschesi(
         )
 
     ];
+
+
+    if (
+        sequenza
+    ) {
+
+        controlli.push(
+            valutaCoerenzaFlussoAnemoschesi(
+                sequenza,
+                anemomero
+            )
+        );
+
+    }
 
 
     const ordineGravita = {
@@ -658,14 +700,27 @@ function valutaFisiologiaAnemomeroAnemoschesi(
             peggiore,
 
         controlli:
-            controlli
+            controlli,
+
+        velocitaVolumetrica:
+            sequenza
+                ? velocitaVolumetricaAnemoschesi(
+                    sequenza,
+                    anemomero
+                )
+                : null,
+
+        variazioneVolume:
+            sequenza
+                ? variazioneVolumeAnemomeroAnemoschesi(
+                    sequenza,
+                    anemomero
+                )
+                : null
 
     };
 
-}
-
-
-/* =====================================================
+}/* =====================================================
    CONTROLLO INIZIALE
 ===================================================== */
 
