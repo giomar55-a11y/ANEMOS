@@ -612,7 +612,18 @@ function valutaFisiologiaAnemomeroAnemoschesi(
 
     ];
 
+if (
+    sequenza
+) {
 
+    controlli.push(
+        valutaCoerenzaFlussoAnemoschesi(
+            sequenza,
+            anemomero
+        )
+    );
+
+}
     const ordineGravita = {
 
         valido:
