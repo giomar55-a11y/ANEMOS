@@ -222,6 +222,134 @@ function valutaDurataAssolutaAnemoschesi(
 
 }
 
+/* =====================================================
+   INTENSITÀ RELATIVA DEL FLUSSO
+===================================================== */
+
+const ANEMOSCHESI_INTENSITA_FLUSSO = {
+
+    [ANEMOS_FLUSSI.TRATTENUTO]:
+        1,
+
+    [ANEMOS_FLUSSI.DELICATO]:
+        2,
+
+    [ANEMOS_FLUSSI.SPONTANEO]:
+        3,
+
+    [ANEMOS_FLUSSI.FORZATO]:
+        4
+
+};
+
+
+/* =====================================================
+   VARIAZIONE REALE DI UN SETTORE
+===================================================== */
+
+function variazioneSettoreAnemoschesi(
+    sequenza,
+    anemomero,
+    settore
+) {
+
+    if (
+        !sequenza ||
+        !anemomero ||
+        !settore
+    ) {
+
+        return null;
+
+    }
+
+
+    const livelloPrima =
+        livelloSettorePrimaDi(
+            sequenza,
+            anemomero.id,
+            settore.nome
+        );
+
+
+    const livelloDopo =
+        livelloVolume(
+            settore.volume
+        );
+
+
+    if (
+        typeof livelloPrima !== "number" ||
+        typeof livelloDopo !== "number"
+    ) {
+
+        return null;
+
+    }
+
+
+    return Math.abs(
+        livelloDopo -
+        livelloPrima
+    );
+
+}
+
+
+/* =====================================================
+   VARIAZIONE COMPLESSIVA DI VOLUME
+===================================================== */
+
+function variazioneVolumeAnemomeroAnemoschesi(
+    sequenza,
+    anemomero
+) {
+
+    if (
+        !sequenza ||
+        !anemomero ||
+        !Array.isArray(
+            anemomero.settori
+        )
+    ) {
+
+        return null;
+
+    }
+
+
+    let variazioneTotale =
+        0;
+
+
+    anemomero.settori.forEach(
+        settore => {
+
+            const variazione =
+                variazioneSettoreAnemoschesi(
+                    sequenza,
+                    anemomero,
+                    settore
+                );
+
+
+            if (
+                typeof variazione ===
+                "number"
+            ) {
+
+                variazioneTotale +=
+                    variazione;
+
+            }
+
+        }
+    );
+
+
+    return variazioneTotale;
+
+}
 
 /* =====================================================
    VALUTAZIONE FISIOLOGICA DELL'ANEMOMERO
