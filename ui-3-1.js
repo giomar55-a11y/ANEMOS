@@ -779,40 +779,39 @@ function renderEditor() {
         "";
 
 
-    ui.editorContenuto.appendChild(
-        creaBloccoTipo(
-            anemodromo
-        )
-    );
+   ui.editorContenuto.appendChild(
+    creaBloccoTipo(
+        anemodromo
+    )
+);
 
 
-    ui.editorContenuto.appendChild(
-        creaBloccoDurata(
-            anemodromo
-        )
-    );
+ui.editorContenuto.appendChild(
+    creaBloccoSettori(
+        anemodromo
+    )
+);
 
 
-    ui.editorContenuto.appendChild(
-        creaBloccoPercorso(
-            anemodromo
-        )
-    );
+ui.editorContenuto.appendChild(
+    creaBloccoDurata(
+        anemodromo
+    )
+);
 
 
-    ui.editorContenuto.appendChild(
-        creaBloccoFlusso(
-            anemodromo
-        )
-    );
+ui.editorContenuto.appendChild(
+    creaBloccoPercorso(
+        anemodromo
+    )
+);
 
 
-    ui.editorContenuto.appendChild(
-        creaBloccoSettori(
-            anemodromo
-        )
-    );
-
+ui.editorContenuto.appendChild(
+    creaBloccoFlusso(
+        anemodromo
+    )
+);
 }
 
 
