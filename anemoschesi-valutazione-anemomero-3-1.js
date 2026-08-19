@@ -1245,14 +1245,168 @@ const nucleoVolumetrico =
     );
 
 
+/*
+Se il nucleo volumetrico
+non è ancora valutabile,
+manteniamo il comportamento precedente.
+*/
+
+if (
+    !nucleoVolumetrico ||
+    typeof nucleoVolumetrico.punteggio !==
+        "number"
+) {
+
+    return {
+
+        ...valutazioneBase,
+
+        nucleoVolumetrico:
+            nucleoVolumetrico
+
+    };
+
+}
+
+
+/*
+=====================================================
+INTEGRAZIONE DEL NUCLEO VOLUMETRICO
+=====================================================
+*/
+
+
+const punteggioBase =
+    valutazioneBase.punteggio;
+
+
+const punteggioVolumetrico =
+    nucleoVolumetrico.punteggio;
+
+
+/*
+In questa fase transitoria:
+
+55% = valutazione precedente
+45% = nucleo volumetrico
+
+Successivamente il 55% verrà
+scomposto in:
+
+- durata
+- flusso
+- percorso
+*/
+
+const punteggioIntegrato =
+    Math.round(
+        (
+            punteggioBase *
+            0.55
+        ) +
+        (
+            punteggioVolumetrico *
+            ANEMOSCHESI_PESI_ANEMOMERO
+                .volume
+        )
+    );
+
+
+/*
+=====================================================
+SEMAFORO INTEGRATO
+=====================================================
+*/
+
+
+let semaforoIntegrato =
+    determinaSemaforoAnemoschesi(
+        punteggioIntegrato
+    );
+
+
+/*
+Il nucleo volumetrico ha funzione
+strutturale e non può essere
+completamente compensato
+dagli altri parametri.
+
+Nucleo < 30:
+massimo risultato ROSSO.
+
+Nucleo 30–49:
+massimo risultato GIALLO.
+
+Nucleo >= 50:
+nessuna limitazione.
+*/
+
+
+if (
+    punteggioVolumetrico <
+    ANEMOSCHESI_DOMINANZA_VOLUMETRICA
+        .massimoRossoSotto
+) {
+
+    semaforoIntegrato =
+        "rosso";
+
+} else if (
+    punteggioVolumetrico <
+    ANEMOSCHESI_DOMINANZA_VOLUMETRICA
+        .massimoGialloSotto &&
+    semaforoIntegrato ===
+        "verde"
+) {
+
+    semaforoIntegrato =
+        "giallo";
+
+}
+
+
+/*
+Aggiorniamo anche la motivazione
+in base al nuovo semaforo.
+*/
+
+
+const intento =
+    trovaIntentoAnemoschesi(
+        intentoEffettivo
+    );
+
+
+const motivazioneIntegrata =
+    creaMotivazioneValutazioneAnemoschesi(
+        semaforoIntegrato,
+        intento,
+        valutazioneBase.preferitiPresenti,
+        valutazioneBase.sconsigliatiPresenti
+    );
+
+
 return {
 
     ...valutazioneBase,
+
+    punteggioBase:
+        punteggioBase,
+
+    punteggio:
+        punteggioIntegrato,
+
+    semaforo:
+        semaforoIntegrato,
+
+    motivazione:
+        motivazioneIntegrata,
 
     nucleoVolumetrico:
         nucleoVolumetrico
 
 };
+
 }
 
 
