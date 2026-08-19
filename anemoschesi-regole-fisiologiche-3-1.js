@@ -583,6 +583,240 @@ function valutaCoerenzaFlussoAnemoschesi(
 
 }
 /* =====================================================
+   RICONOSCIMENTO DEL PERCORSO NASALE
+===================================================== */
+
+function percorsoNasaleAnemoschesi(
+    percorso
+) {
+
+    return (
+        percorso ===
+            ANEMOS_PERCORSI.NARICE_DESTRA ||
+        percorso ===
+            ANEMOS_PERCORSI.NARICE_SINISTRA ||
+        percorso ===
+            ANEMOS_PERCORSI.ENTRAMBE_NARICI
+    );
+
+}
+
+
+/* =====================================================
+   COERENZA DEL PERCORSO RESPIRATORIO
+===================================================== */
+
+/*
+Il Percorso agisce come modulatore fisiologico
+secondario.
+
+Non determina da solo la coerenza
+dell'Anemomero.
+
+Principi iniziali:
+
+- la via nasale è favorita nelle richieste
+  ventilatorie basse e moderate;
+
+- con richiesta molto elevata la sola via
+  nasale diventa progressivamente meno adatta;
+
+- la via orale è pienamente plausibile
+  in espirazione;
+
+- ES orale trattenuta e lunga NON viene
+  penalizzata automaticamente;
+
+- in inspirazione lenta e controllata,
+  la bocca viene considerata meno favorevole
+  della via nasale, senza essere considerata
+  fisiologicamente errata.
+*/
+
+function valutaCoerenzaPercorsoAnemoschesi(
+    sequenza,
+    anemomero
+) {
+
+    if (
+        !sequenza ||
+        !anemomero
+    ) {
+
+        return creaEsitoFisiologicoAnemoschesi(
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .VALIDO,
+            "PERCORSO_NON_VALUTABILE",
+            "Percorso respiratorio non valutabile."
+        );
+
+    }
+
+
+    const velocita =
+        velocitaVolumetricaAnemoschesi(
+            sequenza,
+            anemomero
+        );
+
+
+    if (
+        velocita === null
+    ) {
+
+        return creaEsitoFisiologicoAnemoschesi(
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .VALIDO,
+            "PERCORSO_NON_VALUTABILE",
+            "Relazione tra percorso e richiesta ventilatoria non valutabile."
+        );
+
+    }
+
+
+    const nasale =
+        percorsoNasaleAnemoschesi(
+            anemomero.percorso
+        );
+
+
+    const orale =
+        anemomero.percorso ===
+        ANEMOS_PERCORSI.BOCCA;
+
+
+    /*
+    =====================================================
+    VIA NASALE
+    =====================================================
+    */
+
+    if (
+        nasale
+    ) {
+
+        /*
+        Richiesta molto elevata:
+        la sola via nasale diventa
+        progressivamente meno favorevole.
+        */
+
+        if (
+            velocita >
+            ANEMOSCHESI_FASCE_FLUSSO[
+                ANEMOS_FLUSSI.FORZATO
+            ].idealeMax
+        ) {
+
+            return creaEsitoFisiologicoAnemoschesi(
+                ANEMOSCHESI_ESITI_FISIOLOGICI
+                    .ATTENZIONE,
+                "NASO_RICHIESTA_ELEVATA",
+                "Richiesta ventilatoria elevata per la sola via nasale."
+            );
+
+        }
+
+
+        return creaEsitoFisiologicoAnemoschesi(
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .VALIDO,
+            "PERCORSO_NASALE_COHERENTE",
+            "Via nasale coerente con la richiesta respiratoria."
+        );
+
+    }
+
+
+    /*
+    =====================================================
+    VIA ORALE
+    =====================================================
+    */
+
+    if (
+        orale
+    ) {
+
+        /*
+        ESPIRAZIONE ORALE
+
+        Anche una ES lunga e trattenuta
+        può essere pienamente coerente.
+
+        La compatibilità tra volume,
+        durata e flusso viene già giudicata
+        dal controllo del flusso.
+        */
+
+        if (
+            anemomero.tipo ===
+            ANEMOS_TIPI.ES
+        ) {
+
+            return creaEsitoFisiologicoAnemoschesi(
+                ANEMOSCHESI_ESITI_FISIOLOGICI
+                    .VALIDO,
+                "ESPIRAZIONE_ORALE_COHERENTE",
+                "Via orale fisiologicamente plausibile in espirazione."
+            );
+
+        }
+
+
+        /*
+        INSPIRAZIONE ORALE
+
+        Con richiesta elevata è plausibile.
+
+        Con respirazione lenta e controllata
+        viene considerata meno favorevole
+        rispetto alla via nasale.
+        */
+
+        if (
+            anemomero.tipo ===
+            ANEMOS_TIPI.IN
+        ) {
+
+            if (
+                anemomero.flusso ===
+                    ANEMOS_FLUSSI.TRATTENUTO ||
+                anemomero.flusso ===
+                    ANEMOS_FLUSSI.DELICATO
+            ) {
+
+                return creaEsitoFisiologicoAnemoschesi(
+                    ANEMOSCHESI_ESITI_FISIOLOGICI
+                        .ATTENZIONE,
+                    "IN_ORALE_CONTROLLATA",
+                    "Inspirazione orale poco favorevole in una respirazione lenta e controllata."
+                );
+
+            }
+
+
+            return creaEsitoFisiologicoAnemoschesi(
+                ANEMOSCHESI_ESITI_FISIOLOGICI
+                    .VALIDO,
+                "IN_ORALE_COHERENTE",
+                "Via orale compatibile con la richiesta inspiratoria."
+            );
+
+        }
+
+    }
+
+
+    return creaEsitoFisiologicoAnemoschesi(
+        ANEMOSCHESI_ESITI_FISIOLOGICI
+            .VALIDO,
+        "PERCORSO_NEUTRO",
+        "Percorso respiratorio senza criticità rilevate."
+    );
+
+}
+/* =====================================================
    VALUTAZIONE FISIOLOGICA DELL'ANEMOMERO
 ===================================================== */
 
@@ -623,8 +857,17 @@ if (
         )
     );
 
+
+    controlli.push(
+        valutaCoerenzaPercorsoAnemoschesi(
+            sequenza,
+            anemomero
+        )
+    );
+
 }
-    const ordineGravita = {
+   
+   const ordineGravita = {
 
         valido:
             0,
