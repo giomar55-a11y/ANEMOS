@@ -642,6 +642,211 @@ function creaGuidaSettoriAnemoschesi(
 }
 
 /* =====================================================
+   SIMULAZIONE DEL VOLUME
+===================================================== */
+
+function simulaVolumeAnemomeroAnemoschesi(
+    sequenza,
+    anemomero,
+    nomeSettore,
+    nuovoVolume
+) {
+
+    if (
+        !sequenza ||
+        !anemomero ||
+        !nomeSettore ||
+        !nuovoVolume
+    ) {
+
+        return null;
+
+    }
+
+
+    const simulato =
+        copiaAnemomeroPerSimulazioneAnemoschesi(
+            anemomero
+        );
+
+
+    const settore =
+        simulato.settori.find(
+            elemento =>
+                elemento.nome ===
+                nomeSettore
+        );
+
+
+    if (
+        !settore
+    ) {
+
+        return null;
+
+    }
+
+
+    const disponibili =
+        volumiDisponibiliPerSettore(
+            sequenza,
+            anemomero.id,
+            nomeSettore,
+            anemomero.tipo
+        );
+
+
+    if (
+        !disponibili.includes(
+            nuovoVolume
+        )
+    ) {
+
+        return null;
+
+    }
+
+
+    settore.volume =
+        nuovoVolume;
+
+
+    const valutazioneIntento =
+        valutaAnemomeroPerIntentoAnemoschesi(
+            sequenza,
+            simulato
+        );
+
+
+    const valutazioneFisiologica =
+        valutaFisiologiaAnemomeroAnemoschesi(
+            sequenza,
+            simulato
+        );
+
+
+    return {
+
+        ...valutazioneIntento,
+
+        fisiologia:
+            valutazioneFisiologica
+
+    };
+
+}
+
+
+/* =====================================================
+   GUIDA DELLE OPZIONI DI VOLUME
+===================================================== */
+
+function creaGuidaVolumiAnemoschesi(
+    sequenza,
+    anemomero,
+    nomeSettore
+) {
+
+    if (
+        !sequenza ||
+        !anemomero ||
+        !nomeSettore
+    ) {
+
+        return null;
+
+    }
+
+
+    const settoreAttuale =
+        anemomero.settori.find(
+            settore =>
+                settore.nome ===
+                nomeSettore
+        );
+
+
+    if (
+        !settoreAttuale
+    ) {
+
+        return null;
+
+    }
+
+
+    const valutazioneAttuale =
+        valutaAnemomeroPerIntentoAnemoschesi(
+            sequenza,
+            anemomero
+        );
+
+
+    if (
+        !valutazioneAttuale ||
+        !valutazioneAttuale.valido
+    ) {
+
+        return null;
+
+    }
+
+
+    const volumi =
+        ottieniVolumiPerTipo(
+            anemomero.tipo
+        );
+
+
+    const guida =
+        {};
+
+
+    volumi.forEach(
+        volume => {
+
+            const valutazione =
+                simulaVolumeAnemomeroAnemoschesi(
+                    sequenza,
+                    anemomero,
+                    nomeSettore,
+                    volume
+                );
+
+
+            guida[volume] = {
+
+                selezionato:
+                    settoreAttuale.volume ===
+                    volume,
+
+                disponibile:
+                    valutazione !== null,
+
+                punteggio:
+                    valutazione
+                        ? valutazione.punteggio
+                        : null,
+
+                semaforo:
+                    valutazione
+                        ? semaforoGuidaDurataAnemoschesi(
+                            valutazioneAttuale.punteggio,
+                            valutazione
+                        )
+                        : null
+
+            };
+
+        }
+    );
+
+
+    return guida;
+
+}
+
+/* =====================================================
    PRECEDENZA FISIOLOGICA DELLA GUIDA
 ===================================================== */
 
