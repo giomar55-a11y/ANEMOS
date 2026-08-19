@@ -2295,6 +2295,12 @@ function creaSelettoreVolume(
             anemodromo.tipo
         );
 
+   const guidaVolumi =
+    creaGuidaVolumiAnemoschesi(
+        anemos31,
+        anemodromo,
+        settore.nome
+    );
 
     tutteLeOpzioni.forEach(
         volume => {
@@ -2311,7 +2317,26 @@ pulsante.classList.add(
     "volume-button"
 );
 
+const guidaOpzione =
+    guidaVolumi
+        ? guidaVolumi[
+            volume
+        ]
+        : null;
 
+
+if (
+    guidaOpzione &&
+    guidaOpzione.semaforo
+) {
+
+    pulsante.classList.add(
+        "anemoschesi-" +
+        guidaOpzione.semaforo
+    );
+
+}
+           
 /*
 Icona ANEMOS del livello.
 */
