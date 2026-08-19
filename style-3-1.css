@@ -1122,3 +1122,36 @@ quando è presente il semaforo.
     color: #7a2222;
 
 }
+/* =====================================================
+   ANEMOSCHESI
+   GUIDA AI PULSANTI FLUSSO
+===================================================== */
+
+.editor-opzioni.flusso
+.opzione-button.anemoschesi-verde {
+
+    background: #dcefe3;
+    border: 2px solid #69ad82;
+    color: #1f5c36;
+
+}
+
+
+.editor-opzioni.flusso
+.opzione-button.anemoschesi-giallo {
+
+    background: #f7edc6;
+    border: 2px solid #d5b94f;
+    color: #7a6114;
+
+}
+
+
+.editor-opzioni.flusso
+.opzione-button.anemoschesi-rosso {
+
+    background: #f3d5d5;
+    border: 2px solid #ca7474;
+    color: #7a2222;
+
+}
