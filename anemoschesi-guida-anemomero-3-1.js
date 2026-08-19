@@ -277,6 +277,156 @@ function creaGuidaFlussoAnemoschesi(
     return guida;
 
 }
+
+/* =====================================================
+   SIMULAZIONE DEL PERCORSO
+===================================================== */
+
+function simulaPercorsoAnemomeroAnemoschesi(
+    sequenza,
+    anemomero,
+    nuovoPercorso
+) {
+
+    if (
+        !sequenza ||
+        !anemomero ||
+        !nuovoPercorso
+    ) {
+
+        return null;
+
+    }
+
+
+    const simulato =
+        copiaAnemomeroPerSimulazioneAnemoschesi(
+            anemomero
+        );
+
+
+    simulato.percorso =
+        nuovoPercorso;
+
+
+    const valutazioneIntento =
+        valutaAnemomeroPerIntentoAnemoschesi(
+            sequenza,
+            simulato
+        );
+
+
+    const valutazioneFisiologica =
+        valutaFisiologiaAnemomeroAnemoschesi(
+            sequenza,
+            simulato
+        );
+
+
+    return {
+
+        ...valutazioneIntento,
+
+        fisiologia:
+            valutazioneFisiologica
+
+    };
+
+}
+
+
+/* =====================================================
+   GUIDA DELLE OPZIONI DI PERCORSO
+===================================================== */
+
+function creaGuidaPercorsoAnemoschesi(
+    sequenza,
+    anemomero
+) {
+
+    if (
+        !sequenza ||
+        !anemomero
+    ) {
+
+        return null;
+
+    }
+
+
+    const valutazioneAttuale =
+        valutaAnemomeroPerIntentoAnemoschesi(
+            sequenza,
+            anemomero
+        );
+
+
+    if (
+        !valutazioneAttuale ||
+        !valutazioneAttuale.valido
+    ) {
+
+        return null;
+
+    }
+
+
+    const percorsi = [
+
+        ANEMOS_PERCORSI.NARICE_DESTRA,
+
+        ANEMOS_PERCORSI.NARICE_SINISTRA,
+
+        ANEMOS_PERCORSI.ENTRAMBE_NARICI,
+
+        ANEMOS_PERCORSI.BOCCA
+
+    ];
+
+
+    const guida =
+        {};
+
+
+    percorsi.forEach(
+        percorso => {
+
+            const valutazione =
+                simulaPercorsoAnemomeroAnemoschesi(
+                    sequenza,
+                    anemomero,
+                    percorso
+                );
+
+
+            guida[percorso] = {
+
+                selezionato:
+                    anemomero.percorso ===
+                    percorso,
+
+                punteggio:
+                    valutazione
+                        ? valutazione.punteggio
+                        : null,
+
+                semaforo:
+                    valutazione
+                        ? semaforoGuidaDurataAnemoschesi(
+                            valutazioneAttuale.punteggio,
+                            valutazione
+                        )
+                        : null
+
+            };
+
+        }
+    );
+
+
+    return guida;
+
+}
 /* =====================================================
    PRECEDENZA FISIOLOGICA DELLA GUIDA
 ===================================================== */
