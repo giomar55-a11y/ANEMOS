@@ -1582,7 +1582,12 @@ function creaBloccoSettori(
 
     ];
 
-
+const guidaSettori =
+    creaGuidaSettoriAnemoschesi(
+        anemos31,
+        anemodromo
+    );
+   
     settori.forEach(
         configurazione => {
 
@@ -1631,6 +1636,26 @@ function creaBloccoSettori(
                     configurazione.nome,
                     attivo
                 );
+const guidaOpzione =
+    guidaSettori
+        ? guidaSettori[
+            configurazione.valore
+        ]
+        : null;
+
+
+if (
+    guidaOpzione &&
+    guidaOpzione.semaforo
+) {
+
+    pulsanteSettore.classList.add(
+        "anemoschesi-" +
+        guidaOpzione.semaforo
+    );
+
+}
+           
             pulsanteSettore.insertBefore(
                 creaIconaSettore(
                     configurazione.valore
