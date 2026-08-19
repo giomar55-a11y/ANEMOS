@@ -427,6 +427,220 @@ function creaGuidaPercorsoAnemoschesi(
     return guida;
 
 }
+
+/* =====================================================
+   SIMULAZIONE DEL SETTORE
+===================================================== */
+
+function simulaSettoreAnemomeroAnemoschesi(
+    sequenza,
+    anemomero,
+    nomeSettore
+) {
+
+    if (
+        !sequenza ||
+        !anemomero ||
+        !nomeSettore
+    ) {
+
+        return null;
+
+    }
+
+
+    const simulato =
+        copiaAnemomeroPerSimulazioneAnemoschesi(
+            anemomero
+        );
+
+
+    const settoreEsistente =
+        simulato.settori.find(
+            settore =>
+                settore.nome ===
+                nomeSettore
+        );
+
+
+    /*
+    Se il settore è già attivo,
+    simuliamo la sua disattivazione.
+    */
+
+    if (
+        settoreEsistente
+    ) {
+
+        simulato.settori =
+            simulato.settori.filter(
+                settore =>
+                    settore.nome !==
+                    nomeSettore
+            );
+
+    } else {
+
+        /*
+        Se il settore è inattivo,
+        simuliamo la sua attivazione
+        usando il primo volume
+        fisiologicamente disponibile.
+        */
+
+        const volumeIniziale =
+            primoVolumeDisponibilePerSettore(
+                sequenza,
+                anemomero.id,
+                nomeSettore,
+                anemomero.tipo
+            );
+
+
+        if (
+            !volumeIniziale
+        ) {
+
+            return null;
+
+        }
+
+
+        simulato.settori.push({
+
+            nome:
+                nomeSettore,
+
+            volume:
+                volumeIniziale
+
+        });
+
+    }
+
+
+    const valutazioneIntento =
+        valutaAnemomeroPerIntentoAnemoschesi(
+            sequenza,
+            simulato
+        );
+
+
+    const valutazioneFisiologica =
+        valutaFisiologiaAnemomeroAnemoschesi(
+            sequenza,
+            simulato
+        );
+
+
+    return {
+
+        ...valutazioneIntento,
+
+        fisiologia:
+            valutazioneFisiologica
+
+    };
+
+}
+
+
+/* =====================================================
+   GUIDA DELLE OPZIONI DI SETTORE
+===================================================== */
+
+function creaGuidaSettoriAnemoschesi(
+    sequenza,
+    anemomero
+) {
+
+    if (
+        !sequenza ||
+        !anemomero
+    ) {
+
+        return null;
+
+    }
+
+
+    const valutazioneAttuale =
+        valutaAnemomeroPerIntentoAnemoschesi(
+            sequenza,
+            anemomero
+        );
+
+
+    if (
+        !valutazioneAttuale ||
+        !valutazioneAttuale.valido
+    ) {
+
+        return null;
+
+    }
+
+
+    const settori = [
+
+        ANEMOS_SETTORI.ADDOME,
+
+        ANEMOS_SETTORI.TORACE_INFERIORE,
+
+        ANEMOS_SETTORI.TORACE_SUPERIORE
+
+    ];
+
+
+    const guida = {};
+
+
+    settori.forEach(
+        nomeSettore => {
+
+            const valutazione =
+                simulaSettoreAnemomeroAnemoschesi(
+                    sequenza,
+                    anemomero,
+                    nomeSettore
+                );
+
+
+            guida[nomeSettore] = {
+
+                selezionato:
+                    anemomero.settori.some(
+                        settore =>
+                            settore.nome ===
+                            nomeSettore
+                    ),
+
+                disponibile:
+                    valutazione !== null,
+
+                punteggio:
+                    valutazione
+                        ? valutazione.punteggio
+                        : null,
+
+                semaforo:
+                    valutazione
+                        ? semaforoGuidaDurataAnemoschesi(
+                            valutazioneAttuale.punteggio,
+                            valutazione
+                        )
+                        : null
+
+            };
+
+        }
+    );
+
+
+    return guida;
+
+}
+
 /* =====================================================
    PRECEDENZA FISIOLOGICA DELLA GUIDA
 ===================================================== */
