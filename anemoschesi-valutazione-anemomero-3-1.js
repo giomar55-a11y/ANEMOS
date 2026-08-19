@@ -621,7 +621,540 @@ function valutaProfiloAnemomeroPerIntentoAnemoschesi(
 
 }
 
+/* =====================================================
+   NORMALIZZAZIONE CONTRIBUTO VOLUMETRICO
+===================================================== */
 
+/*
+Converte la scala interna:
+
+-2  ->   0
+-1  ->  25
+ 0  ->  50
++1  ->  75
++2  -> 100
+*/
+
+function normalizzaContributoVolumetricoAnemoschesi(
+    valore
+) {
+
+    if (
+        typeof valore !== "number"
+    ) {
+
+        return null;
+
+    }
+
+
+    return Math.round(
+        (
+            (
+                valore + 2
+            ) /
+            4
+        ) *
+        100
+    );
+
+}
+
+
+/* =====================================================
+   DATI VOLUMETRICI DEL SINGOLO SETTORE
+===================================================== */
+
+function analizzaSettoreVolumetricoAnemoschesi(
+    sequenza,
+    anemomero,
+    settore,
+    intentoId
+) {
+
+    if (
+        !sequenza ||
+        !anemomero ||
+        !settore ||
+        !intentoId
+    ) {
+
+        return null;
+
+    }
+
+
+    const livelloPrima =
+        livelloSettorePrimaDi(
+            sequenza,
+            anemomero.id,
+            settore.nome
+        );
+
+
+    const livelloDopo =
+        livelloVolume(
+            settore.volume
+        );
+
+
+    if (
+        typeof livelloPrima !== "number" ||
+        typeof livelloDopo !== "number"
+    ) {
+
+        return null;
+
+    }
+
+
+    const delta =
+        livelloDopo -
+        livelloPrima;
+
+
+    const escursione =
+        Math.abs(
+            delta
+        );
+
+
+    let direzione =
+        null;
+
+
+    if (
+        delta > 0
+    ) {
+
+        direzione =
+            "espansione";
+
+    }
+
+
+    if (
+        delta < 0
+    ) {
+
+        direzione =
+            "depressione";
+
+    }
+
+
+    const valoreStato =
+        ANEMOSCHESI_STATO_VOLUME_INTENTI[
+            intentoId
+        ]?.[
+            settore.volume
+        ];
+
+
+    const valoreEscursione =
+        ANEMOSCHESI_ESCURSIONE_INTENTI[
+            intentoId
+        ]?.[
+            escursione
+        ];
+
+
+    const valoreDirezione =
+        direzione
+            ? ANEMOSCHESI_DIREZIONE_INTENTI[
+                intentoId
+            ]?.[
+                direzione
+            ]
+            : null;
+
+
+    return {
+
+        settore:
+            settore.nome,
+
+        volumeFinale:
+            settore.volume,
+
+        livelloPrima:
+            livelloPrima,
+
+        livelloDopo:
+            livelloDopo,
+
+        delta:
+            delta,
+
+        escursione:
+            escursione,
+
+        direzione:
+            direzione,
+
+        stato:
+            normalizzaContributoVolumetricoAnemoschesi(
+                valoreStato
+            ),
+
+        punteggioEscursione:
+            normalizzaContributoVolumetricoAnemoschesi(
+                valoreEscursione
+            ),
+
+        punteggioDirezione:
+            normalizzaContributoVolumetricoAnemoschesi(
+                valoreDirezione
+            )
+
+    };
+
+}
+
+
+/* =====================================================
+   RICONOSCIMENTO DELLA DISTRIBUZIONE
+===================================================== */
+
+function riconosciDistribuzioneVolumetricaAnemoschesi(
+    analisiSettori
+) {
+
+    if (
+        !Array.isArray(
+            analisiSettori
+        ) ||
+        analisiSettori.length === 0
+    ) {
+
+        return null;
+
+    }
+
+
+    const escursioni =
+        analisiSettori.map(
+            analisi =>
+                analisi.escursione
+        );
+
+
+    /*
+    Un solo settore coinvolto.
+    */
+
+    if (
+        analisiSettori.length === 1
+    ) {
+
+        return "selettiva";
+
+    }
+
+
+    const massimo =
+        Math.max(
+            ...escursioni
+        );
+
+
+    const minimo =
+        Math.min(
+            ...escursioni
+        );
+
+
+    /*
+    Tutti e tre i settori partecipano
+    con escursione importante.
+    */
+
+    if (
+        analisiSettori.length === 3 &&
+        minimo >= 2
+    ) {
+
+        return "globale";
+
+    }
+
+
+    /*
+    Partecipazione simile.
+    */
+
+    if (
+        massimo ===
+        minimo
+    ) {
+
+        return "equilibrata";
+
+    }
+
+
+    /*
+    Tre livelli progressivamente differenti.
+    */
+
+    if (
+        analisiSettori.length === 3
+    ) {
+
+        const valoriDistinti =
+            new Set(
+                escursioni
+            );
+
+
+        if (
+            valoriDistinti.size === 3
+        ) {
+
+            return "graduata";
+
+        }
+
+    }
+
+
+    /*
+    Negli altri casi esiste
+    una prevalenza relativa.
+    */
+
+    return "prevalente";
+
+}
+
+
+/* =====================================================
+   MEDIA DEI PUNTEGGI VOLUMETRICI
+===================================================== */
+
+function mediaPunteggiVolumetriciAnemoschesi(
+    valori
+) {
+
+    const validi =
+        valori.filter(
+            valore =>
+                typeof valore ===
+                "number"
+        );
+
+
+    if (
+        validi.length === 0
+    ) {
+
+        return null;
+
+    }
+
+
+    return (
+        validi.reduce(
+            (
+                somma,
+                valore
+            ) =>
+                somma +
+                valore,
+            0
+        ) /
+        validi.length
+    );
+
+}
+
+
+/* =====================================================
+   VALUTAZIONE DEL NUCLEO VOLUMETRICO
+===================================================== */
+
+function valutaNucleoVolumetricoAnemoschesi(
+    sequenza,
+    anemomero,
+    intentoId
+) {
+
+    if (
+        !sequenza ||
+        !anemomero ||
+        !intentoId ||
+        !Array.isArray(
+            anemomero.settori
+        ) ||
+        anemomero.settori.length === 0
+    ) {
+
+        return null;
+
+    }
+
+
+    const analisiSettori =
+        anemomero.settori
+            .map(
+                settore =>
+                    analizzaSettoreVolumetricoAnemoschesi(
+                        sequenza,
+                        anemomero,
+                        settore,
+                        intentoId
+                    )
+            )
+            .filter(
+                analisi =>
+                    analisi !== null
+            );
+
+
+    if (
+        analisiSettori.length === 0
+    ) {
+
+        return null;
+
+    }
+
+
+    const stato =
+        mediaPunteggiVolumetriciAnemoschesi(
+            analisiSettori.map(
+                analisi =>
+                    analisi.stato
+            )
+        );
+
+
+    const escursione =
+        mediaPunteggiVolumetriciAnemoschesi(
+            analisiSettori.map(
+                analisi =>
+                    analisi.punteggioEscursione
+            )
+        );
+
+
+    const direzione =
+        mediaPunteggiVolumetriciAnemoschesi(
+            analisiSettori.map(
+                analisi =>
+                    analisi.punteggioDirezione
+            )
+        );
+
+
+    const categoriaDistribuzione =
+        riconosciDistribuzioneVolumetricaAnemoschesi(
+            analisiSettori
+        );
+
+
+    const valoreDistribuzione =
+        ANEMOSCHESI_DISTRIBUZIONE_INTENTI[
+            intentoId
+        ]?.[
+            categoriaDistribuzione
+        ];
+
+
+    const distribuzione =
+        normalizzaContributoVolumetricoAnemoschesi(
+            valoreDistribuzione
+        );
+
+
+   if (
+    statoNucleoNonDisponibileAnemoschesi(
+        stato,
+        escursione,
+        direzione,
+        distribuzione
+    )
+) {
+
+    return null;
+
+}
+
+    const pesi =
+        ANEMOSCHESI_PESI_NUCLEO_VOLUMETRICO;
+
+
+    const punteggio =
+        Math.round(
+            stato *
+                pesi.stato +
+
+            escursione *
+                pesi.escursione +
+
+            direzione *
+                pesi.direzione +
+
+            distribuzione *
+                pesi.distribuzione
+        );
+
+
+    return {
+
+        punteggio:
+            punteggio,
+
+        stato:
+            Math.round(
+                stato
+            ),
+
+        escursione:
+            Math.round(
+                escursione
+            ),
+
+        direzione:
+            Math.round(
+                direzione
+            ),
+
+        distribuzione:
+            Math.round(
+                distribuzione
+            ),
+
+        categoriaDistribuzione:
+            categoriaDistribuzione,
+
+        settori:
+            analisiSettori
+
+    };
+
+}
+
+
+/* =====================================================
+   CONTROLLO COMPLETEZZA DEL NUCLEO
+===================================================== */
+
+function statoNucleoNonDisponibileAnemoschesi(
+    stato,
+    escursione,
+    direzione,
+    distribuzione
+) {
+
+    return (
+        typeof stato !== "number" ||
+        typeof escursione !== "number" ||
+        typeof direzione !== "number" ||
+        typeof distribuzione !== "number"
+    );
+
+}
 /* =====================================================
    VALUTAZIONE DI UN ANEMOMERO REALE
 ===================================================== */
@@ -687,11 +1220,39 @@ function valutaAnemomeroPerIntentoAnemoschesi(
         );
 
 
-    return valutaProfiloAnemomeroPerIntentoAnemoschesi(
+   const valutazioneBase =
+    valutaProfiloAnemomeroPerIntentoAnemoschesi(
         profiloAnemomero,
         intentoEffettivo
     );
 
+
+if (
+    !valutazioneBase ||
+    !valutazioneBase.valido
+) {
+
+    return valutazioneBase;
+
+}
+
+
+const nucleoVolumetrico =
+    valutaNucleoVolumetricoAnemoschesi(
+        sequenza,
+        anemomero,
+        intentoEffettivo
+    );
+
+
+return {
+
+    ...valutazioneBase,
+
+    nucleoVolumetrico:
+        nucleoVolumetrico
+
+};
 }
 
 
