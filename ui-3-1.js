@@ -1197,7 +1197,12 @@ function creaBloccoPercorso(
 
     ];
 
-
+const guidaPercorso =
+    creaGuidaPercorsoAnemoschesi(
+        anemos31,
+        anemodromo
+    );
+   
     opzioni.forEach(
         opzione => {
 
@@ -1208,6 +1213,25 @@ function creaBloccoPercorso(
                         opzione.valore
                 );
 
+           const guidaOpzione =
+    guidaPercorso
+        ? guidaPercorso[
+            opzione.valore
+        ]
+        : null;
+
+
+if (
+    guidaOpzione &&
+    guidaOpzione.semaforo
+) {
+
+    pulsante.classList.add(
+        "anemoschesi-" +
+        guidaOpzione.semaforo
+    );
+
+}
 
             pulsante.addEventListener(
                 "click",
