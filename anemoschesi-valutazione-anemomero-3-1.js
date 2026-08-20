@@ -1446,7 +1446,13 @@ const nucleoVolumetrico =
         anemomero,
         intentoEffettivo
     );
-
+   
+const valutazioneFlusso =
+    valutaFlussoAnemomeroAnemoschesi(
+        anemomero,
+        intentoEffettivo
+    );
+   
 /*
 Se il nucleo volumetrico
 non è ancora valutabile,
@@ -1467,7 +1473,10 @@ if (
         nucleoVolumetrico,
 
     valutazioneDurata:
-        valutazioneDurata
+        valutazioneDurata,
+
+    valutazioneFlusso:
+        valutazioneFlusso
 
 };
 }
@@ -1640,7 +1649,10 @@ return {
         nucleoVolumetrico,
 
     valutazioneDurata:
-        valutazioneDurata
+        valutazioneDurata,
+
+    valutazioneFlusso:
+        valutazioneFlusso
 
 };
 }
