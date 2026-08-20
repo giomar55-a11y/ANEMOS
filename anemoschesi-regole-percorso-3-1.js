@@ -51,7 +51,7 @@ const ANEMOSCHESI_PERCORSO_INTENTI = {
 
     calmare: {
 
-        [ANEMOS_PERCORSI.NARICI]:
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
             2,
 
         [ANEMOS_PERCORSI.NARICE_DESTRA]:
@@ -72,7 +72,7 @@ const ANEMOSCHESI_PERCORSO_INTENTI = {
 
     scaricare: {
 
-        [ANEMOS_PERCORSI.NARICI]:
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
             1,
 
         [ANEMOS_PERCORSI.NARICE_DESTRA]:
@@ -93,7 +93,7 @@ const ANEMOSCHESI_PERCORSO_INTENTI = {
 
     recuperare: {
 
-        [ANEMOS_PERCORSI.NARICI]:
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
             2,
 
         [ANEMOS_PERCORSI.NARICE_DESTRA]:
@@ -114,7 +114,7 @@ const ANEMOSCHESI_PERCORSO_INTENTI = {
 
     riposare: {
 
-        [ANEMOS_PERCORSI.NARICI]:
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
             2,
 
         [ANEMOS_PERCORSI.NARICE_DESTRA]:
@@ -135,7 +135,7 @@ const ANEMOSCHESI_PERCORSO_INTENTI = {
 
     percepire: {
 
-        [ANEMOS_PERCORSI.NARICI]:
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
             2,
 
         [ANEMOS_PERCORSI.NARICE_DESTRA]:
@@ -156,7 +156,7 @@ const ANEMOSCHESI_PERCORSO_INTENTI = {
 
     coordinare: {
 
-        [ANEMOS_PERCORSI.NARICI]:
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
             2,
 
         [ANEMOS_PERCORSI.NARICE_DESTRA]:
@@ -177,7 +177,7 @@ const ANEMOSCHESI_PERCORSO_INTENTI = {
 
     mobilizzare: {
 
-        [ANEMOS_PERCORSI.NARICI]:
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
             1,
 
         [ANEMOS_PERCORSI.NARICE_DESTRA]:
@@ -198,7 +198,7 @@ const ANEMOSCHESI_PERCORSO_INTENTI = {
 
     stabilizzare: {
 
-        [ANEMOS_PERCORSI.NARICI]:
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
             2,
 
         [ANEMOS_PERCORSI.NARICE_DESTRA]:
@@ -219,7 +219,7 @@ const ANEMOSCHESI_PERCORSO_INTENTI = {
 
     attivare: {
 
-        [ANEMOS_PERCORSI.NARICI]:
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
             1,
 
         [ANEMOS_PERCORSI.NARICE_DESTRA]:
@@ -240,7 +240,7 @@ const ANEMOSCHESI_PERCORSO_INTENTI = {
 
     potenziare: {
 
-        [ANEMOS_PERCORSI.NARICI]:
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
             1,
 
         [ANEMOS_PERCORSI.NARICE_DESTRA]:
@@ -261,7 +261,7 @@ const ANEMOSCHESI_PERCORSO_INTENTI = {
 
     resistere: {
 
-        [ANEMOS_PERCORSI.NARICI]:
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
             2,
 
         [ANEMOS_PERCORSI.NARICE_DESTRA]:
@@ -282,7 +282,7 @@ const ANEMOSCHESI_PERCORSO_INTENTI = {
 
     performare: {
 
-        [ANEMOS_PERCORSI.NARICI]:
+        [ANEMOS_PERCORSI.ENTRAMBE_NARICI]:
             1,
 
         [ANEMOS_PERCORSI.NARICE_DESTRA]:
