@@ -1446,19 +1446,49 @@ scomposto in:
 - percorso
 */
 
+/*
+=====================================================
+INTEGRAZIONE VOLUME + DURATA
+=====================================================
+*/
+
+/*
+In questa fase:
+
+30% = valutazione precedente residua
+45% = nucleo volumetrico
+25% = durata
+
+Flusso e percorso verranno
+separati nei passaggi successivi.
+*/
+
+const punteggioDurata =
+    valutazioneDurata &&
+    typeof valutazioneDurata.punteggio ===
+        "number"
+
+        ? valutazioneDurata.punteggio
+        : punteggioBase;
+
+
 const punteggioIntegrato =
     Math.round(
         (
             punteggioBase *
-            0.55
+            0.30
         ) +
         (
             punteggioVolumetrico *
             ANEMOSCHESI_PESI_ANEMOMERO
                 .volume
+        ) +
+        (
+            punteggioDurata *
+            ANEMOSCHESI_PESI_ANEMOMERO
+                .durata
         )
     );
-
 
 /*
 =====================================================
