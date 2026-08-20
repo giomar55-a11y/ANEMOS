@@ -1511,6 +1511,12 @@ const valutazioneFlusso =
         anemomero,
         intentoEffettivo
     );
+
+   const valutazionePercorso =
+    valutaPercorsoAnemomeroAnemoschesi(
+        anemomero,
+        intentoEffettivo
+    );
    
 /*
 Se il nucleo volumetrico
