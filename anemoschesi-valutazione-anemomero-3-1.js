@@ -1537,11 +1537,20 @@ const punteggioDurata =
         : punteggioBase;
 
 
+const punteggioFlusso =
+    valutazioneFlusso &&
+    typeof valutazioneFlusso.punteggio ===
+        "number"
+
+        ? valutazioneFlusso.punteggio
+        : punteggioBase;
+
+
 const punteggioIntegrato =
     Math.round(
         (
             punteggioBase *
-            0.30
+            0.10
         ) +
         (
             punteggioVolumetrico *
@@ -1552,9 +1561,13 @@ const punteggioIntegrato =
             punteggioDurata *
             ANEMOSCHESI_PESI_ANEMOMERO
                 .durata
+        ) +
+        (
+            punteggioFlusso *
+            ANEMOSCHESI_PESI_ANEMOMERO
+                .flusso
         )
     );
-
 /*
 =====================================================
 SEMAFORO INTEGRATO
