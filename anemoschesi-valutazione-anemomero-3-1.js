@@ -1352,6 +1352,65 @@ function valutaFlussoAnemomeroAnemoschesi(
     };
 
 }
+
+/* =====================================================
+   VALUTAZIONE DEL PERCORSO
+===================================================== */
+
+function valutaPercorsoAnemomeroAnemoschesi(
+    anemomero,
+    intentoId
+) {
+
+    if (
+        !anemomero ||
+        !intentoId ||
+        !anemomero.percorso
+    ) {
+
+        return null;
+
+    }
+
+
+    const valore =
+        ANEMOSCHESI_PERCORSO_INTENTI[
+            intentoId
+        ]?.[
+            anemomero.percorso
+        ];
+
+
+    if (
+        typeof valore !== "number"
+    ) {
+
+        return null;
+
+    }
+
+
+    const punteggio =
+        normalizzaContributoVolumetricoAnemoschesi(
+            valore
+        );
+
+
+    return {
+
+        percorso:
+            anemomero.percorso,
+
+        valore:
+            valore,
+
+        punteggio:
+            punteggio
+
+    };
+
+}
+
 /* =====================================================
    VALUTAZIONE DI UN ANEMOMERO REALE
 ===================================================== */
