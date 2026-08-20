@@ -1155,6 +1155,147 @@ function statoNucleoNonDisponibileAnemoschesi(
     );
 
 }
+
+/* =====================================================
+   RICONOSCIMENTO DELLA FASCIA DI DURATA
+===================================================== */
+
+function riconosciFasciaDurataAnemoschesi(
+    durata
+) {
+
+    if (
+        typeof durata !== "number" ||
+        durata < 1
+    ) {
+
+        return null;
+
+    }
+
+
+    if (
+        durata <=
+        ANEMOSCHESI_LIMITI_DURATA
+            .breveMassimo
+    ) {
+
+        return ANEMOSCHESI_FASCE_DURATA
+            .BREVE;
+
+    }
+
+
+    if (
+        durata <=
+        ANEMOSCHESI_LIMITI_DURATA
+            .moderataMassimo
+    ) {
+
+        return ANEMOSCHESI_FASCE_DURATA
+            .MODERATA;
+
+    }
+
+
+    if (
+        durata <=
+        ANEMOSCHESI_LIMITI_DURATA
+            .lungaMassimo
+    ) {
+
+        return ANEMOSCHESI_FASCE_DURATA
+            .LUNGA;
+
+    }
+
+
+    return ANEMOSCHESI_FASCE_DURATA
+        .MOLTO_LUNGA;
+
+}
+
+
+/* =====================================================
+   VALUTAZIONE DELLA DURATA
+===================================================== */
+
+function valutaDurataAnemomeroAnemoschesi(
+    anemomero,
+    intentoId
+) {
+
+    if (
+        !anemomero ||
+        !intentoId
+    ) {
+
+        return null;
+
+    }
+
+
+    const fascia =
+        riconosciFasciaDurataAnemoschesi(
+            anemomero.durata
+        );
+
+
+    if (
+        !fascia
+    ) {
+
+        return null;
+
+    }
+
+
+    const valore =
+        ANEMOSCHESI_DURATA_INTENTI[
+            intentoId
+        ]?.[
+            anemomero.tipo
+        ]?.[
+            fascia
+        ];
+
+
+    if (
+        typeof valore !== "number"
+    ) {
+
+        return null;
+
+    }
+
+
+    const punteggio =
+        normalizzaContributoVolumetricoAnemoschesi(
+            valore
+        );
+
+
+    return {
+
+        durata:
+            anemomero.durata,
+
+        tipo:
+            anemomero.tipo,
+
+        fascia:
+            fascia,
+
+        valore:
+            valore,
+
+        punteggio:
+            punteggio
+
+    };
+
+}
+
 /* =====================================================
    VALUTAZIONE DI UN ANEMOMERO REALE
 ===================================================== */
@@ -1244,6 +1385,11 @@ const nucleoVolumetrico =
         intentoEffettivo
     );
 
+   const valutazioneDurata =
+    valutaDurataAnemomeroAnemoschesi(
+        anemomero,
+        intentoEffettivo
+    );
 
 /*
 Se il nucleo volumetrico
@@ -1259,13 +1405,15 @@ if (
 
     return {
 
-        ...valutazioneBase,
+    ...valutazioneBase,
 
-        nucleoVolumetrico:
-            nucleoVolumetrico
+    nucleoVolumetrico:
+        nucleoVolumetrico,
 
-    };
+    valutazioneDurata:
+        valutazioneDurata
 
+};
 }
 
 
@@ -1403,10 +1551,12 @@ return {
         motivazioneIntegrata,
 
     nucleoVolumetrico:
-        nucleoVolumetrico
+        nucleoVolumetrico,
+
+    valutazioneDurata:
+        valutazioneDurata
 
 };
-
 }
 
 
