@@ -1541,7 +1541,12 @@ if (
         valutazioneDurata,
 
     valutazioneFlusso:
-        valutazioneFlusso
+        valutazioneFlusso,
+
+    valutazionePercorso:
+        valutazionePercorso
+
+       
 
 };
 }
@@ -1610,13 +1615,16 @@ const punteggioFlusso =
         ? valutazioneFlusso.punteggio
         : punteggioBase;
 
+const punteggioPercorso =
+    valutazionePercorso &&
+    typeof valutazionePercorso.punteggio ===
+        "number"
 
+        ? valutazionePercorso.punteggio
+        : punteggioBase;
+   
 const punteggioIntegrato =
     Math.round(
-        (
-            punteggioBase *
-            0.10
-        ) +
         (
             punteggioVolumetrico *
             ANEMOSCHESI_PESI_ANEMOMERO
@@ -1631,8 +1639,14 @@ const punteggioIntegrato =
             punteggioFlusso *
             ANEMOSCHESI_PESI_ANEMOMERO
                 .flusso
+        ) +
+        (
+            punteggioPercorso *
+            ANEMOSCHESI_PESI_ANEMOMERO
+                .percorso
         )
     );
+   
 /*
 =====================================================
 SEMAFORO INTEGRATO
@@ -1730,7 +1744,10 @@ return {
         valutazioneDurata,
 
     valutazioneFlusso:
-        valutazioneFlusso
+        valutazioneFlusso,
+
+   valutazionePercorso:
+        valutazionePercorso
 
 };
 }
