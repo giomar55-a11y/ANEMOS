@@ -1676,21 +1676,6 @@ const anemos31 =
    INTENTO DELLA SEQUENZA
 ===================================================== */
 
-function impostaIntento(
-    sequenza,
-    intentoId
-) {
-
-    sequenza.intento =
-        intentoId;
-
-
-    return sequenza;
-
-}
-
-
-
 function ottieniIntento(
     sequenza
 ) {
