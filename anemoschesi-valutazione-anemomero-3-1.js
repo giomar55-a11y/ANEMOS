@@ -1517,6 +1517,17 @@ const valutazioneFlusso =
         anemomero,
         intentoEffettivo
     );
+   /*
+=====================================================
+VALUTAZIONE FISIOLOGICA
+=====================================================
+*/
+
+const valutazioneFisiologica =
+    valutaFisiologiaAnemomeroAnemoschesi(
+        sequenza,
+        anemomero
+    );
    
 /*
 Se il nucleo volumetrico
@@ -1544,9 +1555,10 @@ if (
         valutazioneFlusso,
 
     valutazionePercorso:
-        valutazionePercorso
+        valutazionePercorso,
 
-       
+   valutazioneFisiologica:
+        valutazioneFisiologica
 
 };
 }
@@ -1747,7 +1759,12 @@ return {
         valutazioneFlusso,
 
    valutazionePercorso:
-        valutazionePercorso
+        valutazionePercorso,
+
+   valutazioneFisiologica:
+        valutazioneFisiologica
+
+
 
 };
 }
