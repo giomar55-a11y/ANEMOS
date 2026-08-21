@@ -816,6 +816,59 @@ function valutaCoerenzaPercorsoAnemoschesi(
     );
 
 }
+
+/* =====================================================
+   VALUTAZIONE FISIOLOGICA DI UNA CONFIGURAZIONE CANDIDATA
+===================================================== */
+
+function valutaCandidatoFisiologicoAnemoschesi(
+    sequenza,
+    anemomero,
+    modifiche = {}
+) {
+
+    if (
+        !sequenza ||
+        !anemomero
+    ) {
+
+        return null;
+
+    }
+
+
+    const candidato = {
+
+        ...anemomero,
+
+        ...modifiche,
+
+        settori:
+            Array.isArray(
+                modifiche.settori
+            )
+                ? modifiche.settori
+                : (
+                    Array.isArray(
+                        anemomero.settori
+                    )
+                        ? anemomero.settori.map(
+                            settore => ({
+                                ...settore
+                            })
+                        )
+                        : []
+                )
+
+    };
+
+
+    return valutaFisiologiaAnemomeroAnemoschesi(
+        sequenza,
+        candidato
+    );
+
+}
 /* =====================================================
    VALUTAZIONE FISIOLOGICA DELL'ANEMOMERO
 ===================================================== */
