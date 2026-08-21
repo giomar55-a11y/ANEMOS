@@ -116,11 +116,14 @@ function simulaDurataAnemomeroAnemoschesi(
 
 
 const valutazioneFisiologica =
-    valutaFisiologiaAnemomeroAnemoschesi(
+    valutaCandidatoFisiologicoAnemoschesi(
         sequenza,
-        simulato
-    );
-   
+        anemomero,
+        {
+            durata:
+                nuovaDurata
+        }
+    );   
    return {
 
     ...valutazioneIntento,
@@ -169,11 +172,14 @@ function simulaFlussoAnemomeroAnemoschesi(
 
 
     const valutazioneFisiologica =
-        valutaFisiologiaAnemomeroAnemoschesi(
-            sequenza,
-            simulato
-        );
-
+    valutaCandidatoFisiologicoAnemoschesi(
+        sequenza,
+        anemomero,
+        {
+            flusso:
+                nuovoFlusso
+        }
+    );
 
     return {
 
@@ -317,11 +323,14 @@ function simulaPercorsoAnemomeroAnemoschesi(
 
 
     const valutazioneFisiologica =
-        valutaFisiologiaAnemomeroAnemoschesi(
-            sequenza,
-            simulato
-        );
-
+    valutaCandidatoFisiologicoAnemoschesi(
+        sequenza,
+        anemomero,
+        {
+            percorso:
+                nuovoPercorso
+        }
+    );
 
     return {
 
@@ -527,11 +536,14 @@ function simulaSettoreAnemomeroAnemoschesi(
 
 
     const valutazioneFisiologica =
-        valutaFisiologiaAnemomeroAnemoschesi(
-            sequenza,
-            simulato
-        );
-
+    valutaCandidatoFisiologicoAnemoschesi(
+        sequenza,
+        anemomero,
+        {
+            settori:
+                simulato.settori
+        }
+    );
 
     return {
 
@@ -719,11 +731,14 @@ function simulaVolumeAnemomeroAnemoschesi(
 
 
     const valutazioneFisiologica =
-        valutaFisiologiaAnemomeroAnemoschesi(
-            sequenza,
-            simulato
-        );
-
+    valutaCandidatoFisiologicoAnemoschesi(
+        sequenza,
+        anemomero,
+        {
+            settori:
+                simulato.settori
+        }
+    );
 
     return {
 
