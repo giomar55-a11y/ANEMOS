@@ -1711,6 +1711,44 @@ if (
 
 }
 
+   /*
+=====================================================
+VINCOLO FISIOLOGICO SUL SEMAFORO
+=====================================================
+*/
+
+if (
+    valutazioneFisiologica &&
+    valutazioneFisiologica.livello ===
+        ANEMOSCHESI_ESITI_FISIOLOGICI
+            .ATTENZIONE &&
+    semaforoIntegrato ===
+        "verde"
+) {
+
+    semaforoIntegrato =
+        "giallo";
+
+}
+
+
+if (
+    valutazioneFisiologica &&
+    (
+        valutazioneFisiologica.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .CRITICO ||
+        valutazioneFisiologica.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .ERRORE
+    )
+) {
+
+    semaforoIntegrato =
+        "rosso";
+
+}
+
 
 /*
 Aggiorniamo anche la motivazione
