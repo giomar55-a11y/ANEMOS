@@ -182,6 +182,95 @@ function calcolaRapportoBlocchiTemporaliAnemoschesi(
 }
 
 /* =====================================================
+   CLASSIFICAZIONE DEI BLOCCHI TEMPORALI
+===================================================== */
+
+/*
+Classifica il rapporto:
+
+(ES + AES) / (IN + AIN)
+
+Questa classificazione descrive
+l'architettura temporale complessiva
+dell'Anemodromo.
+
+NON assegna ancora punteggi
+e NON sostituisce il rapporto ES / IN.
+*/
+
+function classificaRapportoBlocchiTemporaliAnemoschesi(
+    rapportoBlocchi
+) {
+
+    if (
+        !rapportoBlocchi ||
+        typeof rapportoBlocchi.rapporto !==
+            "number"
+    ) {
+
+        return null;
+
+    }
+
+
+    const rapporto =
+        rapportoBlocchi.rapporto;
+
+
+    if (
+        rapporto <=
+        ANEMOSCHESI_SOGLIE_RAPPORTO_TEMPORALE
+            .inPrevalenteForteMassimo
+    ) {
+
+        return ANEMOSCHESI_CLASSI_RAPPORTO_TEMPORALE
+            .IN_PREVALENTE_FORTE;
+
+    }
+
+
+    if (
+        rapporto <=
+        ANEMOSCHESI_SOGLIE_RAPPORTO_TEMPORALE
+            .inPrevalenteMassimo
+    ) {
+
+        return ANEMOSCHESI_CLASSI_RAPPORTO_TEMPORALE
+            .IN_PREVALENTE;
+
+    }
+
+
+    if (
+        rapporto <=
+        ANEMOSCHESI_SOGLIE_RAPPORTO_TEMPORALE
+            .equilibratoMassimo
+    ) {
+
+        return ANEMOSCHESI_CLASSI_RAPPORTO_TEMPORALE
+            .EQUILIBRATO;
+
+    }
+
+
+    if (
+        rapporto <=
+        ANEMOSCHESI_SOGLIE_RAPPORTO_TEMPORALE
+            .esPrevalenteMassimo
+    ) {
+
+        return ANEMOSCHESI_CLASSI_RAPPORTO_TEMPORALE
+            .ES_PREVALENTE;
+
+    }
+
+
+    return ANEMOSCHESI_CLASSI_RAPPORTO_TEMPORALE
+        .ES_PREVALENTE_FORTE;
+
+}
+
+/* =====================================================
    RAPPORTO TEMPORALE × INTENTO
 ===================================================== */
 
