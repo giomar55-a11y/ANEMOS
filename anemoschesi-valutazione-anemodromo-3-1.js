@@ -800,6 +800,32 @@ const punteggioTemporale =
         sequenza
     );
 
+   const valutazioniApnee =
+    analisiApnee
+        .map(
+            analisi =>
+                valutaApneaPerIntentoAnemoschesi(
+                    analisi,
+                    intentoEffettivo
+                )
+        )
+        .filter(
+            Boolean
+        );
+
+
+const punteggioApnee =
+    valutazioniApnee.length > 0
+
+        ? mediaValoriAnemoschesi(
+            valutazioniApnee.map(
+                valutazione =>
+                    valutazione.punteggio
+            )
+        )
+
+        : punteggioSequenza;
+
     const punteggioComplessivo =
     Math.round(
         (
@@ -810,15 +836,20 @@ const punteggioTemporale =
             punteggioSequenza *
             (
                 0.40 -
-                ANEMOSCHESI_PESO_TEMPORALE_ANEMODROMO
+                ANEMOSCHESI_PESO_TEMPORALE_ANEMODROMO -
+                ANEMOSCHESI_PESO_APNEE_ANEMODROMO
             )
         ) +
         (
             punteggioTemporale *
             ANEMOSCHESI_PESO_TEMPORALE_ANEMODROMO
+        ) +
+        (
+            punteggioApnee *
+            ANEMOSCHESI_PESO_APNEE_ANEMODROMO
         )
     );
-
+   
     const semaforo =
         determinaSemaforoAnemoschesi(
             punteggioComplessivo
@@ -856,6 +887,12 @@ punteggioTemporale:
 
        analisiApnee:
     analisiApnee,
+
+       valutazioniApnee:
+    valutazioniApnee,
+
+punteggioApnee:
+    punteggioApnee,
 
 punteggioComplessivo:
     punteggioComplessivo,
