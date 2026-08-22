@@ -1137,6 +1137,12 @@ const punteggioTemporale =
         ? valutazioneTemporale.punteggio
         : punteggioSequenza;
 
+   const effettoApneeMatriceTemporale =
+    analizzaEffettoApneeMatriceTemporaleAnemoschesi(
+        valutazioneTemporale,
+        rapportoBlocchiTemporali
+    );
+
    const analisiApnee =
     analizzaApneeAnemodromoAnemoschesi(
         sequenza
@@ -1327,6 +1333,9 @@ punteggioTemporale:
 
        rapportoBlocchiTemporali:
     rapportoBlocchiTemporali,
+
+       effettoApneeMatriceTemporale:
+    effettoApneeMatriceTemporale,
 
        classeRapportoBlocchiTemporali:
     classeRapportoBlocchiTemporali,
