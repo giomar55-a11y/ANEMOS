@@ -898,6 +898,13 @@ function valutaAnemodromoPerIntentoAnemoschesi(
         sequenza
     );
 
+   const rapportoBlocchiTemporali =
+    matriceTemporale
+        ? calcolaRapportoBlocchiTemporaliAnemoschesi(
+            matriceTemporale
+        )
+        : null;
+
     if (
         profiliAnemomeri.length === 0
     ) {
@@ -1198,6 +1205,9 @@ punteggioTemporale:
 
        matriceTemporale:
     matriceTemporale,
+
+       rapportoBlocchiTemporali:
+    rapportoBlocchiTemporali,
 
        analisiApnee:
     analisiApnee,
