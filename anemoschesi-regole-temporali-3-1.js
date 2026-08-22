@@ -85,7 +85,7 @@ const ANEMOSCHESI_SOGLIE_RAPPORTO_TEMPORALE = {
         1.15,
 
     esPrevalenteMassimo:
-        1.75
+        2.00
 
 };
 
