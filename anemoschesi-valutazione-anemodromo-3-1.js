@@ -905,6 +905,13 @@ function valutaAnemodromoPerIntentoAnemoschesi(
         )
         : null;
 
+   const classeRapportoBlocchiTemporali =
+    rapportoBlocchiTemporali
+        ? classificaRapportoBlocchiTemporaliAnemoschesi(
+            rapportoBlocchiTemporali
+        )
+        : null;
+   
     if (
         profiliAnemomeri.length === 0
     ) {
@@ -1208,6 +1215,9 @@ punteggioTemporale:
 
        rapportoBlocchiTemporali:
     rapportoBlocchiTemporali,
+
+       classeRapportoBlocchiTemporali:
+    classeRapportoBlocchiTemporali,
 
        analisiApnee:
     analisiApnee,
