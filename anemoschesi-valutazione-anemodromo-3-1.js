@@ -327,6 +327,220 @@ function descriviAndamentoAnemodromoAnemoschesi(
 
 }
 
+/* =====================================================
+   RAPPORTO TEMPORALE IN / ES
+===================================================== */
+
+function valutaRapportoTemporaleAnemodromoAnemoschesi(
+    sequenza,
+    intentoId
+) {
+
+    if (
+        !sequenza ||
+        !intentoId
+    ) {
+
+        return null;
+
+    }
+
+
+    const anemomeri =
+        ottieniAnemodromiOrdinati(
+            sequenza
+        );
+
+
+    if (
+        !Array.isArray(
+            anemomeri
+        ) ||
+        anemomeri.length === 0
+    ) {
+
+        return null;
+
+    }
+
+
+    let durataIN =
+        0;
+
+    let durataES =
+        0;
+
+
+    anemomeri.forEach(
+        anemomero => {
+
+            const durata =
+                Number(
+                    anemomero.durata
+                );
+
+
+            if (
+                !Number.isFinite(
+                    durata
+                ) ||
+                durata <= 0
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                anemomero.tipo ===
+                ANEMOS_TIPI.IN
+            ) {
+
+                durataIN +=
+                    durata;
+
+            }
+
+
+            if (
+                anemomero.tipo ===
+                ANEMOS_TIPI.ES
+            ) {
+
+                durataES +=
+                    durata;
+
+            }
+
+        }
+    );
+
+
+    /*
+    Il rapporto IN/ES può essere valutato
+    soltanto quando entrambe le componenti
+    sono presenti.
+    */
+
+    if (
+        durataIN <= 0 ||
+        durataES <= 0
+    ) {
+
+        return null;
+
+    }
+
+
+    const rapporto =
+        durataES /
+        durataIN;
+
+
+    let classe;
+
+
+    if (
+        rapporto <=
+        ANEMOSCHESI_SOGLIE_RAPPORTO_TEMPORALE
+            .inPrevalenteForteMassimo
+    ) {
+
+        classe =
+            ANEMOSCHESI_CLASSI_RAPPORTO_TEMPORALE
+                .IN_PREVALENTE_FORTE;
+
+    } else if (
+        rapporto <=
+        ANEMOSCHESI_SOGLIE_RAPPORTO_TEMPORALE
+            .inPrevalenteMassimo
+    ) {
+
+        classe =
+            ANEMOSCHESI_CLASSI_RAPPORTO_TEMPORALE
+                .IN_PREVALENTE;
+
+    } else if (
+        rapporto <=
+        ANEMOSCHESI_SOGLIE_RAPPORTO_TEMPORALE
+            .equilibratoMassimo
+    ) {
+
+        classe =
+            ANEMOSCHESI_CLASSI_RAPPORTO_TEMPORALE
+                .EQUILIBRATO;
+
+    } else if (
+        rapporto <=
+        ANEMOSCHESI_SOGLIE_RAPPORTO_TEMPORALE
+            .esPrevalenteMassimo
+    ) {
+
+        classe =
+            ANEMOSCHESI_CLASSI_RAPPORTO_TEMPORALE
+                .ES_PREVALENTE;
+
+    } else {
+
+        classe =
+            ANEMOSCHESI_CLASSI_RAPPORTO_TEMPORALE
+                .ES_PREVALENTE_FORTE;
+
+    }
+
+
+    const valore =
+        ANEMOSCHESI_RAPPORTO_TEMPORALE_INTENTI[
+            intentoId
+        ]?.[
+            classe
+        ];
+
+
+    if (
+        typeof valore !==
+        "number"
+    ) {
+
+        return null;
+
+    }
+
+
+    const punteggio =
+        normalizzaContributoVolumetricoAnemoschesi(
+            valore
+        );
+
+
+    return {
+
+        durataIN:
+            durataIN,
+
+        durataES:
+            durataES,
+
+        rapporto:
+            Number(
+                rapporto.toFixed(
+                    2
+                )
+            ),
+
+        classe:
+            classe,
+
+        valore:
+            valore,
+
+        punteggio:
+            punteggio
+
+    };
+
+}
 
 /* =====================================================
    VALUTAZIONE COMPLESSIVA
@@ -512,19 +726,39 @@ function valutaAnemodromoPerIntentoAnemoschesi(
             )
         );
 
+   const valutazioneTemporale =
+    valutaRapportoTemporaleAnemodromoAnemoschesi(
+        sequenza,
+        intentoEffettivo
+    );
+
+
+const punteggioTemporale =
+    valutazioneTemporale &&
+    typeof valutazioneTemporale.punteggio ===
+        "number"
+
+        ? valutazioneTemporale.punteggio
+        : punteggioSequenza;
 
     const punteggioComplessivo =
-        Math.round(
+    Math.round(
+        (
+            punteggioAnemomeri *
+            0.60
+        ) +
+        (
+            punteggioSequenza *
             (
-                punteggioAnemomeri *
-                0.60
-            ) +
-            (
-                punteggioSequenza *
-                0.40
+                0.40 -
+                ANEMOSCHESI_PESO_TEMPORALE_ANEMODROMO
             )
-        );
-
+        ) +
+        (
+            punteggioTemporale *
+            ANEMOSCHESI_PESO_TEMPORALE_ANEMODROMO
+        )
+    );
 
     const semaforo =
         determinaSemaforoAnemoschesi(
@@ -553,11 +787,17 @@ function valutaAnemodromoPerIntentoAnemoschesi(
             punteggioAnemomeri,
 
         punteggioSequenza:
-            punteggioSequenza,
+    punteggioSequenza,
 
-        punteggioComplessivo:
-            punteggioComplessivo,
+valutazioneTemporale:
+    valutazioneTemporale,
 
+punteggioTemporale:
+    punteggioTemporale,
+
+punteggioComplessivo:
+    punteggioComplessivo,
+       
         semaforo:
             semaforo,
 
