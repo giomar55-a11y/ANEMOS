@@ -1409,3 +1409,26 @@ quando è presente il semaforo.
     color: var(--dark);
 
 }
+
+/* =====================================================
+   ANEMOSCHESI — FISIOLOGIA APNEE
+===================================================== */
+
+.apnea-link.apnea-fisiologia-valido {
+    background: #dff3e6;
+    border-color: #65b884;
+    color: #25663f;
+}
+
+.apnea-link.apnea-fisiologia-attenzione {
+    background: #fff2c7;
+    border-color: #d9b93e;
+    color: #806818;
+}
+
+.apnea-link.apnea-fisiologia-critico,
+.apnea-link.apnea-fisiologia-errore {
+    background: #f7d6d6;
+    border-color: #d66a6a;
+    color: #8f2f2f;
+}
