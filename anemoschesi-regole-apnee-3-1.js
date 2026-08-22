@@ -303,6 +303,321 @@ function analizzaApneaAnemoschesi(
 
 }
 
+/* =====================================================
+   APNEA × INTENTO
+===================================================== */
+
+/*
+Scala qualitativa:
+
++2 = molto favorevole
++1 = favorevole
+ 0 = neutro
+-1 = poco favorevole
+-2 = sfavorevole
+
+La valutazione dipende da:
+
+- posizione dell'apnea
+- classe di durata relativa
+*/
+
+const ANEMOSCHESI_APNEA_INTENTI = {
+
+    calmare: {
+
+        post_in: {
+            breve: 0,
+            moderata: -1,
+            lunga: -2,
+            molto_lunga: -2
+        },
+
+        post_es: {
+            breve: 2,
+            moderata: 2,
+            lunga: 1,
+            molto_lunga: -1
+        }
+
+    },
+
+
+    scaricare: {
+
+        post_in: {
+            breve: 0,
+            moderata: -1,
+            lunga: -2,
+            molto_lunga: -2
+        },
+
+        post_es: {
+            breve: 1,
+            moderata: 2,
+            lunga: 2,
+            molto_lunga: 1
+        }
+
+    },
+
+
+    recuperare: {
+
+        post_in: {
+            breve: 0,
+            moderata: -1,
+            lunga: -2,
+            molto_lunga: -2
+        },
+
+        post_es: {
+            breve: 2,
+            moderata: 2,
+            lunga: 1,
+            molto_lunga: -1
+        }
+
+    },
+
+
+    riposare: {
+
+        post_in: {
+            breve: -1,
+            moderata: -2,
+            lunga: -2,
+            molto_lunga: -2
+        },
+
+        post_es: {
+            breve: 2,
+            moderata: 2,
+            lunga: 1,
+            molto_lunga: -1
+        }
+
+    },
+
+
+    percepire: {
+
+        post_in: {
+            breve: 1,
+            moderata: 1,
+            lunga: 0,
+            molto_lunga: -1
+        },
+
+        post_es: {
+            breve: 2,
+            moderata: 2,
+            lunga: 1,
+            molto_lunga: 0
+        }
+
+    },
+
+
+    coordinare: {
+
+        post_in: {
+            breve: 1,
+            moderata: 1,
+            lunga: 0,
+            molto_lunga: -1
+        },
+
+        post_es: {
+            breve: 1,
+            moderata: 1,
+            lunga: 0,
+            molto_lunga: -1
+        }
+
+    },
+
+
+    mobilizzare: {
+
+        post_in: {
+            breve: 1,
+            moderata: 1,
+            lunga: 0,
+            molto_lunga: -1
+        },
+
+        post_es: {
+            breve: 1,
+            moderata: 1,
+            lunga: 0,
+            molto_lunga: -1
+        }
+
+    },
+
+
+    stabilizzare: {
+
+        post_in: {
+            breve: 2,
+            moderata: 2,
+            lunga: 1,
+            molto_lunga: 0
+        },
+
+        post_es: {
+            breve: 1,
+            moderata: 1,
+            lunga: 0,
+            molto_lunga: -1
+        }
+
+    },
+
+
+    attivare: {
+
+        post_in: {
+            breve: 2,
+            moderata: 2,
+            lunga: 1,
+            molto_lunga: -1
+        },
+
+        post_es: {
+            breve: 0,
+            moderata: -1,
+            lunga: -2,
+            molto_lunga: -2
+        }
+
+    },
+
+
+    potenziare: {
+
+        post_in: {
+            breve: 2,
+            moderata: 2,
+            lunga: 1,
+            molto_lunga: 0
+        },
+
+        post_es: {
+            breve: 0,
+            moderata: -1,
+            lunga: -2,
+            molto_lunga: -2
+        }
+
+    },
+
+
+    resistere: {
+
+        post_in: {
+            breve: 1,
+            moderata: 2,
+            lunga: 1,
+            molto_lunga: 0
+        },
+
+        post_es: {
+            breve: 1,
+            moderata: 2,
+            lunga: 1,
+            molto_lunga: 0
+        }
+
+    },
+
+
+    performare: {
+
+        post_in: {
+            breve: 2,
+            moderata: 2,
+            lunga: 1,
+            molto_lunga: 0
+        },
+
+        post_es: {
+            breve: 0,
+            moderata: -1,
+            lunga: -2,
+            molto_lunga: -2
+        }
+
+    }
+
+};
+
+
+/* =====================================================
+   PESO DELLA COMPONENTE APNEA
+===================================================== */
+
+const ANEMOSCHESI_PESO_APNEE_ANEMODROMO =
+    0.15;
+
+
+/* =====================================================
+   VALUTAZIONE QUALITATIVA DI UNA APNEA
+===================================================== */
+
+function valutaApneaPerIntentoAnemoschesi(
+    analisiApnea,
+    intentoId
+) {
+
+    if (
+        !analisiApnea ||
+        !intentoId
+    ) {
+
+        return null;
+
+    }
+
+
+    const valore =
+        ANEMOSCHESI_APNEA_INTENTI[
+            intentoId
+        ]?.[
+            analisiApnea.posizione
+        ]?.[
+            analisiApnea.classeRelativa
+        ];
+
+
+    if (
+        typeof valore !== "number"
+    ) {
+
+        return null;
+
+    }
+
+
+    return {
+
+        ...analisiApnea,
+
+        intentoId:
+            intentoId,
+
+        valore:
+            valore,
+
+        punteggio:
+            normalizzaContributoVolumetricoAnemoschesi(
+                valore
+            )
+
+    };
+
+}
 
 /* =====================================================
    CONTROLLO INIZIALE
