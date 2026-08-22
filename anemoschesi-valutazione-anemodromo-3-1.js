@@ -328,6 +328,218 @@ function descriviAndamentoAnemodromoAnemoschesi(
 }
 
 /* =====================================================
+   MATRICE TEMPORALE DELL'ANEMODROMO
+===================================================== */
+
+/*
+Descrive la distribuzione temporale interna
+dell'Anemodromo come matrice unica.
+
+NON interpreta l'Anemodromo come ciclo
+da ripetere.
+
+Le componenti sono:
+
+IN  = tempo inspiratorio
+AIN = apnea successiva a IN
+ES  = tempo espiratorio
+AES = apnea successiva a ES
+*/
+
+function analizzaMatriceTemporaleAnemodromoAnemoschesi(
+    sequenza
+) {
+
+    if (
+        !sequenza
+    ) {
+
+        return null;
+
+    }
+
+
+    const anemomeri =
+        ottieniAnemodromiOrdinati(
+            sequenza
+        );
+
+
+    let durataIN =
+        0;
+
+    let durataAIN =
+        0;
+
+    let durataES =
+        0;
+
+    let durataAES =
+        0;
+
+
+    anemomeri.forEach(
+        anemomero => {
+
+            const durata =
+                Number(
+                    anemomero.durata
+                );
+
+
+            if (
+                !Number.isFinite(
+                    durata
+                ) ||
+                durata <= 0
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                anemomero.tipo ===
+                ANEMOS_TIPI.IN
+            ) {
+
+                durataIN +=
+                    durata;
+
+            }
+
+
+            if (
+                anemomero.tipo ===
+                ANEMOS_TIPI.ES
+            ) {
+
+                durataES +=
+                    durata;
+
+            }
+
+        }
+    );
+
+
+    if (
+        Array.isArray(
+            sequenza.apnee
+        )
+    ) {
+
+        sequenza.apnee.forEach(
+            apnea => {
+
+                const precedente =
+                    trovaAnemodromo(
+                        sequenza,
+                        apnea.precedente
+                    );
+
+
+                const durata =
+                    Number(
+                        apnea.durata
+                    );
+
+
+                if (
+                    !precedente ||
+                    !Number.isFinite(
+                        durata
+                    ) ||
+                    durata <= 0
+                ) {
+
+                    return;
+
+                }
+
+
+                if (
+                    precedente.tipo ===
+                    ANEMOS_TIPI.IN
+                ) {
+
+                    durataAIN +=
+                        durata;
+
+                }
+
+
+                if (
+                    precedente.tipo ===
+                    ANEMOS_TIPI.ES
+                ) {
+
+                    durataAES +=
+                        durata;
+
+                }
+
+            }
+        );
+
+    }
+
+
+    const durataTotale =
+        durataIN +
+        durataAIN +
+        durataES +
+        durataAES;
+
+
+    if (
+        durataTotale <= 0
+    ) {
+
+        return null;
+
+    }
+
+
+    return {
+
+        durataTotale:
+            durataTotale,
+
+        durataIN:
+            durataIN,
+
+        durataAIN:
+            durataAIN,
+
+        durataES:
+            durataES,
+
+        durataAES:
+            durataAES,
+
+        quotaIN:
+            durataIN /
+            durataTotale,
+
+        quotaAIN:
+            durataAIN /
+            durataTotale,
+
+        quotaES:
+            durataES /
+            durataTotale,
+
+        quotaAES:
+            durataAES /
+            durataTotale
+
+    };
+
+}
+
+/* =====================================================
    RAPPORTO TEMPORALE IN / ES
 ===================================================== */
 
@@ -681,6 +893,10 @@ function valutaAnemodromoPerIntentoAnemoschesi(
             sequenza
         );
 
+   const matriceTemporale =
+    analizzaMatriceTemporaleAnemodromoAnemoschesi(
+        sequenza
+    );
 
     if (
         profiliAnemomeri.length === 0
@@ -979,6 +1195,9 @@ valutazioneTemporale:
 
 punteggioTemporale:
     punteggioTemporale,
+
+       matriceTemporale:
+    matriceTemporale,
 
        analisiApnee:
     analisiApnee,
