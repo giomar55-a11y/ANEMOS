@@ -818,6 +818,187 @@ function valutaCoerenzaPercorsoAnemoschesi(
 }
 
 /* =====================================================
+   VALUTAZIONE FISIOLOGICA DELL'APNEA
+===================================================== */
+
+/*
+Questo controllo riguarda esclusivamente
+la plausibilità interna del modello ANEMOS.
+
+Non valuta la coerenza con l'Intento.
+
+La posizione modifica la tolleranza:
+
+POST-IN
+il mantenimento avviene a volume più elevato
+e viene considerato progressivamente
+più impegnativo.
+
+POST-ES
+il mantenimento a volume più basso
+può essere tollerato maggiormente,
+pur diventando critico se molto prolungato.
+*/
+
+function valutaFisiologiaApneaAnemoschesi(
+    analisiApnea
+) {
+
+    if (
+        !analisiApnea ||
+        !analisiApnea.classeRelativa
+    ) {
+
+        return creaEsitoFisiologicoAnemoschesi(
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .ERRORE,
+            "APNEA_NON_VALUTABILE",
+            "Apnea non valutabile."
+        );
+
+    }
+
+
+    const posizione =
+        analisiApnea.posizione;
+
+
+    const classe =
+        analisiApnea.classeRelativa;
+
+
+    /*
+    =====================================================
+    APNEA POST-IN
+    =====================================================
+    */
+
+    if (
+        posizione ===
+        ANEMOSCHESI_POSIZIONI_APNEA.POST_IN
+    ) {
+
+        if (
+            classe ===
+            ANEMOSCHESI_CLASSI_APNEA_RELATIVA
+                .MOLTO_LUNGA
+        ) {
+
+            return creaEsitoFisiologicoAnemoschesi(
+                ANEMOSCHESI_ESITI_FISIOLOGICI
+                    .ERRORE,
+                "APNEA_POST_IN_ESTREMA",
+                "Apnea post-inspiratoria eccessivamente prolungata."
+            );
+
+        }
+
+
+        if (
+            classe ===
+            ANEMOSCHESI_CLASSI_APNEA_RELATIVA
+                .LUNGA
+        ) {
+
+            return creaEsitoFisiologicoAnemoschesi(
+                ANEMOSCHESI_ESITI_FISIOLOGICI
+                    .CRITICO,
+                "APNEA_POST_IN_LUNGA",
+                "Apnea post-inspiratoria molto impegnativa."
+            );
+
+        }
+
+
+        if (
+            classe ===
+            ANEMOSCHESI_CLASSI_APNEA_RELATIVA
+                .MODERATA
+        ) {
+
+            return creaEsitoFisiologicoAnemoschesi(
+                ANEMOSCHESI_ESITI_FISIOLOGICI
+                    .ATTENZIONE,
+                "APNEA_POST_IN_MODERATA",
+                "Apnea post-inspiratoria moderatamente impegnativa."
+            );
+
+        }
+
+
+        return creaEsitoFisiologicoAnemoschesi(
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .VALIDO,
+            "APNEA_POST_IN_BREVE",
+            "Apnea post-inspiratoria breve."
+        );
+
+    }
+
+
+    /*
+    =====================================================
+    APNEA POST-ES
+    =====================================================
+    */
+
+    if (
+        posizione ===
+        ANEMOSCHESI_POSIZIONI_APNEA.POST_ES
+    ) {
+
+        if (
+            classe ===
+            ANEMOSCHESI_CLASSI_APNEA_RELATIVA
+                .MOLTO_LUNGA
+        ) {
+
+            return creaEsitoFisiologicoAnemoschesi(
+                ANEMOSCHESI_ESITI_FISIOLOGICI
+                    .CRITICO,
+                "APNEA_POST_ES_ESTESA",
+                "Apnea post-espiratoria molto prolungata."
+            );
+
+        }
+
+
+        if (
+            classe ===
+            ANEMOSCHESI_CLASSI_APNEA_RELATIVA
+                .LUNGA
+        ) {
+
+            return creaEsitoFisiologicoAnemoschesi(
+                ANEMOSCHESI_ESITI_FISIOLOGICI
+                    .ATTENZIONE,
+                "APNEA_POST_ES_LUNGA",
+                "Apnea post-espiratoria prolungata."
+            );
+
+        }
+
+
+        return creaEsitoFisiologicoAnemoschesi(
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .VALIDO,
+            "APNEA_POST_ES_PLAUSIBILE",
+            "Apnea post-espiratoria fisiologicamente plausibile nel modello."
+        );
+
+    }
+
+
+    return creaEsitoFisiologicoAnemoschesi(
+        ANEMOSCHESI_ESITI_FISIOLOGICI
+            .ERRORE,
+        "POSIZIONE_APNEA_NON_DETERMINATA",
+        "Posizione dell'apnea non determinata."
+    );
+
+}
+
+/* =====================================================
    VALUTAZIONE FISIOLOGICA DI UNA CONFIGURAZIONE CANDIDATA
 ===================================================== */
 
