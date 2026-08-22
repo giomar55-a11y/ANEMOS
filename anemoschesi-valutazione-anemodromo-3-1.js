@@ -543,6 +543,60 @@ function valutaRapportoTemporaleAnemodromoAnemoschesi(
 }
 
 /* =====================================================
+   ANALISI DELLE APNEE DELL'ANEMODROMO
+===================================================== */
+
+function analizzaApneeAnemodromoAnemoschesi(
+    sequenza
+) {
+
+    if (
+        !sequenza ||
+        !Array.isArray(
+            sequenza.apnee
+        ) ||
+        sequenza.apnee.length === 0
+    ) {
+
+        return [];
+
+    }
+
+
+    return sequenza.apnee
+        .map(
+            apnea => {
+
+                const precedente =
+                    trovaAnemodromo(
+                        sequenza,
+                        apnea.precedente
+                    );
+
+
+                if (
+                    !precedente
+                ) {
+
+                    return null;
+
+                }
+
+
+                return analizzaApneaAnemoschesi(
+                    apnea,
+                    precedente
+                );
+
+            }
+        )
+        .filter(
+            Boolean
+        );
+
+}
+
+/* =====================================================
    VALUTAZIONE COMPLESSIVA
 ===================================================== */
 
@@ -741,6 +795,11 @@ const punteggioTemporale =
         ? valutazioneTemporale.punteggio
         : punteggioSequenza;
 
+   const analisiApnee =
+    analizzaApneeAnemodromoAnemoschesi(
+        sequenza
+    );
+
     const punteggioComplessivo =
     Math.round(
         (
@@ -794,6 +853,9 @@ valutazioneTemporale:
 
 punteggioTemporale:
     punteggioTemporale,
+
+       analisiApnee:
+    analisiApnee,
 
 punteggioComplessivo:
     punteggioComplessivo,
