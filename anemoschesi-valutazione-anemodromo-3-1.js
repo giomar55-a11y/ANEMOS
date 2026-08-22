@@ -867,6 +867,165 @@ function analizzaEffettoApneeMatriceTemporaleAnemoschesi(
 }
 
 /* =====================================================
+   DISTRIBUZIONE DELLE APNEE NELLA MATRICE TEMPORALE
+===================================================== */
+
+/*
+Descrive come il tempo complessivo di apnea
+si distribuisce tra:
+
+AIN = apnea successiva a IN
+AES = apnea successiva a ES
+
+Non assegna punteggi.
+
+Serve a distinguere se l'architettura
+dell'Anemodromo utilizza prevalentemente
+ritenzione post-inspiratoria,
+ritenzione post-espiratoria
+oppure entrambe.
+*/
+
+function analizzaDistribuzioneApneeMatriceTemporaleAnemoschesi(
+    matriceTemporale
+) {
+
+    if (
+        !matriceTemporale
+    ) {
+
+        return null;
+
+    }
+
+
+    const durataAIN =
+        Number(
+            matriceTemporale.durataAIN
+        );
+
+
+    const durataAES =
+        Number(
+            matriceTemporale.durataAES
+        );
+
+
+    if (
+        !Number.isFinite(
+            durataAIN
+        ) ||
+        !Number.isFinite(
+            durataAES
+        )
+    ) {
+
+        return null;
+
+    }
+
+
+    const durataApnee =
+        durataAIN +
+        durataAES;
+
+
+    if (
+        durataApnee <= 0
+    ) {
+
+        return {
+
+            durataAIN:
+                0,
+
+            durataAES:
+                0,
+
+            durataApnee:
+                0,
+
+            quotaAIN:
+                0,
+
+            quotaAES:
+                0,
+
+            prevalenza:
+                "nessuna"
+
+        };
+
+    }
+
+
+    const quotaAIN =
+        durataAIN /
+        durataApnee;
+
+
+    const quotaAES =
+        durataAES /
+        durataApnee;
+
+
+    let prevalenza =
+        "equilibrata";
+
+
+    if (
+        quotaAIN >= 0.60
+    ) {
+
+        prevalenza =
+            "ain";
+
+    }
+
+
+    if (
+        quotaAES >= 0.60
+    ) {
+
+        prevalenza =
+            "aes";
+
+    }
+
+
+    return {
+
+        durataAIN:
+            durataAIN,
+
+        durataAES:
+            durataAES,
+
+        durataApnee:
+            durataApnee,
+
+        quotaAIN:
+            Number(
+                quotaAIN.toFixed(
+                    2
+                )
+            ),
+
+        quotaAES:
+            Number(
+                quotaAES.toFixed(
+                    2
+                )
+            ),
+
+        prevalenza:
+            prevalenza
+
+    };
+
+}
+
+/* =====================================================
    ANALISI DELLE APNEE DELL'ANEMODROMO
 ===================================================== */
 
@@ -1143,6 +1302,11 @@ const punteggioTemporale =
         rapportoBlocchiTemporali
     );
 
+const distribuzioneApneeMatriceTemporale =
+    analizzaDistribuzioneApneeMatriceTemporaleAnemoschesi(
+        matriceTemporale
+    );
+   
    const analisiApnee =
     analizzaApneeAnemodromoAnemoschesi(
         sequenza
@@ -1339,6 +1503,9 @@ punteggioTemporale:
 
        classeRapportoBlocchiTemporali:
     classeRapportoBlocchiTemporali,
+
+       distribuzioneApneeMatriceTemporale:
+    distribuzioneApneeMatriceTemporale,
 
        analisiApnee:
     analisiApnee,
