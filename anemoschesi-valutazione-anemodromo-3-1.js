@@ -826,6 +826,67 @@ const punteggioApnee =
 
         : punteggioSequenza;
 
+   const valutazioniFisiologicheApnee =
+    analisiApnee
+        .map(
+            analisi =>
+                valutaFisiologiaApneaAnemoschesi(
+                    analisi
+                )
+        )
+        .filter(
+            Boolean
+        );
+
+
+const ordineGravitaFisiologiaApnee = {
+
+    valido:
+        0,
+
+    attenzione:
+        1,
+
+    critico:
+        2,
+
+    errore:
+        3
+
+};
+
+
+const fisiologiaApnee =
+    valutazioniFisiologicheApnee.length > 0
+
+        ? valutazioniFisiologicheApnee.reduce(
+            (
+                peggiore,
+                valutazione
+            ) => {
+
+                if (
+                    ordineGravitaFisiologiaApnee[
+                        valutazione.livello
+                    ] >
+                    ordineGravitaFisiologiaApnee[
+                        peggiore.livello
+                    ]
+                ) {
+
+                    return valutazione;
+
+                }
+
+
+                return peggiore;
+
+            },
+            valutazioniFisiologicheApnee[0]
+        )
+
+        : null;
+
     const punteggioComplessivo =
     Math.round(
         (
@@ -850,11 +911,45 @@ const punteggioApnee =
         )
     );
    
-    const semaforo =
-        determinaSemaforoAnemoschesi(
-            punteggioComplessivo
-        );
+    let semaforo =
+    determinaSemaforoAnemoschesi(
+        punteggioComplessivo
+    );
 
+
+if (
+    fisiologiaApnee
+) {
+
+    if (
+        fisiologiaApnee.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .ATTENZIONE &&
+        semaforo ===
+            "verde"
+    ) {
+
+        semaforo =
+            "giallo";
+
+    }
+
+
+    if (
+        fisiologiaApnee.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .CRITICO ||
+        fisiologiaApnee.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .ERRORE
+    ) {
+
+        semaforo =
+            "rosso";
+
+    }
+
+}
 
     return {
 
@@ -893,6 +988,12 @@ punteggioTemporale:
 
 punteggioApnee:
     punteggioApnee,
+
+       valutazioniFisiologicheApnee:
+    valutazioniFisiologicheApnee,
+
+fisiologiaApnee:
+    fisiologiaApnee,
 
 punteggioComplessivo:
     punteggioComplessivo,
