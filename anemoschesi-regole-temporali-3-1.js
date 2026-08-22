@@ -89,6 +89,97 @@ const ANEMOSCHESI_SOGLIE_RAPPORTO_TEMPORALE = {
 
 };
 
+/* =====================================================
+   RAPPORTO DEI BLOCCHI TEMPORALI
+===================================================== */
+
+/*
+La matrice viene letta anche attraverso
+due blocchi temporali:
+
+blocco inspiratorio:
+IN + AIN
+
+blocco espiratorio:
+ES + AES
+
+Questo rapporto NON sostituisce ES / IN.
+
+Serve a descrivere l'architettura temporale
+complessiva dell'Anemodromo includendo
+anche le apnee.
+*/
+
+function calcolaRapportoBlocchiTemporaliAnemoschesi(
+    matriceTemporale
+) {
+
+    if (
+        !matriceTemporale
+    ) {
+
+        return null;
+
+    }
+
+
+    const bloccoInspiratorio =
+        Number(
+            matriceTemporale.durataIN
+        ) +
+        Number(
+            matriceTemporale.durataAIN
+        );
+
+
+    const bloccoEspiratorio =
+        Number(
+            matriceTemporale.durataES
+        ) +
+        Number(
+            matriceTemporale.durataAES
+        );
+
+
+    if (
+        !Number.isFinite(
+            bloccoInspiratorio
+        ) ||
+        !Number.isFinite(
+            bloccoEspiratorio
+        ) ||
+        bloccoInspiratorio <= 0 ||
+        bloccoEspiratorio <= 0
+    ) {
+
+        return null;
+
+    }
+
+
+    const rapporto =
+        bloccoEspiratorio /
+        bloccoInspiratorio;
+
+
+    return {
+
+        bloccoInspiratorio:
+            bloccoInspiratorio,
+
+        bloccoEspiratorio:
+            bloccoEspiratorio,
+
+        rapporto:
+            Number(
+                rapporto.toFixed(
+                    2
+                )
+            )
+
+    };
+
+}
 
 /* =====================================================
    RAPPORTO TEMPORALE × INTENTO
