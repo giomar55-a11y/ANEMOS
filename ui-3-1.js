@@ -485,18 +485,50 @@ function creaCollegamento(
 
     if (apnea) {
 
-        wrapper.classList.add(
-            "attiva"
+    wrapper.classList.add(
+        "attiva"
+    );
+
+
+    wrapper.textContent =
+        "⏸ " +
+        apnea.durata +
+        " s";
+
+
+    /*
+    =================================================
+    GUIDA FISIOLOGICA DELL'APNEA
+    =================================================
+    */
+
+    const analisiApnea =
+        analizzaApneaAnemoschesi(
+            apnea,
+            precedente
         );
 
 
-        wrapper.textContent =
-            "⏸ " +
-            apnea.durata +
-            " s";
+    const fisiologiaApnea =
+        analisiApnea
+            ? valutaFisiologiaApneaAnemoschesi(
+                analisiApnea
+            )
+            : null;
 
-    } else {
 
+    if (
+        fisiologiaApnea
+    ) {
+
+        wrapper.classList.add(
+            "apnea-fisiologia-" +
+            fisiologiaApnea.livello
+        );
+
+    }
+
+} else {
         wrapper.textContent =
             "+ apnea";
 
