@@ -755,6 +755,118 @@ function valutaRapportoTemporaleAnemodromoAnemoschesi(
 }
 
 /* =====================================================
+   EFFETTO DELLE APNEE SULLA MATRICE TEMPORALE
+===================================================== */
+
+/*
+Confronta:
+
+ES / IN
+
+con:
+
+(ES + AES) / (IN + AIN)
+
+per stabilire in quale direzione
+le apnee modificano l'assetto temporale
+dell'Anemodromo.
+
+Non assegna punteggi.
+*/
+
+function analizzaEffettoApneeMatriceTemporaleAnemoschesi(
+    valutazioneTemporale,
+    rapportoBlocchiTemporali
+) {
+
+    if (
+        !valutazioneTemporale ||
+        !rapportoBlocchiTemporali
+    ) {
+
+        return null;
+
+    }
+
+
+    const rapportoRespiratorio =
+        Number(
+            valutazioneTemporale.rapporto
+        );
+
+
+    const rapportoBlocchi =
+        Number(
+            rapportoBlocchiTemporali.rapporto
+        );
+
+
+    if (
+        !Number.isFinite(
+            rapportoRespiratorio
+        ) ||
+        !Number.isFinite(
+            rapportoBlocchi
+        )
+    ) {
+
+        return null;
+
+    }
+
+
+    const differenza =
+        rapportoBlocchi -
+        rapportoRespiratorio;
+
+
+    let direzione =
+        "neutro";
+
+
+    if (
+        differenza > 0.05
+    ) {
+
+        direzione =
+            "sposta_verso_es";
+
+    }
+
+
+    if (
+        differenza < -0.05
+    ) {
+
+        direzione =
+            "sposta_verso_in";
+
+    }
+
+
+    return {
+
+        rapportoRespiratorio:
+            rapportoRespiratorio,
+
+        rapportoBlocchi:
+            rapportoBlocchi,
+
+        differenza:
+            Number(
+                differenza.toFixed(
+                    2
+                )
+            ),
+
+        direzione:
+            direzione
+
+    };
+
+}
+
+/* =====================================================
    ANALISI DELLE APNEE DELL'ANEMODROMO
 ===================================================== */
 
