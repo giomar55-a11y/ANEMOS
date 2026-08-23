@@ -616,6 +616,123 @@ const ANEMOSCHESI_ORIENTAMENTO_APNEE_INTENTI = {
 };
 
 /* =====================================================
+   COERENZA DISTRIBUZIONE AIN / AES × INTENTO
+===================================================== */
+
+/*
+Confronta la prevalenza reale delle apnee:
+
+ain
+aes
+equilibrata
+nessuna
+
+con l'orientamento preferito
+dall'Intento.
+
+Non assegna ancora punteggi.
+*/
+
+function valutaOrientamentoApneePerIntentoAnemoschesi(
+    distribuzioneApnee,
+    intentoId
+) {
+
+    if (
+        !distribuzioneApnee ||
+        !intentoId
+    ) {
+
+        return null;
+
+    }
+
+
+    const orientamentoPreferito =
+        ANEMOSCHESI_ORIENTAMENTO_APNEE_INTENTI[
+            intentoId
+        ];
+
+
+    if (
+        !orientamentoPreferito
+    ) {
+
+        return null;
+
+    }
+
+
+    const prevalenzaReale =
+        distribuzioneApnee.prevalenza;
+
+
+    if (
+        !prevalenzaReale
+    ) {
+
+        return null;
+
+    }
+
+
+    let esito =
+        "neutro";
+
+
+    if (
+        prevalenzaReale ===
+        "nessuna"
+    ) {
+
+        esito =
+            "assenza_apnee";
+
+    } else if (
+        prevalenzaReale ===
+        orientamentoPreferito
+    ) {
+
+        esito =
+            "coerente";
+
+    } else if (
+        prevalenzaReale ===
+        "equilibrata" ||
+        orientamentoPreferito ===
+        "equilibrata"
+    ) {
+
+        esito =
+            "parzialmente_coerente";
+
+    } else {
+
+        esito =
+            "opposto";
+
+    }
+
+
+    return {
+
+        intentoId:
+            intentoId,
+
+        orientamentoPreferito:
+            orientamentoPreferito,
+
+        prevalenzaReale:
+            prevalenzaReale,
+
+        esito:
+            esito
+
+    };
+
+}
+
+/* =====================================================
    PESO DELLA COMPONENTE APNEA
 ===================================================== */
 
