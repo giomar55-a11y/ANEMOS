@@ -1363,6 +1363,33 @@ const punteggioApnee =
 
         : punteggioSequenza;
 
+   const valutazioneOrientamentoApnee =
+    valutaPunteggioOrientamentoApneeAnemoschesi(
+        orientamentoApneeIntento
+    );
+
+
+const punteggioOrientamentoApnee =
+    valutazioneOrientamentoApnee &&
+    typeof valutazioneOrientamentoApnee.punteggio ===
+        "number"
+
+        ? valutazioneOrientamentoApnee.punteggio
+        : punteggioApnee;
+
+
+const punteggioApneeComplessivo =
+    Math.round(
+        (
+            punteggioApnee *
+            0.70
+        ) +
+        (
+            punteggioOrientamentoApnee *
+            0.30
+        )
+    );
+
    const valutazioniFisiologicheApnee =
     analisiApnee
         .map(
@@ -1443,9 +1470,9 @@ const fisiologiaApnee =
             ANEMOSCHESI_PESO_TEMPORALE_ANEMODROMO
         ) +
         (
-            punteggioApnee *
-            ANEMOSCHESI_PESO_APNEE_ANEMODROMO
-        )
+    punteggioApneeComplessivo *
+    ANEMOSCHESI_PESO_APNEE_ANEMODROMO
+)
     );
    
     let semaforo =
@@ -1543,6 +1570,15 @@ punteggioTemporale:
 
 punteggioApnee:
     punteggioApnee,
+
+       valutazioneOrientamentoApnee:
+    valutazioneOrientamentoApnee,
+
+punteggioOrientamentoApnee:
+    punteggioOrientamentoApnee,
+
+punteggioApneeComplessivo:
+    punteggioApneeComplessivo,
 
        valutazioniFisiologicheApnee:
     valutazioniFisiologicheApnee,
