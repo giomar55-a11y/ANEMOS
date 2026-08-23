@@ -733,6 +733,84 @@ function valutaOrientamentoApneePerIntentoAnemoschesi(
 }
 
 /* =====================================================
+   PUNTEGGIO ORIENTAMENTO AIN / AES
+===================================================== */
+
+/*
+Valuta la coerenza della distribuzione
+complessiva delle apnee rispetto all'Intento.
+
+Scala:
+
++2 = coerente
++1 = parzialmente coerente
+ 0 = assenza di apnee
+-2 = opposto
+*/
+
+function valutaPunteggioOrientamentoApneeAnemoschesi(
+    orientamentoApnee
+) {
+
+    if (
+        !orientamentoApnee
+    ) {
+
+        return null;
+
+    }
+
+
+    const valori = {
+
+        coerente:
+            2,
+
+        parzialmente_coerente:
+            1,
+
+        assenza_apnee:
+            0,
+
+        opposto:
+            -2
+
+    };
+
+
+    const valore =
+        valori[
+            orientamentoApnee.esito
+        ];
+
+
+    if (
+        typeof valore !==
+        "number"
+    ) {
+
+        return null;
+
+    }
+
+
+    return {
+
+        ...orientamentoApnee,
+
+        valore:
+            valore,
+
+        punteggio:
+            normalizzaContributoVolumetricoAnemoschesi(
+                valore
+            )
+
+    };
+
+}
+
+/* =====================================================
    PESO DELLA COMPONENTE APNEA
 ===================================================== */
 
