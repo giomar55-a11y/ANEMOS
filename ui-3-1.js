@@ -128,11 +128,41 @@ function renderRiepilogoAnemoschesi() {
     }
 
 
-    esito.textContent =
-        valutazione
-            .punteggioComplessivo +
-        "%";
+    const distribuzioneDiagnostica =
+    valutazione
+        .distribuzioneApneeMatriceTemporale;
 
+
+const orientamentoDiagnostico =
+    valutazione
+        .orientamentoApneeIntento;
+
+
+esito.textContent =
+    valutazione.punteggioComplessivo +
+    "%" +
+    (
+        distribuzioneDiagnostica
+            ? " · AIN " +
+              Math.round(
+                  distribuzioneDiagnostica.quotaAIN * 100
+              ) +
+              "% · AES " +
+              Math.round(
+                  distribuzioneDiagnostica.quotaAES * 100
+              ) +
+              "% · " +
+              distribuzioneDiagnostica.prevalenza +
+              " " +
+              distribuzioneDiagnostica.forzaPrevalenza
+            : ""
+    ) +
+    (
+        orientamentoDiagnostico
+            ? " · " +
+              orientamentoDiagnostico.esito
+            : ""
+    );
 
     contenitore.classList.add(
         "anemoschesi-" +
@@ -140,13 +170,44 @@ function renderRiepilogoAnemoschesi() {
     );
 
 
-    contenitore.title =
-        "Coerenza complessiva con l'Intento " +
-        valutazione.intentoNome +
-        ": " +
-        valutazione.punteggioComplessivo +
-        "%.";
+    const distribuzioneApnee =
+    valutazione
+        .distribuzioneApneeMatriceTemporale;
 
+
+const orientamentoApnee =
+    valutazione
+        .orientamentoApneeIntento;
+
+
+contenitore.title =
+    "Coerenza complessiva con l'Intento " +
+    valutazione.intentoNome +
+    ": " +
+    valutazione.punteggioComplessivo +
+    "%." +
+    (
+        distribuzioneApnee
+            ? " | AIN: " +
+              Math.round(
+                  distribuzioneApnee.quotaAIN * 100
+              ) +
+              "% | AES: " +
+              Math.round(
+                  distribuzioneApnee.quotaAES * 100
+              ) +
+              "% | prevalenza: " +
+              distribuzioneApnee.prevalenza +
+              " | forza: " +
+              distribuzioneApnee.forzaPrevalenza
+            : ""
+    ) +
+    (
+        orientamentoApnee
+            ? " | orientamento: " +
+              orientamentoApnee.esito
+            : ""
+    );
 }
 
 /* =====================================================
