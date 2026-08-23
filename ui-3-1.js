@@ -138,37 +138,66 @@ const orientamentoDiagnostico =
         .orientamentoApneeIntento;
 
 
+let suggerimentoApnee =
+    "";
+
+
+if (
+    distribuzioneDiagnostica &&
+    orientamentoDiagnostico
+) {
+
+    if (
+        orientamentoDiagnostico.esito ===
+        "opposto"
+    ) {
+
+        if (
+            distribuzioneDiagnostica.prevalenza ===
+            "ain"
+        ) {
+
+            suggerimentoApnee =
+                " · Apnee: riduci dopo IN e/o aumenta dopo ES";
+
+        }
+
+
+        if (
+            distribuzioneDiagnostica.prevalenza ===
+            "aes"
+        ) {
+
+            suggerimentoApnee =
+                " · Apnee: riduci dopo ES e/o aumenta dopo IN";
+
+        }
+
+    }
+
+
+    if (
+        orientamentoDiagnostico.esito ===
+        "coerente"
+    ) {
+
+        suggerimentoApnee =
+            " · Apnee: distribuzione coerente";
+
+    }
+
+}
+
+
 esito.textContent =
     valutazione.punteggioComplessivo +
     "%" +
-    (
-        distribuzioneDiagnostica
-            ? " · AIN " +
-              Math.round(
-                  distribuzioneDiagnostica.quotaAIN * 100
-              ) +
-              "% · AES " +
-              Math.round(
-                  distribuzioneDiagnostica.quotaAES * 100
-              ) +
-              "% · " +
-              distribuzioneDiagnostica.prevalenza +
-              " " +
-              distribuzioneDiagnostica.forzaPrevalenza
-            : ""
-    ) +
-    (
-        orientamentoDiagnostico
-            ? " · " +
-              orientamentoDiagnostico.esito
-            : ""
-    );
+    suggerimentoApnee;
 
-    contenitore.classList.add(
-        "anemoschesi-" +
-        valutazione.semaforo
-    );
-
+   contenitore.classList.add(
+    "anemoschesi-" +
+    valutazione.semaforo
+);
 
     const distribuzioneApnee =
     valutazione
