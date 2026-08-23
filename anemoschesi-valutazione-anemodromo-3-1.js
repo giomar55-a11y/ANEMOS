@@ -952,8 +952,11 @@ function analizzaDistribuzioneApneeMatriceTemporaleAnemoschesi(
                 0,
 
             prevalenza:
-                "nessuna"
+            "nessuna",
 
+            forzaPrevalenza:
+            "nessuna"
+           
         };
 
     }
@@ -970,61 +973,77 @@ function analizzaDistribuzioneApneeMatriceTemporaleAnemoschesi(
 
 
     let prevalenza =
-        "equilibrata";
+    "equilibrata";
 
 
-    if (
-        quotaAIN >= 0.60
-    ) {
-
-        prevalenza =
-            "ain";
-
-    }
+let forzaPrevalenza =
+    "equilibrata";
 
 
-    if (
-        quotaAES >= 0.60
-    ) {
+if (
+    quotaAIN >= 0.60
+) {
 
-        prevalenza =
-            "aes";
+    prevalenza =
+        "ain";
 
-    }
-
-
-    return {
-
-        durataAIN:
-            durataAIN,
-
-        durataAES:
-            durataAES,
-
-        durataApnee:
-            durataApnee,
-
-        quotaAIN:
-            Number(
-                quotaAIN.toFixed(
-                    2
-                )
-            ),
-
-        quotaAES:
-            Number(
-                quotaAES.toFixed(
-                    2
-                )
-            ),
-
-        prevalenza:
-            prevalenza
-
-    };
+    forzaPrevalenza =
+        quotaAIN >= 0.80
+            ? "forte"
+            : "moderata";
 
 }
 
+
+if (
+    quotaAES >= 0.60
+) {
+
+    prevalenza =
+        "aes";
+
+    forzaPrevalenza =
+        quotaAES >= 0.80
+            ? "forte"
+            : "moderata";
+
+}
+
+
+return {
+
+    durataAIN:
+        durataAIN,
+
+    durataAES:
+        durataAES,
+
+    durataApnee:
+        durataApnee,
+
+    quotaAIN:
+        Number(
+            quotaAIN.toFixed(
+                2
+            )
+        ),
+
+    quotaAES:
+        Number(
+            quotaAES.toFixed(
+                2
+            )
+        ),
+
+    prevalenza:
+        prevalenza,
+
+    forzaPrevalenza:
+        forzaPrevalenza
+
+};
+
+}
 /* =====================================================
    ANALISI DELLE APNEE DELL'ANEMODROMO
 ===================================================== */
