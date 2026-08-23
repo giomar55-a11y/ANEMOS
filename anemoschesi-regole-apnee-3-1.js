@@ -553,6 +553,67 @@ const ANEMOSCHESI_APNEA_INTENTI = {
 
 };
 
+/* =====================================================
+   ORIENTAMENTO AIN / AES × INTENTO
+===================================================== */
+
+/*
+Descrive quale distribuzione complessiva
+delle apnee è maggiormente coerente
+con ciascun Intento.
+
+Questa regola NON assegna ancora punteggi.
+
+Valori:
+
+ain
+aes
+equilibrata
+
+La scelta deriva dalla diversa funzione
+delle apnee post-IN e post-ES già definita
+nelle regole della singola apnea.
+*/
+
+const ANEMOSCHESI_ORIENTAMENTO_APNEE_INTENTI = {
+
+    calmare:
+        "aes",
+
+    scaricare:
+        "aes",
+
+    recuperare:
+        "aes",
+
+    riposare:
+        "aes",
+
+    percepire:
+        "equilibrata",
+
+    coordinare:
+        "equilibrata",
+
+    mobilizzare:
+        "equilibrata",
+
+    stabilizzare:
+        "ain",
+
+    attivare:
+        "ain",
+
+    potenziare:
+        "ain",
+
+    resistere:
+        "equilibrata",
+
+    performare:
+        "ain"
+
+};
 
 /* =====================================================
    PESO DELLA COMPONENTE APNEA
