@@ -1306,6 +1306,12 @@ const distribuzioneApneeMatriceTemporale =
     analizzaDistribuzioneApneeMatriceTemporaleAnemoschesi(
         matriceTemporale
     );
+
+const orientamentoApneeIntento =
+    valutaOrientamentoApneePerIntentoAnemoschesi(
+        distribuzioneApneeMatriceTemporale,
+        intentoEffettivo
+    );
    
    const analisiApnee =
     analizzaApneeAnemodromoAnemoschesi(
@@ -1506,6 +1512,9 @@ punteggioTemporale:
 
        distribuzioneApneeMatriceTemporale:
     distribuzioneApneeMatriceTemporale,
+
+       orientamentoApneeIntento:
+    orientamentoApneeIntento,
 
        analisiApnee:
     analisiApnee,
