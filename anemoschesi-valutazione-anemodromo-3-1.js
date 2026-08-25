@@ -1099,6 +1099,168 @@ function analizzaApneeAnemodromoAnemoschesi(
 }
 
 /* =====================================================
+   TRANSIZIONI TRA ANEMOMERI
+===================================================== */
+
+/*
+Analizza le relazioni tra Anemomeri consecutivi.
+
+Per ogni transizione descrive:
+
+- tipo di passaggio
+- variazione del carico
+- variazione della durata
+
+Non assegna ancora punteggi.
+*/
+
+function analizzaTransizioniAnemomeriAnemoschesi(
+    profiliAnemomeri
+) {
+
+    if (
+        !Array.isArray(
+            profiliAnemomeri
+        ) ||
+        profiliAnemomeri.length < 2
+    ) {
+
+        return [];
+
+    }
+
+
+    const transizioni =
+        [];
+
+
+    for (
+        let i = 1;
+        i < profiliAnemomeri.length;
+        i++
+    ) {
+
+        const precedente =
+            profiliAnemomeri[
+                i - 1
+            ];
+
+
+        const successivo =
+            profiliAnemomeri[
+                i
+            ];
+
+
+        let andamentoCarico =
+            "stabile";
+
+
+        if (
+            successivo.carico >
+            precedente.carico
+        ) {
+
+            andamentoCarico =
+                "crescente";
+
+        }
+
+
+        if (
+            successivo.carico <
+            precedente.carico
+        ) {
+
+            andamentoCarico =
+                "decrescente";
+
+        }
+
+
+        let andamentoDurata =
+            "stabile";
+
+
+        if (
+            successivo.durata >
+            precedente.durata
+        ) {
+
+            andamentoDurata =
+                "crescente";
+
+        }
+
+
+        if (
+            successivo.durata <
+            precedente.durata
+        ) {
+
+            andamentoDurata =
+                "decrescente";
+
+        }
+
+
+        const tipoPassaggio =
+            String(
+                precedente.tipo
+            ) +
+            "_verso_" +
+            String(
+                successivo.tipo
+            );
+
+
+        transizioni.push(
+            {
+
+                indicePrecedente:
+                    i - 1,
+
+                indiceSuccessivo:
+                    i,
+
+                tipoPrecedente:
+                    precedente.tipo,
+
+                tipoSuccessivo:
+                    successivo.tipo,
+
+                tipoPassaggio:
+                    tipoPassaggio,
+
+                caricoPrecedente:
+                    precedente.carico,
+
+                caricoSuccessivo:
+                    successivo.carico,
+
+                andamentoCarico:
+                    andamentoCarico,
+
+                durataPrecedente:
+                    precedente.durata,
+
+                durataSuccessiva:
+                    successivo.durata,
+
+                andamentoDurata:
+                    andamentoDurata
+
+            }
+        );
+
+    }
+
+
+    return transizioni;
+
+}
+
+/* =====================================================
    VALUTAZIONE COMPLESSIVA
 ===================================================== */
 
@@ -1182,6 +1344,11 @@ function valutaAnemodromoPerIntentoAnemoschesi(
         creaProfiliSequenzaAnemoschesi(
             sequenza
         );
+
+   const transizioniAnemomeri =
+    analizzaTransizioniAnemomeriAnemoschesi(
+        profiliAnemomeri
+    );
 
    const matriceTemporale =
     analizzaMatriceTemporaleAnemodromoAnemoschesi(
@@ -1600,6 +1767,9 @@ punteggioComplessivo:
 
         sconsigliatiPresenti:
             sconsigliatiPresenti,
+
+       transizioniAnemomeri:
+    transizioniAnemomeri,
 
         valutazioniAnemomeri:
             valutazioniAnemomeri
