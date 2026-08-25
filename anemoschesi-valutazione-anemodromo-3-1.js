@@ -1328,8 +1328,18 @@ function descriviAndamentoTransizioniAnemoschesi(
 
 
         if (
-            crescenti ===
+            stabili ===
             valori.length
+        ) {
+
+            return "stabile";
+
+        }
+
+
+        if (
+            decrescenti === 0 &&
+            crescenti > 0
         ) {
 
             return "crescente";
@@ -1338,21 +1348,11 @@ function descriviAndamentoTransizioniAnemoschesi(
 
 
         if (
-            decrescenti ===
-            valori.length
+            crescenti === 0 &&
+            decrescenti > 0
         ) {
 
             return "decrescente";
-
-        }
-
-
-        if (
-            stabili ===
-            valori.length
-        ) {
-
-            return "stabile";
 
         }
 
