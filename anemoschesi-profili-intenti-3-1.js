@@ -127,6 +127,94 @@ const ANEMOSCHESI_DESCRITTORI = {
 
 };
 
+/* =====================================================
+   ANDAMENTI DELLE TRANSIZIONI
+===================================================== */
+
+/*
+Descrive l'evoluzione di una grandezza
+tra Anemomeri consecutivi.
+
+Utilizzato per:
+
+- carico
+- durata
+*/
+
+const ANEMOSCHESI_ANDAMENTI_TRANSIZIONE = {
+
+    CRESCENTE:
+        "crescente",
+
+    DECRESCENTE:
+        "decrescente",
+
+    STABILE:
+        "stabile",
+
+    VARIABILE:
+        "variabile"
+
+};
+
+/* =====================================================
+   TRANSIZIONI × INTENTO
+===================================================== */
+
+/*
+Definisce gli andamenti di carico e durata
+preferiti per ciascun Intento.
+
+Questa prima versione viene introdotta
+progressivamente, Intento per Intento.
+
+Non assegna ancora punteggi.
+*/
+
+const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
+
+    calmare: {
+
+        carico: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
+        },
+
+        durata: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
+        }
+
+    }
+
+};
 
 /* =====================================================
    PROFILI DEGLI INTENTI
