@@ -1261,6 +1261,143 @@ function analizzaTransizioniAnemomeriAnemoschesi(
 }
 
 /* =====================================================
+   ANDAMENTO COMPLESSIVO DELLE TRANSIZIONI
+===================================================== */
+
+/*
+Riassume l'andamento delle transizioni
+tra Anemomeri consecutivi.
+
+Considera separatamente:
+
+- andamento del carico
+- andamento della durata
+
+Possibili esiti:
+
+crescente
+decrescente
+stabile
+variabile
+
+Non assegna ancora punteggi.
+*/
+
+function descriviAndamentoTransizioniAnemoschesi(
+    transizioni
+) {
+
+    if (
+        !Array.isArray(
+            transizioni
+        ) ||
+        transizioni.length === 0
+    ) {
+
+        return null;
+
+    }
+
+
+    function classificaAndamento(
+        valori
+    ) {
+
+        const crescenti =
+            valori.filter(
+                valore =>
+                    valore ===
+                    "crescente"
+            ).length;
+
+
+        const decrescenti =
+            valori.filter(
+                valore =>
+                    valore ===
+                    "decrescente"
+            ).length;
+
+
+        const stabili =
+            valori.filter(
+                valore =>
+                    valore ===
+                    "stabile"
+            ).length;
+
+
+        if (
+            crescenti ===
+            valori.length
+        ) {
+
+            return "crescente";
+
+        }
+
+
+        if (
+            decrescenti ===
+            valori.length
+        ) {
+
+            return "decrescente";
+
+        }
+
+
+        if (
+            stabili ===
+            valori.length
+        ) {
+
+            return "stabile";
+
+        }
+
+
+        return "variabile";
+
+    }
+
+
+    const andamentoCarichi =
+        transizioni.map(
+            transizione =>
+                transizione
+                    .andamentoCarico
+        );
+
+
+    const andamentoDurate =
+        transizioni.map(
+            transizione =>
+                transizione
+                    .andamentoDurata
+        );
+
+
+    return {
+
+        numeroTransizioni:
+            transizioni.length,
+
+        carico:
+            classificaAndamento(
+                andamentoCarichi
+            ),
+
+        durata:
+            classificaAndamento(
+                andamentoDurate
+            )
+
+    };
+
+}
+
+/* =====================================================
    VALUTAZIONE COMPLESSIVA
 ===================================================== */
 
@@ -1348,6 +1485,11 @@ function valutaAnemodromoPerIntentoAnemoschesi(
    const transizioniAnemomeri =
     analizzaTransizioniAnemomeriAnemoschesi(
         profiliAnemomeri
+    );
+
+   const andamentoTransizioni =
+    descriviAndamentoTransizioniAnemoschesi(
+        transizioniAnemomeri
     );
 
    const matriceTemporale =
@@ -1770,6 +1912,9 @@ punteggioComplessivo:
 
        transizioniAnemomeri:
     transizioniAnemomeri,
+
+       andamentoTransizioni:
+    andamentoTransizioni,
 
         valutazioniAnemomeri:
             valutazioniAnemomeri
