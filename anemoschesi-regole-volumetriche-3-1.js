@@ -468,10 +468,48 @@ const ANEMOSCHESI_SETTORI_INTENTI = {
         [ANEMOS_SETTORI.TORACE_SUPERIORE]:
             -1
 
+    },
+
+    scaricare: {
+
+        [ANEMOS_SETTORI.ADDOME]:
+            1,
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            1
+
+    },
+
+    recuperare: {
+
+        [ANEMOS_SETTORI.ADDOME]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            1,
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            0
+
+    },
+
+    riposare: {
+
+        [ANEMOS_SETTORI.ADDOME]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            1,
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            -1
+
     }
 
 };
-
 /* =====================================================
    ESCURSIONE × INTENTO
 ===================================================== */
