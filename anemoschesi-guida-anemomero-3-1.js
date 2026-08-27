@@ -1005,6 +1005,199 @@ function semaforoGuidaDurataAnemoschesi(
     );
 
 }
+
+/* =====================================================
+   DIREZIONE GUIDA DELLA DURATA
+===================================================== */
+
+function semaforoDirezioneDurataAnemoschesi(
+    sequenza,
+    anemomero,
+    direzione,
+    valutazioneSimulata
+) {
+
+    if (
+        !sequenza ||
+        !anemomero ||
+        !valutazioneSimulata
+    ) {
+
+        return null;
+
+    }
+
+
+    /*
+    Prima viene sempre rispettata
+    la plausibilità fisiologica.
+    */
+
+    const fisiologia =
+        valutazioneSimulata.fisiologia;
+
+
+    if (
+        fisiologia
+    ) {
+
+        if (
+            fisiologia.livello ===
+                ANEMOSCHESI_ESITI_FISIOLOGICI.ERRORE ||
+            fisiologia.livello ===
+                ANEMOSCHESI_ESITI_FISIOLOGICI.CRITICO
+        ) {
+
+            return "rosso";
+
+        }
+
+
+        if (
+            fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.ATTENZIONE
+        ) {
+
+            return "giallo";
+
+        }
+
+    }
+
+
+    const intentoId =
+        ottieniIntento(
+            sequenza
+        );
+
+
+    const regole =
+        ANEMOSCHESI_DURATA_INTENTI[
+            intentoId
+        ]?.[
+            anemomero.tipo
+        ];
+
+
+    if (
+        !regole
+    ) {
+
+        return null;
+
+    }
+
+
+    const fasciaAttuale =
+        riconosciFasciaDurataAnemoschesi(
+            anemomero.durata
+        );
+
+
+    if (
+        !fasciaAttuale
+    ) {
+
+        return null;
+
+    }
+
+
+    const valoreAttuale =
+        regole[
+            fasciaAttuale
+        ];
+
+
+    if (
+        typeof valoreAttuale !==
+        "number"
+    ) {
+
+        return null;
+
+    }
+
+
+    /*
+    Cerchiamo nella direzione scelta
+    se esiste una durata più favorevole.
+
+    Questo permette, ad esempio,
+    di mostrare + verde a 1 secondo
+    anche se 1 -> 2 resta nella stessa fascia.
+    */
+
+    const passo =
+        direzione === "aumenta"
+            ? 1
+            : -1;
+
+
+    let durataEsplorata =
+        anemomero.durata +
+        passo;
+
+
+    while (
+        durataEsplorata >= 1 &&
+        durataEsplorata < 30
+    ) {
+
+        const fascia =
+            riconosciFasciaDurataAnemoschesi(
+                durataEsplorata
+            );
+
+
+        const valore =
+            regole[
+                fascia
+            ];
+
+
+        if (
+            typeof valore ===
+            "number" &&
+            valore !== valoreAttuale
+        ) {
+
+            if (
+                valore >
+                valoreAttuale
+            ) {
+
+                return "verde";
+
+            }
+
+
+            if (
+                valore <
+                valoreAttuale
+            ) {
+
+                return "rosso";
+
+            }
+
+        }
+
+
+        durataEsplorata +=
+            passo;
+
+    }
+
+
+    /*
+    Nessun miglioramento o peggioramento
+    significativo nella direzione esplorata.
+    */
+
+    return "giallo";
+
+}
 /* =====================================================
    GUIDA DEI COMANDI − E +
 ===================================================== */
@@ -1078,8 +1271,10 @@ function creaGuidaDurataAnemoschesi(
 
            semaforo:
     valutazioneMeno
-        ? semaforoGuidaDurataAnemoschesi(
-            valutazioneAttuale.punteggio,
+        ? semaforoDirezioneDurataAnemoschesi(
+            sequenza,
+            anemomero,
+            "diminuisci",
             valutazioneMeno
         )
         : null
@@ -1097,8 +1292,10 @@ function creaGuidaDurataAnemoschesi(
 
            semaforo:
     valutazionePiu
-        ? semaforoGuidaDurataAnemoschesi(
-            valutazioneAttuale.punteggio,
+        ? semaforoDirezioneDurataAnemoschesi(
+            sequenza,
+            anemomero,
+            "aumenta",
             valutazionePiu
         )
         : null
