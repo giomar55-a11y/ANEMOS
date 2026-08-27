@@ -887,14 +887,58 @@ function creaGuidaVolumiAnemoschesi(
                         ? valutazione.punteggio
                         : null,
 
-                semaforo:
-                    valutazione
-                        ? semaforoGuidaDurataAnemoschesi(
-                            valutazioneAttuale.punteggio,
-                            valutazione
-                        )
-                        : null
+                semaforo: (() => {
 
+    const intentoId =
+        ottieniIntento(
+            sequenza
+        );
+
+
+    const valoreVolume =
+        ANEMOSCHESI_STATO_VOLUME_INTENTI[
+            intentoId
+        ]?.[
+            volume
+        ];
+
+
+    if (
+        typeof valoreVolume !==
+        "number"
+    ) {
+
+        return valutazione
+            ? semaforoGuidaDurataAnemoschesi(
+                valutazioneAttuale.punteggio,
+                valutazione
+            )
+            : null;
+
+    }
+
+
+    if (
+        valoreVolume === 2
+    ) {
+
+        return "verde";
+
+    }
+
+
+    if (
+        valoreVolume === -2
+    ) {
+
+        return "rosso";
+
+    }
+
+
+    return "giallo";
+
+})()
             };
 
         }
