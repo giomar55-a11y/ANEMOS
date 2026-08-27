@@ -767,7 +767,13 @@ function analizzaSettoreVolumetricoAnemoschesi(
                 direzione
             ]
             : null;
-
+   
+const valoreSettore =
+    ANEMOSCHESI_SETTORI_INTENTI[
+        intentoId
+    ]?.[
+        settore.nome
+    ];
 
     return {
 
@@ -805,7 +811,12 @@ function analizzaSettoreVolumetricoAnemoschesi(
         punteggioDirezione:
             normalizzaContributoVolumetricoAnemoschesi(
                 valoreDirezione
-            )
+            ),
+
+       punteggioSettore:
+    normalizzaContributoVolumetricoAnemoschesi(
+        valoreSettore
+    )
 
     };
 
