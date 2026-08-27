@@ -635,14 +635,58 @@ function creaGuidaSettoriAnemoschesi(
                         ? valutazione.punteggio
                         : null,
 
-                semaforo:
-                    valutazione
-                        ? semaforoGuidaDurataAnemoschesi(
-                            valutazioneAttuale.punteggio,
-                            valutazione
-                        )
-                        : null
+               semaforo: (() => {
 
+    const intentoId =
+        ottieniIntento(
+            sequenza
+        );
+
+
+    const valoreSettore =
+        ANEMOSCHESI_SETTORI_INTENTI[
+            intentoId
+        ]?.[
+            nomeSettore
+        ];
+
+
+    if (
+        typeof valoreSettore !==
+        "number"
+    ) {
+
+        return valutazione
+            ? semaforoGuidaDurataAnemoschesi(
+                valutazioneAttuale.punteggio,
+                valutazione
+            )
+            : null;
+
+    }
+
+
+    if (
+        valoreSettore === 2
+    ) {
+
+        return "verde";
+
+    }
+
+
+    if (
+        valoreSettore === -2
+    ) {
+
+        return "rosso";
+
+    }
+
+
+    return "giallo";
+
+})()
             };
 
         }
