@@ -212,9 +212,142 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         }
 
-    }
+    },
+
+       scaricare: {
+
+        carico: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
+        },
+
+        durata: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
+        }
+
+    },
+
+       recuperare: {
+
+        carico: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
+        },
+
+        durata: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
+        }
+
+   },
+
+    riposare: {
+
+        carico: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
+        },
+
+        durata: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
+        }
+
+    } 
 
 };
+   
 
 /* =====================================================
    PROFILI DEGLI INTENTI
