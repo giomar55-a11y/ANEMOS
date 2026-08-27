@@ -432,6 +432,44 @@ const ANEMOSCHESI_STATO_VOLUME_INTENTI = {
 
 };
 
+/* =====================================================
+   SETTORE ANATOMICO × INTENTO
+===================================================== */
+
+/*
+Valuta la preferenza relativa per il settore
+anatomico coinvolto nell'Anemomero.
+
+Scala:
+
++2 = molto favorevole
++1 = favorevole
+ 0 = neutro
+-1 = poco favorevole
+-2 = sfavorevole
+
+Questa matrice è distinta dalla distribuzione:
+
+- distribuzione = come partecipano più settori
+- settore anatomico = quale regione partecipa
+*/
+
+const ANEMOSCHESI_SETTORI_INTENTI = {
+
+    calmare: {
+
+        [ANEMOS_SETTORI.ADDOME]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            1,
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            -1
+
+    }
+
+};
 
 /* =====================================================
    ESCURSIONE × INTENTO
