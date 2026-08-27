@@ -1104,20 +1104,22 @@ const settore =
 
 
     const punteggio =
-        Math.round(
-            stato *
-                pesi.stato +
+    Math.round(
+        stato *
+            pesi.stato +
 
-            escursione *
-                pesi.escursione +
+        escursione *
+            pesi.escursione +
 
-            direzione *
-                pesi.direzione +
+        direzione *
+            pesi.direzione +
 
-            distribuzione *
-                pesi.distribuzione
-        );
+        settore *
+            pesi.settore +
 
+        distribuzione *
+            pesi.distribuzione
+    );
 
     return {
 
@@ -1138,6 +1140,11 @@ const settore =
             Math.round(
                 direzione
             ),
+
+       settore:
+    Math.round(
+        settore
+    ),
 
         distribuzione:
             Math.round(
