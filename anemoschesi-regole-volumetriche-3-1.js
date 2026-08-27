@@ -114,20 +114,21 @@ const ANEMOSCHESI_COORDINATE_VOLUME = {
 const ANEMOSCHESI_PESI_NUCLEO_VOLUMETRICO = {
 
     stato:
-        0.25,
+        0.20,
 
     escursione:
-        0.25,
+        0.20,
 
     direzione:
-        0.15,
+        0.10,
+
+    settore:
+        0.20,
 
     distribuzione:
-        0.35
+        0.30
 
 };
-
-
 /* =====================================================
    PESI COMPLESSIVI DELL'ANEMOMERO
 ===================================================== */
