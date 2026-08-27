@@ -1056,7 +1056,14 @@ function valutaNucleoVolumetricoAnemoschesi(
                     analisi.punteggioDirezione
             )
         );
-
+   
+const settore =
+    mediaPunteggiVolumetriciAnemoschesi(
+        analisiSettori.map(
+            analisi =>
+                analisi.punteggioSettore
+        )
+    );
 
     const categoriaDistribuzione =
         riconosciDistribuzioneVolumetricaAnemoschesi(
@@ -1083,6 +1090,7 @@ function valutaNucleoVolumetricoAnemoschesi(
         stato,
         escursione,
         direzione,
+        settore,
         distribuzione
     )
 ) {
@@ -1155,6 +1163,7 @@ function statoNucleoNonDisponibileAnemoschesi(
     stato,
     escursione,
     direzione,
+    settore,
     distribuzione
 ) {
 
@@ -1162,11 +1171,11 @@ function statoNucleoNonDisponibileAnemoschesi(
         typeof stato !== "number" ||
         typeof escursione !== "number" ||
         typeof direzione !== "number" ||
+        typeof settore !== "number" ||
         typeof distribuzione !== "number"
     );
 
 }
-
 /* =====================================================
    RICONOSCIMENTO DELLA FASCIA DI DURATA
 ===================================================== */
