@@ -857,6 +857,61 @@ function creaGuidaVolumiAnemoschesi(
         );
 
 
+    const intentoId =
+        ottieniIntento(
+            sequenza
+        );
+
+
+    const valutazioniVolumi =
+        {};
+
+
+    volumi.forEach(
+        volume => {
+
+            valutazioniVolumi[volume] =
+                simulaVolumeAnemomeroAnemoschesi(
+                    sequenza,
+                    anemomero,
+                    nomeSettore,
+                    volume
+                );
+
+        }
+    );
+
+
+    const valoriDisponibili =
+        volumi
+            .filter(
+                volume =>
+                    valutazioniVolumi[volume] !==
+                    null
+            )
+            .map(
+                volume =>
+                    ANEMOSCHESI_STATO_VOLUME_INTENTI[
+                        intentoId
+                    ]?.[
+                        volume
+                    ]
+            )
+            .filter(
+                valore =>
+                    typeof valore ===
+                    "number"
+            );
+
+
+    const migliorValoreDisponibile =
+        valoriDisponibili.length
+            ? Math.max(
+                ...valoriDisponibili
+            )
+            : null;
+
+
     const guida =
         {};
 
@@ -865,12 +920,64 @@ function creaGuidaVolumiAnemoschesi(
         volume => {
 
             const valutazione =
-                simulaVolumeAnemomeroAnemoschesi(
-                    sequenza,
-                    anemomero,
-                    nomeSettore,
+                valutazioniVolumi[
                     volume
-                );
+                ];
+
+
+            const valoreVolume =
+                ANEMOSCHESI_STATO_VOLUME_INTENTI[
+                    intentoId
+                ]?.[
+                    volume
+                ];
+
+
+            let semaforo = null;
+
+
+            if (
+                typeof valoreVolume ===
+                "number"
+            ) {
+
+                if (
+                    migliorValoreDisponibile >= 1 &&
+                    valoreVolume ===
+                        migliorValoreDisponibile
+                ) {
+
+                    semaforo = "verde";
+
+                }
+
+                else if (
+                    valoreVolume === -2
+                ) {
+
+                    semaforo = "rosso";
+
+                }
+
+                else {
+
+                    semaforo = "giallo";
+
+                }
+
+            }
+
+            else {
+
+                semaforo =
+                    valutazione
+                        ? semaforoGuidaDurataAnemoschesi(
+                            valutazioneAttuale.punteggio,
+                            valutazione
+                        )
+                        : null;
+
+            }
 
 
             guida[volume] = {
@@ -887,58 +994,9 @@ function creaGuidaVolumiAnemoschesi(
                         ? valutazione.punteggio
                         : null,
 
-                semaforo: (() => {
+                semaforo:
+                    semaforo
 
-    const intentoId =
-        ottieniIntento(
-            sequenza
-        );
-
-
-    const valoreVolume =
-        ANEMOSCHESI_STATO_VOLUME_INTENTI[
-            intentoId
-        ]?.[
-            volume
-        ];
-
-
-    if (
-        typeof valoreVolume !==
-        "number"
-    ) {
-
-        return valutazione
-            ? semaforoGuidaDurataAnemoschesi(
-                valutazioneAttuale.punteggio,
-                valutazione
-            )
-            : null;
-
-    }
-
-
-    if (
-        valoreVolume === 2
-    ) {
-
-        return "verde";
-
-    }
-
-
-    if (
-        valoreVolume === -2
-    ) {
-
-        return "rosso";
-
-    }
-
-
-    return "giallo";
-
-})()
             };
 
         }
@@ -948,7 +1006,6 @@ function creaGuidaVolumiAnemoschesi(
     return guida;
 
 }
-
 /* =====================================================
    PRECEDENZA FISIOLOGICA DELLA GUIDA
 ===================================================== */
