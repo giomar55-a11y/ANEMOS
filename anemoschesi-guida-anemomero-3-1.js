@@ -240,6 +240,78 @@ function creaGuidaFlussoAnemoschesi(
     ];
 
 
+    const valutazioniFlussi =
+        {};
+
+
+    flussi.forEach(
+        flusso => {
+
+            valutazioniFlussi[flusso] =
+                simulaFlussoAnemomeroAnemoschesi(
+                    sequenza,
+                    anemomero,
+                    flusso
+                );
+
+        }
+    );
+
+
+    const semaforiBase =
+        {};
+
+
+    flussi.forEach(
+        flusso => {
+
+            const valutazione =
+                valutazioniFlussi[
+                    flusso
+                ];
+
+
+            semaforiBase[flusso] =
+                valutazione
+                    ? semaforoGuidaDurataAnemoschesi(
+                        valutazioneAttuale.punteggio,
+                        valutazione
+                    )
+                    : null;
+
+        }
+    );
+
+
+    const punteggiUtili =
+        flussi
+            .filter(
+                flusso =>
+                    valutazioniFlussi[flusso] &&
+                    semaforiBase[flusso] !==
+                        "rosso"
+            )
+            .map(
+                flusso =>
+                    valutazioniFlussi[
+                        flusso
+                    ].punteggio
+            )
+            .filter(
+                punteggio =>
+                    typeof punteggio ===
+                    "number"
+            );
+
+
+    const migliorPunteggio =
+        punteggiUtili.length
+            ? Math.max(
+                ...punteggiUtili
+            )
+            : null;
+
+
     const guida =
         {};
 
@@ -248,11 +320,29 @@ function creaGuidaFlussoAnemoschesi(
         flusso => {
 
             const valutazione =
-                simulaFlussoAnemomeroAnemoschesi(
-                    sequenza,
-                    anemomero,
+                valutazioniFlussi[
                     flusso
-                );
+                ];
+
+
+            let semaforo =
+                semaforiBase[
+                    flusso
+                ];
+
+
+            if (
+                valutazione &&
+                semaforo !== "rosso" &&
+                typeof migliorPunteggio ===
+                    "number" &&
+                valutazione.punteggio ===
+                    migliorPunteggio
+            ) {
+
+                semaforo = "verde";
+
+            }
 
 
             guida[flusso] = {
@@ -267,12 +357,7 @@ function creaGuidaFlussoAnemoschesi(
                         : null,
 
                 semaforo:
-                    valutazione
-                        ? semaforoGuidaDurataAnemoschesi(
-                            valutazioneAttuale.punteggio,
-                            valutazione
-                        )
-                        : null
+                    semaforo
 
             };
 
@@ -283,7 +368,6 @@ function creaGuidaFlussoAnemoschesi(
     return guida;
 
 }
-
 /* =====================================================
    SIMULAZIONE DEL PERCORSO
 ===================================================== */
