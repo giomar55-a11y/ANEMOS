@@ -477,6 +477,78 @@ function creaGuidaPercorsoAnemoschesi(
     ];
 
 
+    const valutazioniPercorsi =
+        {};
+
+
+    percorsi.forEach(
+        percorso => {
+
+            valutazioniPercorsi[percorso] =
+                simulaPercorsoAnemomeroAnemoschesi(
+                    sequenza,
+                    anemomero,
+                    percorso
+                );
+
+        }
+    );
+
+
+    const semaforiBase =
+        {};
+
+
+    percorsi.forEach(
+        percorso => {
+
+            const valutazione =
+                valutazioniPercorsi[
+                    percorso
+                ];
+
+
+            semaforiBase[percorso] =
+                valutazione
+                    ? semaforoGuidaDurataAnemoschesi(
+                        valutazioneAttuale.punteggio,
+                        valutazione
+                    )
+                    : null;
+
+        }
+    );
+
+
+    const punteggiUtili =
+        percorsi
+            .filter(
+                percorso =>
+                    valutazioniPercorsi[percorso] &&
+                    semaforiBase[percorso] !==
+                        "rosso"
+            )
+            .map(
+                percorso =>
+                    valutazioniPercorsi[
+                        percorso
+                    ].punteggio
+            )
+            .filter(
+                punteggio =>
+                    typeof punteggio ===
+                    "number"
+            );
+
+
+    const migliorPunteggio =
+        punteggiUtili.length
+            ? Math.max(
+                ...punteggiUtili
+            )
+            : null;
+
+
     const guida =
         {};
 
@@ -485,11 +557,29 @@ function creaGuidaPercorsoAnemoschesi(
         percorso => {
 
             const valutazione =
-                simulaPercorsoAnemomeroAnemoschesi(
-                    sequenza,
-                    anemomero,
+                valutazioniPercorsi[
                     percorso
-                );
+                ];
+
+
+            let semaforo =
+                semaforiBase[
+                    percorso
+                ];
+
+
+            if (
+                valutazione &&
+                semaforo !== "rosso" &&
+                typeof migliorPunteggio ===
+                    "number" &&
+                valutazione.punteggio ===
+                    migliorPunteggio
+            ) {
+
+                semaforo = "verde";
+
+            }
 
 
             guida[percorso] = {
@@ -504,12 +594,7 @@ function creaGuidaPercorsoAnemoschesi(
                         : null,
 
                 semaforo:
-                    valutazione
-                        ? semaforoGuidaDurataAnemoschesi(
-                            valutazioneAttuale.punteggio,
-                            valutazione
-                        )
-                        : null
+                    semaforo
 
             };
 
@@ -520,7 +605,6 @@ function creaGuidaPercorsoAnemoschesi(
     return guida;
 
 }
-
 /* =====================================================
    SIMULAZIONE DEL SETTORE
 ===================================================== */
