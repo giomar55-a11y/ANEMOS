@@ -2010,7 +2010,19 @@ const fisiologiaApnee =
 
         : null;
 
-    const punteggioComplessivo =
+    const pesoTransizioni =
+    0.05;
+
+
+const punteggioTransizioniEffettivo =
+    typeof punteggioTransizioni ===
+        "number"
+
+        ? punteggioTransizioni
+        : punteggioSequenza;
+
+
+const punteggioComplessivo =
     Math.round(
         (
             punteggioAnemomeri *
@@ -2021,7 +2033,8 @@ const fisiologiaApnee =
             (
                 0.40 -
                 ANEMOSCHESI_PESO_TEMPORALE_ANEMODROMO -
-                ANEMOSCHESI_PESO_APNEE_ANEMODROMO
+                ANEMOSCHESI_PESO_APNEE_ANEMODROMO -
+                pesoTransizioni
             )
         ) +
         (
@@ -2029,11 +2042,14 @@ const fisiologiaApnee =
             ANEMOSCHESI_PESO_TEMPORALE_ANEMODROMO
         ) +
         (
-    punteggioApneeComplessivo *
-    ANEMOSCHESI_PESO_APNEE_ANEMODROMO
-)
-    );
-   
+            punteggioApneeComplessivo *
+            ANEMOSCHESI_PESO_APNEE_ANEMODROMO
+        ) +
+        (
+            punteggioTransizioniEffettivo *
+            pesoTransizioni
+        )
+    );   
     let semaforo =
     determinaSemaforoAnemoschesi(
         punteggioComplessivo
