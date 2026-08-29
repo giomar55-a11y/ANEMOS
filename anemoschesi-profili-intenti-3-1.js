@@ -461,6 +461,41 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         }
 
+    },
+
+       stabilizzare: {
+
+        carico: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
+        },
+
+        durata: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
+        }
+
     }
 
 };
