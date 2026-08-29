@@ -1398,6 +1398,135 @@ function descriviAndamentoTransizioniAnemoschesi(
 }
 
 /* =====================================================
+   VALUTAZIONE DELLE TRANSIZIONI PER INTENTO
+===================================================== */
+
+/*
+Confronta l'andamento complessivo
+di carico e durata con le preferenze
+definite per l'Intento.
+
+Non modifica ancora il punteggio
+complessivo dell'Anemodromo.
+
+Possibili esiti:
+
+- preferito
+- neutro
+- sconsigliato
+*/
+
+function valutaAndamentoTransizioniPerIntentoAnemoschesi(
+    andamentoTransizioni,
+    intentoId
+) {
+
+    if (
+        !andamentoTransizioni ||
+        !intentoId
+    ) {
+
+        return null;
+
+    }
+
+
+    const regoleIntento =
+        ANEMOSCHESI_TRANSIZIONI_INTENTI[
+            intentoId
+        ];
+
+
+    if (
+        !regoleIntento
+    ) {
+
+        return null;
+
+    }
+
+
+    function valutaComponente(
+        andamento,
+        regole
+    ) {
+
+        if (
+            !andamento ||
+            !regole
+        ) {
+
+            return null;
+
+        }
+
+
+        if (
+            Array.isArray(
+                regole.preferiti
+            ) &&
+            regole.preferiti.includes(
+                andamento
+            )
+        ) {
+
+            return "preferito";
+
+        }
+
+
+        if (
+            Array.isArray(
+                regole.sconsigliati
+            ) &&
+            regole.sconsigliati.includes(
+                andamento
+            )
+        ) {
+
+            return "sconsigliato";
+
+        }
+
+
+        return "neutro";
+
+    }
+
+
+    return {
+
+        carico: {
+
+            andamento:
+                andamentoTransizioni.carico,
+
+            esito:
+                valutaComponente(
+                    andamentoTransizioni.carico,
+                    regoleIntento.carico
+                )
+
+        },
+
+        durata: {
+
+            andamento:
+                andamentoTransizioni.durata,
+
+            esito:
+                valutaComponente(
+                    andamentoTransizioni.durata,
+                    regoleIntento.durata
+                )
+
+        }
+
+    };
+
+}
+
+/* =====================================================
    VALUTAZIONE COMPLESSIVA
 ===================================================== */
 
@@ -1490,6 +1619,12 @@ function valutaAnemodromoPerIntentoAnemoschesi(
    const andamentoTransizioni =
     descriviAndamentoTransizioniAnemoschesi(
         transizioniAnemomeri
+    );
+
+   const valutazioneTransizioni =
+    valutaAndamentoTransizioniPerIntentoAnemoschesi(
+        andamentoTransizioni,
+        intentoEffettivo
     );
 
    const matriceTemporale =
@@ -1916,9 +2051,11 @@ punteggioComplessivo:
        andamentoTransizioni:
     andamentoTransizioni,
 
-        valutazioniAnemomeri:
-            valutazioniAnemomeri
+valutazioneTransizioni:
+    valutazioneTransizioni,
 
+valutazioniAnemomeri:
+    valutazioniAnemomeri
     };
 
 }
