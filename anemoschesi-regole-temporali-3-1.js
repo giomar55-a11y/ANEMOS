@@ -541,7 +541,7 @@ Per ora viene definito come dato separato.
 */
 
 const ANEMOSCHESI_PESO_TEMPORALE_ANEMODROMO =
-    0.20;
+    0.15;
 
 
 /* =====================================================
