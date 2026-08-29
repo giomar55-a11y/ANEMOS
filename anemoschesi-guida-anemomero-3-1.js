@@ -1363,6 +1363,36 @@ function semaforoDirezioneDurataAnemoschesi(
         anemomero.durata +
         passo;
 
+   /*
+Se il passo immediato mantiene
+una fascia già favorevole,
+la direzione resta favorevole.
+*/
+
+const fasciaImmediata =
+    riconosciFasciaDurataAnemoschesi(
+        durataEsplorata
+    );
+
+
+const valoreImmediato =
+    regole[
+        fasciaImmediata
+    ];
+
+
+if (
+    typeof valoreImmediato ===
+        "number" &&
+    valoreImmediato ===
+        valoreAttuale &&
+    valoreAttuale >= 1
+) {
+
+    return "verde";
+
+}
+
 
     while (
         durataEsplorata >= 1 &&
