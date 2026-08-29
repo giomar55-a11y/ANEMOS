@@ -1527,6 +1527,116 @@ function valutaAndamentoTransizioniPerIntentoAnemoschesi(
 }
 
 /* =====================================================
+   PUNTEGGIO DELLE TRANSIZIONI
+===================================================== */
+
+/*
+Converte gli esiti qualitativi delle transizioni
+in un punteggio numerico.
+
+preferito     = 100
+neutro        = 50
+sconsigliato  = 0
+
+Il punteggio complessivo delle transizioni
+è la media tra carico e durata.
+*/
+
+function calcolaPunteggioTransizioniAnemoschesi(
+    valutazioneTransizioni
+) {
+
+    if (
+        !valutazioneTransizioni
+    ) {
+
+        return null;
+
+    }
+
+
+    function punteggioEsito(
+        esito
+    ) {
+
+        if (
+            esito ===
+            "preferito"
+        ) {
+
+            return 100;
+
+        }
+
+
+        if (
+            esito ===
+            "neutro"
+        ) {
+
+            return 50;
+
+        }
+
+
+        if (
+            esito ===
+            "sconsigliato"
+        ) {
+
+            return 0;
+
+        }
+
+
+        return null;
+
+    }
+
+
+    const punteggioCarico =
+        punteggioEsito(
+            valutazioneTransizioni
+                .carico
+                ?.esito
+        );
+
+
+    const punteggioDurata =
+        punteggioEsito(
+            valutazioneTransizioni
+                .durata
+                ?.esito
+        );
+
+
+    const punteggiValidi =
+        [
+            punteggioCarico,
+            punteggioDurata
+        ].filter(
+            punteggio =>
+                typeof punteggio ===
+                "number"
+        );
+
+
+    if (
+        punteggiValidi.length === 0
+    ) {
+
+        return null;
+
+    }
+
+
+    return mediaValoriAnemoschesi(
+        punteggiValidi
+    );
+
+}
+
+/* =====================================================
    VALUTAZIONE COMPLESSIVA
 ===================================================== */
 
@@ -1625,6 +1735,11 @@ function valutaAnemodromoPerIntentoAnemoschesi(
     valutaAndamentoTransizioniPerIntentoAnemoschesi(
         andamentoTransizioni,
         intentoEffettivo
+    );
+
+   const punteggioTransizioni =
+    calcolaPunteggioTransizioniAnemoschesi(
+        valutazioneTransizioni
     );
 
    const matriceTemporale =
@@ -2053,6 +2168,9 @@ punteggioComplessivo:
 
 valutazioneTransizioni:
     valutazioneTransizioni,
+
+       punteggioTransizioni:
+    punteggioTransizioni,
 
 valutazioniAnemomeri:
     valutazioniAnemomeri
