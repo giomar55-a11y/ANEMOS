@@ -176,16 +176,37 @@ if (
     }
 
 
-    if (
-        orientamentoDiagnostico.esito ===
-        "coerente"
-    ) {
+   if (
+    orientamentoDiagnostico.esito ===
+    "coerente"
+) {
 
-        suggerimentoApnee =
-            " · Apnee: distribuzione coerente";
+    suggerimentoApnee =
+        " · Apnee: distribuzione coerente";
 
-    }
+}
 
+
+if (
+    orientamentoDiagnostico.esito ===
+    "parzialmente_coerente"
+) {
+
+    suggerimentoApnee =
+        " · Apnee: distribuzione parzialmente coerente";
+
+}
+
+
+if (
+    orientamentoDiagnostico.esito ===
+    "assenza_apnee"
+) {
+
+    suggerimentoApnee =
+        "";
+
+}
 }
 
 
