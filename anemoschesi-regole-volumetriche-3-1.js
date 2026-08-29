@@ -457,6 +457,10 @@ Questa matrice è distinta dalla distribuzione:
 
 const ANEMOSCHESI_SETTORI_INTENTI = {
 
+    /* ================================================
+       ARMONIA
+    ================================================= */
+
     calmare: {
 
         [ANEMOS_SETTORI.ADDOME]:
@@ -469,6 +473,7 @@ const ANEMOSCHESI_SETTORI_INTENTI = {
             -1
 
     },
+
 
     scaricare: {
 
@@ -483,6 +488,7 @@ const ANEMOSCHESI_SETTORI_INTENTI = {
 
     },
 
+
     recuperare: {
 
         [ANEMOS_SETTORI.ADDOME]:
@@ -496,6 +502,7 @@ const ANEMOSCHESI_SETTORI_INTENTI = {
 
     },
 
+
     riposare: {
 
         [ANEMOS_SETTORI.ADDOME]:
@@ -506,6 +513,126 @@ const ANEMOSCHESI_SETTORI_INTENTI = {
 
         [ANEMOS_SETTORI.TORACE_SUPERIORE]:
             -1
+
+    },
+
+
+    /* ================================================
+       EQUALIZZAZIONE
+    ================================================= */
+
+    percepire: {
+
+        [ANEMOS_SETTORI.ADDOME]:
+            1,
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            1
+
+    },
+
+
+    coordinare: {
+
+        [ANEMOS_SETTORI.ADDOME]:
+            1,
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            1
+
+    },
+
+
+    mobilizzare: {
+
+        [ANEMOS_SETTORI.ADDOME]:
+            1,
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            2
+
+    },
+
+
+    stabilizzare: {
+
+        [ANEMOS_SETTORI.ADDOME]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            1,
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            0
+
+    },
+
+
+    /* ================================================
+       ESPANSIONE
+    ================================================= */
+
+    attivare: {
+
+        [ANEMOS_SETTORI.ADDOME]:
+            1,
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            2
+
+    },
+
+
+    potenziare: {
+
+        [ANEMOS_SETTORI.ADDOME]:
+            1,
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            2
+
+    },
+
+
+    resistere: {
+
+        [ANEMOS_SETTORI.ADDOME]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            1
+
+    },
+
+
+    performare: {
+
+        [ANEMOS_SETTORI.ADDOME]:
+            1,
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            2,
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            2
 
     }
 
