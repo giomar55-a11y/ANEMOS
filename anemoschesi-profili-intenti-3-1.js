@@ -610,7 +610,45 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         }
 
-    }
+    },
+
+      performare: {
+
+        carico: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ]
+
+        },
+
+        durata: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE
+            ]
+
+        }
+
+    } 
 
 };
 /* =====================================================
