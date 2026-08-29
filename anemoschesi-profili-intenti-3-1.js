@@ -534,10 +534,47 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         }
 
+      },
+
+    potenziare: {
+
+        carico: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ]
+
+        },
+
+        durata: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE
+            ]
+
+        }
+
     }
 
 };
-
 /* =====================================================
    PROFILI DEGLI INTENTI
 ===================================================== */
