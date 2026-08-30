@@ -76,6 +76,102 @@ function copiaAnemomeroPerSimulazioneAnemoschesi(
 
 }
 
+/* =====================================================
+   COPIA DELLA SEQUENZA CON ANEMOMERO SIMULATO
+===================================================== */
+
+function copiaSequenzaConAnemomeroSimulatoAnemoschesi(
+    sequenza,
+    anemomeroSimulato
+) {
+
+    if (
+        !sequenza ||
+        !anemomeroSimulato
+    ) {
+
+        return null;
+
+    }
+
+
+    const sequenzaSimulata = {
+
+        ...sequenza,
+
+        anemodromi:
+            sequenza.anemodromi.map(
+                anemomero => {
+
+                    if (
+                        anemomero.id ===
+                        anemomeroSimulato.id
+                    ) {
+
+                        return copiaAnemomeroPerSimulazioneAnemoschesi(
+                            anemomeroSimulato
+                        );
+
+                    }
+
+
+                    return copiaAnemomeroPerSimulazioneAnemoschesi(
+                        anemomero
+                    );
+
+                }
+            ),
+
+        ordine:
+            [
+                ...sequenza.ordine
+            ],
+
+        apnee:
+            sequenza.apnee.map(
+                apnea => ({
+                    ...apnea
+                })
+            )
+
+    };
+
+
+    return sequenzaSimulata;
+
+}
+
+
+/* =====================================================
+   VALUTAZIONE DELL'ANEMODROMO SIMULATO
+===================================================== */
+
+function valutaAnemodromoConAnemomeroSimulatoAnemoschesi(
+    sequenza,
+    anemomeroSimulato
+) {
+
+    const sequenzaSimulata =
+        copiaSequenzaConAnemomeroSimulatoAnemoschesi(
+            sequenza,
+            anemomeroSimulato
+        );
+
+
+    if (
+        !sequenzaSimulata
+    ) {
+
+        return null;
+
+    }
+
+
+    return valutaAnemodromoPerIntentoAnemoschesi(
+        sequenzaSimulata
+    );
+
+}
 
 /* =====================================================
    SIMULAZIONE DELLA DURATA
