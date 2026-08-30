@@ -1079,7 +1079,6 @@ function simulaVolumeAnemomeroAnemoschesi(
         valutazioneAnemodromo
 
 };
-    };
 
 }
 
@@ -1255,18 +1254,59 @@ function creaGuidaVolumiAnemoschesi(
 
             }
 
-            else {
+           else {
 
-                semaforo =
-                    valutazione
-                        ? semaforoGuidaDurataAnemoschesi(
-                            valutazioneAttuale.punteggio,
-                            valutazione
-                        )
-                        : null;
+    semaforo =
+        valutazione
+            ? semaforoGuidaDurataAnemoschesi(
+                valutazioneAttuale.punteggio,
+                valutazione
+            )
+            : null;
 
-            }
+}
 
+
+if (
+    valutazione &&
+    semaforo
+) {
+
+    semaforo =
+        applicaTransizioneCaricoAllaGuidaAnemoschesi(
+            sequenza,
+            valutazione,
+            semaforo
+        );
+
+}
+
+           if (
+    valutazione?.fisiologia
+) {
+
+    if (
+        valutazione.fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.ERRORE ||
+        valutazione.fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.CRITICO
+    ) {
+
+        semaforo = "rosso";
+
+    }
+
+    else if (
+        valutazione.fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.ATTENZIONE &&
+        semaforo === "verde"
+    ) {
+
+        semaforo = "giallo";
+
+    }
+
+}
 
             guida[volume] = {
 
@@ -1489,6 +1529,145 @@ const esitoSimulato =
 
     }
 
+
+    if (
+        valoreSimulato <
+        valoreAttuale
+    ) {
+
+        if (
+            semaforoBase === "verde"
+        ) {
+
+            return "giallo";
+
+        }
+
+
+        if (
+            semaforoBase === "giallo"
+        ) {
+
+            return "rosso";
+
+        }
+
+    }
+
+
+    return semaforoBase;
+
+}
+
+/* =====================================================
+   INFLUENZA DELLE TRANSIZIONI DI CARICO SULLA GUIDA
+===================================================== */
+
+function applicaTransizioneCaricoAllaGuidaAnemoschesi(
+    sequenza,
+    valutazioneSimulata,
+    semaforoBase
+) {
+
+    if (
+        !sequenza ||
+        !valutazioneSimulata ||
+        !semaforoBase
+    ) {
+
+        return semaforoBase;
+
+    }
+
+
+    const valutazioneAttualeAnemodromo =
+        valutaAnemodromoPerIntentoAnemoschesi(
+            sequenza
+        );
+
+
+    const valutazioneSimulataAnemodromo =
+        valutazioneSimulata.anemodromo;
+
+
+    const esitoAttuale =
+        valutazioneAttualeAnemodromo
+            ?.valutazioneTransizioni
+            ?.carico
+            ?.esito;
+
+
+    const esitoSimulato =
+        valutazioneSimulataAnemodromo
+            ?.valutazioneTransizioni
+            ?.carico
+            ?.esito;
+
+
+    const valoreAttuale =
+        valoreEsitoTransizioneGuidaAnemoschesi(
+            esitoAttuale
+        );
+
+
+    const valoreSimulato =
+        valoreEsitoTransizioneGuidaAnemoschesi(
+            esitoSimulato
+        );
+
+
+    /*
+    Se non esiste una transizione confrontabile
+    oppure l'esito non cambia,
+    manteniamo la guida locale del volume.
+    */
+
+    if (
+        typeof valoreAttuale !==
+            "number" ||
+        typeof valoreSimulato !==
+            "number" ||
+        valoreAttuale ===
+            valoreSimulato
+    ) {
+
+        return semaforoBase;
+
+    }
+
+
+    /*
+    Miglioramento della transizione:
+    giallo -> verde.
+
+    Un volume localmente rosso
+    non viene promosso.
+    */
+
+    if (
+        valoreSimulato >
+        valoreAttuale
+    ) {
+
+        if (
+            semaforoBase === "giallo"
+        ) {
+
+            return "verde";
+
+        }
+
+
+        return semaforoBase;
+
+    }
+
+
+    /*
+    Peggioramento della transizione:
+    verde -> giallo
+    giallo -> rosso.
+    */
 
     if (
         valoreSimulato <
