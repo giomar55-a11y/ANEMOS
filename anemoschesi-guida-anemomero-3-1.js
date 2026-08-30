@@ -430,7 +430,53 @@ function creaGuidaFlussoAnemoschesi(
                 ...punteggiUtili
             )
             : null;
+   
+const miglioriFlussi =
+    flussi.filter(
+        flusso => {
 
+            const valutazione =
+                valutazioniFlussi[
+                    flusso
+                ];
+
+            return (
+                valutazione &&
+                semaforiBase[flusso] !==
+                    "rosso" &&
+                typeof migliorPunteggio ===
+                    "number" &&
+                valutazione.punteggio ===
+                    migliorPunteggio
+            );
+
+        }
+    );
+
+
+const punteggiAnemodromoMigliori =
+    miglioriFlussi
+        .map(
+            flusso =>
+                valutazioniFlussi[
+                    flusso
+                ]
+                    ?.anemodromo
+                    ?.punteggioComplessivo
+        )
+        .filter(
+            punteggio =>
+                typeof punteggio ===
+                    "number"
+        );
+
+
+const migliorPunteggioAnemodromo =
+    punteggiAnemodromoMigliori.length
+        ? Math.max(
+            ...punteggiAnemodromoMigliori
+        )
+        : null;
 
     const guida =
         {};
@@ -452,18 +498,32 @@ function creaGuidaFlussoAnemoschesi(
 
 
             if (
-                valutazione &&
-                semaforo !== "rosso" &&
-                typeof migliorPunteggio ===
-                    "number" &&
-                valutazione.punteggio ===
-                    migliorPunteggio
-            ) {
+    valutazione &&
+    semaforo !== "rosso" &&
+    typeof migliorPunteggio ===
+        "number" &&
+    valutazione.punteggio ===
+        migliorPunteggio
+) {
 
-                semaforo = "verde";
+    const punteggioAnemodromo =
+        valutazione
+            ?.anemodromo
+            ?.punteggioComplessivo;
 
-            }
 
+    if (
+        typeof migliorPunteggioAnemodromo !==
+            "number" ||
+        punteggioAnemodromo ===
+            migliorPunteggioAnemodromo
+    ) {
+
+        semaforo = "verde";
+
+    }
+
+}
 
             guida[flusso] = {
 
@@ -675,7 +735,53 @@ function creaGuidaPercorsoAnemoschesi(
                 ...punteggiUtili
             )
             : null;
+   
+const miglioriPercorsi =
+    percorsi.filter(
+        percorso => {
 
+            const valutazione =
+                valutazioniPercorsi[
+                    percorso
+                ];
+
+            return (
+                valutazione &&
+                semaforiBase[percorso] !==
+                    "rosso" &&
+                typeof migliorPunteggio ===
+                    "number" &&
+                valutazione.punteggio ===
+                    migliorPunteggio
+            );
+
+        }
+    );
+
+
+const punteggiAnemodromoMigliori =
+    miglioriPercorsi
+        .map(
+            percorso =>
+                valutazioniPercorsi[
+                    percorso
+                ]
+                    ?.anemodromo
+                    ?.punteggioComplessivo
+        )
+        .filter(
+            punteggio =>
+                typeof punteggio ===
+                    "number"
+        );
+
+
+const migliorPunteggioAnemodromo =
+    punteggiAnemodromoMigliori.length
+        ? Math.max(
+            ...punteggiAnemodromoMigliori
+        )
+        : null;
 
     const guida =
         {};
@@ -697,18 +803,32 @@ function creaGuidaPercorsoAnemoschesi(
 
 
             if (
-                valutazione &&
-                semaforo !== "rosso" &&
-                typeof migliorPunteggio ===
-                    "number" &&
-                valutazione.punteggio ===
-                    migliorPunteggio
-            ) {
+    valutazione &&
+    semaforo !== "rosso" &&
+    typeof migliorPunteggio ===
+        "number" &&
+    valutazione.punteggio ===
+        migliorPunteggio
+) {
 
-                semaforo = "verde";
+    const punteggioAnemodromo =
+        valutazione
+            ?.anemodromo
+            ?.punteggioComplessivo;
 
-            }
 
+    if (
+        typeof migliorPunteggioAnemodromo !==
+            "number" ||
+        punteggioAnemodromo ===
+            migliorPunteggioAnemodromo
+    ) {
+
+        semaforo = "verde";
+
+    }
+
+}
 
             guida[percorso] = {
 
