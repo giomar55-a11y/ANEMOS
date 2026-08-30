@@ -204,30 +204,43 @@ function simulaDurataAnemomeroAnemoschesi(
         nuovaDurata;
 
 
-   const valutazioneIntento =
-    valutaAnemomeroPerIntentoAnemoschesi(
-        sequenza,
-        simulato
-    );
+    const valutazioneIntento =
+        valutaAnemomeroPerIntentoAnemoschesi(
+            sequenza,
+            simulato
+        );
 
 
-const valutazioneFisiologica =
-    valutaCandidatoFisiologicoAnemoschesi(
-        sequenza,
-        anemomero,
-        {
-            durata:
-                nuovaDurata
-        }
-    );   
-   return {
+    const valutazioneFisiologica =
+        valutaCandidatoFisiologicoAnemoschesi(
+            sequenza,
+            anemomero,
+            {
+                durata:
+                    nuovaDurata
+            }
+        );
 
-    ...valutazioneIntento,
 
-    fisiologia:
-        valutazioneFisiologica
+    const valutazioneAnemodromo =
+        valutaAnemodromoConAnemomeroSimulatoAnemoschesi(
+            sequenza,
+            simulato
+        );
 
-};
+
+    return {
+
+        ...valutazioneIntento,
+
+        fisiologia:
+            valutazioneFisiologica,
+
+        anemodromo:
+            valutazioneAnemodromo
+
+    };
+
 }
 /* =====================================================
    SIMULAZIONE DEL FLUSSO
@@ -268,34 +281,26 @@ function simulaFlussoAnemomeroAnemoschesi(
 
 
     const valutazioneFisiologica =
-    valutaCandidatoFisiologicoAnemoschesi(
-        sequenza,
-        anemomero,
-        {
-            durata:
-                nuovaDurata
-        }
-    );
+        valutaCandidatoFisiologicoAnemoschesi(
+            sequenza,
+            anemomero,
+            {
+                flusso:
+                    nuovoFlusso
+            }
+        );
 
 
-const valutazioneAnemodromo =
-    valutaAnemodromoConAnemomeroSimulatoAnemoschesi(
-        sequenza,
-        simulato
-    );
+    return {
 
+        ...valutazioneIntento,
 
-return {
+        fisiologia:
+            valutazioneFisiologica
 
-    ...valutazioneIntento,
+    };
 
-    fisiologia:
-        valutazioneFisiologica,
-
-    anemodromo:
-        valutazioneAnemodromo
-
-};
+}
 /* =====================================================
    GUIDA DELLE OPZIONI DI FLUSSO
 ===================================================== */
@@ -1336,6 +1341,172 @@ function semaforoGuidaDurataAnemoschesi(
 
 }
 
+   /* =====================================================
+   INFLUENZA DELLE TRANSIZIONI SULLA GUIDA
+===================================================== */
+
+function valoreEsitoTransizioneGuidaAnemoschesi(
+    esito
+) {
+
+    if (
+        esito === "preferito"
+    ) {
+
+        return 2;
+
+    }
+
+
+    if (
+        esito === "neutro"
+    ) {
+
+        return 1;
+
+    }
+
+
+    if (
+        esito === "sconsigliato"
+    ) {
+
+        return 0;
+
+    }
+
+
+    return null;
+
+}
+
+
+function applicaTransizioneDurataAllaGuidaAnemoschesi(
+    sequenza,
+    valutazioneSimulata,
+    semaforoBase
+) {
+
+    if (
+        !sequenza ||
+        !valutazioneSimulata ||
+        !semaforoBase
+    ) {
+
+        return semaforoBase;
+
+    }
+
+
+    const valutazioneAttualeAnemodromo =
+        valutaAnemodromoPerIntentoAnemoschesi(
+            sequenza
+        );
+
+
+    const valutazioneSimulataAnemodromo =
+        valutazioneSimulata.anemodromo;
+
+
+    const esitoAttuale =
+        valutazioneAttualeAnemodromo
+            ?.valutazioneTransizioni
+            ?.durata;
+
+
+    const esitoSimulato =
+        valutazioneSimulataAnemodromo
+            ?.valutazioneTransizioni
+            ?.durata;
+
+
+    const valoreAttuale =
+        valoreEsitoTransizioneGuidaAnemoschesi(
+            esitoAttuale
+        );
+
+
+    const valoreSimulato =
+        valoreEsitoTransizioneGuidaAnemoschesi(
+            esitoSimulato
+        );
+
+
+    /*
+    Se non esiste ancora una vera transizione
+    confrontabile, la guida resta invariata.
+    */
+
+    if (
+        typeof valoreAttuale !==
+            "number" ||
+        typeof valoreSimulato !==
+            "number" ||
+        valoreAttuale ===
+            valoreSimulato
+    ) {
+
+        return semaforoBase;
+
+    }
+
+
+    /*
+    La transizione modifica il risultato
+    di un solo livello.
+
+    Non può trasformare direttamente
+    un rosso in verde o viceversa.
+    */
+
+    if (
+        valoreSimulato >
+        valoreAttuale
+    ) {
+
+        if (
+            semaforoBase === "giallo"
+        ) {
+
+            return "verde";
+
+        }
+
+
+        return semaforoBase;
+
+    }
+
+
+    if (
+        valoreSimulato <
+        valoreAttuale
+    ) {
+
+        if (
+            semaforoBase === "verde"
+        ) {
+
+            return "giallo";
+
+        }
+
+
+        if (
+            semaforoBase === "giallo"
+        ) {
+
+            return "rosso";
+
+        }
+
+    }
+
+
+    return semaforoBase;
+
+}
+
 /* =====================================================
    DIREZIONE GUIDA DELLA DURATA
 ===================================================== */
@@ -1385,7 +1556,7 @@ function semaforoDirezioneDurataAnemoschesi(
 
         if (
             fisiologia.livello ===
-            ANEMOSCHESI_ESITI_FISIOLOGICI.ATTENZIONE
+                ANEMOSCHESI_ESITI_FISIOLOGICI.ATTENZIONE
         ) {
 
             return "giallo";
@@ -1441,7 +1612,7 @@ function semaforoDirezioneDurataAnemoschesi(
 
     if (
         typeof valoreAttuale !==
-        "number"
+            "number"
     ) {
 
         return null;
@@ -1449,14 +1620,9 @@ function semaforoDirezioneDurataAnemoschesi(
     }
 
 
-    /*
-    Cerchiamo nella direzione scelta
-    se esiste una durata più favorevole.
+    let semaforoBase =
+        "giallo";
 
-    Questo permette, ad esempio,
-    di mostrare + verde a 1 secondo
-    anche se 1 -> 2 resta nella stessa fascia.
-    */
 
     const passo =
         direzione === "aumenta"
@@ -1468,94 +1634,115 @@ function semaforoDirezioneDurataAnemoschesi(
         anemomero.durata +
         passo;
 
-   /*
-Se il passo immediato mantiene
-una fascia già favorevole,
-la direzione resta favorevole.
-*/
 
-const fasciaImmediata =
-    riconosciFasciaDurataAnemoschesi(
-        durataEsplorata
-    );
+    /*
+    Se il passo immediato mantiene
+    una fascia già favorevole,
+    la direzione resta favorevole.
+    */
 
-
-const valoreImmediato =
-    regole[
-        fasciaImmediata
-    ];
+    const fasciaImmediata =
+        riconosciFasciaDurataAnemoschesi(
+            durataEsplorata
+        );
 
 
-if (
-    typeof valoreImmediato ===
-        "number" &&
-    valoreImmediato ===
-        valoreAttuale &&
-    valoreAttuale >= 1
-) {
-
-    return "verde";
-
-}
+    const valoreImmediato =
+        regole[
+            fasciaImmediata
+        ];
 
 
-    while (
-        durataEsplorata >= 1 &&
-        durataEsplorata < 30
+    if (
+        typeof valoreImmediato ===
+            "number" &&
+        valoreImmediato ===
+            valoreAttuale &&
+        valoreAttuale >= 1
     ) {
 
-        const fascia =
-            riconosciFasciaDurataAnemoschesi(
-                durataEsplorata
-            );
-
-
-        const valore =
-            regole[
-                fascia
-            ];
-
-
-        if (
-            typeof valore ===
-            "number" &&
-            valore !== valoreAttuale
-        ) {
-
-            if (
-                valore >
-                valoreAttuale
-            ) {
-
-                return "verde";
-
-            }
-
-
-            if (
-                valore <
-                valoreAttuale
-            ) {
-
-                return "rosso";
-
-            }
-
-        }
-
-
-        durataEsplorata +=
-            passo;
+        semaforoBase =
+            "verde";
 
     }
 
 
     /*
-    Nessun miglioramento o peggioramento
-    significativo nella direzione esplorata.
+    Se il passo immediato non ha già
+    determinato una direzione favorevole,
+    esploriamo le fasce successive.
     */
 
-    return "giallo";
+    if (
+        semaforoBase !==
+            "verde"
+    ) {
+
+        while (
+            durataEsplorata >= 1 &&
+            durataEsplorata < 30
+        ) {
+
+            const fascia =
+                riconosciFasciaDurataAnemoschesi(
+                    durataEsplorata
+                );
+
+
+            const valore =
+                regole[
+                    fascia
+                ];
+
+
+            if (
+                typeof valore ===
+                    "number" &&
+                valore !==
+                    valoreAttuale
+            ) {
+
+                if (
+                    valore >
+                    valoreAttuale
+                ) {
+
+                    semaforoBase =
+                        "verde";
+
+                    break;
+
+                }
+
+
+                if (
+                    valore <
+                    valoreAttuale
+                ) {
+
+                    semaforoBase =
+                        "rosso";
+
+                    break;
+
+                }
+
+            }
+
+
+            durataEsplorata +=
+                passo;
+
+        }
+
+    }
+
+
+    return applicaTransizioneDurataAllaGuidaAnemoschesi(
+        sequenza,
+        valutazioneSimulata,
+        semaforoBase
+    );
 
 }
 /* =====================================================
