@@ -1408,17 +1408,19 @@ function applicaTransizioneDurataAllaGuidaAnemoschesi(
         valutazioneSimulata.anemodromo;
 
 
-    const esitoAttuale =
-        valutazioneAttualeAnemodromo
-            ?.valutazioneTransizioni
-            ?.durata;
+   const esitoAttuale =
+    valutazioneAttualeAnemodromo
+        ?.valutazioneTransizioni
+        ?.durata
+        ?.esito;
 
 
-    const esitoSimulato =
-        valutazioneSimulataAnemodromo
-            ?.valutazioneTransizioni
-            ?.durata;
-
+const esitoSimulato =
+    valutazioneSimulataAnemodromo
+        ?.valutazioneTransizioni
+        ?.durata
+        ?.esito;
+   
 
     const valoreAttuale =
         valoreEsitoTransizioneGuidaAnemoschesi(
