@@ -823,15 +823,23 @@ function simulaSettoreAnemomeroAnemoschesi(
         }
     );
 
+   const valutazioneAnemodromo =
+    valutaAnemodromoConAnemomeroSimulatoAnemoschesi(
+        sequenza,
+        simulato
+    );
+
     return {
 
-        ...valutazioneIntento,
+    ...valutazioneIntento,
 
-        fisiologia:
-            valutazioneFisiologica
+    fisiologia:
+        valutazioneFisiologica,
 
-    };
+    anemodromo:
+        valutazioneAnemodromo
 
+};
 }
 
 
@@ -896,76 +904,145 @@ function creaGuidaSettoriAnemoschesi(
                 );
 
 
-            guida[nomeSettore] = {
-
-                selezionato:
-                    anemomero.settori.some(
-                        settore =>
-                            settore.nome ===
-                            nomeSettore
-                    ),
-
-                disponibile:
-                    valutazione !== null,
-
-                punteggio:
-                    valutazione
-                        ? valutazione.punteggio
-                        : null,
-
-               semaforo: (() => {
-
-    const intentoId =
-        ottieniIntento(
-            sequenza
-        );
+        const intentoId =
+    ottieniIntento(
+        sequenza
+    );
 
 
-    const valoreSettore =
-        ANEMOSCHESI_SETTORI_INTENTI[
-            intentoId
-        ]?.[
-            nomeSettore
-        ];
+const valoreSettore =
+    ANEMOSCHESI_SETTORI_INTENTI[
+        intentoId
+    ]?.[
+        nomeSettore
+    ];
 
+
+let semaforo = null;
+
+
+/*
+Prima determiniamo il colore locale
+del settore rispetto all'Intento.
+*/
+
+if (
+    typeof valoreSettore ===
+        "number"
+) {
 
     if (
-        typeof valoreSettore !==
-        "number"
+        valoreSettore === 2
     ) {
 
-        return valutazione
+        semaforo = "verde";
+
+    }
+
+    else if (
+        valoreSettore === -2
+    ) {
+
+        semaforo = "rosso";
+
+    }
+
+    else {
+
+        semaforo = "giallo";
+
+    }
+
+}
+
+else {
+
+    semaforo =
+        valutazione
             ? semaforoGuidaDurataAnemoschesi(
                 valutazioneAttuale.punteggio,
                 valutazione
             )
             : null;
 
-    }
+}
 
+
+/*
+Poi valutiamo come l'attivazione
+o disattivazione del settore modifica
+la transizione di carico dell'Anemodromo.
+*/
+
+if (
+    valutazione &&
+    semaforo
+) {
+
+    semaforo =
+        applicaTransizioneCaricoAllaGuidaAnemoschesi(
+            sequenza,
+            valutazione,
+            semaforo
+        );
+
+}
+
+
+/*
+La fisiologia mantiene sempre
+la precedenza finale.
+*/
+
+if (
+    valutazione?.fisiologia
+) {
 
     if (
-        valoreSettore === 2
+        valutazione.fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.ERRORE ||
+        valutazione.fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.CRITICO
     ) {
 
-        return "verde";
+        semaforo = "rosso";
 
     }
 
-
-    if (
-        valoreSettore === -2
+    else if (
+        valutazione.fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.ATTENZIONE &&
+        semaforo === "verde"
     ) {
 
-        return "rosso";
+        semaforo = "giallo";
 
     }
 
+}
 
-    return "giallo";
 
-})()
-            };
+guida[nomeSettore] = {
+
+    selezionato:
+        anemomero.settori.some(
+            settore =>
+                settore.nome ===
+                nomeSettore
+        ),
+
+    disponibile:
+        valutazione !== null,
+
+    punteggio:
+        valutazione
+            ? valutazione.punteggio
+            : null,
+
+    semaforo:
+        semaforo
+
+};
 
         }
     );
