@@ -272,21 +272,30 @@ function simulaFlussoAnemomeroAnemoschesi(
         sequenza,
         anemomero,
         {
-            flusso:
-                nuovoFlusso
+            durata:
+                nuovaDurata
         }
     );
 
-    return {
 
-        ...valutazioneIntento,
+const valutazioneAnemodromo =
+    valutaAnemodromoConAnemomeroSimulatoAnemoschesi(
+        sequenza,
+        simulato
+    );
 
-        fisiologia:
-            valutazioneFisiologica
 
-    };
+return {
 
-}
+    ...valutazioneIntento,
+
+    fisiologia:
+        valutazioneFisiologica,
+
+    anemodromo:
+        valutazioneAnemodromo
+
+};
 /* =====================================================
    GUIDA DELLE OPZIONI DI FLUSSO
 ===================================================== */
