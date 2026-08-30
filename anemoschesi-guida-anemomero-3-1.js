@@ -290,17 +290,27 @@ function simulaFlussoAnemomeroAnemoschesi(
             }
         );
 
+   const valutazioneAnemodromo =
+    valutaAnemodromoConAnemomeroSimulatoAnemoschesi(
+        sequenza,
+        simulato
+    );
+
 
     return {
 
-        ...valutazioneIntento,
+    ...valutazioneIntento,
 
-        fisiologia:
-            valutazioneFisiologica
+    fisiologia:
+        valutazioneFisiologica,
 
-    };
+    anemodromo:
+        valutazioneAnemodromo
 
+};
 }
+
+
 /* =====================================================
    GUIDA DELLE OPZIONI DI FLUSSO
 ===================================================== */
@@ -526,15 +536,23 @@ function simulaPercorsoAnemomeroAnemoschesi(
         }
     );
 
+   const valutazioneAnemodromo =
+    valutaAnemodromoConAnemomeroSimulatoAnemoschesi(
+        sequenza,
+        simulato
+    );
+
     return {
 
-        ...valutazioneIntento,
+    ...valutazioneIntento,
 
-        fisiologia:
-            valutazioneFisiologica
+    fisiologia:
+        valutazioneFisiologica,
 
-    };
+    anemodromo:
+        valutazioneAnemodromo
 
+};
 }
 
 
