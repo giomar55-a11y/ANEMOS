@@ -1062,13 +1062,23 @@ function simulaVolumeAnemomeroAnemoschesi(
         }
     );
 
-    return {
+   const valutazioneAnemodromo =
+    valutaAnemodromoConAnemomeroSimulatoAnemoschesi(
+        sequenza,
+        simulato
+    );
 
-        ...valutazioneIntento,
+   return {
 
-        fisiologia:
-            valutazioneFisiologica
+    ...valutazioneIntento,
 
+    fisiologia:
+        valutazioneFisiologica,
+
+    anemodromo:
+        valutazioneAnemodromo
+
+};
     };
 
 }
