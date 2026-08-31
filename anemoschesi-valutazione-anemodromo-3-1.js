@@ -1114,6 +1114,57 @@ Per ogni transizione descrive:
 Non assegna ancora punteggi.
 */
 
+/* =====================================================
+   ORDINE DEL FLUSSO NELLE TRANSIZIONI
+===================================================== */
+
+/*
+Permette di confrontare il flusso
+tra Anemomeri consecutivi.
+
+Ordine crescente di intensità:
+
+trattenuto
+delicato
+spontaneo
+forzato
+*/
+
+function valoreFlussoTransizioneAnemoschesi(
+    flusso
+) {
+
+    const valori = {
+
+        trattenuto:
+            1,
+
+        delicato:
+            2,
+
+        spontaneo:
+            3,
+
+        forzato:
+            4
+
+    };
+
+
+    return (
+        typeof valori[
+            flusso
+        ] === "number"
+
+            ? valori[
+                flusso
+            ]
+
+            : null
+    );
+
+}
+
 function analizzaTransizioniAnemomeriAnemoschesi(
     profiliAnemomeri
 ) {
@@ -1202,8 +1253,56 @@ function analizzaTransizioniAnemomeriAnemoschesi(
                 "decrescente";
 
         }
+       
+        const valoreFlussoPrecedente =
+            valoreFlussoTransizioneAnemoschesi(
+                precedente.flusso
+            );
 
 
+        const valoreFlussoSuccessivo =
+            valoreFlussoTransizioneAnemoschesi(
+                successivo.flusso
+            );
+
+
+                let andamentoFlusso =
+            null;
+
+
+        if (
+            typeof valoreFlussoPrecedente ===
+                "number" &&
+            typeof valoreFlussoSuccessivo ===
+                "number"
+        ) {
+
+            andamentoFlusso =
+                "stabile";
+
+
+            if (
+                valoreFlussoSuccessivo >
+                valoreFlussoPrecedente
+            ) {
+
+                andamentoFlusso =
+                    "crescente";
+
+            }
+
+
+            if (
+                valoreFlussoSuccessivo <
+                valoreFlussoPrecedente
+            ) {
+
+                andamentoFlusso =
+                    "decrescente";
+
+            }
+
+        }
         const tipoPassaggio =
             String(
                 precedente.tipo
@@ -1241,14 +1340,23 @@ function analizzaTransizioniAnemomeriAnemoschesi(
                 andamentoCarico:
                     andamentoCarico,
 
-                durataPrecedente:
+                                durataPrecedente:
                     precedente.durata,
 
                 durataSuccessiva:
                     successivo.durata,
 
                 andamentoDurata:
-                    andamentoDurata
+                    andamentoDurata,
+
+                flussoPrecedente:
+                    precedente.flusso,
+
+                flussoSuccessivo:
+                    successivo.flusso,
+
+                andamentoFlusso:
+                    andamentoFlusso
 
             }
         );
@@ -1272,6 +1380,7 @@ Considera separatamente:
 
 - andamento del carico
 - andamento della durata
+- andamento del flusso
 
 Possibili esiti:
 
@@ -1378,12 +1487,25 @@ function descriviAndamentoTransizioniAnemoschesi(
         );
 
 
+        const andamentoFlussi =
+        transizioni
+            .map(
+                transizione =>
+                    transizione
+                        .andamentoFlusso
+            )
+            .filter(
+                andamento =>
+                    typeof andamento ===
+                    "string"
+            );
+   
     return {
 
         numeroTransizioni:
             transizioni.length,
 
-        carico:
+                carico:
             classificaAndamento(
                 andamentoCarichi
             ),
@@ -1391,8 +1513,15 @@ function descriviAndamentoTransizioniAnemoschesi(
         durata:
             classificaAndamento(
                 andamentoDurate
-            )
+            ),
 
+                flusso:
+            andamentoFlussi.length > 0
+                ? classificaAndamento(
+                    andamentoFlussi
+                )
+                : null
+       
     };
 
 }
@@ -1403,7 +1532,7 @@ function descriviAndamentoTransizioniAnemoschesi(
 
 /*
 Confronta l'andamento complessivo
-di carico e durata con le preferenze
+di carico, durata e flusso con le preferenze
 definite per l'Intento.
 
 Non modifica ancora il punteggio
@@ -1509,7 +1638,7 @@ function valutaAndamentoTransizioniPerIntentoAnemoschesi(
 
         },
 
-        durata: {
+                durata: {
 
             andamento:
                 andamentoTransizioni.durata,
@@ -1520,10 +1649,22 @@ function valutaAndamentoTransizioniPerIntentoAnemoschesi(
                     regoleIntento.durata
                 )
 
+        },
+
+        flusso: {
+
+            andamento:
+                andamentoTransizioni.flusso,
+
+            esito:
+                valutaComponente(
+                    andamentoTransizioni.flusso,
+                    regoleIntento.flusso
+                )
+
         }
 
     };
-
 }
 
 /* =====================================================
@@ -1609,12 +1750,19 @@ function calcolaPunteggioTransizioniAnemoschesi(
                 ?.esito
         );
 
+       const punteggioFlusso =
+        punteggioEsito(
+            valutazioneTransizioni
+                .flusso
+                ?.esito
+        );
 
-    const punteggiValidi =
+        const punteggiValidi =
         [
             punteggioCarico,
-            punteggioDurata
-        ].filter(
+            punteggioDurata,
+            punteggioFlusso
+        ].filter(           
             punteggio =>
                 typeof punteggio ===
                 "number"
