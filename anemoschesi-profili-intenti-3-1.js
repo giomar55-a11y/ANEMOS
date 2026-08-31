@@ -139,6 +139,7 @@ Utilizzato per:
 
 - carico
 - durata
+- flusso
 */
 
 const ANEMOSCHESI_ANDAMENTI_TRANSIZIONE = {
@@ -162,8 +163,8 @@ const ANEMOSCHESI_ANDAMENTI_TRANSIZIONE = {
 ===================================================== */
 
 /*
-Definisce gli andamenti di carico e durata
-preferiti per ciascun Intento.
+Definisce gli andamenti di carico, durata
+e flusso preferiti per ciascun Intento.
 
 Questa prima versione viene introdotta
 progressivamente, Intento per Intento.
@@ -195,7 +196,7 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         },
 
-        durata: {
+                durata: {
 
             preferiti: [
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
@@ -206,6 +207,26 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
             ],
 
             sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
+        },
+
+        flusso: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
                     .VARIABILE
             ]
@@ -236,7 +257,7 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         },
 
-        durata: {
+                durata: {
 
             preferiti: [
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
@@ -254,10 +275,27 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
                     .VARIABILE
             ]
 
+        },
+
+        flusso: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE
+            ]
+
         }
 
     },
-
+   
        recuperare: {
 
         carico: {
@@ -280,7 +318,7 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         },
 
-        durata: {
+                durata: {
 
             preferiti: [
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
@@ -298,10 +336,27 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
                     .VARIABILE
             ]
 
+        },
+
+        flusso: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
         }
 
-   },
-
+    },
+   
     riposare: {
 
         carico: {
@@ -324,7 +379,7 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         },
 
-        durata: {
+                        durata: {
 
             preferiti: [
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
@@ -342,10 +397,27 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
                     .VARIABILE
             ]
 
+        },
+
+        flusso: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
         }
 
     },
-
+   
     percepire: {
 
         carico: {
@@ -368,7 +440,7 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         },
 
-        durata: {
+                durata: {
 
             preferiti: [
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
@@ -380,10 +452,27 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
                     .VARIABILE
             ]
 
+        },
+
+        flusso: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
         }
 
     },
-
+   
     coordinare: {
 
         carico: {
@@ -406,7 +495,24 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         },
 
-        durata: {
+                durata: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
+        },
+
+        flusso: {
 
             preferiti: [
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
@@ -424,7 +530,7 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
         }
 
     },
-
+   
        mobilizzare: {
 
         carico: {
@@ -444,7 +550,7 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         },
 
-        durata: {
+                durata: {
 
             preferiti: [
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
@@ -452,6 +558,23 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
                     .CRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ]
+
+        },
+
+        flusso: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
             ],
 
             sconsigliati: [
@@ -482,7 +605,7 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         },
 
-        durata: {
+                durata: {
 
             preferiti: [
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
@@ -494,10 +617,27 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
                     .VARIABILE
             ]
 
+        },
+
+        flusso: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ]
+
         }
 
     },
-
+   
        attivare: {
 
         carico: {
@@ -517,7 +657,7 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         },
 
-        durata: {
+                durata: {
 
             preferiti: [
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
@@ -532,10 +672,27 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
                     .CRESCENTE
             ]
 
+        },
+
+        flusso: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ]
+
         }
 
-      },
-
+    },
+   
     potenziare: {
 
         carico: {
@@ -555,7 +712,7 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         },
 
-        durata: {
+                durata: {
 
             preferiti: [
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
@@ -570,10 +727,24 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
                     .CRESCENTE
             ]
 
+        },
+
+        flusso: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ]
+
         }
 
-       },
-
+    },
+   
     resistere: {
 
         carico: {
@@ -593,7 +764,7 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         },
 
-        durata: {
+                durata: {
 
             preferiti: [
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
@@ -606,6 +777,20 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
                     .DECRESCENTE
+            ]
+
+        },
+
+        flusso: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .STABILE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE
             ]
 
         }
@@ -631,7 +816,7 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
 
         },
 
-        durata: {
+                durata: {
 
             preferiti: [
                 ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
@@ -646,9 +831,26 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
                     .CRESCENTE
             ]
 
+        },
+
+        flusso: {
+
+            preferiti: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .VARIABILE,
+
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .CRESCENTE
+            ],
+
+            sconsigliati: [
+                ANEMOSCHESI_ANDAMENTI_TRANSIZIONE
+                    .DECRESCENTE
+            ]
+
         }
 
-    } 
+    }
 
 };
 /* =====================================================
