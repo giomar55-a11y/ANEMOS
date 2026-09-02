@@ -1684,6 +1684,149 @@ Possibili esiti:
 - sconsigliato
 */
 
+function valutaTransizioniPercorsoPerIntentoAnemoschesi(
+    transizioni,
+    intentoId
+) {
+
+    if (
+        !Array.isArray(
+            transizioni
+        ) ||
+        !intentoId
+    ) {
+
+        return null;
+
+    }
+
+
+    const regoleIntento =
+        ANEMOSCHESI_TRANSIZIONI_PERCORSO_INTENTI[
+            intentoId
+        ];
+
+
+    if (
+        !regoleIntento
+    ) {
+
+        return null;
+
+    }
+
+
+    const valutazioni =
+        transizioni
+            .map(
+                transizione => {
+
+                    const categoria =
+                        transizione
+                            .transizionePercorso;
+
+
+                    if (
+                        !categoria
+                    ) {
+
+                        return null;
+
+                    }
+
+
+                    let esito =
+                        "neutro";
+
+
+                    if (
+                        Array.isArray(
+                            regoleIntento.preferiti
+                        ) &&
+                        regoleIntento
+                            .preferiti
+                            .includes(
+                                categoria
+                            )
+                    ) {
+
+                        esito =
+                            "preferito";
+
+                    }
+
+
+                    if (
+                        Array.isArray(
+                            regoleIntento.sconsigliati
+                        ) &&
+                        regoleIntento
+                            .sconsigliati
+                            .includes(
+                                categoria
+                            )
+                    ) {
+
+                        esito =
+                            "sconsigliato";
+
+                    }
+
+
+                    const punteggio =
+                        esito === "preferito"
+                            ? 100
+                            : esito === "neutro"
+                                ? 50
+                                : 0;
+
+
+                    return {
+
+                        categoria:
+                            categoria,
+
+                        esito:
+                            esito,
+
+                        punteggio:
+                            punteggio
+
+                    };
+
+                }
+            )
+            .filter(
+                Boolean
+            );
+
+
+    if (
+        valutazioni.length === 0
+    ) {
+
+        return null;
+
+    }
+
+
+    return {
+
+        valutazioni:
+            valutazioni,
+
+        punteggio:
+            mediaValoriAnemoschesi(
+                valutazioni.map(
+                    valutazione =>
+                        valutazione.punteggio
+                )
+            )
+
+    };
+
+}
+
 function valutaAndamentoTransizioniPerIntentoAnemoschesi(
     andamentoTransizioni,
     intentoId
@@ -1823,9 +1966,10 @@ Il punteggio complessivo delle transizioni
 */
 
 function calcolaPunteggioTransizioniAnemoschesi(
-    valutazioneTransizioni
+    valutazioneTransizioni,
+    valutazioneTransizioniPercorso = null
 ) {
-
+   
     if (
         !valutazioneTransizioni
     ) {
@@ -1896,13 +2040,21 @@ function calcolaPunteggioTransizioniAnemoschesi(
                 ?.esito
         );
 
+   const punteggioPercorso =
+    typeof valutazioneTransizioniPercorso
+        ?.punteggio === "number"
+        ? valutazioneTransizioniPercorso
+            .punteggio
+        : null;
+
         const punteggiValidi =
-        [
-            punteggioCarico,
-            punteggioDurata,
-            punteggioFlusso
-        ].filter(           
-            punteggio =>
+    [
+        punteggioCarico,
+        punteggioDurata,
+        punteggioFlusso,
+        punteggioPercorso
+    ].filter(
+       punteggio =>
                 typeof punteggio ===
                 "number"
         );
@@ -2024,11 +2176,18 @@ function valutaAnemodromoPerIntentoAnemoschesi(
         intentoEffettivo
     );
 
+const valutazioneTransizioniPercorso =
+    valutaTransizioniPercorsoPerIntentoAnemoschesi(
+        transizioniAnemomeri,
+        intentoEffettivo
+    );
+   
    const punteggioTransizioni =
     calcolaPunteggioTransizioniAnemoschesi(
-        valutazioneTransizioni
+        valutazioneTransizioni,
+        valutazioneTransizioniPercorso
     );
-
+   
    const matriceTemporale =
     analizzaMatriceTemporaleAnemodromoAnemoschesi(
         sequenza
@@ -2472,9 +2631,11 @@ punteggioComplessivo:
 valutazioneTransizioni:
     valutazioneTransizioni,
 
-       punteggioTransizioni:
-    punteggioTransizioni,
+valutazioneTransizioniPercorso:
+    valutazioneTransizioniPercorso,
 
+punteggioTransizioni:
+    punteggioTransizioni,
 valutazioniAnemomeri:
     valutazioniAnemomeri
     };
