@@ -430,53 +430,6 @@ function creaGuidaFlussoAnemoschesi(
                 ...punteggiUtili
             )
             : null;
-   
-const miglioriFlussi =
-    flussi.filter(
-        flusso => {
-
-            const valutazione =
-                valutazioniFlussi[
-                    flusso
-                ];
-
-            return (
-                valutazione &&
-                semaforiBase[flusso] !==
-                    "rosso" &&
-                typeof migliorPunteggio ===
-                    "number" &&
-                valutazione.punteggio ===
-                    migliorPunteggio
-            );
-
-        }
-    );
-
-
-const punteggiAnemodromoMigliori =
-    miglioriFlussi
-        .map(
-            flusso =>
-                valutazioniFlussi[
-                    flusso
-                ]
-                    ?.anemodromo
-                    ?.punteggioComplessivo
-        )
-        .filter(
-            punteggio =>
-                typeof punteggio ===
-                    "number"
-        );
-
-
-const migliorPunteggioAnemodromo =
-    punteggiAnemodromoMigliori.length
-        ? Math.max(
-            ...punteggiAnemodromoMigliori
-        )
-        : null;
 
     const guida =
         {};
@@ -506,20 +459,53 @@ const migliorPunteggioAnemodromo =
         migliorPunteggio
 ) {
 
-    const punteggioAnemodromo =
-        valutazione
-            ?.anemodromo
-            ?.punteggioComplessivo;
+    semaforo = "verde";
 
+}
+
+
+if (
+    valutazione &&
+    semaforo
+) {
+
+    semaforo =
+        applicaTransizioneFlussoAllaGuidaAnemoschesi(
+            sequenza,
+            valutazione,
+            semaforo
+        );
+
+}
+
+
+/*
+La fisiologia mantiene sempre
+la precedenza finale.
+*/
+
+if (
+    valutazione?.fisiologia
+) {
 
     if (
-        typeof migliorPunteggioAnemodromo !==
-            "number" ||
-        punteggioAnemodromo ===
-            migliorPunteggioAnemodromo
+        valutazione.fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.ERRORE ||
+        valutazione.fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.CRITICO
     ) {
 
-        semaforo = "verde";
+        semaforo = "rosso";
+
+    }
+
+    else if (
+        valutazione.fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.ATTENZIONE &&
+        semaforo === "verde"
+    ) {
+
+        semaforo = "giallo";
 
     }
 
@@ -1856,6 +1842,145 @@ function applicaTransizioneCaricoAllaGuidaAnemoschesi(
     giallo -> verde.
 
     Un volume localmente rosso
+    non viene promosso.
+    */
+
+    if (
+        valoreSimulato >
+        valoreAttuale
+    ) {
+
+        if (
+            semaforoBase === "giallo"
+        ) {
+
+            return "verde";
+
+        }
+
+
+        return semaforoBase;
+
+    }
+
+
+    /*
+    Peggioramento della transizione:
+    verde -> giallo
+    giallo -> rosso.
+    */
+
+    if (
+        valoreSimulato <
+        valoreAttuale
+    ) {
+
+        if (
+            semaforoBase === "verde"
+        ) {
+
+            return "giallo";
+
+        }
+
+
+        if (
+            semaforoBase === "giallo"
+        ) {
+
+            return "rosso";
+
+        }
+
+    }
+
+
+    return semaforoBase;
+
+}
+
+/* =====================================================
+   INFLUENZA DELLE TRANSIZIONI DI FLUSSO SULLA GUIDA
+===================================================== */
+
+function applicaTransizioneFlussoAllaGuidaAnemoschesi(
+    sequenza,
+    valutazioneSimulata,
+    semaforoBase
+) {
+
+    if (
+        !sequenza ||
+        !valutazioneSimulata ||
+        !semaforoBase
+    ) {
+
+        return semaforoBase;
+
+    }
+
+
+    const valutazioneAttualeAnemodromo =
+        valutaAnemodromoPerIntentoAnemoschesi(
+            sequenza
+        );
+
+
+    const valutazioneSimulataAnemodromo =
+        valutazioneSimulata.anemodromo;
+
+
+    const esitoAttuale =
+        valutazioneAttualeAnemodromo
+            ?.valutazioneTransizioni
+            ?.flusso
+            ?.esito;
+
+
+    const esitoSimulato =
+        valutazioneSimulataAnemodromo
+            ?.valutazioneTransizioni
+            ?.flusso
+            ?.esito;
+
+
+    const valoreAttuale =
+        valoreEsitoTransizioneGuidaAnemoschesi(
+            esitoAttuale
+        );
+
+
+    const valoreSimulato =
+        valoreEsitoTransizioneGuidaAnemoschesi(
+            esitoSimulato
+        );
+
+
+    /*
+    Se non esiste ancora una transizione
+    confrontabile oppure l'esito non cambia,
+    manteniamo la guida locale del flusso.
+    */
+
+    if (
+        typeof valoreAttuale !==
+            "number" ||
+        typeof valoreSimulato !==
+            "number" ||
+        valoreAttuale ===
+            valoreSimulato
+    ) {
+
+        return semaforoBase;
+
+    }
+
+
+    /*
+    Miglioramento della transizione:
+    giallo -> verde.
+
+    Un flusso localmente rosso
     non viene promosso.
     */
 
