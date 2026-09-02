@@ -1204,8 +1204,10 @@ function classificaTransizionePercorsoAnemoschesi(
     */
 
     if (
-        percorsoPrecedente === "bocca" ||
-        percorsoSuccessivo === "bocca"
+        percorsoPrecedente ===
+            ANEMOS_PERCORSI.BOCCA ||
+        percorsoSuccessivo ===
+            ANEMOS_PERCORSI.BOCCA
     ) {
         return (
             ANEMOSCHESI_TRANSIZIONI_PERCORSO
@@ -1221,16 +1223,16 @@ function classificaTransizionePercorsoAnemoschesi(
     if (
         (
             percorsoPrecedente ===
-                "narice_destra" &&
+                ANEMOS_PERCORSI.NARICE_DESTRA &&
             percorsoSuccessivo ===
-                "narice_sinistra"
+                ANEMOS_PERCORSI.NARICE_SINISTRA
         )
         ||
         (
             percorsoPrecedente ===
-                "narice_sinistra" &&
+                ANEMOS_PERCORSI.NARICE_SINISTRA &&
             percorsoSuccessivo ===
-                "narice_destra"
+                ANEMOS_PERCORSI.NARICE_DESTRA
         )
     ) {
         return (
@@ -1241,19 +1243,19 @@ function classificaTransizionePercorsoAnemoschesi(
 
 
     /*
-    Percorso unilaterale → entrambe
+    Percorso unilaterale → entrambe le narici
     */
 
     if (
         (
             percorsoPrecedente ===
-                "narice_destra" ||
+                ANEMOS_PERCORSI.NARICE_DESTRA ||
             percorsoPrecedente ===
-                "narice_sinistra"
+                ANEMOS_PERCORSI.NARICE_SINISTRA
         )
         &&
         percorsoSuccessivo ===
-            "entrambe"
+            ANEMOS_PERCORSI.ENTRAMBE_NARICI
     ) {
         return (
             ANEMOSCHESI_TRANSIZIONI_PERCORSO
@@ -1263,18 +1265,18 @@ function classificaTransizionePercorsoAnemoschesi(
 
 
     /*
-    Entrambe → percorso unilaterale
+    Entrambe le narici → percorso unilaterale
     */
 
     if (
         percorsoPrecedente ===
-            "entrambe"
+            ANEMOS_PERCORSI.ENTRAMBE_NARICI
         &&
         (
             percorsoSuccessivo ===
-                "narice_destra" ||
+                ANEMOS_PERCORSI.NARICE_DESTRA ||
             percorsoSuccessivo ===
-                "narice_sinistra"
+                ANEMOS_PERCORSI.NARICE_SINISTRA
         )
     ) {
         return (
@@ -1426,6 +1428,12 @@ function analizzaTransizioniAnemomeriAnemoschesi(
             }
 
         }
+
+               const transizionePercorso =
+            classificaTransizionePercorsoAnemoschesi(
+                precedente.percorso,
+                successivo.percorso
+            );
         const tipoPassaggio =
             String(
                 precedente.tipo
@@ -1479,8 +1487,16 @@ function analizzaTransizioniAnemomeriAnemoschesi(
                     successivo.flusso,
 
                 andamentoFlusso:
-                    andamentoFlusso
+                    andamentoFlusso,
 
+                percorsoPrecedente:
+                    precedente.percorso,
+
+                percorsoSuccessivo:
+                    successivo.percorso,
+
+                transizionePercorso:
+                    transizionePercorso
             }
         );
 
