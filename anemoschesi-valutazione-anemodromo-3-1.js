@@ -1165,6 +1165,129 @@ function valoreFlussoTransizioneAnemoschesi(
 
 }
 
+function classificaTransizionePercorsoAnemoschesi(
+    percorsoPrecedente,
+    percorsoSuccessivo
+) {
+
+    if (
+        !percorsoPrecedente ||
+        !percorsoSuccessivo
+    ) {
+        return null;
+    }
+
+
+    /*
+    Stesso percorso:
+    entrambe → entrambe
+    destra → destra
+    sinistra → sinistra
+    bocca → bocca
+    */
+
+    if (
+        percorsoPrecedente ===
+        percorsoSuccessivo
+    ) {
+        return (
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO
+                .STABILE
+        );
+    }
+
+
+    /*
+    Se il percorso cambia e almeno uno
+    dei due utilizza la bocca,
+    la transizione è ORALE.
+    */
+
+    if (
+        percorsoPrecedente === "bocca" ||
+        percorsoSuccessivo === "bocca"
+    ) {
+        return (
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO
+                .ORALE
+        );
+    }
+
+
+    /*
+    Narice destra ↔ narice sinistra
+    */
+
+    if (
+        (
+            percorsoPrecedente ===
+                "narice_destra" &&
+            percorsoSuccessivo ===
+                "narice_sinistra"
+        )
+        ||
+        (
+            percorsoPrecedente ===
+                "narice_sinistra" &&
+            percorsoSuccessivo ===
+                "narice_destra"
+        )
+    ) {
+        return (
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO
+                .ALTERNATA
+        );
+    }
+
+
+    /*
+    Percorso unilaterale → entrambe
+    */
+
+    if (
+        (
+            percorsoPrecedente ===
+                "narice_destra" ||
+            percorsoPrecedente ===
+                "narice_sinistra"
+        )
+        &&
+        percorsoSuccessivo ===
+            "entrambe"
+    ) {
+        return (
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO
+                .CONVERGENTE
+        );
+    }
+
+
+    /*
+    Entrambe → percorso unilaterale
+    */
+
+    if (
+        percorsoPrecedente ===
+            "entrambe"
+        &&
+        (
+            percorsoSuccessivo ===
+                "narice_destra" ||
+            percorsoSuccessivo ===
+                "narice_sinistra"
+        )
+    ) {
+        return (
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO
+                .DIVERGENTE
+        );
+    }
+
+
+    return null;
+
+}
+
 function analizzaTransizioniAnemomeriAnemoschesi(
     profiliAnemomeri
 ) {
