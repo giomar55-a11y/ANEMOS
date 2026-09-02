@@ -722,53 +722,6 @@ function creaGuidaPercorsoAnemoschesi(
             )
             : null;
    
-const miglioriPercorsi =
-    percorsi.filter(
-        percorso => {
-
-            const valutazione =
-                valutazioniPercorsi[
-                    percorso
-                ];
-
-            return (
-                valutazione &&
-                semaforiBase[percorso] !==
-                    "rosso" &&
-                typeof migliorPunteggio ===
-                    "number" &&
-                valutazione.punteggio ===
-                    migliorPunteggio
-            );
-
-        }
-    );
-
-
-const punteggiAnemodromoMigliori =
-    miglioriPercorsi
-        .map(
-            percorso =>
-                valutazioniPercorsi[
-                    percorso
-                ]
-                    ?.anemodromo
-                    ?.punteggioComplessivo
-        )
-        .filter(
-            punteggio =>
-                typeof punteggio ===
-                    "number"
-        );
-
-
-const migliorPunteggioAnemodromo =
-    punteggiAnemodromoMigliori.length
-        ? Math.max(
-            ...punteggiAnemodromoMigliori
-        )
-        : null;
-
     const guida =
         {};
 
@@ -797,22 +750,49 @@ const migliorPunteggioAnemodromo =
         migliorPunteggio
 ) {
 
-    const punteggioAnemodromo =
-        valutazione
-            ?.anemodromo
-            ?.punteggioComplessivo;
+    semaforo =
+        "verde";
+
+}
+
+           semaforo =
+    applicaTransizionePercorsoAllaGuidaAnemoschesi(
+        sequenza,
+        valutazione,
+        semaforo
+    );
+
+           if (
+    valutazione
+        ?.fisiologia
+        ?.livello ===
+        ANEMOSCHESI_ESITI_FISIOLOGICI
+            .ATTENZIONE &&
+    semaforo ===
+        "verde"
+) {
+
+    semaforo =
+        "giallo";
+
+}
 
 
-    if (
-        typeof migliorPunteggioAnemodromo !==
-            "number" ||
-        punteggioAnemodromo ===
-            migliorPunteggioAnemodromo
-    ) {
+if (
+    valutazione
+        ?.fisiologia
+        ?.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .CRITICO ||
+    valutazione
+        ?.fisiologia
+        ?.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI
+                .ERRORE
+) {
 
-        semaforo = "verde";
-
-    }
+    semaforo =
+        "rosso";
 
 }
 
@@ -2012,6 +1992,127 @@ function applicaTransizioneFlussoAllaGuidaAnemoschesi(
     if (
         valoreSimulato <
         valoreAttuale
+    ) {
+
+        if (
+            semaforoBase === "verde"
+        ) {
+
+            return "giallo";
+
+        }
+
+
+        if (
+            semaforoBase === "giallo"
+        ) {
+
+            return "rosso";
+
+        }
+
+    }
+
+
+    return semaforoBase;
+
+}
+
+function applicaTransizionePercorsoAllaGuidaAnemoschesi(
+    sequenza,
+    valutazioneSimulata,
+    semaforoBase
+) {
+
+    if (
+        !sequenza ||
+        !valutazioneSimulata ||
+        !semaforoBase
+    ) {
+
+        return semaforoBase;
+
+    }
+
+
+    const valutazioneAttualeAnemodromo =
+        valutaAnemodromoPerIntentoAnemoschesi(
+            sequenza
+        );
+
+
+    const valutazioneSimulataAnemodromo =
+        valutazioneSimulata.anemodromo;
+
+
+    const punteggioAttuale =
+        valutazioneAttualeAnemodromo
+            ?.valutazioneTransizioniPercorso
+            ?.punteggio;
+
+
+    const punteggioSimulato =
+        valutazioneSimulataAnemodromo
+            ?.valutazioneTransizioniPercorso
+            ?.punteggio;
+
+
+    /*
+    Se non esiste ancora una transizione
+    confrontabile oppure il punteggio non cambia,
+    manteniamo la guida locale del percorso.
+    */
+
+    if (
+        typeof punteggioAttuale !==
+            "number" ||
+        typeof punteggioSimulato !==
+            "number" ||
+        punteggioAttuale ===
+            punteggioSimulato
+    ) {
+
+        return semaforoBase;
+
+    }
+
+
+    /*
+    Miglioramento della grammatica del percorso:
+    giallo -> verde.
+
+    Un percorso localmente rosso
+    non viene promosso.
+    */
+
+    if (
+        punteggioSimulato >
+        punteggioAttuale
+    ) {
+
+        if (
+            semaforoBase === "giallo"
+        ) {
+
+            return "verde";
+
+        }
+
+
+        return semaforoBase;
+
+    }
+
+
+    /*
+    Peggioramento della grammatica del percorso:
+    verde -> giallo
+    giallo -> rosso.
+    */
+
+    if (
+        punteggioSimulato <
+        punteggioAttuale
     ) {
 
         if (
