@@ -158,6 +158,25 @@ const ANEMOSCHESI_ANDAMENTI_TRANSIZIONE = {
 
 };
 
+const ANEMOSCHESI_TRANSIZIONI_PERCORSO = {
+
+    STABILE:
+        "stabile",
+
+    ALTERNATA:
+        "alternata",
+
+    CONVERGENTE:
+        "convergente",
+
+    DIVERGENTE:
+        "divergente",
+
+    ORALE:
+        "orale"
+
+};
+
 /* =====================================================
    TRANSIZIONI × INTENTO
 ===================================================== */
@@ -849,6 +868,184 @@ const ANEMOSCHESI_TRANSIZIONI_INTENTI = {
             ]
 
         }
+
+    }
+
+};
+
+const ANEMOSCHESI_TRANSIZIONI_PERCORSO_INTENTI = {
+
+    calmare: {
+
+        preferiti: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.STABILE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.CONVERGENTE
+        ],
+
+        sconsigliati: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.DIVERGENTE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ORALE
+        ]
+
+    },
+
+
+    scaricare: {
+
+        preferiti: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.DIVERGENTE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ORALE
+        ],
+
+        sconsigliati: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.CONVERGENTE
+        ]
+
+    },
+
+
+    recuperare: {
+
+        preferiti: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.STABILE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.CONVERGENTE
+        ],
+
+        sconsigliati: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.DIVERGENTE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ORALE
+        ]
+
+    },
+
+
+    riposare: {
+
+        preferiti: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.STABILE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.CONVERGENTE
+        ],
+
+        sconsigliati: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.DIVERGENTE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ORALE
+        ]
+
+    },
+
+
+    percepire: {
+
+        preferiti: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ALTERNATA,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.STABILE
+        ],
+
+        sconsigliati: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ORALE
+        ]
+
+    },
+
+
+    coordinare: {
+
+        preferiti: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ALTERNATA,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.CONVERGENTE
+        ],
+
+        sconsigliati: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ORALE
+        ]
+
+    },
+
+
+    mobilizzare: {
+
+        preferiti: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ALTERNATA,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.DIVERGENTE
+        ],
+
+        sconsigliati: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ORALE
+        ]
+
+    },
+
+
+    stabilizzare: {
+
+        preferiti: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.STABILE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.CONVERGENTE
+        ],
+
+        sconsigliati: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.DIVERGENTE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ORALE
+        ]
+
+    },
+
+
+    attivare: {
+
+        preferiti: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.DIVERGENTE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ORALE
+        ],
+
+        sconsigliati: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.STABILE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.CONVERGENTE
+        ]
+
+    },
+
+
+    potenziare: {
+
+        preferiti: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ORALE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.DIVERGENTE
+        ],
+
+        sconsigliati: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.STABILE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.CONVERGENTE
+        ]
+
+    },
+
+
+    resistere: {
+
+        preferiti: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.STABILE
+        ],
+
+        sconsigliati: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.DIVERGENTE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ORALE
+        ]
+
+    },
+
+
+    performare: {
+
+        preferiti: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ALTERNATA,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.DIVERGENTE,
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.ORALE
+        ],
+
+        sconsigliati: [
+            ANEMOSCHESI_TRANSIZIONI_PERCORSO.CONVERGENTE
+        ]
 
     }
 
