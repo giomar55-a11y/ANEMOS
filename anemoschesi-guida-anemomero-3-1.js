@@ -2103,41 +2103,22 @@ function applicaTransizionePercorsoAllaGuidaAnemoschesi(
     }
 
 
-    const valutazioneAttualeAnemodromo =
-        valutaAnemodromoPerIntentoAnemoschesi(
-            sequenza
-        );
-
-
-    const valutazioneSimulataAnemodromo =
-        valutazioneSimulata.anemodromo;
-
-
-    const punteggioAttuale =
-        valutazioneAttualeAnemodromo
-            ?.valutazioneTransizioniPercorso
-            ?.punteggio;
-
-
-    const punteggioSimulato =
-        valutazioneSimulataAnemodromo
+    const punteggioTransizione =
+        valutazioneSimulata
+            .anemodromo
             ?.valutazioneTransizioniPercorso
             ?.punteggio;
 
 
     /*
     Se non esiste ancora una transizione
-    confrontabile oppure il punteggio non cambia,
-    manteniamo la guida locale del percorso.
+    di percorso valutabile,
+    manteniamo la guida locale.
     */
 
     if (
-        typeof punteggioAttuale !==
-            "number" ||
-        typeof punteggioSimulato !==
-            "number" ||
-        punteggioAttuale ===
-            punteggioSimulato
+        typeof punteggioTransizione !==
+            "number"
     ) {
 
         return semaforoBase;
@@ -2146,16 +2127,18 @@ function applicaTransizionePercorsoAllaGuidaAnemoschesi(
 
 
     /*
-    Miglioramento della grammatica del percorso:
-    giallo -> verde.
+    La grammatica viene letta direttamente
+    dalla configurazione che risulterebbe
+    dopo il click.
 
-    Un percorso localmente rosso
-    non viene promosso.
+    >= 75  favorevole
+    >= 50  neutra/intermedia
+    < 50   sfavorevole
     */
 
+
     if (
-        punteggioSimulato >
-        punteggioAttuale
+        punteggioTransizione >= 75
     ) {
 
         if (
@@ -2172,15 +2155,8 @@ function applicaTransizionePercorsoAllaGuidaAnemoschesi(
     }
 
 
-    /*
-    Peggioramento della grammatica del percorso:
-    verde -> giallo
-    giallo -> rosso.
-    */
-
     if (
-        punteggioSimulato <
-        punteggioAttuale
+        punteggioTransizione < 50
     ) {
 
         if (
@@ -2206,7 +2182,6 @@ function applicaTransizionePercorsoAllaGuidaAnemoschesi(
     return semaforoBase;
 
 }
-
 /* =====================================================
    DIREZIONE GUIDA DELLA DURATA
 ===================================================== */
