@@ -721,6 +721,59 @@ function creaGuidaPercorsoAnemoschesi(
                 ...punteggiUtili
             )
             : null;
+
+/*
+Tra i percorsi localmente migliori,
+la grammatica delle transizioni
+determina quali sono realmente
+le scelte preferibili nella sequenza.
+*/
+
+const punteggiTransizioneMigliori =
+    percorsi
+        .filter(
+            percorso => {
+
+                const valutazione =
+                    valutazioniPercorsi[
+                        percorso
+                    ];
+
+                return (
+                    valutazione &&
+                    semaforiBase[
+                        percorso
+                    ] !== "rosso" &&
+                    typeof migliorPunteggio ===
+                        "number" &&
+                    valutazione.punteggio ===
+                        migliorPunteggio &&
+                    typeof valutazione
+                        .anemodromo
+                        ?.valutazioneTransizioniPercorso
+                        ?.punteggio ===
+                        "number"
+                );
+
+            }
+        )
+        .map(
+            percorso =>
+                valutazioniPercorsi[
+                    percorso
+                ]
+                    .anemodromo
+                    .valutazioneTransizioniPercorso
+                    .punteggio
+        );
+
+
+const migliorPunteggioTransizione =
+    punteggiTransizioneMigliori.length
+        ? Math.max(
+            ...punteggiTransizioneMigliori
+        )
+        : null;
    
     const guida =
         {};
@@ -750,11 +803,26 @@ function creaGuidaPercorsoAnemoschesi(
         migliorPunteggio
 ) {
 
-    semaforo =
-        "verde";
+    const punteggioTransizione =
+        valutazione
+            .anemodromo
+            ?.valutazioneTransizioniPercorso
+            ?.punteggio;
+
+
+    if (
+        typeof migliorPunteggioTransizione !==
+            "number" ||
+        punteggioTransizione ===
+            migliorPunteggioTransizione
+    ) {
+
+        semaforo =
+            "verde";
+
+    }
 
 }
-
            semaforo =
     applicaTransizionePercorsoAllaGuidaAnemoschesi(
         sequenza,
