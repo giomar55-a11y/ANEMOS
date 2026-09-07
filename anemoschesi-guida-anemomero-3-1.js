@@ -811,16 +811,30 @@ const migliorPunteggioTransizione =
 
 
     if (
-        typeof migliorPunteggioTransizione !==
-            "number" ||
-        punteggioTransizione ===
-            migliorPunteggioTransizione
-    ) {
+    typeof migliorPunteggioTransizione !==
+        "number" ||
+    punteggioTransizione ===
+        migliorPunteggioTransizione
+) {
 
-        semaforo =
-            "verde";
+    semaforo =
+        "verde";
 
-    }
+}
+
+else if (
+    typeof punteggioTransizione ===
+        "number" &&
+    typeof migliorPunteggioTransizione ===
+        "number" &&
+    punteggioTransizione <
+        migliorPunteggioTransizione &&
+    semaforo ===
+        "verde"
+) {
+
+    semaforo =
+        "giallo";
 
 }
            semaforo =
