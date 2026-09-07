@@ -940,60 +940,49 @@ function simulaSettoreAnemomeroAnemoschesi(
 
 
     /*
-    Se il settore è già attivo,
-    simuliamo la sua disattivazione.
-    */
+Il semaforo deve descrivere la configurazione
+rappresentata dal settore.
+
+Se il settore è già attivo,
+manteniamo quindi la configurazione attuale.
+
+Se è inattivo, simuliamo la sua attivazione
+usando il primo volume disponibile.
+*/
+
+if (
+    !settoreEsistente
+) {
+
+    const volumeIniziale =
+        primoVolumeDisponibilePerSettore(
+            sequenza,
+            anemomero.id,
+            nomeSettore,
+            anemomero.tipo
+        );
+
 
     if (
-        settoreEsistente
+        !volumeIniziale
     ) {
 
-        simulato.settori =
-            simulato.settori.filter(
-                settore =>
-                    settore.nome !==
-                    nomeSettore
-            );
-
-    } else {
-
-        /*
-        Se il settore è inattivo,
-        simuliamo la sua attivazione
-        usando il primo volume
-        fisiologicamente disponibile.
-        */
-
-        const volumeIniziale =
-            primoVolumeDisponibilePerSettore(
-                sequenza,
-                anemomero.id,
-                nomeSettore,
-                anemomero.tipo
-            );
-
-
-        if (
-            !volumeIniziale
-        ) {
-
-            return null;
-
-        }
-
-
-        simulato.settori.push({
-
-            nome:
-                nomeSettore,
-
-            volume:
-                volumeIniziale
-
-        });
+        return null;
 
     }
 
+
+    simulato.settori.push({
+
+        nome:
+            nomeSettore,
+
+        volume:
+            volumeIniziale
+
+    });
+
+}
 
     const valutazioneIntento =
         valutaAnemomeroPerIntentoAnemoschesi(
