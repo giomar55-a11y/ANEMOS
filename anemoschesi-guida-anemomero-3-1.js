@@ -837,6 +837,9 @@ else if (
         "giallo";
 
 }
+
+}
+               
            semaforo =
     applicaTransizionePercorsoAllaGuidaAnemoschesi(
         sequenza,
