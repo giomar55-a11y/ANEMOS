@@ -658,7 +658,9 @@ function creaGuidaPercorsoAnemoschesi(
     percorsi.forEach(
         percorso => {
 
-            valutazioniPercorsi[percorso] =
+            valutazioniPercorsi[
+                percorso
+            ] =
                 simulaPercorsoAnemomeroAnemoschesi(
                     sequenza,
                     anemomero,
@@ -682,7 +684,9 @@ function creaGuidaPercorsoAnemoschesi(
                 ];
 
 
-            semaforiBase[percorso] =
+            semaforiBase[
+                percorso
+            ] =
                 valutazione
                     ? semaforoGuidaDurataAnemoschesi(
                         valutazioneAttuale.punteggio,
@@ -694,87 +698,56 @@ function creaGuidaPercorsoAnemoschesi(
     );
 
 
-    const punteggiUtili =
-        percorsi
-            .filter(
-                percorso =>
-                    valutazioniPercorsi[percorso] &&
-                    semaforiBase[percorso] !==
-                        "rosso"
-            )
-            .map(
-                percorso =>
+    /*
+    Per ciascun percorso simulato
+    valutiamo la transizione direttamente
+    coinvolta dall'Anemomero corrente.
+    */
+
+    const transizioniLocaliPercorsi =
+        {};
+
+
+    percorsi.forEach(
+        percorso => {
+
+            transizioniLocaliPercorsi[
+                percorso
+            ] =
+                valutaTransizioneLocalePercorsoGuidaAnemoschesi(
+                    sequenza,
+                    anemomero,
                     valutazioniPercorsi[
                         percorso
-                    ].punteggio
-            )
-            .filter(
-                punteggio =>
-                    typeof punteggio ===
-                    "number"
-            );
-
-
-    const migliorPunteggio =
-        punteggiUtili.length
-            ? Math.max(
-                ...punteggiUtili
-            )
-            : null;
-
-/*
-Tra i percorsi localmente migliori,
-la grammatica delle transizioni
-determina quali sono realmente
-le scelte preferibili nella sequenza.
-*/
-
-const punteggiTransizioneMigliori =
-    percorsi
-        .filter(
-            percorso => {
-
-                const valutazione =
-                    valutazioniPercorsi[
-                        percorso
-                    ];
-
-                return (
-                    valutazione &&
-                    semaforiBase[
-                        percorso
-                    ] !== "rosso" &&
-                    typeof migliorPunteggio ===
-                        "number" &&
-                    valutazione.punteggio ===
-                        migliorPunteggio &&
-                    typeof valutazione
-                        .anemodromo
-                        ?.valutazioneTransizioniPercorso
-                        ?.punteggio ===
-                        "number"
+                    ]
                 );
 
-            }
-        )
-        .map(
+        }
+    );
+
+
+    /*
+    Serve a distinguere una transizione
+    neutra da una realmente preferita.
+
+    Se esiste almeno una scelta preferita
+    fisiologicamente/localmente ammissibile,
+    una scelta neutra non deve restare verde.
+    */
+
+    const esisteTransizionePreferita =
+        percorsi.some(
             percorso =>
-                valutazioniPercorsi[
+                semaforiBase[
                     percorso
-                ]
-                    .anemodromo
-                    .valutazioneTransizioniPercorso
-                    .punteggio
+                ] !== "rosso" &&
+                transizioniLocaliPercorsi[
+                    percorso
+                ]?.esito ===
+                    "preferito"
         );
 
 
-const migliorPunteggioTransizione =
-    punteggiTransizioneMigliori.length
-        ? Math.max(
-            ...punteggiTransizioneMigliori
-        )
-        : null;
-   
     const guida =
         {};
 
@@ -794,94 +767,126 @@ const migliorPunteggioTransizione =
                 ];
 
 
+            const transizioneLocale =
+                transizioniLocaliPercorsi[
+                    percorso
+                ];
+
+
+            /*
+            La grammatica locale può
+            promuovere o declassare di
+            un solo livello il semaforo.
+
+            Non può recuperare un rosso
+            prodotto dalla valutazione locale.
+            */
+
             if (
-    valutazione &&
-    semaforo !== "rosso" &&
-    typeof migliorPunteggio ===
-        "number" &&
-    valutazione.punteggio ===
-        migliorPunteggio
-) {
+                valutazione &&
+                semaforo !== "rosso" &&
+                transizioneLocale
+            ) {
 
-    const punteggioTransizione =
-        valutazione
-            .anemodromo
-            ?.valutazioneTransizioniPercorso
-            ?.punteggio;
+                if (
+                    transizioneLocale.esito ===
+                        "preferito"
+                ) {
 
+                    if (
+                        semaforo === "giallo"
+                    ) {
 
-    if (
-    typeof migliorPunteggioTransizione !==
-        "number" ||
-    punteggioTransizione ===
-        migliorPunteggioTransizione
-) {
+                        semaforo =
+                            "verde";
 
-    semaforo =
-        "verde";
+                    }
 
-}
+                }
 
-else if (
-    typeof punteggioTransizione ===
-        "number" &&
-    typeof migliorPunteggioTransizione ===
-        "number" &&
-    punteggioTransizione <
-        migliorPunteggioTransizione &&
-    semaforo ===
-        "verde"
-) {
+                else if (
+                    transizioneLocale.esito ===
+                        "neutro" &&
+                    esisteTransizionePreferita &&
+                    semaforo === "verde"
+                ) {
 
-    semaforo =
-        "giallo";
+                    semaforo =
+                        "giallo";
 
-}
+                }
 
-}
-               
-           semaforo =
-    applicaTransizionePercorsoAllaGuidaAnemoschesi(
-        sequenza,
-        valutazione,
-        semaforo
-    );
+                else if (
+                    transizioneLocale.esito ===
+                        "sconsigliato"
+                ) {
 
-           if (
-    valutazione
-        ?.fisiologia
-        ?.livello ===
-        ANEMOSCHESI_ESITI_FISIOLOGICI
-            .ATTENZIONE &&
-    semaforo ===
-        "verde"
-) {
+                    if (
+                        semaforo === "verde"
+                    ) {
 
-    semaforo =
-        "giallo";
+                        semaforo =
+                            "giallo";
 
-}
+                    }
+
+                    else if (
+                        semaforo === "giallo"
+                    ) {
+
+                        semaforo =
+                            "rosso";
+
+                    }
+
+                }
+
+            }
 
 
-if (
-    valutazione
-        ?.fisiologia
-        ?.livello ===
-            ANEMOSCHESI_ESITI_FISIOLOGICI
-                .CRITICO ||
-    valutazione
-        ?.fisiologia
-        ?.livello ===
-            ANEMOSCHESI_ESITI_FISIOLOGICI
-                .ERRORE
-) {
+            /*
+            La fisiologia rimane
+            l'autorità finale.
+            */
 
-    semaforo =
-        "rosso";
+            if (
+                valutazione
+                    ?.fisiologia
+                    ?.livello ===
+                    ANEMOSCHESI_ESITI_FISIOLOGICI
+                        .ATTENZIONE &&
+                semaforo ===
+                    "verde"
+            ) {
 
-}
+                semaforo =
+                    "giallo";
 
-            guida[percorso] = {
+            }
+
+
+            if (
+                valutazione
+                    ?.fisiologia
+                    ?.livello ===
+                        ANEMOSCHESI_ESITI_FISIOLOGICI
+                            .CRITICO ||
+                valutazione
+                    ?.fisiologia
+                    ?.livello ===
+                        ANEMOSCHESI_ESITI_FISIOLOGICI
+                            .ERRORE
+            ) {
+
+                semaforo =
+                    "rosso";
+
+            }
+
+
+            guida[
+                percorso
+            ] = {
 
                 selezionato:
                     anemomero.percorso ===
@@ -2354,6 +2359,180 @@ function applicaTransizionePercorsoAllaGuidaAnemoschesi(
     return semaforoBase;
 
 }
+
+/* =====================================================
+   TRANSIZIONE LOCALE DEL PERCORSO PER LA GUIDA
+===================================================== */
+
+function valutaTransizioneLocalePercorsoGuidaAnemoschesi(
+    sequenza,
+    anemomero,
+    valutazioneSimulata
+) {
+
+    if (
+        !sequenza ||
+        !anemomero ||
+        !valutazioneSimulata
+    ) {
+
+        return null;
+
+    }
+
+
+    const transizioni =
+        valutazioneSimulata
+            .anemodromo
+            ?.transizioniAnemomeri;
+
+
+    if (
+        !Array.isArray(
+            transizioni
+        )
+    ) {
+
+        return null;
+
+    }
+
+
+    const indiceAnemomero =
+        sequenza.anemodromi.findIndex(
+            elemento =>
+                elemento.id ===
+                anemomero.id
+        );
+
+
+    if (
+        indiceAnemomero < 0
+    ) {
+
+        return null;
+
+    }
+
+
+    /*
+    Per la guida del singolo pulsante
+    consideriamo la transizione che entra
+    nell'Anemomero modificato.
+
+    Se è il primo Anemomero,
+    utilizziamo invece la transizione
+    verso il successivo.
+    */
+
+    let transizione =
+        transizioni.find(
+            elemento =>
+                elemento.indiceSuccessivo ===
+                indiceAnemomero
+        );
+
+
+    if (
+        !transizione
+    ) {
+
+        transizione =
+            transizioni.find(
+                elemento =>
+                    elemento.indicePrecedente ===
+                    indiceAnemomero
+            );
+
+    }
+
+
+    const categoria =
+        transizione
+            ?.transizionePercorso;
+
+
+    if (
+        !categoria
+    ) {
+
+        return null;
+
+    }
+
+
+    const intentoId =
+        sequenza.intento;
+
+
+    const regoleIntento =
+        ANEMOSCHESI_TRANSIZIONI_PERCORSO_INTENTI[
+            intentoId
+        ];
+
+
+    if (
+        !regoleIntento
+    ) {
+
+        return null;
+
+    }
+
+
+    if (
+        Array.isArray(
+            regoleIntento.preferiti
+        ) &&
+        regoleIntento.preferiti.includes(
+            categoria
+        )
+    ) {
+
+        return {
+            categoria:
+                categoria,
+            esito:
+                "preferito",
+            punteggio:
+                100
+        };
+
+    }
+
+
+    if (
+        Array.isArray(
+            regoleIntento.sconsigliati
+        ) &&
+        regoleIntento.sconsigliati.includes(
+            categoria
+        )
+    ) {
+
+        return {
+            categoria:
+                categoria,
+            esito:
+                "sconsigliato",
+            punteggio:
+                0
+        };
+
+    }
+
+
+    return {
+        categoria:
+            categoria,
+        esito:
+            "neutro",
+        punteggio:
+            50
+    };
+
+}
+
 /* =====================================================
    DIREZIONE GUIDA DELLA DURATA
 ===================================================== */
