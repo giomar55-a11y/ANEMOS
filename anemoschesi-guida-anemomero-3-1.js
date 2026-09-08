@@ -1158,12 +1158,13 @@ if (
 ) {
 
     semaforo =
-        applicaTransizioneCaricoAllaGuidaAnemoschesi(
-            sequenza,
-            valutazione,
-            semaforo
-        );
-
+    applicaTransizioneSettoreAllaGuidaAnemoschesi(
+        sequenza,
+        anemomero,
+        nomeSettore,
+        valutazione,
+        semaforo
+    );
 }
 
 
@@ -1788,6 +1789,171 @@ const esitoSimulato =
     if (
         valoreSimulato <
         valoreAttuale
+    ) {
+
+        if (
+            semaforoBase === "verde"
+        ) {
+
+            return "giallo";
+
+        }
+
+
+        if (
+            semaforoBase === "giallo"
+        ) {
+
+            return "rosso";
+
+        }
+
+    }
+
+
+    return semaforoBase;
+
+}
+
+/* =====================================================
+   RIFERIMENTO DI CARICO PER LA GUIDA DEI SETTORI
+===================================================== */
+
+function creaRiferimentoSettoreAnemoschesi(
+    sequenza,
+    anemomero,
+    nomeSettore
+) {
+
+    if (
+        !sequenza ||
+        !anemomero ||
+        !nomeSettore
+    ) {
+
+        return null;
+
+    }
+
+
+    const riferimento =
+        copiaAnemomeroPerSimulazioneAnemoschesi(
+            anemomero
+        );
+
+
+    /*
+    Il riferimento rappresenta sempre
+    la configurazione senza il settore
+    che stiamo valutando.
+    */
+
+    riferimento.settori =
+        riferimento.settori.filter(
+            settore =>
+                settore.nome !==
+                nomeSettore
+        );
+
+
+    return valutaAnemodromoConAnemomeroSimulatoAnemoschesi(
+        sequenza,
+        riferimento
+    );
+
+}
+
+function applicaTransizioneSettoreAllaGuidaAnemoschesi(
+    sequenza,
+    anemomero,
+    nomeSettore,
+    valutazioneSimulata,
+    semaforoBase
+) {
+
+    if (
+        !sequenza ||
+        !anemomero ||
+        !nomeSettore ||
+        !valutazioneSimulata ||
+        !semaforoBase
+    ) {
+
+        return semaforoBase;
+
+    }
+
+
+    const valutazioneRiferimento =
+        creaRiferimentoSettoreAnemoschesi(
+            sequenza,
+            anemomero,
+            nomeSettore
+        );
+
+
+    const esitoRiferimento =
+        valutazioneRiferimento
+            ?.valutazioneTransizioni
+            ?.carico
+            ?.esito;
+
+
+    const esitoConSettore =
+        valutazioneSimulata
+            .anemodromo
+            ?.valutazioneTransizioni
+            ?.carico
+            ?.esito;
+
+
+    const valoreRiferimento =
+        valoreEsitoTransizioneGuidaAnemoschesi(
+            esitoRiferimento
+        );
+
+
+    const valoreConSettore =
+        valoreEsitoTransizioneGuidaAnemoschesi(
+            esitoConSettore
+        );
+
+
+    if (
+        typeof valoreRiferimento !==
+            "number" ||
+        typeof valoreConSettore !==
+            "number" ||
+        valoreRiferimento ===
+            valoreConSettore
+    ) {
+
+        return semaforoBase;
+
+    }
+
+
+    if (
+        valoreConSettore >
+        valoreRiferimento
+    ) {
+
+        if (
+            semaforoBase === "giallo"
+        ) {
+
+            return "verde";
+
+        }
+
+        return semaforoBase;
+
+    }
+
+
+    if (
+        valoreConSettore <
+        valoreRiferimento
     ) {
 
         if (
