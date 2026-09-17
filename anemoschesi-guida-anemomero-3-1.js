@@ -2729,17 +2729,18 @@ function semaforoDirezioneDurataAnemoschesi(
             ) {
 
                 if (
-                    valore >
-                    valoreAttuale
-                ) {
+    valore <
+    valoreAttuale
+) {
 
-                    semaforoBase =
-                        "verde";
+    semaforoBase =
+        valore < 0
+            ? "rosso"
+            : "giallo";
 
-                    break;
+    break;
 
-                }
-
+}
 
                 if (
                     valore <
