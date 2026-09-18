@@ -282,6 +282,289 @@ function valutaAnemodromoConApneaSimulataAnemoschesi(
 }
 
 /* =====================================================
+   CONFRONTO ORIENTAMENTO APNEE PRIMA / DOPO
+===================================================== */
+
+function valoreOrientamentoApneeGuidaAnemoschesi(
+    orientamento
+) {
+
+    if (
+        !orientamento
+    ) {
+
+        return null;
+
+    }
+
+
+    const valori = {
+
+        coerente:
+            2,
+
+        parzialmente_coerente:
+            1,
+
+        assenza_apnee:
+            0,
+
+        opposto:
+            -2
+
+    };
+
+
+    const valore =
+        valori[
+            orientamento.esito
+        ];
+
+
+    return typeof valore === "number"
+        ? valore
+        : null;
+
+}
+
+
+function confrontaOrientamentoApneeGuidaAnemoschesi(
+    valutazioneAttuale,
+    valutazioneSimulata
+) {
+
+    const orientamentoAttuale =
+        valutazioneAttuale
+            ?.orientamentoApneeIntento;
+
+
+    const orientamentoSimulato =
+        valutazioneSimulata
+            ?.orientamentoApneeIntento;
+
+
+    const valoreAttuale =
+        valoreOrientamentoApneeGuidaAnemoschesi(
+            orientamentoAttuale
+        );
+
+
+    const valoreSimulato =
+        valoreOrientamentoApneeGuidaAnemoschesi(
+            orientamentoSimulato
+        );
+
+
+    if (
+        typeof valoreAttuale !== "number" ||
+        typeof valoreSimulato !== "number"
+    ) {
+
+        return null;
+
+    }
+
+
+    if (
+        valoreSimulato >
+        valoreAttuale
+    ) {
+
+        return "migliora";
+
+    }
+
+
+    if (
+        valoreSimulato <
+        valoreAttuale
+    ) {
+
+        return "peggiora";
+
+    }
+
+
+    return "stabile";
+
+}
+
+/* =====================================================
+   SIMULAZIONE DELLA SINGOLA APNEA
+===================================================== */
+
+function simulaApneaAnemoschesi(
+    sequenza,
+    precedente,
+    successivoId = null,
+    nuovaDurata = 0
+) {
+
+    if (
+        !sequenza ||
+        !precedente ||
+        nuovaDurata < 0
+    ) {
+
+        return null;
+
+    }
+
+
+    const sequenzaSimulata =
+        copiaSequenzaConApneaSimulataAnemoschesi(
+            sequenza,
+            precedente.id,
+            successivoId,
+            nuovaDurata
+        );
+
+
+    if (
+        !sequenzaSimulata
+    ) {
+
+        return null;
+
+    }
+
+
+    const valutazioneAnemodromo =
+        valutaAnemodromoPerIntentoAnemoschesi(
+            sequenzaSimulata
+        );
+
+
+    /*
+    Durata 0 = rimozione dell'apnea.
+    Non esiste quindi un'apnea locale
+    da classificare o valutare
+    fisiologicamente.
+    */
+
+    if (
+        nuovaDurata === 0
+    ) {
+
+        return {
+
+            durata:
+                0,
+
+            rimossa:
+                true,
+
+            analisi:
+                null,
+
+            intento:
+                null,
+
+            fisiologia:
+                null,
+
+            anemodromo:
+                valutazioneAnemodromo
+
+        };
+
+    }
+
+
+    const apneaSimulata =
+        trovaApneaTra(
+            sequenzaSimulata,
+            precedente.id,
+            successivoId
+        );
+
+
+    if (
+        !apneaSimulata
+    ) {
+
+        return null;
+
+    }
+
+
+    const precedenteSimulato =
+        sequenzaSimulata.anemodromi.find(
+            anemomero =>
+                anemomero.id ===
+                precedente.id
+        );
+
+
+    if (
+        !precedenteSimulato
+    ) {
+
+        return null;
+
+    }
+
+
+    const analisi =
+        analizzaApneaAnemoschesi(
+            apneaSimulata,
+            precedenteSimulato
+        );
+
+
+    if (
+        !analisi
+    ) {
+
+        return null;
+
+    }
+
+
+    const intentoId =
+        ottieniIntento(
+            sequenzaSimulata
+        );
+
+
+    const valutazioneIntento =
+        valutaApneaPerIntentoAnemoschesi(
+            analisi,
+            intentoId
+        );
+
+
+    const valutazioneFisiologica =
+        valutaFisiologiaApneaAnemoschesi(
+            analisi
+        );
+
+
+    return {
+
+        durata:
+            nuovaDurata,
+
+        rimossa:
+            false,
+
+        analisi:
+            analisi,
+
+        intento:
+            valutazioneIntento,
+
+        fisiologia:
+            valutazioneFisiologica,
+
+        anemodromo:
+            valutazioneAnemodromo
+
+    };
+
+}
+
+/* =====================================================
    SIMULAZIONE DELLA DURATA
 ===================================================== */
 
