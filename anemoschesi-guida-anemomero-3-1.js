@@ -565,6 +565,183 @@ function simulaApneaAnemoschesi(
 }
 
 /* =====================================================
+   SEMAFORO DELLA SINGOLA APNEA
+===================================================== */
+
+function semaforoLocaleApneaAnemoschesi(
+    valutazioneApnea
+) {
+
+    const valore =
+        valutazioneApnea
+            ?.intento
+            ?.valore;
+
+
+    if (
+        typeof valore !== "number"
+    ) {
+
+        return null;
+
+    }
+
+
+    if (
+        valore >= 1
+    ) {
+
+        return "verde";
+
+    }
+
+
+    if (
+        valore <= -2
+    ) {
+
+        return "rosso";
+
+    }
+
+
+    return "giallo";
+
+}
+
+
+/* =====================================================
+   INFLUENZA ORIENTAMENTO AIN / AES
+===================================================== */
+
+function applicaOrientamentoApneeAllaGuidaAnemoschesi(
+    semaforoBase,
+    confrontoOrientamento
+) {
+
+    if (
+        !semaforoBase ||
+        !confrontoOrientamento ||
+        confrontoOrientamento === "stabile"
+    ) {
+
+        return semaforoBase;
+
+    }
+
+
+    /*
+    L'orientamento complessivo AIN/AES
+    può modificare il colore locale
+    di un solo livello.
+    */
+
+    if (
+        confrontoOrientamento === "migliora"
+    ) {
+
+        if (
+            semaforoBase === "rosso"
+        ) {
+
+            return "giallo";
+
+        }
+
+
+        if (
+            semaforoBase === "giallo"
+        ) {
+
+            return "verde";
+
+        }
+
+
+        return "verde";
+
+    }
+
+
+    if (
+        confrontoOrientamento === "peggiora"
+    ) {
+
+        if (
+            semaforoBase === "verde"
+        ) {
+
+            return "giallo";
+
+        }
+
+
+        if (
+            semaforoBase === "giallo"
+        ) {
+
+            return "rosso";
+
+        }
+
+
+        return "rosso";
+
+    }
+
+
+    return semaforoBase;
+
+}
+
+
+/* =====================================================
+   PRECEDENZA FISIOLOGICA DELL'APNEA
+===================================================== */
+
+function applicaFisiologiaApneaAllaGuidaAnemoschesi(
+    semaforoBase,
+    fisiologia
+) {
+
+    if (
+        !semaforoBase ||
+        !fisiologia
+    ) {
+
+        return semaforoBase;
+
+    }
+
+
+    if (
+        fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.CRITICO ||
+        fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.ERRORE
+    ) {
+
+        return "rosso";
+
+    }
+
+
+    if (
+        fisiologia.livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.ATTENZIONE &&
+        semaforoBase === "verde"
+    ) {
+
+        return "giallo";
+
+    }
+
+
+    return semaforoBase;
+
+}
+
+/* =====================================================
    SIMULAZIONE DELLA DURATA
 ===================================================== */
 
