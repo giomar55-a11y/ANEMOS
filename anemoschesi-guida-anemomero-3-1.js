@@ -247,6 +247,41 @@ function valutaAnemodromoConAnemomeroSimulatoAnemoschesi(
 }
 
 /* =====================================================
+   VALUTAZIONE ANEMODROMO CON APNEA SIMULATA
+===================================================== */
+
+function valutaAnemodromoConApneaSimulataAnemoschesi(
+    sequenza,
+    precedenteId,
+    successivoId = null,
+    durata = 0
+) {
+
+    const sequenzaSimulata =
+        copiaSequenzaConApneaSimulataAnemoschesi(
+            sequenza,
+            precedenteId,
+            successivoId,
+            durata
+        );
+
+
+    if (
+        !sequenzaSimulata
+    ) {
+
+        return null;
+
+    }
+
+
+    return valutaAnemodromoPerIntentoAnemoschesi(
+        sequenzaSimulata
+    );
+
+}
+
+/* =====================================================
    SIMULAZIONE DELLA DURATA
 ===================================================== */
 
