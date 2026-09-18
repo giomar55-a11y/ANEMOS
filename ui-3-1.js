@@ -566,17 +566,13 @@ function creaCollegamento(
     successivo = null
 ) {
 
-    const wrapper =
+    const contenitore =
         document.createElement(
-            "button"
+            "div"
         );
 
 
-    wrapper.type =
-        "button";
-
-
-    wrapper.className =
+    contenitore.className =
         "apnea-link";
 
 
@@ -592,7 +588,8 @@ function creaCollegamento(
             precedente.id,
             successivoId
         );
-   
+
+
     const guidaApnea =
         creaGuidaApneaAnemoschesi(
             anemos31,
@@ -600,23 +597,192 @@ function creaCollegamento(
             successivoId
         );
 
-    if (apnea) {
 
-    wrapper.classList.add(
+    /*
+    =================================================
+    APNEA NON PRESENTE
+    =================================================
+    */
+
+    if (
+        !apnea
+    ) {
+
+        const aggiungi =
+            document.createElement(
+                "button"
+            );
+
+
+        aggiungi.type =
+            "button";
+
+
+        aggiungi.className =
+            "apnea-link";
+
+
+        aggiungi.textContent =
+            "+ apnea";
+
+
+        if (
+            guidaApnea
+                ?.piu
+                ?.semaforo
+        ) {
+
+            aggiungi.classList.add(
+                "anemoschesi-" +
+                guidaApnea.piu.semaforo
+            );
+
+        }
+
+
+        aggiungi.addEventListener(
+            "click",
+            function () {
+
+                modificaApneaTra(
+                    precedente.id,
+                    successivoId
+                );
+
+            }
+        );
+
+
+        return aggiungi;
+
+    }
+
+
+    /*
+    =================================================
+    APNEA PRESENTE: −  ⏸ X s  +
+    =================================================
+    */
+
+    contenitore.classList.add(
         "attiva"
     );
 
 
-    wrapper.textContent =
+    const meno =
+        document.createElement(
+            "button"
+        );
+
+
+    meno.type =
+        "button";
+
+
+    meno.textContent =
+        "−";
+
+
+    meno.className =
+        "apnea-comando";
+
+
+    const valore =
+        document.createElement(
+            "button"
+        );
+
+
+    valore.type =
+        "button";
+
+
+    valore.className =
+        "apnea-valore";
+
+
+    valore.textContent =
         "⏸ " +
         apnea.durata +
         " s";
 
 
+    const piu =
+        document.createElement(
+            "button"
+        );
+
+
+    piu.type =
+        "button";
+
+
+    piu.textContent =
+        "+";
+
+
+    piu.className =
+        "apnea-comando";
+
+
     /*
     =================================================
-    GUIDA FISIOLOGICA DELL'APNEA
+    SEMAFORI − / +
     =================================================
+    */
+
+    if (
+        guidaApnea
+            ?.meno
+            ?.disponibile &&
+        guidaApnea
+            ?.meno
+            ?.semaforo
+    ) {
+
+        meno.classList.add(
+            "anemoschesi-" +
+            guidaApnea.meno.semaforo
+        );
+
+
+        meno.title =
+            guidaApnea.meno.rimuove
+                ? "Rimuovi apnea"
+                : "Riduci apnea a " +
+                  guidaApnea.meno.nuovaDurata +
+                  " s";
+
+    }
+
+
+    if (
+        guidaApnea
+            ?.piu
+            ?.disponibile &&
+        guidaApnea
+            ?.piu
+            ?.semaforo
+    ) {
+
+        piu.classList.add(
+            "anemoschesi-" +
+            guidaApnea.piu.semaforo
+        );
+
+
+        piu.title =
+            "Aumenta apnea a " +
+            guidaApnea.piu.nuovaDurata +
+            " s";
+
+    }
+
+
+    /*
+    Il valore centrale mantiene
+    la valutazione fisiologica
+    dell'apnea attuale.
     */
 
     const analisiApnea =
@@ -638,21 +804,106 @@ function creaCollegamento(
         fisiologiaApnea
     ) {
 
-        wrapper.classList.add(
+        valore.classList.add(
             "apnea-fisiologia-" +
             fisiologiaApnea.livello
         );
 
     }
 
-} else {
-        wrapper.textContent =
-            "+ apnea";
 
-    }
+    /*
+    =================================================
+    COMANDO −
+    =================================================
+    */
+
+    meno.addEventListener(
+        "click",
+        function () {
+
+            const nuovaDurata =
+                Number(
+                    apnea.durata
+                ) - 1;
 
 
-    wrapper.addEventListener(
+            if (
+                nuovaDurata <= 0
+            ) {
+
+                rimuoviApnea(
+                    anemos31,
+                    precedente.id,
+                    successivoId
+                );
+
+            } else {
+
+                inserisciApnea(
+                    anemos31,
+                    precedente.id,
+                    successivoId,
+                    nuovaDurata
+                );
+
+            }
+
+
+            localStorage.setItem(
+                "ANEMOS_SEQUENZA_TEST",
+                JSON.stringify(
+                    anemos31
+                )
+            );
+
+
+            renderAnemos31();
+
+        }
+    );
+
+
+    /*
+    =================================================
+    COMANDO +
+    =================================================
+    */
+
+    piu.addEventListener(
+        "click",
+        function () {
+
+            inserisciApnea(
+                anemos31,
+                precedente.id,
+                successivoId,
+                Number(
+                    apnea.durata
+                ) + 1
+            );
+
+
+            localStorage.setItem(
+                "ANEMOS_SEQUENZA_TEST",
+                JSON.stringify(
+                    anemos31
+                )
+            );
+
+
+            renderAnemos31();
+
+        }
+    );
+
+
+    /*
+    Toccando il valore centrale
+    resta disponibile il prompt originale.
+    */
+
+    valore.addEventListener(
         "click",
         function () {
 
@@ -665,11 +916,24 @@ function creaCollegamento(
     );
 
 
-    return wrapper;
+    contenitore.appendChild(
+        meno
+    );
+
+
+    contenitore.appendChild(
+        valore
+    );
+
+
+    contenitore.appendChild(
+        piu
+    );
+
+
+    return contenitore;
 
 }
-
-
 
 function modificaApneaTra(
     precedenteId,
