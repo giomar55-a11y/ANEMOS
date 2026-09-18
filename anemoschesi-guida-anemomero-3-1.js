@@ -742,6 +742,292 @@ function applicaFisiologiaApneaAllaGuidaAnemoschesi(
 }
 
 /* =====================================================
+   GUIDA DEI COMANDI − E + DELL'APNEA
+===================================================== */
+
+function creaGuidaApneaAnemoschesi(
+    sequenza,
+    precedente,
+    successivoId = null
+) {
+
+    if (
+        !sequenza ||
+        !precedente
+    ) {
+
+        return null;
+
+    }
+
+
+    const apneaAttuale =
+        trovaApneaTra(
+            sequenza,
+            precedente.id,
+            successivoId
+        );
+
+
+    /*
+    Se l'apnea non esiste ancora,
+    consideriamo durata attuale 0.
+
+    Il comando + simulerà quindi
+    la creazione di un'apnea di 1 secondo.
+    */
+
+    const durataAttuale =
+        apneaAttuale
+            ? Number(apneaAttuale.durata)
+            : 0;
+
+
+    if (
+        !Number.isFinite(durataAttuale) ||
+        durataAttuale < 0
+    ) {
+
+        return null;
+
+    }
+
+
+    const valutazioneAttualeAnemodromo =
+        valutaAnemodromoPerIntentoAnemoschesi(
+            sequenza
+        );
+
+
+    /*
+    ==========================
+    SIMULAZIONE DEL COMANDO −
+    ==========================
+    */
+
+    const nuovaDurataMeno =
+        durataAttuale > 0
+            ? durataAttuale - 1
+            : null;
+
+
+    const valutazioneMeno =
+        nuovaDurataMeno !== null
+            ? simulaApneaAnemoschesi(
+                sequenza,
+                precedente,
+                successivoId,
+                nuovaDurataMeno
+            )
+            : null;
+
+
+    /*
+    ==========================
+    SIMULAZIONE DEL COMANDO +
+    ==========================
+    */
+
+    const nuovaDurataPiu =
+        durataAttuale + 1;
+
+
+    const valutazionePiu =
+        simulaApneaAnemoschesi(
+            sequenza,
+            precedente,
+            successivoId,
+            nuovaDurataPiu
+        );
+
+
+    /*
+    =================================================
+    COLORE DI UNA MODIFICA DELL'APNEA
+    =================================================
+    */
+
+    function calcolaSemaforoModificaApnea(
+        valutazione,
+        nuovaDurata
+    ) {
+
+        if (
+            !valutazione
+        ) {
+
+            return null;
+
+        }
+
+
+        const confrontoOrientamento =
+            confrontaOrientamentoApneeGuidaAnemoschesi(
+                valutazioneAttualeAnemodromo,
+                valutazione.anemodromo
+            );
+
+
+        /*
+        CASO SPECIALE: durata 0.
+
+        L'apnea viene rimossa.
+
+        Non utilizziamo la matrice
+        Apnea × Intento e non esiste
+        una fisiologia dell'apnea rimossa.
+
+        Il colore dipende esclusivamente
+        dall'effetto della rimozione
+        sull'orientamento complessivo AIN/AES.
+        */
+
+        if (
+            nuovaDurata === 0
+        ) {
+
+            if (
+                confrontoOrientamento ===
+                    "migliora"
+            ) {
+
+                return "verde";
+
+            }
+
+
+            if (
+                confrontoOrientamento ===
+                    "peggiora"
+            ) {
+
+                return "rosso";
+
+            }
+
+
+            /*
+            Orientamento invariato oppure
+            non confrontabile:
+            rimozione neutra.
+            */
+
+            return "giallo";
+
+        }
+
+
+        /*
+        Per un'apnea realmente presente
+        partiamo dalla relazione locale
+        Apnea × Intento.
+        */
+
+        let semaforo =
+            semaforoLocaleApneaAnemoschesi(
+                valutazione
+            );
+
+
+        if (
+            !semaforo
+        ) {
+
+            return null;
+
+        }
+
+
+        /*
+        L'orientamento AIN/AES può
+        modificare il colore locale
+        al massimo di un livello.
+        */
+
+        semaforo =
+            applicaOrientamentoApneeAllaGuidaAnemoschesi(
+                semaforo,
+                confrontoOrientamento
+            );
+
+
+        /*
+        La fisiologia ha sempre
+        l'ultima parola.
+        */
+
+        semaforo =
+            applicaFisiologiaApneaAllaGuidaAnemoschesi(
+                semaforo,
+                valutazione.fisiologia
+            );
+
+
+        return semaforo;
+
+    }
+
+
+    const semaforoMeno =
+        valutazioneMeno
+            ? calcolaSemaforoModificaApnea(
+                valutazioneMeno,
+                nuovaDurataMeno
+            )
+            : null;
+
+
+    const semaforoPiu =
+        valutazionePiu
+            ? calcolaSemaforoModificaApnea(
+                valutazionePiu,
+                nuovaDurataPiu
+            )
+            : null;
+
+
+    return {
+
+        durataAttuale:
+            durataAttuale,
+
+        meno: {
+
+            disponibile:
+                valutazioneMeno !== null,
+
+            nuovaDurata:
+                nuovaDurataMeno,
+
+            rimuove:
+                nuovaDurataMeno === 0,
+
+            semaforo:
+                semaforoMeno
+
+        },
+
+        piu: {
+
+            disponibile:
+                valutazionePiu !== null,
+
+            nuovaDurata:
+                nuovaDurataPiu,
+
+            rimuove:
+                false,
+
+            semaforo:
+                semaforoPiu
+
+        }
+
+    };
+
+}
+
+/* =====================================================
    SIMULAZIONE DELLA DURATA
 ===================================================== */
 
