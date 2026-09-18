@@ -592,7 +592,13 @@ function creaCollegamento(
             precedente.id,
             successivoId
         );
-
+   
+    const guidaApnea =
+        creaGuidaApneaAnemoschesi(
+            anemos31,
+            precedente,
+            successivoId
+        );
 
     if (apnea) {
 
