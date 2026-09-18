@@ -141,6 +141,79 @@ function copiaSequenzaConAnemomeroSimulatoAnemoschesi(
 
 }
 
+/* =====================================================
+   COPIA SEQUENZA CON APNEA SIMULATA
+===================================================== */
+
+function copiaSequenzaConApneaSimulataAnemoschesi(
+    sequenza,
+    precedenteId,
+    successivoId = null,
+    durata = 0
+) {
+
+    if (
+        !sequenza ||
+        !precedenteId
+    ) {
+
+        return null;
+
+    }
+
+
+    const sequenzaSimulata = {
+
+        ...sequenza,
+
+        anemodromi:
+            sequenza.anemodromi.map(
+                anemomero =>
+                    copiaAnemomeroPerSimulazioneAnemoschesi(
+                        anemomero
+                    )
+            ),
+
+        ordine:
+            [
+                ...sequenza.ordine
+            ],
+
+        apnee:
+            sequenza.apnee.map(
+                apnea => ({
+                    ...apnea
+                })
+            )
+
+    };
+
+
+    if (
+        durata <= 0
+    ) {
+
+        rimuoviApnea(
+            sequenzaSimulata,
+            precedenteId,
+            successivoId
+        );
+
+    } else {
+
+        inserisciApnea(
+            sequenzaSimulata,
+            precedenteId,
+            successivoId,
+            durata
+        );
+
+    }
+
+
+    return sequenzaSimulata;
+
+}
 
 /* =====================================================
    VALUTAZIONE DELL'ANEMODROMO SIMULATO
