@@ -1124,7 +1124,86 @@ function creaGuidaApneaAnemoschesi(
                 nuovaDurataPiu
             )
             : null;
+   
+    /*
+    =================================================
+    MOTIVAZIONI DEI COMANDI − E +
+    =================================================
+    */
 
+    function creaMotiviModificaApnea(
+        valutazione,
+        nuovaDurata
+    ) {
+
+        if (!valutazione) {
+            return [];
+        }
+
+
+        const motivi = [];
+
+
+        const motivoOrientamento =
+            descriviOrientamentoApneaGuidaAnemoschesi(
+                valutazioneAttualeAnemodromo,
+                valutazione.anemodromo
+            );
+
+
+        if (motivoOrientamento) {
+            motivi.push(
+                motivoOrientamento
+            );
+        }
+
+
+        /*
+        Se durata = 0 l'apnea viene rimossa:
+        non esiste quindi una fisiologia
+        dell'apnea risultante.
+        */
+
+        if (
+            nuovaDurata > 0
+        ) {
+
+            const motivoFisiologia =
+                descriviFisiologiaApneaGuidaAnemoschesi(
+                    valutazione.fisiologia
+                );
+
+
+            if (motivoFisiologia) {
+                motivi.push(
+                    motivoFisiologia
+                );
+            }
+
+        }
+
+
+        return motivi;
+
+    }
+
+
+    const motiviMeno =
+        valutazioneMeno
+            ? creaMotiviModificaApnea(
+                valutazioneMeno,
+                nuovaDurataMeno
+            )
+            : [];
+
+
+    const motiviPiu =
+        valutazionePiu
+            ? creaMotiviModificaApnea(
+                valutazionePiu,
+                nuovaDurataPiu
+            )
+            : [];
 
     return {
 
@@ -1142,9 +1221,11 @@ function creaGuidaApneaAnemoschesi(
             rimuove:
                 nuovaDurataMeno === 0,
 
-            semaforo:
-                semaforoMeno
+                       semaforo:
+                semaforoMeno,
 
+            motivi:
+                motiviMeno
         },
 
         piu: {
@@ -1158,9 +1239,11 @@ function creaGuidaApneaAnemoschesi(
             rimuove:
                 false,
 
-            semaforo:
-                semaforoPiu
+                     semaforo:
+                semaforoPiu,
 
+            motivi:
+                motiviPiu
         }
 
     };
