@@ -209,35 +209,10 @@ if (
 }
 }
 
-
 esito.textContent =
     valutazione.punteggioComplessivo +
     "%" +
-    suggerimentoApnee +
-    " [TEST: " +
-    valutazione.intentoId +
-    " / " +
-    (
-        valutazione
-            .distribuzioneApneeMatriceTemporale
-            ?.prevalenza ??
-        "?"
-    ) +
-    " / " +
-    (
-        valutazione
-            .orientamentoApneeIntento
-            ?.orientamentoPreferito ??
-        "?"
-    ) +
-    " / " +
-    (
-        valutazione
-            .orientamentoApneeIntento
-            ?.esito ??
-        "?"
-    ) +
-    "]";
+    suggerimentoApnee;
    contenitore.classList.add(
     "anemoschesi-" +
     valutazione.semaforo
