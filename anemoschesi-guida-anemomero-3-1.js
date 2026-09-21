@@ -744,7 +744,58 @@ function applicaFisiologiaApneaAllaGuidaAnemoschesi(
 /* =====================================================
    GUIDA DEI COMANDI − E + DELL'APNEA
 ===================================================== */
+function descriviFisiologiaApneaGuidaAnemoschesi(
+    fisiologia
+) {
 
+    if (!fisiologia) {
+        return null;
+    }
+
+
+    if (
+        fisiologia.livello ===
+        ANEMOSCHESI_ESITI_FISIOLOGICI.VALIDO
+    ) {
+
+        return "Durata fisiologicamente valida";
+
+    }
+
+
+    if (
+        fisiologia.livello ===
+        ANEMOSCHESI_ESITI_FISIOLOGICI.ATTENZIONE
+    ) {
+
+        return "Durata fisiologicamente impegnativa";
+
+    }
+
+
+    if (
+        fisiologia.livello ===
+        ANEMOSCHESI_ESITI_FISIOLOGICI.CRITICO
+    ) {
+
+        return "Durata fisiologicamente critica";
+
+    }
+
+
+    if (
+        fisiologia.livello ===
+        ANEMOSCHESI_ESITI_FISIOLOGICI.ERRORE
+    ) {
+
+        return "Durata fisiologicamente non ammessa";
+
+    }
+
+
+    return null;
+
+}
 function creaGuidaApneaAnemoschesi(
     sequenza,
     precedente,
