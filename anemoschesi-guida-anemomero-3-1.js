@@ -796,6 +796,95 @@ function descriviFisiologiaApneaGuidaAnemoschesi(
     return null;
 
 }
+
+/* =====================================================
+   SPIEGAZIONE ORIENTAMENTO AIN / AES DELL'APNEA
+===================================================== */
+
+function descriviOrientamentoApneaGuidaAnemoschesi(
+    valutazioneAttuale,
+    valutazioneSimulata
+) {
+
+    const orientamentoSimulato =
+        valutazioneSimulata
+            ?.orientamentoApneeIntento;
+
+
+    if (!orientamentoSimulato) {
+        return null;
+    }
+
+
+    const confronto =
+        confrontaOrientamentoApneeGuidaAnemoschesi(
+            valutazioneAttuale,
+            valutazioneSimulata
+        );
+
+
+    if (
+        confronto === "migliora"
+    ) {
+
+        return "Migliora la distribuzione AIN/AES rispetto all'Intento";
+
+    }
+
+
+    if (
+        confronto === "peggiora"
+    ) {
+
+        return "Peggiora la distribuzione AIN/AES rispetto all'Intento";
+
+    }
+
+
+    if (
+        orientamentoSimulato.esito ===
+        "coerente"
+    ) {
+
+        return "Distribuzione AIN/AES coerente con l'Intento";
+
+    }
+
+
+    if (
+        orientamentoSimulato.esito ===
+        "parzialmente_coerente"
+    ) {
+
+        return "Distribuzione AIN/AES parzialmente coerente con l'Intento";
+
+    }
+
+
+    if (
+        orientamentoSimulato.esito ===
+        "opposto"
+    ) {
+
+        return "Distribuzione AIN/AES opposta all'Intento";
+
+    }
+
+
+    if (
+        orientamentoSimulato.esito ===
+        "assenza_apnee"
+    ) {
+
+        return "La modifica elimina la distribuzione delle apnee";
+
+    }
+
+
+    return null;
+
+}
+
 function creaGuidaApneaAnemoschesi(
     sequenza,
     precedente,
