@@ -966,6 +966,37 @@ function creaCollegamento(
         piu
     );
 
+       /*
+    =================================================
+    INFORMAZIONI ANEMOSCHESI SUI COMANDI − / +
+    =================================================
+    */
+
+    const info =
+        document.createElement(
+            "button"
+        );
+
+
+    info.type =
+        "button";
+
+
+    info.className =
+        "apnea-info";
+
+
+    info.textContent =
+        "ⓘ";
+
+
+    info.title =
+        "Perché questi colori?";
+
+
+    contenitore.appendChild(
+        info
+    );
 
     return contenitore;
 
