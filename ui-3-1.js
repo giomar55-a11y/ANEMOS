@@ -723,7 +723,43 @@ function creaCollegamento(
 
     piu.className =
         "apnea-comando";
+   
+    /*
+    =================================================
+    SPIEGAZIONI DELLA GUIDA − / +
+    =================================================
+    */
 
+    const motiviMeno =
+        Array.isArray(
+            guidaApnea
+                ?.meno
+                ?.motivi
+        )
+            ? guidaApnea.meno.motivi
+            : [];
+
+
+    const motiviPiu =
+        Array.isArray(
+            guidaApnea
+                ?.piu
+                ?.motivi
+        )
+            ? guidaApnea.piu.motivi
+            : [];
+
+
+    meno.dataset.spiegazioneAnemoschesi =
+        motiviMeno.join(
+            " · "
+        );
+
+
+    piu.dataset.spiegazioneAnemoschesi =
+        motiviPiu.join(
+            " · "
+        );
 
     /*
     =================================================
