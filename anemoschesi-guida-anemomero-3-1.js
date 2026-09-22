@@ -1200,6 +1200,70 @@ if (
     punteggioMeno !== punteggioPiu
 ) {
 
+    /*
+    Se i due comandi producono risultati
+    differenti, il migliore deve emergere.
+
+    Il peggiore, se era verde, viene
+    declassato a giallo.
+
+    Un rosso non viene modificato.
+    */
+
+    if (
+        punteggioMeno > punteggioPiu
+    ) {
+
+        if (
+            puoEsserePromossaApneaAnemoschesi(
+                valutazioneMeno,
+                semaforoMeno
+            )
+        ) {
+
+            semaforoMeno = "verde";
+
+        }
+
+
+        if (
+            semaforoPiu === "verde"
+        ) {
+
+            semaforoPiu = "giallo";
+
+        }
+
+    }
+
+
+    if (
+        punteggioPiu > punteggioMeno
+    ) {
+
+        if (
+            puoEsserePromossaApneaAnemoschesi(
+                valutazionePiu,
+                semaforoPiu
+            )
+        ) {
+
+            semaforoPiu = "verde";
+
+        }
+
+
+        if (
+            semaforoMeno === "verde"
+        ) {
+
+            semaforoMeno = "giallo";
+
+        }
+
+    }
+
+}
     if (
         punteggioMeno > punteggioPiu &&
         puoEsserePromossaApneaAnemoschesi(
