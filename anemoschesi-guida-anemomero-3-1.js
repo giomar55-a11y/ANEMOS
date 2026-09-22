@@ -1264,32 +1264,6 @@ if (
     }
 
 }
-    if (
-        punteggioMeno > punteggioPiu &&
-        puoEsserePromossaApneaAnemoschesi(
-            valutazioneMeno,
-            semaforoMeno
-        )
-    ) {
-
-        semaforoMeno = "verde";
-
-    }
-
-
-    if (
-        punteggioPiu > punteggioMeno &&
-        puoEsserePromossaApneaAnemoschesi(
-            valutazionePiu,
-            semaforoPiu
-        )
-    ) {
-
-        semaforoPiu = "verde";
-
-    }
-
-}
    
     /*
     =================================================
