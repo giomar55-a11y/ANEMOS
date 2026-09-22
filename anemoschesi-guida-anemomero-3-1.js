@@ -1108,7 +1108,7 @@ function creaGuidaApneaAnemoschesi(
     }
 
 
-    const semaforoMeno =
+    let semaforoMeno =
         valutazioneMeno
             ? calcolaSemaforoModificaApnea(
                 valutazioneMeno,
@@ -1117,13 +1117,115 @@ function creaGuidaApneaAnemoschesi(
             : null;
 
 
-    const semaforoPiu =
+    let semaforoPiu =
         valutazionePiu
             ? calcolaSemaforoModificaApnea(
                 valutazionePiu,
                 nuovaDurataPiu
             )
             : null;
+
+   /*
+=================================================
+RANKING RELATIVO DEI COMANDI − E +
+=================================================
+
+I semafori precedenti restano autorevoli.
+
+Questo passaggio serve soltanto a far emergere
+la scelta migliore tra − e + quando:
+
+- entrambe le simulazioni sono disponibili;
+- nessuna promozione contraddice la fisiologia;
+- una delle due produce un punteggio
+  ANEMOSCHESI superiore all'altra.
+
+Un candidato in ATTENZIONE, CRITICO o ERRORE
+non viene promosso a verde.
+*/
+
+function puoEsserePromossaApneaAnemoschesi(
+    valutazione,
+    semaforo
+) {
+
+    if (
+        !valutazione ||
+        semaforo === "rosso"
+    ) {
+
+        return false;
+
+    }
+
+
+    const livello =
+        valutazione.fisiologia?.livello;
+
+
+    if (
+        livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.ATTENZIONE ||
+        livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.CRITICO ||
+        livello ===
+            ANEMOSCHESI_ESITI_FISIOLOGICI.ERRORE
+    ) {
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+const punteggioMeno =
+    valutazioneMeno
+        ?.anemodromo
+        ?.punteggioComplessivo;
+
+
+const punteggioPiu =
+    valutazionePiu
+        ?.anemodromo
+        ?.punteggioComplessivo;
+
+
+if (
+    typeof punteggioMeno === "number" &&
+    typeof punteggioPiu === "number" &&
+    punteggioMeno !== punteggioPiu
+) {
+
+    if (
+        punteggioMeno > punteggioPiu &&
+        puoEsserePromossaApneaAnemoschesi(
+            valutazioneMeno,
+            semaforoMeno
+        )
+    ) {
+
+        semaforoMeno = "verde";
+
+    }
+
+
+    if (
+        punteggioPiu > punteggioMeno &&
+        puoEsserePromossaApneaAnemoschesi(
+            valutazionePiu,
+            semaforoPiu
+        )
+    ) {
+
+        semaforoPiu = "verde";
+
+    }
+
+}
    
     /*
     =================================================
