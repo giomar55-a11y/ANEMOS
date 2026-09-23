@@ -668,39 +668,34 @@ function valutaOrientamentoApneePerIntentoAnemoschesi(
 
 
     if (
-        !prevalenzaReale
-    ) {
+    prevalenzaReale ===
+    "nessuna"
+) {
 
-        return null;
+    esito =
+        "assenza_apnee";
 
-    }
+} else if (
+    presentiAIN !== presentiAES
+) {
 
-
-    let esito =
-        "neutro";
+    const orientamentoPresente =
+        presentiAIN
+            ? "ain"
+            : "aes";
 
 
     if (
-        prevalenzaReale ===
-        "nessuna"
-    ) {
-
-        esito =
-            "assenza_apnee";
-
-    } else if (
-        prevalenzaReale ===
-        orientamentoPreferito
-    ) {
-
-        esito =
-            "coerente";
-
-    } else if (
-        prevalenzaReale ===
-        "equilibrata" ||
         orientamentoPreferito ===
         "equilibrata"
+    ) {
+
+        esito =
+            "parzialmente_coerente";
+
+    } else if (
+        orientamentoPresente ===
+        orientamentoPreferito
     ) {
 
         esito =
@@ -713,6 +708,30 @@ function valutaOrientamentoApneePerIntentoAnemoschesi(
 
     }
 
+} else if (
+    prevalenzaReale ===
+    orientamentoPreferito
+) {
+
+    esito =
+        "coerente";
+
+} else if (
+    prevalenzaReale ===
+    "equilibrata" ||
+    orientamentoPreferito ===
+    "equilibrata"
+) {
+
+    esito =
+        "parzialmente_coerente";
+
+} else {
+
+    esito =
+        "opposto";
+
+}
 
     return {
 
