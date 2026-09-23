@@ -192,11 +192,33 @@ if (
     "parzialmente_coerente"
 ) {
 
-    suggerimentoApnee =
-        " · Apnee: distribuzione parzialmente coerente";
+    const presentiAIN =
+        Number(
+            distribuzioneDiagnostica.durataAIN
+        ) > 0;
+
+
+    const presentiAES =
+        Number(
+            distribuzioneDiagnostica.durataAES
+        ) > 0;
+
+
+    if (
+        presentiAIN !== presentiAES
+    ) {
+
+        suggerimentoApnee =
+            " · Apnee: orientamento favorevole";
+
+    } else {
+
+        suggerimentoApnee =
+            " · Apnee: distribuzione parzialmente coerente";
+
+    }
 
 }
-
 
 if (
     orientamentoDiagnostico.esito ===
