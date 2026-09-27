@@ -666,7 +666,38 @@ function valutaOrientamentoApneePerIntentoAnemoschesi(
     const prevalenzaReale =
         distribuzioneApnee.prevalenza;
 
+if (
+    !prevalenzaReale
+) {
 
+    return null;
+
+}
+
+
+let esito =
+    "neutro";
+
+
+const durataAIN =
+    Number(
+        distribuzioneApnee.durataAIN ?? 0
+    );
+
+
+const durataAES =
+    Number(
+        distribuzioneApnee.durataAES ?? 0
+    );
+
+
+const presentiAIN =
+    durataAIN > 0;
+
+
+const presentiAES =
+    durataAES > 0;
+   
     if (
     prevalenzaReale ===
     "nessuna"
