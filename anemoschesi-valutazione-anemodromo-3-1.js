@@ -2536,6 +2536,70 @@ if (
 
 }
 
+ /*
+=====================================================
+VINCOLO FISIOLOGICO DEGLI ANEMOMERI
+SUL SEMAFORO DELL'ANEMODROMO
+=====================================================
+*/
+
+const livelliFisiologiciAnemomeri =
+    valutazioniAnemomeri
+        .map(
+            valutazione =>
+                valutazione &&
+                valutazione.valutazioneFisiologica
+                    ? valutazione
+                        .valutazioneFisiologica
+                        .livello
+                    : null
+        )
+        .filter(
+            livello =>
+                livello
+        );
+
+
+const presenzaErroreFisiologicoAnemomeri =
+    livelliFisiologiciAnemomeri.includes(
+        ANEMOSCHESI_ESITI_FISIOLOGICI
+            .ERRORE
+    );
+
+
+const presenzaCriticitaFisiologicaAnemomeri =
+    livelliFisiologiciAnemomeri.includes(
+        ANEMOSCHESI_ESITI_FISIOLOGICI
+            .CRITICO
+    );
+
+
+const presenzaAttenzioneFisiologicaAnemomeri =
+    livelliFisiologiciAnemomeri.includes(
+        ANEMOSCHESI_ESITI_FISIOLOGICI
+            .ATTENZIONE
+    );
+
+
+if (
+    presenzaErroreFisiologicoAnemomeri ||
+    presenzaCriticitaFisiologicaAnemomeri
+) {
+
+    semaforo =
+        "rosso";
+
+} else if (
+    presenzaAttenzioneFisiologicaAnemomeri &&
+    semaforo ===
+        "verde"
+) {
+
+    semaforo =
+        "giallo";
+
+}  
+
     return {
 
         valido:
