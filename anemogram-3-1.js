@@ -144,6 +144,12 @@ function creaIconaSettoreAnemogramma(
     );
 
 
+    /*
+    Tronco umano stilizzato:
+    spalle più larghe, vita e addome
+    progressivamente più stretti.
+    */
+
     const parti = [
 
         {
@@ -151,7 +157,7 @@ function creaIconaSettoreAnemogramma(
                 "torace_superiore",
 
             d:
-                "M12 5 C16 2 32 2 36 5 L40 18 L8 18 Z"
+                "M8 12 Q12 5 20 6 Q24 8 28 6 Q36 5 40 12 L38 22 L10 22 Z"
         },
 
         {
@@ -159,7 +165,7 @@ function creaIconaSettoreAnemogramma(
                 "torace_inferiore",
 
             d:
-                "M8 18 L40 18 L37 36 L11 36 Z"
+                "M10 22 L38 22 Q37 32 34 38 L14 38 Q11 32 10 22 Z"
         },
 
         {
@@ -167,7 +173,7 @@ function creaIconaSettoreAnemogramma(
                 "addome",
 
             d:
-                "M11 36 L37 36 L34 55 L14 55 Z"
+                "M14 38 L34 38 Q35 48 31 55 L17 55 Q13 48 14 38 Z"
         }
 
     ];
@@ -215,7 +221,9 @@ function creaIconaSettoreAnemogramma(
             );
 
 
-            svg.appendChild(path);
+            svg.appendChild(
+                path
+            );
 
         }
     );
