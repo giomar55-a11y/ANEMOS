@@ -112,7 +112,7 @@ function creaIconaFlussoAnemogramma(
 }
 
 /* =====================================================
-   ICONA SETTORE
+   ICONA SETTORE — SAGOMA UMANA
 ===================================================== */
 
 function creaIconaSettoreAnemogramma(
@@ -131,7 +131,7 @@ function creaIconaSettoreAnemogramma(
 
     svg.setAttribute(
         "viewBox",
-        "0 0 48 60"
+        "0 0 60 90"
     );
 
     svg.setAttribute(
@@ -145,9 +145,65 @@ function creaIconaSettoreAnemogramma(
 
 
     /*
-    Tronco umano stilizzato:
-    spalle più larghe, vita e addome
-    progressivamente più stretti.
+    TESTA
+    */
+
+    const testa =
+        document.createElementNS(
+            ns,
+            "circle"
+        );
+
+    testa.setAttribute("cx", "30");
+    testa.setAttribute("cy", "9");
+    testa.setAttribute("r", "6");
+    testa.setAttribute("fill", "#fff");
+    testa.setAttribute("stroke", "#000");
+    testa.setAttribute("stroke-width", "2");
+
+    svg.appendChild(testa);
+
+
+    /*
+    BRACCIA
+    */
+
+    const braccia =
+        document.createElementNS(
+            ns,
+            "path"
+        );
+
+    braccia.setAttribute(
+        "d",
+        "M18 23 L8 48 M42 23 L52 48"
+    );
+
+    braccia.setAttribute(
+        "fill",
+        "none"
+    );
+
+    braccia.setAttribute(
+        "stroke",
+        "#000"
+    );
+
+    braccia.setAttribute(
+        "stroke-width",
+        "3"
+    );
+
+    braccia.setAttribute(
+        "stroke-linecap",
+        "round"
+    );
+
+    svg.appendChild(braccia);
+
+
+    /*
+    TRE SETTORI RESPIRATORI
     */
 
     const parti = [
@@ -157,7 +213,7 @@ function creaIconaSettoreAnemogramma(
                 "torace_superiore",
 
             d:
-                "M8 12 Q12 5 20 6 Q24 8 28 6 Q36 5 40 12 L38 22 L10 22 Z"
+                "M19 20 Q30 16 41 20 L39 34 L21 34 Z"
         },
 
         {
@@ -165,7 +221,7 @@ function creaIconaSettoreAnemogramma(
                 "torace_inferiore",
 
             d:
-                "M10 22 L38 22 Q37 32 34 38 L14 38 Q11 32 10 22 Z"
+                "M21 34 L39 34 L37 49 L23 49 Z"
         },
 
         {
@@ -173,7 +229,7 @@ function creaIconaSettoreAnemogramma(
                 "addome",
 
             d:
-                "M14 38 L34 38 Q35 48 31 55 L17 55 Q13 48 14 38 Z"
+                "M23 49 L37 49 L36 62 Q30 66 24 62 Z"
         }
 
     ];
@@ -188,12 +244,10 @@ function creaIconaSettoreAnemogramma(
                     "path"
                 );
 
-
             path.setAttribute(
                 "d",
                 parte.d
             );
-
 
             path.setAttribute(
                 "fill",
@@ -202,35 +256,66 @@ function creaIconaSettoreAnemogramma(
                     : "#fff"
             );
 
-
             path.setAttribute(
                 "stroke",
                 "#000"
             );
-
 
             path.setAttribute(
                 "stroke-width",
                 "1.8"
             );
 
-
             path.setAttribute(
                 "stroke-linejoin",
                 "round"
             );
 
-
-            svg.appendChild(
-                path
-            );
+            svg.appendChild(path);
 
         }
     );
 
 
-    return svg;
+    /*
+    GAMBE
+    */
 
+    const gambe =
+        document.createElementNS(
+            ns,
+            "path"
+        );
+
+    gambe.setAttribute(
+        "d",
+        "M26 63 L22 84 M34 63 L38 84"
+    );
+
+    gambe.setAttribute(
+        "fill",
+        "none"
+    );
+
+    gambe.setAttribute(
+        "stroke",
+        "#000"
+    );
+
+    gambe.setAttribute(
+        "stroke-width",
+        "3"
+    );
+
+    gambe.setAttribute(
+        "stroke-linecap",
+        "round"
+    );
+
+    svg.appendChild(gambe);
+
+
+    return svg;
 }
 /* =====================================================
    ICONA VOLUME
