@@ -313,16 +313,10 @@ disposizione orizzontale
 ===================================================== */
 
 .anemogramma-icona-settore {
-    width:
-        28px;
-
-    height:
-        35px;
-
-    flex:
-        0 0 auto;
+    width: 34px;
+    height: 51px;
+    flex: 0 0 auto;
 }
-
 
 /* =====================================================
    VOLUME
