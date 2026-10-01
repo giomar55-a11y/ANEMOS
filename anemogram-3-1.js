@@ -196,10 +196,9 @@ function creaIconaSettoreAnemogramma(
         );
 
     braccia.setAttribute(
-        "d",
-        "M22 23 Q16 27 14 36 L10 57 Q9 61 11 64 M48 23 Q54 27 56 36 L60 57 Q61 61 59 64"
-    );
-
+    "d",
+    "M22 23 Q17 27 15 35 L12 51 Q11 54 13 56 M48 23 Q53 27 55 35 L58 51 Q59 54 57 56"
+);
     braccia.setAttribute("fill", "none");
     braccia.setAttribute("stroke", "#000");
     braccia.setAttribute("stroke-width", "3.2");
