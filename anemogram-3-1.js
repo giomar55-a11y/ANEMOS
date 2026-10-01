@@ -129,7 +129,7 @@ function creaIconaSettoreAnemogramma(
 
     svg.setAttribute(
         "viewBox",
-        "0 0 70 105"
+        "0 0 70 108"
     );
 
     svg.setAttribute(
@@ -303,7 +303,7 @@ function creaIconaSettoreAnemogramma(
 
     gambaSinistra.setAttribute(
         "d",
-        "M28 77 Q29 88 29 94 L27 101 L32 101 L35 81"
+        "M28 77 Q29 89 29 98 L27 104 L32 104 L35 81"
     );
 
     gambaSinistra.setAttribute("fill", "#fff");
@@ -322,7 +322,7 @@ function creaIconaSettoreAnemogramma(
 
     gambaDestra.setAttribute(
         "d",
-        "M42 77 Q41 88 41 94 L43 101 L38 101 L35 81"
+        "M42 77 Q41 89 41 98 L43 104 L38 104 L35 81"
     );
 
     gambaDestra.setAttribute("fill", "#fff");
