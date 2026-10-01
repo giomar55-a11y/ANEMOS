@@ -155,8 +155,8 @@ function creaIconaSettoreAnemogramma(
         );
 
     testa.setAttribute("cx", "30");
-    testa.setAttribute("cy", "9");
-    testa.setAttribute("r", "6");
+    testa.setAttribute("cy", "8");
+    testa.setAttribute("r", "5");
     testa.setAttribute("fill", "#fff");
     testa.setAttribute("stroke", "#000");
     testa.setAttribute("stroke-width", "2");
@@ -176,7 +176,7 @@ function creaIconaSettoreAnemogramma(
 
     braccia.setAttribute(
         "d",
-        "M18 23 L8 48 M42 23 L52 48"
+        "M17 22 L8 45 M43 22 L52 45"
     );
 
     braccia.setAttribute(
@@ -208,32 +208,31 @@ function creaIconaSettoreAnemogramma(
 
     const parti = [
 
-        {
-            nome:
-                "torace_superiore",
+    {
+        nome:
+            "torace_superiore",
 
-            d:
-                "M19 20 Q30 16 41 20 L39 34 L21 34 Z"
-        },
+        d:
+            "M17 20 Q30 15 43 20 L40 35 L20 35 Z"
+    },
 
-        {
-            nome:
-                "torace_inferiore",
+    {
+        nome:
+            "torace_inferiore",
 
-            d:
-                "M21 34 L39 34 L37 49 L23 49 Z"
-        },
+        d:
+            "M20 35 L40 35 L38 51 L22 51 Z"
+    },
 
-        {
-            nome:
-                "addome",
+    {
+        nome:
+            "addome",
 
-            d:
-                "M23 49 L37 49 L36 62 Q30 66 24 62 Z"
-        }
+        d:
+            "M22 51 L38 51 L37 65 Q30 69 23 65 Z"
+    }
 
-    ];
-
+];
 
     parti.forEach(
         parte => {
@@ -289,7 +288,7 @@ function creaIconaSettoreAnemogramma(
 
     gambe.setAttribute(
         "d",
-        "M26 63 L22 84 M34 63 L38 84"
+        "M23 65 Q30 70 37 65 M26 68 L23 84 M34 68 L37 84"
     );
 
     gambe.setAttribute(
