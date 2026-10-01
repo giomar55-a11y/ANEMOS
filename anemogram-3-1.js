@@ -1785,48 +1785,95 @@ async function eseguiTimelineAnemogramma(
     contenuto,
     esecuzione
 ) {
+
     const elementi =
         contenuto.children;
 
 
-    for (
-        const elemento
-        of elementi
+    while (
+        esecuzione ===
+        anemogrammaEsecuzione
     ) {
-               if (
-            esecuzione !==
-            anemogrammaEsecuzione
+
+        /*
+        Ogni nuovo ciclo riparte
+        dall'Anemogramma vuoto.
+        */
+
+        azzeraAnemogramma(
+            contenuto
+        );
+
+
+        for (
+            const elemento
+            of elementi
         ) {
 
-            return;
+            if (
+                esecuzione !==
+                anemogrammaEsecuzione
+            ) {
+
+                return;
+
+            }
+
+
+            /*
+            Se siamo in pausa,
+            il ciclo rimane esattamente
+            nel punto raggiunto.
+            */
+
+            await attendiPausaAnemogramma();
+
+
+            if (
+                esecuzione !==
+                anemogrammaEsecuzione
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                elemento.classList.contains(
+                    "anemogramma-anemomero"
+                )
+            ) {
+
+                await animaAnemomeroAnemogramma(
+                    elemento,
+                    esecuzione
+                );
+
+            }
+
+
+            if (
+                elemento.classList.contains(
+                    "anemogramma-apnea"
+                )
+            ) {
+
+                await animaApneaAnemogramma(
+                    elemento,
+                    esecuzione
+                );
+
+            }
 
         }
-        await attendiPausaAnemogramma();
-        if (
-            elemento.classList.contains(
-                "anemogramma-anemomero"
-            )
-        ) {
-
-          await animaAnemomeroAnemogramma(
-    elemento,
-    esecuzione
-);
-        }
 
 
-        if (
-            elemento.classList.contains(
-                "anemogramma-apnea"
-            )
-        ) {
-
-            await animaApneaAnemogramma(
-    elemento,
-    esecuzione
-);
-
-        }
+        /*
+        Fine Anemodromo:
+        il while ricomincia automaticamente
+        dal primo elemento.
+        */
 
     }
 
