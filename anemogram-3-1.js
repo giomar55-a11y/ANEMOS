@@ -1494,9 +1494,8 @@ async function animaAnemomeroAnemogramma(
                 "none";
 
 
-            avanzamento.style.width =
+            avanzamento.style.height =
                 "0%";
-
 
             avanzamenti.push(
                 avanzamento
@@ -1565,8 +1564,8 @@ async function animaAnemomeroAnemogramma(
         avanzamenti.forEach(
             avanzamento => {
 
-                avanzamento.style.width =
-                    percentuale + "%";
+                avanzamento.style.height =
+                     percentuale + "%";
 
             }
         );
@@ -1589,7 +1588,7 @@ async function animaAnemomeroAnemogramma(
     avanzamenti.forEach(
         avanzamento => {
 
-            avanzamento.style.width =
+            avanzamento.style.height =
                 "100%";
 
         }
@@ -1732,9 +1731,8 @@ function azzeraAnemogramma(
             avanzamento.style.transition =
                 "none";
 
-            avanzamento.style.width =
+           avanzamento.style.height =
                 "0%";
-
         }
     );
 
