@@ -228,25 +228,21 @@ disposizione orizzontale
     flex:
         0 0 auto;
 }
-
 /* =====================================================
-   AVANZAMENTO ANIMATO
+   AVANZAMENTO ANIMATO VERTICALE
 ===================================================== */
 
 .anemogramma-avanzamento {
     position:
         absolute;
 
-    top:
-        0;
-
-    bottom:
-        0;
-
     left:
         0;
 
-    width:
+    right:
+        0;
+
+    height:
         0%;
 
     z-index:
@@ -256,18 +252,20 @@ disposizione orizzontale
         none;
 
     transition-property:
-        width;
+        height;
 
     transition-timing-function:
         linear;
 }
 
 
+/* IN — DAL BASSO VERSO L'ALTO */
+
 .anemogramma-in .anemogramma-avanzamento {
-    left:
+    bottom:
         0;
 
-    right:
+    top:
         auto;
 
     background:
@@ -275,17 +273,18 @@ disposizione orizzontale
 }
 
 
+/* ES — DALL'ALTO VERSO IL BASSO */
+
 .anemogramma-es .anemogramma-avanzamento {
-    right:
+    top:
         0;
 
-    left:
+    bottom:
         auto;
 
     background:
         rgba(255, 150, 70, 0.32);
 }
-
 
 .anemogramma-settore-contenuto {
     position:
