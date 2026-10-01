@@ -121,17 +121,15 @@ function creaIconaSettoreAnemogramma(
     const ns =
         "http://www.w3.org/2000/svg";
 
-
     const svg =
         document.createElementNS(
             ns,
             "svg"
         );
 
-
     svg.setAttribute(
         "viewBox",
-        "0 0 60 90"
+        "0 0 70 105"
     );
 
     svg.setAttribute(
@@ -151,17 +149,40 @@ function creaIconaSettoreAnemogramma(
     const testa =
         document.createElementNS(
             ns,
-            "circle"
+            "ellipse"
         );
 
-    testa.setAttribute("cx", "30");
-    testa.setAttribute("cy", "8");
-    testa.setAttribute("r", "5");
+    testa.setAttribute("cx", "35");
+    testa.setAttribute("cy", "9");
+    testa.setAttribute("rx", "5.8");
+    testa.setAttribute("ry", "7");
     testa.setAttribute("fill", "#fff");
     testa.setAttribute("stroke", "#000");
-    testa.setAttribute("stroke-width", "2");
+    testa.setAttribute("stroke-width", "1.8");
 
     svg.appendChild(testa);
+
+
+    /*
+    COLLO
+    */
+
+    const collo =
+        document.createElementNS(
+            ns,
+            "path"
+        );
+
+    collo.setAttribute(
+        "d",
+        "M31.5 15 L31 20 M38.5 15 L39 20"
+    );
+
+    collo.setAttribute("fill", "none");
+    collo.setAttribute("stroke", "#000");
+    collo.setAttribute("stroke-width", "1.8");
+
+    svg.appendChild(collo);
 
 
     /*
@@ -176,28 +197,14 @@ function creaIconaSettoreAnemogramma(
 
     braccia.setAttribute(
         "d",
-        "M17 22 L8 45 M43 22 L52 45"
+        "M22 23 Q16 27 14 36 L10 57 Q9 61 11 64 M48 23 Q54 27 56 36 L60 57 Q61 61 59 64"
     );
 
-    braccia.setAttribute(
-        "fill",
-        "none"
-    );
-
-    braccia.setAttribute(
-        "stroke",
-        "#000"
-    );
-
-    braccia.setAttribute(
-        "stroke-width",
-        "3"
-    );
-
-    braccia.setAttribute(
-        "stroke-linecap",
-        "round"
-    );
+    braccia.setAttribute("fill", "none");
+    braccia.setAttribute("stroke", "#000");
+    braccia.setAttribute("stroke-width", "3.2");
+    braccia.setAttribute("stroke-linecap", "round");
+    braccia.setAttribute("stroke-linejoin", "round");
 
     svg.appendChild(braccia);
 
@@ -207,32 +214,19 @@ function creaIconaSettoreAnemogramma(
     */
 
     const parti = [
-
-    {
-        nome:
-            "torace_superiore",
-
-        d:
-            "M17 20 Q30 15 43 20 L40 35 L20 35 Z"
-    },
-
-    {
-        nome:
-            "torace_inferiore",
-
-        d:
-            "M20 35 L40 35 L38 51 L22 51 Z"
-    },
-
-    {
-        nome:
-            "addome",
-
-        d:
-            "M22 51 L38 51 L37 65 Q30 69 23 65 Z"
-    }
-
-];
+        {
+            nome: "torace_superiore",
+            d: "M22 23 Q27 19 35 20 Q43 19 48 23 L45 38 Q40 40 35 40 Q30 40 25 38 Z"
+        },
+        {
+            nome: "torace_inferiore",
+            d: "M25 38 Q30 40 35 40 Q40 40 45 38 L42 54 Q38 56 35 56 Q32 56 28 54 Z"
+        },
+        {
+            nome: "addome",
+            d: "M28 54 Q32 56 35 56 Q38 56 42 54 L43 69 Q39 73 35 73 Q31 73 27 69 Z"
+        }
+    ];
 
     parti.forEach(
         parte => {
@@ -271,47 +265,73 @@ function creaIconaSettoreAnemogramma(
             );
 
             svg.appendChild(path);
-
         }
     );
+
+
+    /*
+    BACINO
+    */
+
+    const bacino =
+        document.createElementNS(
+            ns,
+            "path"
+        );
+
+    bacino.setAttribute(
+        "d",
+        "M27 69 Q35 74 43 69 L42 78 Q38 81 35 81 Q32 81 28 78 Z"
+    );
+
+    bacino.setAttribute("fill", "#fff");
+    bacino.setAttribute("stroke", "#000");
+    bacino.setAttribute("stroke-width", "1.8");
+    bacino.setAttribute("stroke-linejoin", "round");
+
+    svg.appendChild(bacino);
 
 
     /*
     GAMBE
     */
 
-    const gambe =
+    const gambaSinistra =
         document.createElementNS(
             ns,
             "path"
         );
 
-    gambe.setAttribute(
+    gambaSinistra.setAttribute(
         "d",
-        "M23 65 Q30 70 37 65 M26 68 L23 84 M34 68 L37 84"
+        "M28 77 Q29 88 29 94 L27 101 L32 101 L35 81"
     );
 
-    gambe.setAttribute(
-        "fill",
-        "none"
+    gambaSinistra.setAttribute("fill", "#fff");
+    gambaSinistra.setAttribute("stroke", "#000");
+    gambaSinistra.setAttribute("stroke-width", "1.8");
+    gambaSinistra.setAttribute("stroke-linejoin", "round");
+
+    svg.appendChild(gambaSinistra);
+
+
+    const gambaDestra =
+        document.createElementNS(
+            ns,
+            "path"
+        );
+
+    gambaDestra.setAttribute(
+        "d",
+        "M42 77 Q41 88 41 94 L43 101 L38 101 L35 81"
     );
 
-    gambe.setAttribute(
-        "stroke",
-        "#000"
-    );
+    gambaDestra.setAttribute("fill", "#fff");
+    gambaDestra.setAttribute("stroke", "#000");
+    gambaDestra.setAttribute("stroke-width", "1.8");
+    gambaDestra.setAttribute("stroke-linejoin", "round");
 
-    gambe.setAttribute(
-        "stroke-width",
-        "3"
-    );
-
-    gambe.setAttribute(
-        "stroke-linecap",
-        "round"
-    );
-
-    svg.appendChild(gambe);
+    svg.appendChild(gambaDestra);
 
 
     return svg;
