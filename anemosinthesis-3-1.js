@@ -233,57 +233,41 @@ function anemosinthesisOttieniAnemomeriOrdinati(
     }
 
     /*
-    Se l'Anemodromo arriva già
-    come array ordinato di Anemomeri.
+    Usa prioritariamente il motore
+    di ordinamento già presente in ANEMOS.
     */
 
     if (
-        Array.isArray(sequenza) &&
-        sequenza.length > 0
+        typeof ottieniAnemodromiOrdinati ===
+        "function"
+    ) {
+        const ordinati =
+            ottieniAnemodromiOrdinati(
+                sequenza
+            );
+
+        if (
+            Array.isArray(ordinati)
+        ) {
+            return ordinati;
+        }
+    }
+
+
+    /*
+    Fallback per eventuali test
+    con array già ordinato.
+    */
+
+    if (
+        Array.isArray(sequenza)
     ) {
         return sequenza;
     }
 
-    /*
-    Struttura ANEMOS:
-    ordine[] + anemodromi[]
-    */
-
-    if (
-        Array.isArray(sequenza.ordine) &&
-        Array.isArray(sequenza.anemodromi)
-    ) {
-        return sequenza.ordine
-            .map(
-                id =>
-                    sequenza.anemodromi.find(
-                        anemomero =>
-                            anemomero.id === id
-                    )
-            )
-            .filter(Boolean);
-    }
-
-    /*
-    Fallback:
-    se gli Anemomeri sono già
-    nell'ordine corretto.
-    */
-
-    if (
-        Array.isArray(
-            sequenza.anemodromi
-        )
-    ) {
-        return [
-            ...sequenza.anemodromi
-        ];
-    }
 
     return [];
 }
-
-
 /* =====================================================
    NORMALIZZAZIONE TIPO
 ===================================================== */
