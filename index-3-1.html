@@ -155,6 +155,25 @@
 
     </div>
 
+
+    <div
+        id="anemosinthesis-riepilogo"
+        class="riepilogo-voce"
+    >
+
+        <span>
+            ANEMOSINTHESIS
+        </span>
+
+        <strong
+            id="anemosinthesis-esito"
+        >
+            —
+        </strong>
+
+    </div>
+
+
     <div
         id="anemoschesi-riepilogo"
         class="riepilogo-voce anemoschesi-riepilogo"
@@ -173,8 +192,6 @@
     </div>
 
 </div>
-
-
             <div class="azioni">
 
     <button
@@ -442,6 +459,10 @@ pulsanteAggiungiES.classList.toggle(
                 "durata-totale"
             );
 
+    const anemosinthesisEsito =
+    document.getElementById(
+        "anemosinthesis-esito"
+    );
 
 
         /*
@@ -633,9 +654,34 @@ pulsanteEliminaTutto
 
 
             durataTotale.textContent =
-                totale + " s";
+    totale + " s";
 
-        }
+
+const risultatoAnemosinthesis =
+    calcolaAnemosinthesis(
+        anemos31
+    );
+
+
+if (
+    risultatoAnemosinthesis.valido
+) {
+
+    anemosinthesisEsito.textContent =
+        risultatoAnemosinthesis.anemosinthesis
+        + "/100 · "
+        + risultatoAnemosinthesis.simbolo
+        + " "
+        + risultatoAnemosinthesis.livello;
+
+} else {
+
+    anemosinthesisEsito.textContent =
+        "—";
+
+}
+
+}
 
 
 
