@@ -1008,15 +1008,44 @@ function calcolaAnemosinthesis(
         punteggioTransizioni;
 
 
-    const punteggio =
-        Math.round(
-            anemosinthesisLimita(
-                punteggioGrezzo,
-                0,
-                100
-            )
-        );
+    let punteggioCalibrato =
+    punteggioGrezzo;
 
+
+/*
+Calibrazione empirica della fascia alta.
+
+La scala resta invariata fino a 66.
+
+Oltre 66, la fascia viene espansa
+per rappresentare meglio la complessità
+realmente raggiungibile in ANEMOS.
+
+Riferimento di calibrazione:
+76 grezzo ≈ 95 ANEMOSINTHESIS.
+*/
+
+if (
+    punteggioGrezzo > 66
+) {
+
+    punteggioCalibrato =
+        66 +
+        (
+            punteggioGrezzo - 66
+        ) * 2.9;
+
+}
+
+
+const punteggio =
+    Math.round(
+        anemosinthesisLimita(
+            punteggioCalibrato,
+            0,
+            100
+        )
+    );
 
     /* =================================================
        7. CLASSIFICAZIONE
