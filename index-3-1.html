@@ -699,11 +699,50 @@ if (
         + " "
         + risultatoAnemosinthesis.livello;
 
+
+    const riepilogoAnemosinthesis =
+        document.getElementById(
+            "anemosinthesis-riepilogo"
+        );
+
+
+    riepilogoAnemosinthesis.classList.remove(
+        "anemosinthesis-verde",
+        "anemosinthesis-giallo",
+        "anemosinthesis-rosso"
+    );
+
+
+    if (
+        risultatoAnemosinthesis.anemosinthesis <= 33
+    ) {
+
+        riepilogoAnemosinthesis.classList.add(
+            "anemosinthesis-verde"
+        );
+
+    } else if (
+        risultatoAnemosinthesis.anemosinthesis <= 66
+    ) {
+
+        riepilogoAnemosinthesis.classList.add(
+            "anemosinthesis-giallo"
+        );
+
+    } else {
+
+        riepilogoAnemosinthesis.classList.add(
+            "anemosinthesis-rosso"
+        );
+
+    }
+
 } else {
 
     anemosinthesisEsito.textContent =
         "—";
 
+}
 }
 const risultatoAnemobaros =
     calcolaAnemobaros(
