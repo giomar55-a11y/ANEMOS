@@ -752,17 +752,70 @@ const risultatoAnemobaros =
 if (
     risultatoAnemobaros.valido
 ) {
+
     anemobarosEsito.textContent =
         risultatoAnemobaros.anemobaros
         + "/100 · "
         + risultatoAnemobaros.simbolo
         + " "
         + risultatoAnemobaros.livello;
+
+
+    const riepilogoAnemobaros =
+        document.getElementById(
+            "anemobaros-riepilogo"
+        );
+
+
+    riepilogoAnemobaros.classList.remove(
+        "anemobaros-verde",
+        "anemobaros-giallo",
+        "anemobaros-rosso"
+    );
+
+
+    if (
+        risultatoAnemobaros.anemobaros <= 33
+    ) {
+
+        riepilogoAnemobaros.classList.add(
+            "anemobaros-verde"
+        );
+
+    } else if (
+        risultatoAnemobaros.anemobaros <= 66
+    ) {
+
+        riepilogoAnemobaros.classList.add(
+            "anemobaros-giallo"
+        );
+
+    } else {
+
+        riepilogoAnemobaros.classList.add(
+            "anemobaros-rosso"
+        );
+
+    }
+
 } else {
+
     anemobarosEsito.textContent =
         "—";
-}
-            
+
+
+    const riepilogoAnemobaros =
+        document.getElementById(
+            "anemobaros-riepilogo"
+        );
+
+    riepilogoAnemobaros.classList.remove(
+        "anemobaros-verde",
+        "anemobaros-giallo",
+        "anemobaros-rosso"
+    );
+
+}            
 
 }
 
