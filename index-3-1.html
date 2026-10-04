@@ -481,6 +481,13 @@ pulsanteAggiungiES.classList.toggle(
     document.getElementById(
         "anemosinthesis-esito"
     );
+    
+    const anemobarosEsito =
+    document.getElementById(
+        "anemobaros-esito"
+    );
+
+    
 
 
         /*
@@ -698,6 +705,25 @@ if (
         "—";
 
 }
+const risultatoAnemobaros =
+    calcolaAnemobaros(
+        anemos31
+    );
+
+if (
+    risultatoAnemobaros.valido
+) {
+    anemobarosEsito.textContent =
+        risultatoAnemobaros.anemobaros
+        + "/100 · "
+        + risultatoAnemobaros.simbolo
+        + " "
+        + risultatoAnemobaros.livello;
+} else {
+    anemobarosEsito.textContent =
+        "—";
+}
+            
 
 }
 
