@@ -1,0 +1,249 @@
+/* =====================================================
+   ANEMOS 3.1
+   LIBRERIA ANEMODROMI v1.0
+===================================================== */
+
+
+/* =====================================================
+   PANNELLO SALVATAGGIO
+===================================================== */
+
+.salva-libreria {
+
+    position: fixed;
+    inset: 0;
+
+    display: none;
+
+    align-items: flex-end;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    z-index: 1000;
+
+}
+
+
+.salva-libreria.aperto {
+
+    display: flex;
+
+}
+
+
+.salva-libreria-sheet {
+
+    width: 100%;
+    max-width: 560px;
+
+    max-height: 90vh;
+    overflow-y: auto;
+
+    background: #ffffff;
+
+    border-radius: 22px 22px 0 0;
+
+    padding: 20px;
+
+    box-sizing: border-box;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.salva-libreria-header {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+
+}
+
+
+.salva-libreria-header h2 {
+
+    margin: 0;
+
+    font-size: 20px;
+
+}
+
+
+#chiudi-salva-libreria {
+
+    border: 0;
+    background: transparent;
+
+    font-size: 28px;
+    line-height: 1;
+
+    cursor: pointer;
+
+}
+
+
+/* =====================================================
+   CONTENUTO
+===================================================== */
+
+.salva-libreria-contenuto {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+
+.salva-libreria-contenuto label {
+
+    font-size: 13px;
+    font-weight: 600;
+
+    margin-top: 6px;
+
+}
+
+
+#salva-libreria-nome,
+#salva-libreria-note {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    border: 1px solid #d7d7d7;
+    border-radius: 10px;
+
+    padding: 11px 12px;
+
+    font: inherit;
+
+    background: #ffffff;
+
+}
+
+
+#salva-libreria-note {
+
+    resize: vertical;
+
+}
+
+
+.salva-libreria-intento {
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin: 8px 0;
+
+    padding: 12px;
+
+    border-radius: 10px;
+
+    background: #f4f4f4;
+
+}
+
+
+/* =====================================================
+   ANTEPRIMA MOTORI
+===================================================== */
+
+.salva-libreria-anteprima {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 8px;
+
+    margin-top: 12px;
+
+}
+
+
+.salva-libreria-anteprima > div {
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+
+    padding: 10px;
+
+    border: 1px solid #e3e3e3;
+    border-radius: 10px;
+
+}
+
+
+.salva-libreria-anteprima span {
+
+    font-size: 11px;
+
+}
+
+
+.salva-libreria-anteprima strong {
+
+    font-size: 14px;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.salva-libreria-footer {
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 22px;
+
+}
+
+
+.salva-libreria-footer button {
+
+    min-height: 46px;
+
+    border-radius: 12px;
+
+    font: inherit;
+    font-weight: 600;
+
+    cursor: pointer;
+
+}
+
+
+#annulla-salva-libreria {
+
+    border: 1px solid #cccccc;
+
+    background: #ffffff;
+
+}
+
+
+#conferma-salva-libreria {
+
+    border: 0;
+
+    background: #202020;
+    color: #ffffff;
+
+}
