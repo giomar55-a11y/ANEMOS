@@ -139,3 +139,131 @@ function anemosLibreriaCreaId() {
             .slice(2, 10)
     );
 }
+
+/* =====================================================
+   SALVATAGGIO ANEMODROMO
+===================================================== */
+
+function anemosLibreriaSalva(
+    sequenza,
+    nome,
+    intentoId,
+    note = ""
+) {
+
+    const nomePulito =
+        String(
+            nome ?? ""
+        ).trim();
+
+    const intentoPulito =
+        String(
+            intentoId ?? ""
+        ).trim();
+
+    const notePulite =
+        String(
+            note ?? ""
+        ).trim();
+
+
+    /*
+       Nome e Intento sono obbligatori.
+    */
+
+    if (
+        !nomePulito ||
+        !intentoPulito ||
+        !sequenza
+    ) {
+
+        return {
+            successo: false,
+            motivo: "dati-mancanti"
+        };
+
+    }
+
+
+    /*
+       La sequenza deve contenere
+       almeno un Anemomero.
+    */
+
+    const anemomeri =
+        anemosLibreriaClona(
+            sequenza
+        );
+
+
+    if (
+        !Array.isArray(
+            anemomeri.anemodromi
+        ) ||
+        anemomeri.anemodromi.length === 0
+    ) {
+
+        return {
+            successo: false,
+            motivo: "sequenza-vuota"
+        };
+
+    }
+
+
+    const voce = {
+
+        id:
+            anemosLibreriaCreaId(),
+
+        versione:
+            ANEMOS_LIBRERIA_VERSIONE,
+
+        creatoIl:
+            new Date().toISOString(),
+
+        nome:
+            nomePulito,
+
+        intento:
+            intentoPulito,
+
+        note:
+            notePulite,
+
+        sequenza:
+            anemomeri
+
+    };
+
+
+    const libreria =
+        anemosLibreriaLeggi();
+
+
+    libreria.push(
+        voce
+    );
+
+
+    const scritto =
+        anemosLibreriaScrivi(
+            libreria
+        );
+
+
+    if (!scritto) {
+
+        return {
+            successo: false,
+            motivo: "errore-scrittura"
+        };
+
+    }
+
+
+    return {
+        successo: true,
+        voce: voce
+    };
+}
