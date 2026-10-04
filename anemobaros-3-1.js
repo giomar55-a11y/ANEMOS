@@ -296,3 +296,69 @@ function anemobarosCaricoFlusso(
     return 0;
 }
 
+/* =====================================================
+   4. APNEE
+   Carico della singola apnea: 0–20
+
+   Apnea alta = dopo IN
+   Apnea bassa = dopo ES
+===================================================== */
+
+function anemobarosCaricoApnea(
+    tipoPrecedente,
+    durata
+) {
+
+    const secondi =
+        Number(durata);
+
+    if (
+        !Number.isFinite(secondi) ||
+        secondi <= 0
+    ) {
+        return 0;
+    }
+
+
+    let carico = 0;
+
+
+    /* -------------------------
+       DURATA DELL'APNEA
+    ------------------------- */
+
+    if (secondi <= 2) {
+        carico = 3;
+    } else if (secondi <= 4) {
+        carico = 5;
+    } else if (secondi <= 6) {
+        carico = 8;
+    } else if (secondi <= 8) {
+        carico = 11;
+    } else if (secondi <= 11) {
+        carico = 14;
+    } else if (secondi <= 14) {
+        carico = 17;
+    } else {
+        carico = 20;
+    }
+
+
+    /* -------------------------
+       APNEA BASSA
+
+       Dopo ES aggiunge 3 punti
+       rispetto all'apnea alta.
+    ------------------------- */
+
+    if (tipoPrecedente === "ES") {
+        carico += 3;
+    }
+
+
+    return Math.min(
+        carico,
+        20
+    );
+}
+
