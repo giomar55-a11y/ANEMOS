@@ -370,27 +370,28 @@ function anemobarosCaricoApnea(
 function anemobarosCaricoPercorso(
     percorso
 ) {
-
     const testo =
         String(
             percorso ?? ""
         )
-            .trim()
-            .toLowerCase();
+        .trim()
+        .toLowerCase();
 
-    if (testo === "bocca") {
+    if (
+        testo === "bocca"
+    ) {
         return 1;
     }
 
     if (
-        testo === "entrambe le narici"
+        testo === "entrambe_narici"
     ) {
         return 3;
     }
 
     if (
-        testo === "narice destra" ||
-        testo === "narice sinistra"
+        testo === "narice_destra" ||
+        testo === "narice_sinistra"
     ) {
         return 6;
     }
