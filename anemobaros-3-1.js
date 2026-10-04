@@ -398,3 +398,108 @@ function anemobarosCaricoPercorso(
     return 0;
 }
 
+/* =====================================================
+   6. FUNZIONI COMUNI
+===================================================== */
+
+function anemobarosLimita(
+    valore,
+    minimo,
+    massimo
+) {
+
+    return Math.min(
+        Math.max(
+            valore,
+            minimo
+        ),
+        massimo
+    );
+}
+
+
+function anemobarosMedia(
+    valori
+) {
+
+    if (
+        !Array.isArray(valori) ||
+        valori.length === 0
+    ) {
+        return 0;
+    }
+
+    return (
+        valori.reduce(
+            (somma, valore) =>
+                somma + valore,
+            0
+        )
+        /
+        valori.length
+    );
+}
+
+
+function anemobarosMediaPicco(
+    valori
+) {
+
+    if (
+        !Array.isArray(valori) ||
+        valori.length === 0
+    ) {
+        return 0;
+    }
+
+    const media =
+        anemobarosMedia(
+            valori
+        );
+
+    const massimo =
+        Math.max(
+            ...valori
+        );
+
+    return (
+        media * 0.70 +
+        massimo * 0.30
+    );
+}
+
+
+function anemobarosOttieniAnemomeriOrdinati(
+    sequenza
+) {
+
+    if (!sequenza) {
+        return [];
+    }
+
+    if (
+        typeof ottieniAnemodromiOrdinati ===
+        "function"
+    ) {
+
+        const ordinati =
+            ottieniAnemodromiOrdinati(
+                sequenza
+            );
+
+        if (
+            Array.isArray(ordinati)
+        ) {
+            return ordinati;
+        }
+    }
+
+    if (
+        Array.isArray(sequenza)
+    ) {
+        return sequenza;
+    }
+
+    return [];
+}
+
