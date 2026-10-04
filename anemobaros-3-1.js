@@ -362,3 +362,39 @@ function anemobarosCaricoApnea(
     );
 }
 
+/* =====================================================
+   5. PERCORSO
+   Carico del singolo Anemomero: 0–10
+===================================================== */
+
+function anemobarosCaricoPercorso(
+    percorso
+) {
+
+    const testo =
+        String(
+            percorso ?? ""
+        )
+            .trim()
+            .toLowerCase();
+
+    if (testo === "bocca") {
+        return 1;
+    }
+
+    if (
+        testo === "entrambe le narici"
+    ) {
+        return 3;
+    }
+
+    if (
+        testo === "narice destra" ||
+        testo === "narice sinistra"
+    ) {
+        return 6;
+    }
+
+    return 0;
+}
+
