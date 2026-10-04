@@ -267,3 +267,266 @@ function anemosLibreriaSalva(
         voce: voce
     };
 }
+
+/* =====================================================
+   INTERFACCIA SALVATAGGIO
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const pulsanteSalva =
+            document.getElementById(
+                "salva-anemodromo"
+            );
+
+        const pannello =
+            document.getElementById(
+                "salva-libreria"
+            );
+
+        const pulsanteChiudi =
+            document.getElementById(
+                "chiudi-salva-libreria"
+            );
+
+        const pulsanteAnnulla =
+            document.getElementById(
+                "annulla-salva-libreria"
+            );
+
+
+        if (
+            !pulsanteSalva ||
+            !pannello
+        ) {
+            return;
+        }
+
+
+        function chiudiPannello() {
+
+            pannello.classList.remove(
+                "aperto"
+            );
+
+        }
+
+
+        pulsanteSalva.addEventListener(
+            "click",
+            function () {
+
+                /*
+                   Deve esistere almeno
+                   un Anemomero.
+                */
+
+                if (
+                    typeof anemos31 === "undefined" ||
+                    !Array.isArray(
+                        anemos31.anemodromi
+                    ) ||
+                    anemos31.anemodromi.length === 0
+                ) {
+
+                    alert(
+                        "Crea almeno un Anemomero prima di salvare."
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                   L'Intento è obbligatorio.
+                */
+
+                if (
+                    !anemos31.intento
+                ) {
+
+                    alert(
+                        "Seleziona un Intento prima di salvare."
+                    );
+
+                    return;
+
+                }
+
+
+                /*
+                   Nome già presente
+                   nell'editor principale.
+                */
+
+                const nomePrincipale =
+                    document.getElementById(
+                        "nome-respirazione"
+                    );
+
+                const nomeSalvataggio =
+                    document.getElementById(
+                        "salva-libreria-nome"
+                    );
+
+
+                if (
+                    nomePrincipale &&
+                    nomeSalvataggio
+                ) {
+
+                    nomeSalvataggio.value =
+                        nomePrincipale.value;
+
+                }
+
+
+                /*
+                   Mostra il nome leggibile
+                   dell'Intento selezionato.
+                */
+
+                const selettoreIntento =
+                    document.getElementById(
+                        "selettore-intento"
+                    );
+
+                const intentoAnteprima =
+                    document.getElementById(
+                        "salva-libreria-intento"
+                    );
+
+
+                if (
+                    selettoreIntento &&
+                    intentoAnteprima
+                ) {
+
+                    const opzione =
+                        selettoreIntento.options[
+                            selettoreIntento.selectedIndex
+                        ];
+
+                    intentoAnteprima.textContent =
+                        opzione
+                            ? opzione.textContent
+                            : anemos31.intento;
+
+                }
+
+
+                /*
+                   Recupera i risultati già
+                   calcolati dal riepilogo.
+                */
+
+                const collegamenti = [
+
+                    [
+                        "durata-totale",
+                        "salva-libreria-durata"
+                    ],
+
+                    [
+                        "anemoschesi-esito",
+                        "salva-libreria-anemoschesi"
+                    ],
+
+                    [
+                        "anemobaros-esito",
+                        "salva-libreria-anemobaros"
+                    ],
+
+                    [
+                        "anemosinthesis-esito",
+                        "salva-libreria-anemosinthesis"
+                    ]
+
+                ];
+
+
+                collegamenti.forEach(
+                    function (coppia) {
+
+                        const origine =
+                            document.getElementById(
+                                coppia[0]
+                            );
+
+                        const destinazione =
+                            document.getElementById(
+                                coppia[1]
+                            );
+
+
+                        if (
+                            origine &&
+                            destinazione
+                        ) {
+
+                            destinazione.textContent =
+                                origine.textContent;
+
+                        }
+
+                    }
+                );
+
+
+                /*
+                   Apertura pannello.
+                */
+
+                pannello.classList.add(
+                    "aperto"
+                );
+
+            }
+        );
+
+
+        if (pulsanteChiudi) {
+
+            pulsanteChiudi.addEventListener(
+                "click",
+                chiudiPannello
+            );
+
+        }
+
+
+        if (pulsanteAnnulla) {
+
+            pulsanteAnnulla.addEventListener(
+                "click",
+                chiudiPannello
+            );
+
+        }
+
+
+        /*
+           Tocco sullo sfondo:
+           chiude il pannello.
+        */
+
+        pannello.addEventListener(
+            "click",
+            function (evento) {
+
+                if (
+                    evento.target === pannello
+                ) {
+
+                    chiudiPannello();
+
+                }
+
+            }
+        );
+
+    }
+);
