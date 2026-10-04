@@ -132,3 +132,131 @@ function anemobarosCaricoDurata(
 
     return 0;
 }
+
+/* =====================================================
+   2. ESCURSIONE VOLUMETRICA
+   Carico della singola escursione: 0–25
+===================================================== */
+
+function anemobarosLivelloVolume(
+    volume
+) {
+
+    const testo =
+        String(
+            volume ?? ""
+        )
+            .trim()
+            .toLowerCase();
+
+    const mappa = {
+        vuoto: 0,
+        scarso: 1,
+        confortevole: 2,
+        abbondante: 3,
+        pieno: 4
+    };
+
+    if (
+        Object.prototype.hasOwnProperty.call(
+            mappa,
+            testo
+        )
+    ) {
+        return mappa[testo];
+    }
+
+    const numero =
+        Number(volume);
+
+    if (
+        Number.isFinite(numero) &&
+        numero >= 0 &&
+        numero <= 4
+    ) {
+        return numero;
+    }
+
+    return null;
+}
+
+
+function anemobarosCaricoEscursione(
+    tipo,
+    volumePartenza,
+    volumeArrivo
+) {
+
+    const partenza =
+        anemobarosLivelloVolume(
+            volumePartenza
+        );
+
+    const arrivo =
+        anemobarosLivelloVolume(
+            volumeArrivo
+        );
+
+    if (
+        partenza === null ||
+        arrivo === null
+    ) {
+        return 0;
+    }
+
+
+    const escursione =
+        Math.abs(
+            arrivo - partenza
+        );
+
+
+    let carico = 0;
+
+    if (escursione === 1) {
+        carico = 4;
+    }
+
+    if (escursione === 2) {
+        carico = 9;
+    }
+
+    if (escursione === 3) {
+        carico = 15;
+    }
+
+    if (escursione >= 4) {
+        carico = 21;
+    }
+
+
+    /*
+       Raggiungimento dell'estremo.
+
+       IN verso Pieno:
+       maggiore richiesta inspiratoria.
+
+       ES verso Vuoto:
+       maggiore richiesta espiratoria.
+    */
+
+    if (
+        tipo === "IN" &&
+        arrivo === 4
+    ) {
+        carico += 3;
+    }
+
+    if (
+        tipo === "ES" &&
+        arrivo === 0
+    ) {
+        carico += 4;
+    }
+
+
+    return Math.min(
+        carico,
+        25
+    );
+}
