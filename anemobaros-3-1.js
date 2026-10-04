@@ -668,7 +668,7 @@ function calcolaAnemobaros(
             valido: false,
             anemobaros: 0,
             livello: "—",
-            simbolo: "○○○○",
+            simbolo: "○○○",
             dettaglio: {}
         };
     }
@@ -915,43 +915,32 @@ function calcolaAnemobaros(
     let simbolo;
 
 
-    if (punteggio <= 29) {
+    if (punteggio <= 33) {
 
         livello =
             "Leggero";
 
         simbolo =
-            "●○○○";
+            "●○○";
 
-    } else if (
-        punteggio <= 49
+     } else if (
+        punteggio <= 66
     ) {
 
         livello =
-            "Medio";
+            "Moderato";
 
         simbolo =
-            "●●○○";
-
-    } else if (
-        punteggio <= 69
-    ) {
-
-        livello =
-            "Impegnativo";
-
-        simbolo =
-            "●●●○";
+            "●●○";
 
     } else {
 
         livello =
-            "Molto impegnativo";
+            "Elevato";
 
         simbolo =
-            "●●●●";
+            "●●●";
     }
-
 
     return {
 
