@@ -503,3 +503,143 @@ function anemobarosOttieniAnemomeriOrdinati(
     return [];
 }
 
+/* =====================================================
+   7. ESCURSIONE VOLUMETRICA CICLICA
+
+   Per ogni settore viene confrontato
+   il volume corrente con l'ultimo volume
+   assegnato allo stesso settore.
+
+   La ricerca è ciclica:
+   prima del primo Anemomero viene
+   considerata la parte finale del ciclo.
+===================================================== */
+
+function anemobarosTrovaVolumePrecedente(
+    anemomeri,
+    indiceCorrente,
+    nomeSettore
+) {
+
+    const totale =
+        anemomeri.length;
+
+    if (totale <= 1) {
+        return null;
+    }
+
+
+    for (
+        let passo = 1;
+        passo < totale;
+        passo++
+    ) {
+
+        const indice =
+            (
+                indiceCorrente -
+                passo +
+                totale
+            )
+            %
+            totale;
+
+        const precedente =
+            anemomeri[indice];
+
+        if (
+            !precedente ||
+            !Array.isArray(
+                precedente.settori
+            )
+        ) {
+            continue;
+        }
+
+
+        const settore =
+            precedente.settori.find(
+                elemento =>
+                    elemento.nome ===
+                    nomeSettore
+            );
+
+
+        if (settore) {
+            return settore.volume;
+        }
+    }
+
+
+    return null;
+}
+
+
+function anemobarosCarichiVolume(
+    anemomeri
+) {
+
+    const carichi = [];
+
+
+    anemomeri.forEach(
+        (
+            anemomero,
+            indice
+        ) => {
+
+            if (
+                !anemomero ||
+                !Array.isArray(
+                    anemomero.settori
+                )
+            ) {
+                return;
+            }
+
+
+            anemomero.settori.forEach(
+                settore => {
+
+                    const precedente =
+                        anemobarosTrovaVolumePrecedente(
+                            anemomeri,
+                            indice,
+                            settore.nome
+                        );
+
+
+                    /*
+                       Se il settore non possiede
+                       uno stato precedente nel ciclo,
+                       non possiamo calcolare
+                       un'escursione attendibile.
+                    */
+
+                    if (
+                        precedente === null ||
+                        precedente === undefined
+                    ) {
+                        return;
+                    }
+
+
+                    const carico =
+                        anemobarosCaricoEscursione(
+                            anemomero.tipo,
+                            precedente,
+                            settore.volume
+                        );
+
+
+                    carichi.push(
+                        carico
+                    );
+                }
+            );
+        }
+    );
+
+
+    return carichi;
+}
