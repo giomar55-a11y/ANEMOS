@@ -742,8 +742,19 @@ if (
     anemosinthesisEsito.textContent =
         "—";
 
-}
-            
+
+    const riepilogoAnemosinthesis =
+        document.getElementById(
+            "anemosinthesis-riepilogo"
+        );
+
+    riepilogoAnemosinthesis.classList.remove(
+        "anemosinthesis-verde",
+        "anemosinthesis-giallo",
+        "anemosinthesis-rosso"
+    );
+
+}            
 const risultatoAnemobaros =
     calcolaAnemobaros(
         anemos31
