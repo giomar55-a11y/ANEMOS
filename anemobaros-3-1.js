@@ -260,3 +260,39 @@ function anemobarosCaricoEscursione(
         25
     );
 }
+
+/* =====================================================
+   3. FLUSSO
+   Carico del singolo Anemomero: 0–20
+===================================================== */
+
+function anemobarosCaricoFlusso(
+    flusso
+) {
+
+    const testo =
+        String(
+            flusso ?? ""
+        )
+            .trim()
+            .toLowerCase();
+
+    const mappa = {
+        spontaneo: 2,
+        delicato: 5,
+        trattenuto: 11,
+        forzato: 17
+    };
+
+    if (
+        Object.prototype.hasOwnProperty.call(
+            mappa,
+            testo
+        )
+    ) {
+        return mappa[testo];
+    }
+
+    return 0;
+}
+
