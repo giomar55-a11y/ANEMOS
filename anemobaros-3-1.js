@@ -643,3 +643,353 @@ function anemobarosCarichiVolume(
 
     return carichi;
 }
+
+/* =====================================================
+   8. CALCOLO COMPLETO ANEMOBAROS
+===================================================== */
+
+function calcolaAnemobaros(
+    sequenza
+) {
+
+    const anemomeri =
+        anemobarosOttieniAnemomeriOrdinati(
+            sequenza
+        );
+
+
+    if (
+        !Array.isArray(anemomeri) ||
+        anemomeri.length === 0
+    ) {
+
+        return {
+            valido: false,
+            anemobaros: 0,
+            livello: "—",
+            simbolo: "○○○○",
+            dettaglio: {}
+        };
+    }
+
+
+    /* =================================================
+       DURATA
+    ================================================= */
+
+    const carichiDurata =
+        anemomeri.map(
+            anemomero =>
+                anemobarosCaricoDurata(
+                    anemomero.tipo,
+                    anemomero.durata
+                )
+        );
+
+    const durata =
+        anemobarosMediaPicco(
+            carichiDurata
+        );
+
+
+    /* =================================================
+       VOLUME
+    ================================================= */
+
+    const carichiVolume =
+        anemobarosCarichiVolume(
+            anemomeri
+        );
+
+    const volume =
+        anemobarosMediaPicco(
+            carichiVolume
+        );
+
+
+    /* =================================================
+       FLUSSO
+    ================================================= */
+
+    const carichiFlusso =
+        anemomeri.map(
+            anemomero =>
+                anemobarosCaricoFlusso(
+                    anemomero.flusso
+                )
+        );
+
+    const flusso =
+        anemobarosMediaPicco(
+            carichiFlusso
+        );
+
+
+    /* =================================================
+       PERCORSO
+    ================================================= */
+
+    const carichiPercorso =
+        anemomeri.map(
+            anemomero =>
+                anemobarosCaricoPercorso(
+                    anemomero.percorso
+                )
+        );
+
+    const percorso =
+        anemobarosMediaPicco(
+            carichiPercorso
+        );
+
+
+    /* =================================================
+       APNEE
+    ================================================= */
+
+    const apnee =
+        (
+            sequenza &&
+            Array.isArray(
+                sequenza.apnee
+            )
+        )
+            ? sequenza.apnee
+            : [];
+
+
+    const mappaAnemomeri =
+        new Map(
+            anemomeri.map(
+                anemomero => [
+                    anemomero.id,
+                    anemomero
+                ]
+            )
+        );
+
+
+    const carichiApnee =
+        apnee.map(
+            apnea => {
+
+                const precedente =
+                    mappaAnemomeri.get(
+                        apnea.precedente
+                    );
+
+                if (!precedente) {
+                    return 0;
+                }
+
+                return anemobarosCaricoApnea(
+                    precedente.tipo,
+                    apnea.durata
+                );
+            }
+        );
+
+
+    const caricoApnee =
+        anemobarosMediaPicco(
+            carichiApnee
+        );
+
+
+    /* =================================================
+       CARICO BASE
+    ================================================= */
+
+    const caricoBase =
+        durata +
+        volume +
+        flusso +
+        caricoApnee +
+        percorso;
+
+
+    /* =================================================
+       DURATA TOTALE DEL CICLO
+
+       Comprende:
+       - tutti gli Anemomeri
+       - tutte le apnee
+    ================================================= */
+
+    const tempoAnemomeri =
+        anemomeri.reduce(
+            (
+                totale,
+                anemomero
+            ) =>
+                totale +
+                (
+                    Number(
+                        anemomero.durata
+                    ) || 0
+                ),
+            0
+        );
+
+
+    const tempoApnee =
+        apnee.reduce(
+            (
+                totale,
+                apnea
+            ) =>
+                totale +
+                (
+                    Number(
+                        apnea.durata
+                    ) || 0
+                ),
+            0
+        );
+
+
+    const durataTotale =
+        tempoAnemomeri +
+        tempoApnee;
+
+
+    /* =================================================
+       ACCUMULO
+
+       Ftempo:
+       0 fino a 45 secondi
+       1 da 105 secondi in poi
+
+       Fintensità:
+       cresce con il carico base
+       fino al massimo a 75.
+    ================================================= */
+
+    const fattoreTempo =
+        anemobarosLimita(
+            (
+                durataTotale - 45
+            )
+            /
+            60,
+            0,
+            1
+        );
+
+
+    const fattoreIntensita =
+        anemobarosLimita(
+            caricoBase / 75,
+            0,
+            1
+        );
+
+
+    const accumulo =
+        15 *
+        fattoreTempo *
+        fattoreIntensita;
+
+
+    /* =================================================
+       PUNTEGGIO FINALE
+    ================================================= */
+
+    const punteggio =
+        Math.round(
+            anemobarosLimita(
+                caricoBase +
+                accumulo,
+                0,
+                100
+            )
+        );
+
+
+    /* =================================================
+       CLASSIFICAZIONE
+    ================================================= */
+
+    let livello;
+    let simbolo;
+
+
+    if (punteggio <= 29) {
+
+        livello =
+            "Leggero";
+
+        simbolo =
+            "●○○○";
+
+    } else if (
+        punteggio <= 49
+    ) {
+
+        livello =
+            "Medio";
+
+        simbolo =
+            "●●○○";
+
+    } else if (
+        punteggio <= 69
+    ) {
+
+        livello =
+            "Impegnativo";
+
+        simbolo =
+            "●●●○";
+
+    } else {
+
+        livello =
+            "Molto impegnativo";
+
+        simbolo =
+            "●●●●";
+    }
+
+
+    return {
+
+        valido: true,
+
+        anemobaros:
+            punteggio,
+
+        livello:
+            livello,
+
+        simbolo:
+            simbolo,
+
+        dettaglio: {
+
+            durata:
+                durata,
+
+            volume:
+                volume,
+
+            flusso:
+                flusso,
+
+            apnee:
+                caricoApnee,
+
+            percorso:
+                percorso,
+
+            caricoBase:
+                caricoBase,
+
+            durataTotale:
+                durataTotale,
+
+            accumulo:
+                accumulo
+        }
+    };
+}
