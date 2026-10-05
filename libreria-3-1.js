@@ -826,101 +826,322 @@ document.addEventListener(
 
 
         /*
-           Disegna le respirazioni
-           realmente archiviate.
-        */
+   Disegna le respirazioni
+   realmente archiviate.
 
-        function renderLibreria() {
+   Gli indici vengono ricalcolati
+   dalla sequenza originale salvata.
+*/
 
-            const libreria =
-                anemosLibreriaLeggi();
+function renderLibreria() {
+
+    const libreria =
+        anemosLibreriaLeggi();
 
 
-            aggiornaFiltroIntenti(
-                libreria
+    aggiornaFiltroIntenti(
+        libreria
+    );
+
+
+    contenitore.innerHTML = "";
+
+
+    if (
+        libreria.length === 0
+    ) {
+
+        const vuota =
+            document.createElement(
+                "div"
+            );
+
+        vuota.className =
+            "libreria-vuota";
+
+        vuota.textContent =
+            "Nessun Anemodromo salvato.";
+
+        contenitore.appendChild(
+            vuota
+        );
+
+        return;
+
+    }
+
+
+    libreria.forEach(
+        function (voce) {
+
+            /*
+               Ricalcolo dei tre motori
+               sulla sequenza archiviata.
+            */
+
+            const risultatoAnemoschesi =
+                valutaAnemodromoPerIntentoAnemoschesi(
+                    voce.sequenza
+                );
+
+            const risultatoAnemobaros =
+                calcolaAnemobaros(
+                    voce.sequenza
+                );
+
+            const risultatoAnemosinthesis =
+                calcolaAnemosinthesis(
+                    voce.sequenza
+                );
+
+
+            /*
+               Durata totale.
+
+               ANEMOBAROS la calcola già
+               comprendendo Anemomeri e apnee.
+            */
+
+            const durata =
+                risultatoAnemobaros &&
+                risultatoAnemobaros.dettaglio
+                    ? risultatoAnemobaros
+                        .dettaglio
+                        .durataTotale
+                    : 0;
+
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+            card.className =
+                "libreria-card";
+
+
+            /*
+               NOME
+            */
+
+            const titolo =
+                document.createElement(
+                    "h3"
+                );
+
+            titolo.textContent =
+                voce.nome;
+
+
+            /*
+               INTENTO + DURATA
+            */
+
+            const meta =
+                document.createElement(
+                    "div"
+                );
+
+            meta.className =
+                "libreria-card-meta";
+
+            meta.textContent =
+                nomeIntento(
+                    voce.intento
+                ) +
+                " · " +
+                durata +
+                " s";
+
+
+            /*
+               INDICI
+            */
+
+            const indici =
+                document.createElement(
+                    "div"
+                );
+
+            indici.className =
+                "libreria-card-indici";
+
+
+            const schedaAnemoschesi =
+                document.createElement(
+                    "div"
+                );
+
+            schedaAnemoschesi.className =
+                "libreria-card-indice";
+
+            schedaAnemoschesi.innerHTML =
+                "<span>ANEMOSCHESI</span>" +
+                "<strong>" +
+                Math.round(
+                    risultatoAnemoschesi
+                        .punteggioComplessivo
+                ) +
+                "%</strong>";
+
+
+            const schedaAnemobaros =
+                document.createElement(
+                    "div"
+                );
+
+            schedaAnemobaros.className =
+                "libreria-card-indice";
+
+            schedaAnemobaros.innerHTML =
+                "<span>ANEMOBAROS</span>" +
+                "<strong>" +
+                risultatoAnemobaros.anemobaros +
+                "/100 · " +
+                risultatoAnemobaros.simbolo +
+                " " +
+                risultatoAnemobaros.livello +
+                "</strong>";
+
+
+            const schedaAnemosinthesis =
+                document.createElement(
+                    "div"
+                );
+
+            schedaAnemosinthesis.className =
+                "libreria-card-indice";
+
+            schedaAnemosinthesis.innerHTML =
+                "<span>ANEMOSINTHESIS</span>" +
+                "<strong>" +
+                risultatoAnemosinthesis
+                    .anemosinthesis +
+                "/100 · " +
+                risultatoAnemosinthesis.simbolo +
+                " " +
+                risultatoAnemosinthesis.livello +
+                "</strong>";
+
+
+            indici.appendChild(
+                schedaAnemoschesi
+            );
+
+            indici.appendChild(
+                schedaAnemobaros
+            );
+
+            indici.appendChild(
+                schedaAnemosinthesis
             );
 
 
-            contenitore.innerHTML = "";
+            /*
+               AZIONI
 
+               Per ora vengono predisposti
+               i pulsanti. CARICA verrà
+               collegato nel passaggio
+               successivo.
+            */
 
-            if (
-                libreria.length === 0
-            ) {
-
-                const vuota =
-                    document.createElement(
-                        "div"
-                    );
-
-                vuota.className =
-                    "libreria-vuota";
-
-                vuota.textContent =
-                    "Nessun Anemodromo salvato.";
-
-                contenitore.appendChild(
-                    vuota
+            const azioni =
+                document.createElement(
+                    "div"
                 );
 
-                return;
-
-            }
-
-
-            libreria.forEach(
-                function (voce) {
-
-                    const card =
-                        document.createElement(
-                            "article"
-                        );
-
-                    card.className =
-                        "libreria-card";
+            azioni.className =
+                "libreria-card-azioni";
 
 
-                    const titolo =
-                        document.createElement(
-                            "h3"
-                        );
+            const carica =
+                document.createElement(
+                    "button"
+                );
 
-                    titolo.textContent =
-                        voce.nome;
+            carica.type =
+                "button";
 
+            carica.textContent =
+                "CARICA";
 
-                    const meta =
-                        document.createElement(
-                            "div"
-                        );
-
-                    meta.className =
-                        "libreria-card-meta";
-
-                    meta.textContent =
-                        nomeIntento(
-                            voce.intento
-                        );
+            carica.dataset.id =
+                voce.id;
 
 
-                    card.appendChild(
-                        titolo
-                    );
+            const anemogramma =
+                document.createElement(
+                    "button"
+                );
 
-                    card.appendChild(
-                        meta
-                    );
+            anemogramma.type =
+                "button";
+
+            anemogramma.textContent =
+                "ANEMOGRAMMA";
+
+            anemogramma.dataset.id =
+                voce.id;
 
 
-                    contenitore.appendChild(
-                        card
-                    );
+            const menu =
+                document.createElement(
+                    "button"
+                );
 
-                }
+            menu.type =
+                "button";
+
+            menu.textContent =
+                "⋯";
+
+            menu.dataset.id =
+                voce.id;
+
+
+            azioni.appendChild(
+                carica
+            );
+
+            azioni.appendChild(
+                anemogramma
+            );
+
+            azioni.appendChild(
+                menu
+            );
+
+
+            /*
+               COMPOSIZIONE CARD
+            */
+
+            card.appendChild(
+                titolo
+            );
+
+            card.appendChild(
+                meta
+            );
+
+            card.appendChild(
+                indici
+            );
+
+            card.appendChild(
+                azioni
+            );
+
+
+            contenitore.appendChild(
+                card
             );
 
         }
+    );
 
+}
 
         /*
            Apertura Libreria.
