@@ -513,7 +513,7 @@ document.addEventListener(
            chiude il pannello.
         */
 
-        pannello.addEventListener(
+               pannello.addEventListener(
             "click",
             function (evento) {
 
@@ -528,5 +528,136 @@ document.addEventListener(
             }
         );
 
+
+        /*
+           Conferma salvataggio
+           nella Libreria.
+        */
+
+        const pulsanteConferma =
+            document.getElementById(
+                "conferma-salva-libreria"
+            );
+
+
+        if (pulsanteConferma) {
+
+            pulsanteConferma.addEventListener(
+                "click",
+                function () {
+
+                    const campoNome =
+                        document.getElementById(
+                            "salva-libreria-nome"
+                        );
+
+                    const campoNote =
+                        document.getElementById(
+                            "salva-libreria-note"
+                        );
+
+
+                    const nome =
+                        campoNome
+                            ? campoNome.value.trim()
+                            : "";
+
+                    const note =
+                        campoNote
+                            ? campoNote.value.trim()
+                            : "";
+
+
+                    if (!nome) {
+
+                        alert(
+                            "Inserisci un nome per l'Anemodromo."
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (
+                        typeof anemos31 === "undefined" ||
+                        !anemos31.intento
+                    ) {
+
+                        alert(
+                            "Seleziona un Intento prima di salvare."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const risultato =
+                        anemosLibreriaSalva(
+                            anemos31,
+                            nome,
+                            anemos31.intento,
+                            note
+                        );
+
+
+                    if (
+                        !risultato.successo
+                    ) {
+
+                        alert(
+                            "Non è stato possibile salvare l'Anemodromo."
+                        );
+
+                        return;
+
+                    }
+
+
+                    /*
+                       Mantiene sincronizzato
+                       anche il nome principale.
+                    */
+
+                    const nomePrincipale =
+                        document.getElementById(
+                            "nome-respirazione"
+                        );
+
+
+                    if (nomePrincipale) {
+
+                        nomePrincipale.value =
+                            nome;
+
+                    }
+
+
+                    /*
+                       Pulisce le note per
+                       il prossimo salvataggio.
+                    */
+
+                    if (campoNote) {
+
+                        campoNote.value = "";
+
+                    }
+
+
+                    chiudiPannello();
+
+
+                    alert(
+                        "Anemodromo salvato nella Libreria."
+                    );
+
+                }
+            );
+
+        }
+
     }
 );
+
