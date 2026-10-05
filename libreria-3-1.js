@@ -1069,6 +1069,144 @@ function renderLibreria() {
             carica.dataset.id =
                 voce.id;
 
+                       /*
+               CARICA
+
+               Mantiene l'oggetto anemos31
+               esistente e ne sostituisce
+               soltanto il contenuto.
+            */
+
+            carica.addEventListener(
+                "click",
+                function () {
+
+                    const sequenzaCaricata =
+                        anemosLibreriaClona(
+                            voce.sequenza
+                        );
+
+
+                    /*
+                       Svuota lo stato corrente
+                       senza sostituire anemos31.
+                    */
+
+                    Object.keys(
+                        anemos31
+                    ).forEach(
+                        function (chiave) {
+
+                            delete anemos31[
+                                chiave
+                            ];
+
+                        }
+                    );
+
+
+                    /*
+                       Copia nello stato ANEMOS
+                       la respirazione archiviata.
+                    */
+
+                    Object.assign(
+                        anemos31,
+                        sequenzaCaricata
+                    );
+
+
+                    /*
+                       Ripristina il nome.
+                    */
+
+                    const nomePrincipale =
+                        document.getElementById(
+                            "nome-respirazione"
+                        );
+
+
+                    if (nomePrincipale) {
+
+                        nomePrincipale.value =
+                            voce.nome;
+
+                    }
+
+
+                    /*
+                       Ripristina l'Intento
+                       nel selettore visibile.
+                    */
+
+                    const selettoreIntento =
+                        document.getElementById(
+                            "selettore-intento"
+                        );
+
+
+                    if (selettoreIntento) {
+
+                        selettoreIntento.value =
+                            anemos31.intento || "";
+
+                    }
+
+
+                    /*
+                       Nessun Anemomero deve
+                       rimanere selezionato
+                       dal lavoro precedente.
+                    */
+
+                    if (
+                        typeof anemodromoSelezionatoId !==
+                        "undefined"
+                    ) {
+
+                        anemodromoSelezionatoId =
+                            null;
+
+                    }
+
+
+                    const editor =
+                        document.getElementById(
+                            "editor-anemodromo"
+                        );
+
+
+                    if (editor) {
+
+                        editor.classList.remove(
+                            "aperto"
+                        );
+
+                    }
+
+
+                    /*
+                       Ridisegna l'intera app.
+
+                       Il render principale aggiorna
+                       anche durata, indici e stato
+                       dei pulsanti IN / ES.
+                    */
+
+                    renderAnemos31();
+
+
+                    /*
+                       Chiude la Libreria.
+                    */
+
+                    libreriaPannello.classList.remove(
+                        "aperta"
+                    );
+
+                }
+            );
+
 
             const anemogramma =
                 document.createElement(
