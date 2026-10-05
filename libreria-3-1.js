@@ -661,3 +661,303 @@ document.addEventListener(
     }
 );
 
+/* =====================================================
+   INTERFACCIA LIBRERIA
+===================================================== */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function () {
+
+        const pulsanteApri =
+            document.getElementById(
+                "apri-libreria"
+            );
+
+        const libreriaPannello =
+            document.getElementById(
+                "libreria-anemodromi"
+            );
+
+        const pulsanteChiudi =
+            document.getElementById(
+                "chiudi-libreria"
+            );
+
+        const contenitore =
+            document.getElementById(
+                "libreria-risultati"
+            );
+
+        const filtroIntento =
+            document.getElementById(
+                "libreria-filtro-intento"
+            );
+
+
+        if (
+            !pulsanteApri ||
+            !libreriaPannello ||
+            !contenitore
+        ) {
+            return;
+        }
+
+
+        /*
+           Restituisce il nome leggibile
+           dell'Intento partendo dal suo ID.
+        */
+
+        function nomeIntento(
+            intentoId
+        ) {
+
+            const selettore =
+                document.getElementById(
+                    "selettore-intento"
+                );
+
+
+            if (selettore) {
+
+                const opzione =
+                    Array.from(
+                        selettore.options
+                    ).find(
+                        function (voce) {
+
+                            return (
+                                voce.value ===
+                                intentoId
+                            );
+
+                        }
+                    );
+
+
+                if (opzione) {
+
+                    return opzione.textContent;
+
+                }
+
+            }
+
+
+            return intentoId;
+
+        }
+
+
+        /*
+           Popola il filtro Intento
+           usando gli Intenti realmente
+           presenti nella Libreria.
+        */
+
+        function aggiornaFiltroIntenti(
+            libreria
+        ) {
+
+            if (!filtroIntento) {
+                return;
+            }
+
+
+            const valoreAttuale =
+                filtroIntento.value;
+
+
+            filtroIntento.innerHTML =
+                '<option value="">Tutti</option>';
+
+
+            const intenti =
+                [
+                    ...new Set(
+                        libreria
+                            .map(
+                                function (voce) {
+                                    return voce.intento;
+                                }
+                            )
+                            .filter(Boolean)
+                    )
+                ];
+
+
+            intenti.forEach(
+                function (intentoId) {
+
+                    const opzione =
+                        document.createElement(
+                            "option"
+                        );
+
+                    opzione.value =
+                        intentoId;
+
+                    opzione.textContent =
+                        nomeIntento(
+                            intentoId
+                        );
+
+                    filtroIntento.appendChild(
+                        opzione
+                    );
+
+                }
+            );
+
+
+            if (
+                intenti.includes(
+                    valoreAttuale
+                )
+            ) {
+
+                filtroIntento.value =
+                    valoreAttuale;
+
+            }
+
+        }
+
+
+        /*
+           Disegna le respirazioni
+           realmente archiviate.
+        */
+
+        function renderLibreria() {
+
+            const libreria =
+                anemosLibreriaLeggi();
+
+
+            aggiornaFiltroIntenti(
+                libreria
+            );
+
+
+            contenitore.innerHTML = "";
+
+
+            if (
+                libreria.length === 0
+            ) {
+
+                const vuota =
+                    document.createElement(
+                        "div"
+                    );
+
+                vuota.className =
+                    "libreria-vuota";
+
+                vuota.textContent =
+                    "Nessun Anemodromo salvato.";
+
+                contenitore.appendChild(
+                    vuota
+                );
+
+                return;
+
+            }
+
+
+            libreria.forEach(
+                function (voce) {
+
+                    const card =
+                        document.createElement(
+                            "article"
+                        );
+
+                    card.className =
+                        "libreria-card";
+
+
+                    const titolo =
+                        document.createElement(
+                            "h3"
+                        );
+
+                    titolo.textContent =
+                        voce.nome;
+
+
+                    const meta =
+                        document.createElement(
+                            "div"
+                        );
+
+                    meta.className =
+                        "libreria-card-meta";
+
+                    meta.textContent =
+                        nomeIntento(
+                            voce.intento
+                        );
+
+
+                    card.appendChild(
+                        titolo
+                    );
+
+                    card.appendChild(
+                        meta
+                    );
+
+
+                    contenitore.appendChild(
+                        card
+                    );
+
+                }
+            );
+
+        }
+
+
+        /*
+           Apertura Libreria.
+        */
+
+        pulsanteApri.addEventListener(
+            "click",
+            function () {
+
+                renderLibreria();
+
+                libreriaPannello.classList.add(
+                    "aperta"
+                );
+
+            }
+        );
+
+
+        /*
+           Chiusura Libreria.
+        */
+
+        if (pulsanteChiudi) {
+
+            pulsanteChiudi.addEventListener(
+                "click",
+                function () {
+
+                    libreriaPannello.classList.remove(
+                        "aperta"
+                    );
+
+                }
+            );
+
+        }
+
+    }
+);
