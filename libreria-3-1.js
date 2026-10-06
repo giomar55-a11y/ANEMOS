@@ -679,14 +679,33 @@ document.addEventListener(
                     }
 
 
-                    const risultato =
-                        anemosLibreriaSalva(
-                            anemos31,
-                            nome,
-                            anemos31.intento,
-                            note
-                        );
+                   const modificaId =
+    pannello.dataset.modificaId || "";
 
+
+let risultato;
+
+
+if (modificaId) {
+
+    risultato =
+        anemosLibreriaModifica(
+            modificaId,
+            nome,
+            note
+        );
+
+} else {
+
+    risultato =
+        anemosLibreriaSalva(
+            anemos31,
+            nome,
+            anemos31.intento,
+            note
+        );
+
+}
 
                     if (
                         !risultato.successo
@@ -732,13 +751,37 @@ document.addEventListener(
                     }
 
 
-                    chiudiPannello();
+                  const eraModifica =
+    Boolean(
+        pannello.dataset.modificaId
+    );
 
 
-                    alert(
-                        "Anemodromo salvato nella Libreria."
-                    );
+delete pannello.dataset.modificaId;
 
+
+pulsanteConferma.textContent =
+    "Salva nella Libreria";
+
+
+chiudiPannello();
+
+
+if (eraModifica) {
+
+    renderLibreria();
+
+    alert(
+        "Modifiche salvate."
+    );
+
+} else {
+
+    alert(
+        "Anemodromo salvato nella Libreria."
+    );
+
+}
                 }
             );
 
