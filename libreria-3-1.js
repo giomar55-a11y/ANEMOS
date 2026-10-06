@@ -1820,7 +1820,39 @@ if (pannelloLibreria) {
         duplica.textContent =
             "Duplica";
 
+       duplica.addEventListener(
+    "click",
+    function () {
 
+        const risultato =
+            anemosLibreriaDuplica(
+                voce.id
+            );
+
+
+        if (
+            !risultato.successo
+        ) {
+
+            alert(
+                "Non è stato possibile duplicare l'Anemodromo."
+            );
+
+            return;
+
+        }
+
+
+        renderLibreria();
+
+
+        alert(
+            "Anemodromo duplicato."
+        );
+
+    }
+);
+       
         const elimina =
             document.createElement(
                 "button"
