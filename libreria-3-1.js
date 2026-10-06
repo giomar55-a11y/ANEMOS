@@ -1441,7 +1441,19 @@ function renderLibreria() {
 
             anemogramma.dataset.id =
                 voce.id;
+           
+anemogramma.addEventListener(
+    "click",
+    function () {
 
+        creaPannelloAnemogramma(
+            anemosLibreriaClona(
+                voce.sequenza
+            )
+        );
+
+    }
+);
 
             const menu =
                 document.createElement(
