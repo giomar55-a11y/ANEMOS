@@ -439,6 +439,71 @@ function anemosLibreriaDuplica(
 }
 
 /* =====================================================
+   ELIMINA VOCE LIBRERIA
+===================================================== */
+
+function anemosLibreriaElimina(
+    id
+) {
+
+    if (!id) {
+
+        return {
+            successo: false,
+            motivo: "dati-mancanti"
+        };
+
+    }
+
+
+    const libreria =
+        anemosLibreriaLeggi();
+
+
+    const nuovaLibreria =
+        libreria.filter(
+            function (elemento) {
+                return elemento.id !== id;
+            }
+        );
+
+
+    if (
+        nuovaLibreria.length ===
+        libreria.length
+    ) {
+
+        return {
+            successo: false,
+            motivo: "non-trovato"
+        };
+
+    }
+
+
+    const scritto =
+        anemosLibreriaScrivi(
+            nuovaLibreria
+        );
+
+
+    if (!scritto) {
+
+        return {
+            successo: false,
+            motivo: "errore-scrittura"
+        };
+
+    }
+
+
+    return {
+        successo: true
+    };
+
+}
+
+/* =====================================================
    INTERFACCIA SALVATAGGIO
 ===================================================== */
 
