@@ -1704,6 +1704,19 @@ modifica.addEventListener(
         conferma.textContent =
             "Salva modifiche";
 
+        const pannelloLibreria =
+    document.getElementById(
+        "libreria-anemodromi"
+    );
+
+
+if (pannelloLibreria) {
+
+    pannelloLibreria.classList.remove(
+        "aperta"
+    );
+
+}
 
         pannello.classList.add(
             "aperto"
