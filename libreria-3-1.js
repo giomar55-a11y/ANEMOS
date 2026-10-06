@@ -1469,6 +1469,92 @@ anemogramma.addEventListener(
             menu.dataset.id =
                 voce.id;
 
+           menu.addEventListener(
+    "click",
+    function () {
+
+        const menuEsistente =
+            card.querySelector(
+                ".libreria-menu-azioni"
+            );
+
+
+        if (menuEsistente) {
+
+            menuEsistente.remove();
+
+            return;
+
+        }
+
+
+        const pannelloMenu =
+            document.createElement(
+                "div"
+            );
+
+        pannelloMenu.className =
+            "libreria-menu-azioni";
+
+
+        const modifica =
+            document.createElement(
+                "button"
+            );
+
+        modifica.type =
+            "button";
+
+        modifica.textContent =
+            "Rinomina / Note";
+
+
+        const duplica =
+            document.createElement(
+                "button"
+            );
+
+        duplica.type =
+            "button";
+
+        duplica.textContent =
+            "Duplica";
+
+
+        const elimina =
+            document.createElement(
+                "button"
+            );
+
+        elimina.type =
+            "button";
+
+        elimina.textContent =
+            "Elimina";
+
+        elimina.className =
+            "libreria-menu-elimina";
+
+
+        pannelloMenu.appendChild(
+            modifica
+        );
+
+        pannelloMenu.appendChild(
+            duplica
+        );
+
+        pannelloMenu.appendChild(
+            elimina
+        );
+
+
+        card.appendChild(
+            pannelloMenu
+        );
+
+    }
+);
 
             azioni.appendChild(
                 carica
