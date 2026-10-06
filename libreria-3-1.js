@@ -1593,7 +1593,78 @@ anemogramma.addEventListener(
 
         modifica.textContent =
             "Rinomina / Note";
+       
+modifica.addEventListener(
+    "click",
+    function () {
 
+        const pannello =
+            document.getElementById(
+                "salva-libreria"
+            );
+
+        const nome =
+            document.getElementById(
+                "salva-libreria-nome"
+            );
+
+        const note =
+            document.getElementById(
+                "salva-libreria-note"
+            );
+
+        const intento =
+            document.getElementById(
+                "salva-libreria-intento"
+            );
+
+        const conferma =
+            document.getElementById(
+                "conferma-salva-libreria"
+            );
+
+
+        if (
+            !pannello ||
+            !nome ||
+            !note ||
+            !conferma
+        ) {
+            return;
+        }
+
+
+        nome.value =
+            voce.nome || "";
+
+        note.value =
+            voce.note || "";
+
+
+        if (intento) {
+
+            intento.textContent =
+                nomeIntento(
+                    voce.intento
+                );
+
+        }
+
+
+        pannello.dataset.modificaId =
+            voce.id;
+
+
+        conferma.textContent =
+            "Salva modifiche";
+
+
+        pannello.classList.add(
+            "aperto"
+        );
+
+    }
+);
 
         const duplica =
             document.createElement(
