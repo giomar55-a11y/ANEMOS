@@ -1878,7 +1878,9 @@ async function eseguiTimelineAnemogramma(
     }
 
 }
-function creaPannelloAnemogramma() {
+function creaPannelloAnemogramma(
+    sequenza = anemos31
+) {
    
    anemogrammaInPausa =
         false;
@@ -2241,9 +2243,9 @@ intestazione.appendChild(
 
     const timeline =
     ottieniTimelineAnemogramma(
-        anemos31
+        sequenza
     );
-
+   
     if (
     timeline.length === 0
 ) {
