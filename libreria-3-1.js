@@ -1185,6 +1185,16 @@ function renderLibreria() {
                     }
 
 
+                                       /*
+                       Chiude subito la Libreria
+                       prima del rendering.
+                    */
+
+                    libreriaPannello.classList.remove(
+                        "aperta"
+                    );
+
+
                     /*
                        Ridisegna l'intera app.
 
@@ -1194,16 +1204,6 @@ function renderLibreria() {
                     */
 
                     renderAnemos31();
-
-
-                    /*
-                       Chiude la Libreria.
-                    */
-
-                    libreriaPannello.classList.remove(
-                        "aperta"
-                    );
-
                 }
             );
 
