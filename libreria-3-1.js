@@ -1502,6 +1502,67 @@ function renderLibreria() {
 }
 
         /*
+           Aggiornamento immediato
+           dei risultati della Libreria
+           quando cambiano i filtri.
+        */
+
+        const ricercaLibreria =
+            document.getElementById(
+                "libreria-ricerca"
+            );
+
+        const filtroAnemobarosLibreria =
+            document.getElementById(
+                "libreria-filtro-anemobaros"
+            );
+
+        const filtroAnemosinthesisLibreria =
+            document.getElementById(
+                "libreria-filtro-anemosinthesis"
+            );
+
+
+        if (ricercaLibreria) {
+
+            ricercaLibreria.addEventListener(
+                "input",
+                renderLibreria
+            );
+
+        }
+
+
+        if (filtroIntento) {
+
+            filtroIntento.addEventListener(
+                "change",
+                renderLibreria
+            );
+
+        }
+
+
+        if (filtroAnemobarosLibreria) {
+
+            filtroAnemobarosLibreria.addEventListener(
+                "change",
+                renderLibreria
+            );
+
+        }
+
+
+        if (filtroAnemosinthesisLibreria) {
+
+            filtroAnemosinthesisLibreria.addEventListener(
+                "change",
+                renderLibreria
+            );
+
+        }       
+
+        /*
            Apertura Libreria.
         */
 
