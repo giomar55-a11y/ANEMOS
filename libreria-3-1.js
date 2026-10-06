@@ -1204,6 +1204,41 @@ function renderLibreria() {
                     */
 
                     renderAnemos31();
+                                       /*
+                       Feedback visivo
+                       del caricamento.
+                    */
+
+                    const feedback =
+                        document.getElementById(
+                            "feedback-caricamento"
+                        );
+
+
+                    if (feedback) {
+
+                        feedback.textContent =
+                            "✓ “" +
+                            voce.nome +
+                            "” caricato";
+
+                        feedback.classList.add(
+                            "visibile"
+                        );
+
+
+                        setTimeout(
+                            function () {
+
+                                feedback.classList.remove(
+                                    "visibile"
+                                );
+
+                            },
+                            2000
+                        );
+
+                    }
                 }
             );
 
