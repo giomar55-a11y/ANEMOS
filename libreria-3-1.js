@@ -1932,7 +1932,52 @@ if (pannelloLibreria) {
         elimina.className =
             "libreria-menu-elimina";
 
+        elimina.addEventListener(
+    "click",
+    function () {
 
+        const conferma =
+            confirm(
+                "Vuoi eliminare \"" +
+                voce.nome +
+                "\" dalla Libreria?"
+            );
+
+
+        if (!conferma) {
+            return;
+        }
+
+
+        const risultato =
+            anemosLibreriaElimina(
+                voce.id
+            );
+
+
+        if (
+            !risultato.successo
+        ) {
+
+            alert(
+                "Non è stato possibile eliminare l'Anemodromo."
+            );
+
+            return;
+
+        }
+
+
+        renderLibreria();
+
+
+        alert(
+            "Anemodromo eliminato."
+        );
+
+    }
+);
+       
         pannelloMenu.appendChild(
             modifica
         );
