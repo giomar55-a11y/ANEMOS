@@ -1203,7 +1203,7 @@ function renderLibreria() {
                        dei pulsanti IN / ES.
                     */
 
-                    renderAnemos31();
+                  
                                        /*
                        Feedback visivo
                        del caricamento.
@@ -1239,6 +1239,9 @@ function renderLibreria() {
                         );
 
                     }
+
+                    renderAnemos31();
+                   
                 }
             );
 
