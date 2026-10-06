@@ -665,24 +665,27 @@ document.addEventListener(
                     }
 
 
-                    if (
-                        typeof anemos31 === "undefined" ||
-                        !anemos31.intento
-                    ) {
-
-                        alert(
-                            "Seleziona un Intento prima di salvare."
-                        );
-
-                        return;
-
-                    }
-
-
-                   const modificaId =
+                    const modificaId =
     pannello.dataset.modificaId || "";
 
 
+if (
+    !modificaId &&
+    (
+        typeof anemos31 === "undefined" ||
+        !anemos31.intento
+    )
+) {
+
+    alert(
+        "Seleziona un Intento prima di salvare."
+    );
+
+    return;
+
+}
+
+                 
 let risultato;
 
 
