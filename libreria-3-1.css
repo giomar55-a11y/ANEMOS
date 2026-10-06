@@ -604,3 +604,42 @@
         translate(-50%, 0);
 
 }
+
+/* =====================================================
+   MENU AZIONI SCHEDA
+===================================================== */
+
+.libreria-menu-azioni {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    margin-top: 8px;
+    padding: 8px;
+
+    border: 1px solid #dddddd;
+    border-radius: 12px;
+
+    background: #f7f7f7;
+}
+
+
+.libreria-menu-azioni button {
+    width: 100%;
+    padding: 11px 12px;
+
+    border: 0;
+    border-radius: 9px;
+
+    background: #ffffff;
+
+    font-size: 14px;
+    text-align: left;
+
+    cursor: pointer;
+}
+
+
+.libreria-menu-elimina {
+    color: #b42318;
+}
