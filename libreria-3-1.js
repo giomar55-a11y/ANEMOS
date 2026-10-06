@@ -871,29 +871,211 @@ function renderLibreria() {
     }
 
 
-    libreria.forEach(
-        function (voce) {
+        /*
+       Legge i filtri correnti.
+    */
+
+    const ricerca =
+        (
+            document.getElementById(
+                "libreria-ricerca"
+            )?.value || ""
+        )
+        .trim()
+        .toLowerCase();
+
+
+    const filtroIntento =
+        document.getElementById(
+            "libreria-filtro-intento"
+        )?.value || "";
+
+
+    const filtroAnemobaros =
+        document.getElementById(
+            "libreria-filtro-anemobaros"
+        )?.value || "";
+
+
+    const filtroAnemosinthesis =
+        document.getElementById(
+            "libreria-filtro-anemosinthesis"
+        )?.value || "";
+
+
+    /*
+       Ricalcola gli indici di ogni
+       Anemodromo salvato.
+
+       I valori non vengono congelati
+       nella Libreria: vengono sempre
+       ricavati dai motori attuali.
+    */
+
+    const vociValutate =
+        libreria
+            .map(
+                function (voce) {
+
+                    return {
+
+                        voce,
+
+                        risultatoAnemoschesi:
+                            valutaAnemodromoPerIntentoAnemoschesi(
+                                voce.sequenza
+                            ),
+
+                        risultatoAnemobaros:
+                            calcolaAnemobaros(
+                                voce.sequenza
+                            ),
+
+                        risultatoAnemosinthesis:
+                            calcolaAnemosinthesis(
+                                voce.sequenza
+                            )
+
+                    };
+
+                }
+            )
+
 
             /*
-               Ricalcolo dei tre motori
-               sulla sequenza archiviata.
+               FILTRI
             */
 
+            .filter(
+                function (elemento) {
+
+                    const voce =
+                        elemento.voce;
+
+
+                    if (
+                        ricerca &&
+                        !(
+                            voce.nome || ""
+                        )
+                        .toLowerCase()
+                        .includes(
+                            ricerca
+                        )
+                    ) {
+
+                        return false;
+
+                    }
+
+
+                    if (
+                        filtroIntento &&
+                        voce.intento !==
+                            filtroIntento
+                    ) {
+
+                        return false;
+
+                    }
+
+
+                    if (
+                        filtroAnemobaros &&
+                        elemento
+                            .risultatoAnemobaros
+                            .livello !==
+                            filtroAnemobaros
+                    ) {
+
+                        return false;
+
+                    }
+
+
+                    if (
+                        filtroAnemosinthesis &&
+                        elemento
+                            .risultatoAnemosinthesis
+                            .livello !==
+                            filtroAnemosinthesis
+                    ) {
+
+                        return false;
+
+                    }
+
+
+                    return true;
+
+                }
+            )
+
+
+            /*
+               ANEMOSCHESI non è un filtro.
+
+               Ordina invece i risultati
+               dal più coerente al meno
+               coerente con l'Intento.
+            */
+
+            .sort(
+                function (a, b) {
+
+                    return (
+                        b.risultatoAnemoschesi
+                            .punteggioComplessivo -
+                        a.risultatoAnemoschesi
+                            .punteggioComplessivo
+                    );
+
+                }
+            );
+
+
+    /*
+       Nessun risultato dopo i filtri.
+    */
+
+    if (
+        vociValutate.length === 0
+    ) {
+
+        const vuota =
+            document.createElement(
+                "div"
+            );
+
+        vuota.className =
+            "libreria-vuota";
+
+        vuota.textContent =
+            "Nessun Anemodromo corrisponde ai filtri.";
+
+        contenitore.appendChild(
+            vuota
+        );
+
+        return;
+
+    }
+
+
+    vociValutate.forEach(
+        function (elemento) {
+
+            const voce =
+                elemento.voce;
+
             const risultatoAnemoschesi =
-                valutaAnemodromoPerIntentoAnemoschesi(
-                    voce.sequenza
-                );
+                elemento.risultatoAnemoschesi;
 
             const risultatoAnemobaros =
-                calcolaAnemobaros(
-                    voce.sequenza
-                );
+                elemento.risultatoAnemobaros;
 
             const risultatoAnemosinthesis =
-                calcolaAnemosinthesis(
-                    voce.sequenza
-                );
-
+                elemento.risultatoAnemosinthesis;
 
             /*
                Durata totale.
