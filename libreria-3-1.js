@@ -355,6 +355,90 @@ function anemosLibreriaModifica(
 }
 
 /* =====================================================
+   DUPLICA VOCE LIBRERIA
+===================================================== */
+
+function anemosLibreriaDuplica(
+    id
+) {
+
+    if (!id) {
+
+        return {
+            successo: false,
+            motivo: "dati-mancanti"
+        };
+
+    }
+
+
+    const libreria =
+        anemosLibreriaLeggi();
+
+
+    const originale =
+        libreria.find(
+            function (elemento) {
+                return elemento.id === id;
+            }
+        );
+
+
+    if (!originale) {
+
+        return {
+            successo: false,
+            motivo: "non-trovato"
+        };
+
+    }
+
+
+    const copia =
+        anemosLibreriaClona(
+            originale
+        );
+
+
+    copia.id =
+        anemosLibreriaCreaId();
+
+    copia.creatoIl =
+        new Date().toISOString();
+
+    copia.nome =
+        originale.nome + " copia";
+
+
+    libreria.push(
+        copia
+    );
+
+
+    const scritto =
+        anemosLibreriaScrivi(
+            libreria
+        );
+
+
+    if (!scritto) {
+
+        return {
+            successo: false,
+            motivo: "errore-scrittura"
+        };
+
+    }
+
+
+    return {
+        successo: true,
+        voce: copia
+    };
+
+}
+
+/* =====================================================
    INTERFACCIA SALVATAGGIO
 ===================================================== */
 
