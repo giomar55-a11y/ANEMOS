@@ -269,6 +269,92 @@ function anemosLibreriaSalva(
 }
 
 /* =====================================================
+   MODIFICA DATI VOCE LIBRERIA
+===================================================== */
+
+function anemosLibreriaModifica(
+    id,
+    nome,
+    note = ""
+) {
+
+    const nomePulito =
+        String(
+            nome ?? ""
+        ).trim();
+
+    const notePulite =
+        String(
+            note ?? ""
+        ).trim();
+
+
+    if (
+        !id ||
+        !nomePulito
+    ) {
+
+        return {
+            successo: false,
+            motivo: "dati-mancanti"
+        };
+
+    }
+
+
+    const libreria =
+        anemosLibreriaLeggi();
+
+
+    const voce =
+        libreria.find(
+            function (elemento) {
+                return elemento.id === id;
+            }
+        );
+
+
+    if (!voce) {
+
+        return {
+            successo: false,
+            motivo: "non-trovato"
+        };
+
+    }
+
+
+    voce.nome =
+        nomePulito;
+
+    voce.note =
+        notePulite;
+
+
+    const scritto =
+        anemosLibreriaScrivi(
+            libreria
+        );
+
+
+    if (!scritto) {
+
+        return {
+            successo: false,
+            motivo: "errore-scrittura"
+        };
+
+    }
+
+
+    return {
+        successo: true,
+        voce: voce
+    };
+
+}
+
+/* =====================================================
    INTERFACCIA SALVATAGGIO
 ===================================================== */
 
