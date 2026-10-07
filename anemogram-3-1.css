@@ -297,7 +297,7 @@ disposizione orizzontale
         flex;
 
     flex-direction:
-        column;
+        row;
 
     align-items:
         center;
@@ -306,7 +306,7 @@ disposizione orizzontale
         center;
 
     gap:
-        3px;
+        10px;
 }
 /* =====================================================
    ICONA SETTORE
