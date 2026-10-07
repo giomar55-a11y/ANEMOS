@@ -354,23 +354,19 @@ function creaIconaVolumeAnemogramma(
             "anemogramma-icona-volume"
         );
 
-
-    const svgNS =
+    const ns =
         "http://www.w3.org/2000/svg";
-
 
     const svg =
         document.createElementNS(
-            svgNS,
+            ns,
             "svg"
         );
 
-
     svg.setAttribute(
         "viewBox",
-        "0 0 40 40"
+        "0 0 64 64"
     );
-
 
     svg.setAttribute(
         "aria-hidden",
@@ -379,417 +375,243 @@ function creaIconaVolumeAnemogramma(
 
 
     /*
-    =====================================================
-    CERCHIO BASE
-    =====================================================
+    LIVELLO DEL VOLUME
     */
 
-    function creaCerchioBase(
-        riempimento = "#fff"
-    ) {
-
-        const cerchio =
-            document.createElementNS(
-                svgNS,
-                "circle"
-            );
-
-
-        cerchio.setAttribute(
-            "cx",
-            "20"
-        );
-
-        cerchio.setAttribute(
-            "cy",
-            "20"
-        );
-
-        cerchio.setAttribute(
-            "r",
-            "16"
-        );
-
-        cerchio.setAttribute(
-            "fill",
-            riempimento
-        );
-
-        cerchio.setAttribute(
-            "stroke",
-            "#000"
-        );
-
-        cerchio.setAttribute(
-            "stroke-width",
-            "2"
-        );
-
-
-        return cerchio;
-
-    }
-
-
-    /*
-    =====================================================
-    VUOTO
-    =====================================================
-    */
-
-    if (
-        volume ===
-        ANEMOS_VOLUMI.VUOTO
-    ) {
-
-        svg.appendChild(
-            creaCerchioBase(
-                "#fff"
-            )
-        );
-
-    }
-
-
-    /*
-    =====================================================
-    SCARSO
-    1/4 NERO
-    QUADRANTE INFERIORE DESTRO
-    =====================================================
-    */
+    let percentuale = 0;
 
     if (
         volume ===
         ANEMOS_VOLUMI.SCARSO
     ) {
-
-        svg.appendChild(
-            creaCerchioBase(
-                "#fff"
-            )
-        );
-
-
-        const quarto =
-            document.createElementNS(
-                svgNS,
-                "path"
-            );
-
-
-        quarto.setAttribute(
-            "d",
-            [
-                "M 20 20",
-                "L 36 20",
-                "A 16 16 0 0 1 20 36",
-                "Z"
-            ].join(" ")
-        );
-
-
-        quarto.setAttribute(
-            "fill",
-            "#000"
-        );
-
-
-        svg.appendChild(
-            quarto
-        );
-
+        percentuale = 25;
     }
-
-
-    /*
-    =====================================================
-    CONFORTEVOLE
-    YIN-YANG
-    =====================================================
-    */
 
     if (
         volume ===
         ANEMOS_VOLUMI.CONFORTEVOLE
     ) {
-
-        /*
-        Cerchio esterno.
-        */
-
-        svg.appendChild(
-            creaCerchioBase(
-                "#fff"
-            )
-        );
-
-
-        /*
-        Metà destra nera.
-        */
-
-        const metaNera =
-            document.createElementNS(
-                svgNS,
-                "path"
-            );
-
-
-        metaNera.setAttribute(
-            "d",
-            [
-                "M 20 4",
-                "A 16 16 0 0 1 20 36",
-                "A 8 8 0 0 1 20 20",
-                "A 8 8 0 0 0 20 4",
-                "Z"
-            ].join(" ")
-        );
-
-
-        metaNera.setAttribute(
-            "fill",
-            "#000"
-        );
-
-
-        svg.appendChild(
-            metaNera
-        );
-
-
-        /*
-        Parte bianca superiore.
-        */
-
-        const biancoSuperiore =
-            document.createElementNS(
-                svgNS,
-                "circle"
-            );
-
-
-        biancoSuperiore.setAttribute(
-            "cx",
-            "20"
-        );
-
-        biancoSuperiore.setAttribute(
-            "cy",
-            "12"
-        );
-
-        biancoSuperiore.setAttribute(
-            "r",
-            "8"
-        );
-
-        biancoSuperiore.setAttribute(
-            "fill",
-            "#fff"
-        );
-
-
-        svg.appendChild(
-            biancoSuperiore
-        );
-
-
-        /*
-        Parte nera inferiore.
-        */
-
-        const neroInferiore =
-            document.createElementNS(
-                svgNS,
-                "circle"
-            );
-
-
-        neroInferiore.setAttribute(
-            "cx",
-            "20"
-        );
-
-        neroInferiore.setAttribute(
-            "cy",
-            "28"
-        );
-
-        neroInferiore.setAttribute(
-            "r",
-            "8"
-        );
-
-        neroInferiore.setAttribute(
-            "fill",
-            "#000"
-        );
-
-
-        svg.appendChild(
-            neroInferiore
-        );
-
-
-        /*
-        Punto nero nella parte bianca.
-        */
-
-        const puntoNero =
-            document.createElementNS(
-                svgNS,
-                "circle"
-            );
-
-
-        puntoNero.setAttribute(
-            "cx",
-            "20"
-        );
-
-        puntoNero.setAttribute(
-            "cy",
-            "12"
-        );
-
-        puntoNero.setAttribute(
-            "r",
-            "2.5"
-        );
-
-        puntoNero.setAttribute(
-            "fill",
-            "#000"
-        );
-
-
-        svg.appendChild(
-            puntoNero
-        );
-
-
-        /*
-        Punto bianco nella parte nera.
-        */
-
-        const puntoBianco =
-            document.createElementNS(
-                svgNS,
-                "circle"
-            );
-
-
-        puntoBianco.setAttribute(
-            "cx",
-            "20"
-        );
-
-        puntoBianco.setAttribute(
-            "cy",
-            "28"
-        );
-
-        puntoBianco.setAttribute(
-            "r",
-            "2.5"
-        );
-
-        puntoBianco.setAttribute(
-            "fill",
-            "#fff"
-        );
-
-
-        svg.appendChild(
-            puntoBianco
-        );
-
+        percentuale = 50;
     }
-
-
-    /*
-    =====================================================
-    ABBONDANTE
-    3/4 NERO
-    QUADRANTE SUPERIORE SINISTRO BIANCO
-    =====================================================
-    */
 
     if (
         volume ===
         ANEMOS_VOLUMI.ABBONDANTE
     ) {
-
-        svg.appendChild(
-            creaCerchioBase(
-                "#000"
-            )
-        );
-
-
-        const quartoBianco =
-            document.createElementNS(
-                svgNS,
-                "path"
-            );
-
-
-        quartoBianco.setAttribute(
-            "d",
-            [
-                "M 20 20",
-                "L 4 20",
-                "A 16 16 0 0 1 20 4",
-                "Z"
-            ].join(" ")
-        );
-
-
-        quartoBianco.setAttribute(
-            "fill",
-            "#fff"
-        );
-
-
-        svg.appendChild(
-            quartoBianco
-        );
-
+        percentuale = 75;
     }
-
-
-    /*
-    =====================================================
-    PIENO
-    =====================================================
-    */
 
     if (
         volume ===
         ANEMOS_VOLUMI.PIENO
     ) {
+        percentuale = 100;
+    }
 
-        svg.appendChild(
-            creaCerchioBase(
-                "#000"
-            )
+
+    /*
+    FORMA FISSA DEI POLMONI
+    */
+
+    const polmoneSinistro =
+        "M29 18 C25 16 21 17 18 21 C14 27 12 36 13 46 C14 53 18 57 23 56 C27 55 29 50 29 44 Z";
+
+    const polmoneDestro =
+        "M35 18 C39 16 43 17 46 21 C50 27 52 36 51 46 C50 53 46 57 41 56 C37 55 35 50 35 44 Z";
+
+
+    /*
+    BASE CHIARA
+    */
+
+    [
+        polmoneSinistro,
+        polmoneDestro
+    ].forEach(function(d) {
+
+        const path =
+            document.createElementNS(
+                ns,
+                "path"
+            );
+
+        path.setAttribute("d", d);
+        path.setAttribute(
+            "fill",
+            "#F1F1F1"
+        );
+        path.setAttribute(
+            "stroke",
+            "#555"
+        );
+        path.setAttribute(
+            "stroke-width",
+            "2"
+        );
+        path.setAttribute(
+            "stroke-linejoin",
+            "round"
         );
 
-    }
+        svg.appendChild(path);
+
+    });
+
+
+    /*
+    RIEMPIMENTO GRIGIO
+    DAL BASSO VERSO L'ALTO
+    */
+
+    const altezzaMassima = 40;
+
+    const altezza =
+        altezzaMassima *
+        percentuale /
+        100;
+
+    const y =
+        57 - altezza;
+
+    const defs =
+        document.createElementNS(
+            ns,
+            "defs"
+        );
+
+    const clip =
+        document.createElementNS(
+            ns,
+            "clipPath"
+        );
+
+    const clipId =
+        "anemos-volume-" +
+        Math.random()
+            .toString(36)
+            .slice(2);
+
+    clip.setAttribute(
+        "id",
+        clipId
+    );
+
+    const rettangolo =
+        document.createElementNS(
+            ns,
+            "rect"
+        );
+
+    rettangolo.setAttribute(
+        "x",
+        "10"
+    );
+
+    rettangolo.setAttribute(
+        "y",
+        String(y)
+    );
+
+    rettangolo.setAttribute(
+        "width",
+        "44"
+    );
+
+    rettangolo.setAttribute(
+        "height",
+        String(altezza)
+    );
+
+    clip.appendChild(
+        rettangolo
+    );
+
+    defs.appendChild(
+        clip
+    );
+
+    svg.appendChild(
+        defs
+    );
+
+
+    [
+        polmoneSinistro,
+        polmoneDestro
+    ].forEach(function(d) {
+
+        const path =
+            document.createElementNS(
+                ns,
+                "path"
+            );
+
+        path.setAttribute("d", d);
+
+        path.setAttribute(
+            "fill",
+            "#777"
+        );
+
+        path.setAttribute(
+            "clip-path",
+            "url(#" +
+            clipId +
+            ")"
+        );
+
+        svg.appendChild(path);
+
+    });
+
+
+    /*
+    TRACHEA E BRONCHI
+    */
+
+    const vieAeree =
+        document.createElementNS(
+            ns,
+            "path"
+        );
+
+    vieAeree.setAttribute(
+        "d",
+        "M32 7 L32 25 M32 25 L25 32 M32 25 L39 32"
+    );
+
+    vieAeree.setAttribute(
+        "fill",
+        "none"
+    );
+
+    vieAeree.setAttribute(
+        "stroke",
+        "#555"
+    );
+
+    vieAeree.setAttribute(
+        "stroke-width",
+        "2.5"
+    );
+
+    vieAeree.setAttribute(
+        "stroke-linecap",
+        "round"
+    );
+
+    svg.appendChild(
+        vieAeree
+    );
 
 
     contenitore.appendChild(
         svg
     );
 
-
     return contenitore;
 
-}
-
-/* =====================================================
+}/* =====================================================
    SINGOLO SETTORE + VOLUME
 ===================================================== */
 
