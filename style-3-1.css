@@ -1595,3 +1595,149 @@ quando è presente il semaforo.
     color: #7a2222;
 
 }
+
+/* =====================================================
+   SETTORE + VOLUME — LAYOUT AFFIANCATO
+===================================================== */
+
+.settore-riga {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 0.85fr)
+        minmax(0, 1.15fr);
+
+    gap: 8px;
+    align-items: stretch;
+}
+
+
+/* =====================================================
+   SETTORE — ICONA CORPO GRANDE
+===================================================== */
+
+.settore-riga >
+.opzione-button {
+
+    grid-column: 1;
+
+    width: 100%;
+
+    min-height: 108px;
+
+    padding: 6px !important;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    text-align: center;
+}
+
+
+.settore-riga >
+.opzione-button svg {
+
+    display: block;
+
+    width: 55px;
+    height: 78px;
+
+    flex-shrink: 0;
+}
+
+
+/* =====================================================
+   VOLUMI — AFFIANCATI AL SETTORE
+===================================================== */
+
+.settore-riga >
+.volume-opzioni {
+
+    grid-column: 2;
+
+    margin-top: 0 !important;
+
+    display: grid !important;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0, 1fr)
+        ) !important;
+
+    gap: 5px !important;
+}
+
+
+/* =====================================================
+   PULSANTI VOLUME
+===================================================== */
+
+.settore-riga
+.volume-opzioni
+.volume-button {
+
+    height: auto !important;
+    min-height: 51px !important;
+
+    padding: 3px !important;
+
+    display: flex !important;
+
+    flex-direction: column !important;
+
+    align-items: center !important;
+    justify-content: center !important;
+
+    gap: 2px !important;
+}
+
+
+/* =====================================================
+   POLMONI GRANDI
+===================================================== */
+
+.settore-riga
+.volume-icon {
+
+    width: 43px !important;
+    height: 38px !important;
+
+    min-width: 43px !important;
+    max-width: 43px !important;
+
+    flex:
+        0 0 38px !important;
+}
+
+
+.settore-riga
+.volume-icon svg {
+
+    width: 43px !important;
+    height: 38px !important;
+
+    min-width: 43px !important;
+    max-width: 43px !important;
+}
+
+
+/* =====================================================
+   ETICHETTA VOLUME
+===================================================== */
+
+.settore-riga
+.volume-label {
+
+    font-size: 9px !important;
+    font-weight: 700;
+
+    line-height: 1.05;
+
+    text-align: center;
+}
