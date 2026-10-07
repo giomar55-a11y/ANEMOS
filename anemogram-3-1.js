@@ -212,6 +212,12 @@ function creaIconaSettoreAnemogramma(
     TRE SETTORI RESPIRATORI
     */
 
+   const coloriSettori = {
+    torace_superiore: "#35C6E8",
+    torace_inferiore: "#9B51E0",
+    addome: "#2457D6"
+};
+
     const parti = [
         {
             nome: "torace_superiore",
@@ -241,13 +247,12 @@ function creaIconaSettoreAnemogramma(
                 parte.d
             );
 
-            path.setAttribute(
-                "fill",
-                parte.nome === settore
-                    ? "#000"
-                    : "#fff"
-            );
-
+           path.setAttribute(
+    "fill",
+    parte.nome === settore
+        ? coloriSettori[parte.nome]
+        : "#fff"
+);
             path.setAttribute(
                 "stroke",
                 "#000"
