@@ -1869,7 +1869,17 @@ function creaIconaSettore(
 
     svg.setAttribute(
         "viewBox",
-        "0 0 64 92"
+        "0 0 48 60"
+    );
+
+    svg.setAttribute(
+        "width",
+        "22"
+    );
+
+    svg.setAttribute(
+        "height",
+        "28"
     );
 
     svg.setAttribute(
@@ -1877,97 +1887,12 @@ function creaIconaSettore(
         "true"
     );
 
+    svg.style.marginRight =
+        "8px";
 
-    /*
-    ==========================================
-    TESTA
-    ==========================================
-    */
+    svg.style.flexShrink =
+        "0";
 
-    const testa =
-        document.createElementNS(
-            ns,
-            "circle"
-        );
-
-    testa.setAttribute("cx", "32");
-    testa.setAttribute("cy", "10");
-    testa.setAttribute("r", "7");
-    testa.setAttribute("fill", "#fff");
-    testa.setAttribute("stroke", "#111");
-    testa.setAttribute("stroke-width", "2");
-
-    svg.appendChild(testa);
-
-
-    /*
-    ==========================================
-    CORPO / BRACCIA / GAMBE
-    ==========================================
-    */
-
-    const corpo =
-        document.createElementNS(
-            ns,
-            "path"
-        );
-
-    corpo.setAttribute(
-        "d",
-        [
-            "M25 20",
-            "C19 20 15 22 11 26",
-            "L5 32",
-            "L14 45",
-            "L20 39",
-            "L17 33",
-            "L22 29",
-            "L22 70",
-            "L22 82",
-            "C22 87 29 88 32 83",
-            "C35 88 42 87 42 82",
-            "L42 70",
-            "L42 29",
-            "L47 33",
-            "L44 39",
-            "L50 45",
-            "L59 32",
-            "L53 26",
-            "C49 22 45 20 39 20",
-            "Z"
-        ].join(" ")
-    );
-
-    corpo.setAttribute(
-        "fill",
-        "#fff"
-    );
-
-    corpo.setAttribute(
-        "stroke",
-        "#111"
-    );
-
-    corpo.setAttribute(
-        "stroke-width",
-        "2"
-    );
-
-    corpo.setAttribute(
-        "stroke-linejoin",
-        "round"
-    );
-
-    svg.appendChild(corpo);
-
-
-    /*
-    ==========================================
-    SETTORI
-
-    Ogni icona mostra UN SOLO colore.
-    ==========================================
-    */
 
     const parti = [
 
@@ -1976,8 +1901,8 @@ function creaIconaSettore(
                 ANEMOS_SETTORI
                     .TORACE_SUPERIORE,
 
-            y: 25,
-            colore: "#55C7E8"
+            d:
+                "M12 5 C16 2 32 2 36 5 L40 18 L8 18 Z"
         },
 
         {
@@ -1985,17 +1910,16 @@ function creaIconaSettore(
                 ANEMOS_SETTORI
                     .TORACE_INFERIORE,
 
-            y: 38,
-            colore: "#B218E5"
+            d:
+                "M8 18 L40 18 L37 36 L11 36 Z"
         },
 
         {
             nome:
-                ANEMOS_SETTORI
-                    .ADDOME,
+                ANEMOS_SETTORI.ADDOME,
 
-            y: 51,
-            colore: "#315FEA"
+            d:
+                "M11 36 L37 36 L34 55 L14 55 Z"
         }
 
     ];
@@ -2004,58 +1928,43 @@ function creaIconaSettore(
     parti.forEach(
         parte => {
 
-            const rettangolo =
+            const path =
                 document.createElementNS(
                     ns,
-                    "rect"
+                    "path"
                 );
 
 
-            rettangolo.setAttribute(
-                "x",
-                "23"
+            path.setAttribute(
+                "d",
+                parte.d
             );
 
-            rettangolo.setAttribute(
-                "y",
-                String(parte.y)
-            );
-
-            rettangolo.setAttribute(
-                "width",
-                "18"
-            );
-
-            rettangolo.setAttribute(
-                "height",
-                "11"
-            );
-
-            rettangolo.setAttribute(
-                "rx",
-                "3"
-            );
-
-            rettangolo.setAttribute(
+            path.setAttribute(
                 "fill",
                 parte.nome === settore
-                    ? parte.colore
+                    ? "#000"
                     : "#fff"
             );
 
-            rettangolo.setAttribute(
+            path.setAttribute(
                 "stroke",
-                "#111"
+                "#000"
             );
 
-            rettangolo.setAttribute(
+            path.setAttribute(
                 "stroke-width",
-                "1.7"
+                "1.8"
+            );
+
+            path.setAttribute(
+                "stroke-linejoin",
+                "round"
             );
 
 
             svg.appendChild(
-                rettangolo
+                path
             );
 
         }
@@ -2369,21 +2278,22 @@ function creaIconaVolume(
         "volume-icon";
 
 
-    const ns =
+    const svgNS =
         "http://www.w3.org/2000/svg";
 
 
     const svg =
         document.createElementNS(
-            ns,
+            svgNS,
             "svg"
         );
 
 
     svg.setAttribute(
         "viewBox",
-        "0 0 64 56"
+        "0 0 40 40"
     );
+
 
     svg.setAttribute(
         "aria-hidden",
@@ -2391,311 +2301,374 @@ function creaIconaVolume(
     );
 
 
-    /*
-    ==========================================
-    QUOTA DI RIEMPIMENTO
-    ==========================================
-    */
+    function creaCerchioBase(
+        riempimento = "#fff"
+    ) {
 
-    const quote = {
-
-        [ANEMOS_VOLUMI.VUOTO]:
-            0,
-
-        [ANEMOS_VOLUMI.SCARSO]:
-            0.25,
-
-        [ANEMOS_VOLUMI.CONFORTEVOLE]:
-            0.50,
-
-        [ANEMOS_VOLUMI.ABBONDANTE]:
-            0.75,
-
-        [ANEMOS_VOLUMI.PIENO]:
-            1
-
-    };
-
-
-    const quota =
-        quote[volume] ?? 0;
-
-
-    const limite =
-        (1 - quota) * 100;
-
-
-    /*
-    Gradiente con passaggio netto:
-    bianco sopra, grigio sotto.
-    */
-
-    const idGradiente =
-        "volume-polmoni-" +
-        Math.random()
-            .toString(36)
-            .slice(2);
-
-
-    const defs =
-        document.createElementNS(
-            ns,
-            "defs"
-        );
-
-
-    const gradiente =
-        document.createElementNS(
-            ns,
-            "linearGradient"
-        );
-
-
-    gradiente.setAttribute(
-        "id",
-        idGradiente
-    );
-
-    gradiente.setAttribute(
-        "x1",
-        "0"
-    );
-
-    gradiente.setAttribute(
-        "y1",
-        "0"
-    );
-
-    gradiente.setAttribute(
-        "x2",
-        "0"
-    );
-
-    gradiente.setAttribute(
-        "y2",
-        "1"
-    );
-
-
-    const creaStop = (
-        offset,
-        colore
-    ) => {
-
-        const stop =
+        const cerchio =
             document.createElementNS(
-                ns,
-                "stop"
+                svgNS,
+                "circle"
             );
 
-        stop.setAttribute(
-            "offset",
-            offset + "%"
+
+        cerchio.setAttribute(
+            "cx",
+            "20"
         );
 
-        stop.setAttribute(
-            "stop-color",
-            colore
+        cerchio.setAttribute(
+            "cy",
+            "20"
         );
 
-        gradiente.appendChild(
-            stop
+        cerchio.setAttribute(
+            "r",
+            "16"
         );
 
-    };
-
-
-    if (quota === 0) {
-
-        creaStop(
-            0,
-            "#fff"
+        cerchio.setAttribute(
+            "fill",
+            riempimento
         );
 
-        creaStop(
-            100,
-            "#fff"
+        cerchio.setAttribute(
+            "stroke",
+            "#000"
         );
 
-    } else if (quota === 1) {
-
-        creaStop(
-            0,
-            "#9DA1A6"
+        cerchio.setAttribute(
+            "stroke-width",
+            "2"
         );
 
-        creaStop(
-            100,
-            "#9DA1A6"
-        );
 
-    } else {
+        return cerchio;
 
-        creaStop(
-            limite,
-            "#fff"
-        );
+    }
 
-        creaStop(
-            limite,
-            "#9DA1A6"
+
+    /*
+    =====================================================
+    VUOTO
+    =====================================================
+    */
+
+    if (
+        volume ===
+        ANEMOS_VOLUMI.VUOTO
+    ) {
+
+        svg.appendChild(
+            creaCerchioBase(
+                "#fff"
+            )
         );
 
     }
 
 
-    defs.appendChild(
-        gradiente
-    );
+    /*
+    =====================================================
+    SCARSO
+    1/4 NERO
+    =====================================================
+    */
 
-    svg.appendChild(
-        defs
-    );
+    if (
+        volume ===
+        ANEMOS_VOLUMI.SCARSO
+    ) {
+
+        svg.appendChild(
+            creaCerchioBase(
+                "#fff"
+            )
+        );
+
+
+        const quarto =
+            document.createElementNS(
+                svgNS,
+                "path"
+            );
+
+
+        quarto.setAttribute(
+            "d",
+            [
+                "M 20 20",
+                "L 36 20",
+                "A 16 16 0 0 1 20 36",
+                "Z"
+            ].join(" ")
+        );
+
+
+        quarto.setAttribute(
+            "fill",
+            "#000"
+        );
+
+
+        svg.appendChild(
+            quarto
+        );
+
+    }
 
 
     /*
-    ==========================================
-    POLMONI
-    ==========================================
+    =====================================================
+    CONFORTEVOLE
+    YIN-YANG
+    =====================================================
     */
 
-    const polmoneSinistro =
-        document.createElementNS(
-            ns,
-            "path"
+    if (
+        volume ===
+        ANEMOS_VOLUMI.CONFORTEVOLE
+    ) {
+
+        svg.appendChild(
+            creaCerchioBase(
+                "#fff"
+            )
         );
 
 
-    polmoneSinistro.setAttribute(
-        "d",
-        [
-            "M28 15",
-            "C25 9 20 7 16 9",
-            "C10 12 7 21 6 31",
-            "C5 41 7 48 12 50",
-            "C16 52 22 49 26 46",
-            "C29 43 30 38 30 31",
-            "L30 20",
-            "C30 18 29 16 28 15",
-            "Z"
-        ].join(" ")
-    );
+        const metaNera =
+            document.createElementNS(
+                svgNS,
+                "path"
+            );
 
 
-    const polmoneDestro =
-        document.createElementNS(
-            ns,
-            "path"
+        metaNera.setAttribute(
+            "d",
+            [
+                "M 20 4",
+                "A 16 16 0 0 1 20 36",
+                "A 8 8 0 0 1 20 20",
+                "A 8 8 0 0 0 20 4",
+                "Z"
+            ].join(" ")
         );
 
 
-    polmoneDestro.setAttribute(
-        "d",
-        [
-            "M36 15",
-            "C39 9 44 7 48 9",
-            "C54 12 57 21 58 31",
-            "C59 41 57 48 52 50",
-            "C48 52 42 49 38 46",
-            "C35 43 34 38 34 31",
-            "L34 20",
-            "C34 18 35 16 36 15",
-            "Z"
-        ].join(" ")
-    );
+        metaNera.setAttribute(
+            "fill",
+            "#000"
+        );
 
 
-    [
-        polmoneSinistro,
-        polmoneDestro
-    ].forEach(
-        polmone => {
+        svg.appendChild(
+            metaNera
+        );
 
-            polmone.setAttribute(
-                "fill",
-                "url(#" +
-                idGradiente +
-                ")"
+
+        const biancoSuperiore =
+            document.createElementNS(
+                svgNS,
+                "circle"
             );
 
-            polmone.setAttribute(
-                "stroke",
-                "#111"
+
+        biancoSuperiore.setAttribute(
+            "cx",
+            "20"
+        );
+
+        biancoSuperiore.setAttribute(
+            "cy",
+            "12"
+        );
+
+        biancoSuperiore.setAttribute(
+            "r",
+            "8"
+        );
+
+        biancoSuperiore.setAttribute(
+            "fill",
+            "#fff"
+        );
+
+
+        svg.appendChild(
+            biancoSuperiore
+        );
+
+
+        const neroInferiore =
+            document.createElementNS(
+                svgNS,
+                "circle"
             );
 
-            polmone.setAttribute(
-                "stroke-width",
-                "2"
+
+        neroInferiore.setAttribute(
+            "cx",
+            "20"
+        );
+
+        neroInferiore.setAttribute(
+            "cy",
+            "28"
+        );
+
+        neroInferiore.setAttribute(
+            "r",
+            "8"
+        );
+
+        neroInferiore.setAttribute(
+            "fill",
+            "#000"
+        );
+
+
+        svg.appendChild(
+            neroInferiore
+        );
+
+
+        const puntoNero =
+            document.createElementNS(
+                svgNS,
+                "circle"
             );
 
-            polmone.setAttribute(
-                "stroke-linejoin",
-                "round"
+
+        puntoNero.setAttribute(
+            "cx",
+            "20"
+        );
+
+        puntoNero.setAttribute(
+            "cy",
+            "12"
+        );
+
+        puntoNero.setAttribute(
+            "r",
+            "2.5"
+        );
+
+        puntoNero.setAttribute(
+            "fill",
+            "#000"
+        );
+
+
+        svg.appendChild(
+            puntoNero
+        );
+
+
+        const puntoBianco =
+            document.createElementNS(
+                svgNS,
+                "circle"
             );
 
-            svg.appendChild(
-                polmone
-            );
 
-        }
-    );
+        puntoBianco.setAttribute(
+            "cx",
+            "20"
+        );
+
+        puntoBianco.setAttribute(
+            "cy",
+            "28"
+        );
+
+        puntoBianco.setAttribute(
+            "r",
+            "2.5"
+        );
+
+        puntoBianco.setAttribute(
+            "fill",
+            "#fff"
+        );
+
+
+        svg.appendChild(
+            puntoBianco
+        );
+
+    }
 
 
     /*
-    ==========================================
-    TRACHEA E BRONCHI
-    ==========================================
+    =====================================================
+    ABBONDANTE
+    3/4 NERO
+    =====================================================
     */
 
-    const vieAeree =
-        document.createElementNS(
-            ns,
-            "path"
+    if (
+        volume ===
+        ANEMOS_VOLUMI.ABBONDANTE
+    ) {
+
+        svg.appendChild(
+            creaCerchioBase(
+                "#000"
+            )
         );
 
 
-    vieAeree.setAttribute(
-        "d",
-        [
-            "M30 3 L30 17",
-            "C30 20 31 22 32 23",
-            "C33 22 34 20 34 17",
-            "L34 3",
-            "M32 23 L23 30",
-            "M32 23 L41 30"
-        ].join(" ")
-    );
+        const quartoBianco =
+            document.createElementNS(
+                svgNS,
+                "path"
+            );
 
 
-    vieAeree.setAttribute(
-        "fill",
-        "none"
-    );
-
-    vieAeree.setAttribute(
-        "stroke",
-        "#111"
-    );
-
-    vieAeree.setAttribute(
-        "stroke-width",
-        "2"
-    );
-
-    vieAeree.setAttribute(
-        "stroke-linecap",
-        "round"
-    );
-
-    vieAeree.setAttribute(
-        "stroke-linejoin",
-        "round"
-    );
+        quartoBianco.setAttribute(
+            "d",
+            [
+                "M 20 20",
+                "L 4 20",
+                "A 16 16 0 0 1 20 4",
+                "Z"
+            ].join(" ")
+        );
 
 
-    svg.appendChild(
-        vieAeree
-    );
+        quartoBianco.setAttribute(
+            "fill",
+            "#fff"
+        );
+
+
+        svg.appendChild(
+            quartoBianco
+        );
+
+    }
+
+
+    /*
+    =====================================================
+    PIENO
+    =====================================================
+    */
+
+    if (
+        volume ===
+        ANEMOS_VOLUMI.PIENO
+    ) {
+
+        svg.appendChild(
+            creaCerchioBase(
+                "#000"
+            )
+        );
+
+    }
 
 
     contenitore.appendChild(
@@ -2705,9 +2678,7 @@ function creaIconaVolume(
 
     return contenitore;
 
-}
-
-/* =====================================================
+}/* =====================================================
    VOLUME SINGOLO SETTORE
 ===================================================== */
 
