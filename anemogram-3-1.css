@@ -335,38 +335,6 @@ disposizione orizzontale
    SCHERMI PICCOLI
 ===================================================== */
 
-@media (
-    max-width: 600px
-) {
-
-    #pannello-anemogramma {
-        padding:
-            16px !important;
-    }
-
-
-    .anemogramma-anemomero {
-        padding:
-            14px;
-    }
-
-
-    .anemogramma-icona-settore {
-    width:
-        42px;
-
-    height:
-        67px;
-}
-
-    .anemogramma-icona-volume {
-    width:
-        42px;
-
-    height:
-        42px;
-}
-    
 /* =====================================================
    ICONA VOLUME
 ===================================================== */
@@ -387,6 +355,43 @@ disposizione orizzontale
     height: 100%;
 
     display: block;
+}
+
+
+/* =====================================================
+   SCHERMI PICCOLI
+===================================================== */
+
+@media (
+    max-width: 600px
+) {
+
+    #pannello-anemogramma {
+        padding:
+            16px !important;
+    }
+
+    .anemogramma-anemomero {
+        padding:
+            14px;
+    }
+
+    .anemogramma-icona-settore {
+        width:
+            42px;
+
+        height:
+            67px;
+    }
+
+    .anemogramma-icona-volume {
+        width:
+            42px;
+
+        height:
+            42px;
+    }
+
 }
 /* =====================================================
    APNEA
