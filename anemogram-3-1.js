@@ -118,8 +118,10 @@ function creaIconaFlussoAnemogramma(
 function creaIconaSettoreAnemogramma(
     settore
 ) {
+
     const ns =
         "http://www.w3.org/2000/svg";
+
 
     const svg =
         document.createElementNS(
@@ -127,9 +129,10 @@ function creaIconaSettoreAnemogramma(
             "svg"
         );
 
+
     svg.setAttribute(
         "viewBox",
-        "0 0 70 108"
+        "0 0 64 92"
     );
 
     svg.setAttribute(
@@ -143,28 +146,78 @@ function creaIconaSettoreAnemogramma(
 
 
     /*
+    =====================================================
+    COLORI DEI TRE SETTORI
+    =====================================================
+    */
+
+    const coloriSettori = {
+
+        torace_superiore:
+            "#35C6E8",
+
+        torace_inferiore:
+            "#9B51E0",
+
+        addome:
+            "#2457D6"
+
+    };
+
+
+    /*
+    =====================================================
     TESTA
+    =====================================================
     */
 
     const testa =
         document.createElementNS(
             ns,
-            "ellipse"
+            "circle"
         );
 
-    testa.setAttribute("cx", "35");
-    testa.setAttribute("cy", "9");
-    testa.setAttribute("rx", "5.8");
-    testa.setAttribute("ry", "7");
-    testa.setAttribute("fill", "#fff");
-    testa.setAttribute("stroke", "#000");
-    testa.setAttribute("stroke-width", "1.8");
 
-    svg.appendChild(testa);
+    testa.setAttribute(
+        "cx",
+        "32"
+    );
+
+    testa.setAttribute(
+        "cy",
+        "8"
+    );
+
+    testa.setAttribute(
+        "r",
+        "5.5"
+    );
+
+    testa.setAttribute(
+        "fill",
+        "#F7F7F7"
+    );
+
+    testa.setAttribute(
+        "stroke",
+        "#333"
+    );
+
+    testa.setAttribute(
+        "stroke-width",
+        "1.7"
+    );
+
+
+    svg.appendChild(
+        testa
+    );
 
 
     /*
+    =====================================================
     COLLO
+    =====================================================
     */
 
     const collo =
@@ -173,20 +226,42 @@ function creaIconaSettoreAnemogramma(
             "path"
         );
 
+
     collo.setAttribute(
         "d",
-        "M31.5 15 L31 20 M38.5 15 L39 20"
+        "M29 13 L29 18 M35 13 L35 18"
     );
 
-    collo.setAttribute("fill", "none");
-    collo.setAttribute("stroke", "#000");
-    collo.setAttribute("stroke-width", "1.8");
+    collo.setAttribute(
+        "fill",
+        "none"
+    );
 
-    svg.appendChild(collo);
+    collo.setAttribute(
+        "stroke",
+        "#333"
+    );
+
+    collo.setAttribute(
+        "stroke-width",
+        "1.7"
+    );
+
+    collo.setAttribute(
+        "stroke-linecap",
+        "round"
+    );
+
+
+    svg.appendChild(
+        collo
+    );
 
 
     /*
-    BRACCIA
+    =====================================================
+    BRACCIA PIEGATE — MANI AI FIANCHI
+    =====================================================
     */
 
     const braccia =
@@ -195,46 +270,92 @@ function creaIconaSettoreAnemogramma(
             "path"
         );
 
-    braccia.setAttribute(
-    "d",
-    "M22 23 Q17 27 15 35 L12 51 Q11 54 13 56 M48 23 Q53 27 55 35 L58 51 Q59 54 57 56"
-);
-    braccia.setAttribute("fill", "none");
-    braccia.setAttribute("stroke", "#000");
-    braccia.setAttribute("stroke-width", "3.2");
-    braccia.setAttribute("stroke-linecap", "round");
-    braccia.setAttribute("stroke-linejoin", "round");
 
-    svg.appendChild(braccia);
+    braccia.setAttribute(
+        "d",
+        [
+            "M22 22",
+            "Q17 23 14 29",
+            "L10 40",
+            "Q9 44 13 47",
+            "L24 51",
+
+            "M42 22",
+            "Q47 23 50 29",
+            "L54 40",
+            "Q55 44 51 47",
+            "L40 51"
+        ].join(" ")
+    );
+
+    braccia.setAttribute(
+        "fill",
+        "none"
+    );
+
+    braccia.setAttribute(
+        "stroke",
+        "#333"
+    );
+
+    braccia.setAttribute(
+        "stroke-width",
+        "3"
+    );
+
+    braccia.setAttribute(
+        "stroke-linecap",
+        "round"
+    );
+
+    braccia.setAttribute(
+        "stroke-linejoin",
+        "round"
+    );
+
+
+    svg.appendChild(
+        braccia
+    );
 
 
     /*
+    =====================================================
     TRE SETTORI RESPIRATORI
+    =====================================================
     */
 
-   const coloriSettori = {
-    torace_superiore: "#35C6E8",
-    torace_inferiore: "#9B51E0",
-    addome: "#2457D6"
-};
-
     const parti = [
+
         {
-            nome: "torace_superiore",
-            d: "M22 23 Q27 19 35 20 Q43 19 48 23 L45 38 Q40 40 35 40 Q30 40 25 38 Z"
+            nome:
+                "torace_superiore",
+
+            d:
+                "M22 22 Q26 18 32 18 Q38 18 42 22 L40 34 Q36 36 32 36 Q28 36 24 34 Z"
         },
+
         {
-            nome: "torace_inferiore",
-            d: "M25 38 Q30 40 35 40 Q40 40 45 38 L42 54 Q38 56 35 56 Q32 56 28 54 Z"
+            nome:
+                "torace_inferiore",
+
+            d:
+                "M24 34 Q28 36 32 36 Q36 36 40 34 L39 47 Q36 49 32 49 Q28 49 25 47 Z"
         },
+
         {
-            nome: "addome",
-            d: "M28 54 Q32 56 35 56 Q38 56 42 54 L43 69 Q39 73 35 73 Q31 73 27 69 Z"
+            nome:
+                "addome",
+
+            d:
+                "M25 47 Q28 49 32 49 Q36 49 39 47 L40 60 Q36 63 32 63 Q28 63 24 60 Z"
         }
+
     ];
 
+
     parti.forEach(
-        parte => {
+        function(parte) {
 
             const path =
                 document.createElementNS(
@@ -242,39 +363,53 @@ function creaIconaSettoreAnemogramma(
                     "path"
                 );
 
+
             path.setAttribute(
                 "d",
                 parte.d
             );
 
-           path.setAttribute(
-    "fill",
-    parte.nome === settore
-        ? coloriSettori[parte.nome]
-        : "#fff"
-);
+
+            path.setAttribute(
+                "fill",
+                parte.nome === settore
+                    ? coloriSettori[
+                        parte.nome
+                    ]
+                    : "#F7F7F7"
+            );
+
+
             path.setAttribute(
                 "stroke",
-                "#000"
+                "#333"
             );
+
 
             path.setAttribute(
                 "stroke-width",
-                "1.8"
+                "1.7"
             );
+
 
             path.setAttribute(
                 "stroke-linejoin",
                 "round"
             );
 
-            svg.appendChild(path);
+
+            svg.appendChild(
+                path
+            );
+
         }
     );
 
 
     /*
+    =====================================================
     BACINO
+    =====================================================
     */
 
     const bacino =
@@ -283,62 +418,101 @@ function creaIconaSettoreAnemogramma(
             "path"
         );
 
+
     bacino.setAttribute(
         "d",
-        "M27 69 Q35 74 43 69 L42 78 Q38 81 35 81 Q32 81 28 78 Z"
+        "M24 60 Q28 63 32 63 Q36 63 40 60 L39 68 Q36 71 32 71 Q28 71 25 68 Z"
     );
 
-    bacino.setAttribute("fill", "#fff");
-    bacino.setAttribute("stroke", "#000");
-    bacino.setAttribute("stroke-width", "1.8");
-    bacino.setAttribute("stroke-linejoin", "round");
+    bacino.setAttribute(
+        "fill",
+        "#F7F7F7"
+    );
 
-    svg.appendChild(bacino);
+    bacino.setAttribute(
+        "stroke",
+        "#333"
+    );
+
+    bacino.setAttribute(
+        "stroke-width",
+        "1.7"
+    );
+
+    bacino.setAttribute(
+        "stroke-linejoin",
+        "round"
+    );
+
+
+    svg.appendChild(
+        bacino
+    );
 
 
     /*
+    =====================================================
     GAMBE
+    =====================================================
     */
 
-    const gambaSinistra =
+    const gambe =
         document.createElementNS(
             ns,
             "path"
         );
 
-    gambaSinistra.setAttribute(
+
+    gambe.setAttribute(
         "d",
-        "M28 77 Q29 89 29 98 L27 104 L32 104 L35 81"
+        [
+            "M27 68",
+            "L25 85",
+            "L23 89",
+            "L29 89",
+            "L32 71",
+
+            "M37 68",
+            "L39 85",
+            "L41 89",
+            "L35 89",
+            "L32 71"
+        ].join(" ")
     );
 
-    gambaSinistra.setAttribute("fill", "#fff");
-    gambaSinistra.setAttribute("stroke", "#000");
-    gambaSinistra.setAttribute("stroke-width", "1.8");
-    gambaSinistra.setAttribute("stroke-linejoin", "round");
-
-    svg.appendChild(gambaSinistra);
-
-
-    const gambaDestra =
-        document.createElementNS(
-            ns,
-            "path"
-        );
-
-    gambaDestra.setAttribute(
-        "d",
-        "M42 77 Q41 89 41 98 L43 104 L38 104 L35 81"
+    gambe.setAttribute(
+        "fill",
+        "#F7F7F7"
     );
 
-    gambaDestra.setAttribute("fill", "#fff");
-    gambaDestra.setAttribute("stroke", "#000");
-    gambaDestra.setAttribute("stroke-width", "1.8");
-    gambaDestra.setAttribute("stroke-linejoin", "round");
+    gambe.setAttribute(
+        "stroke",
+        "#333"
+    );
 
-    svg.appendChild(gambaDestra);
+    gambe.setAttribute(
+        "stroke-width",
+        "1.7"
+    );
+
+    gambe.setAttribute(
+        "stroke-linejoin",
+        "round"
+    );
+
+    gambe.setAttribute(
+        "stroke-linecap",
+        "round"
+    );
+
+
+    svg.appendChild(
+        gambe
+    );
 
 
     return svg;
+
 }
 /* =====================================================
    ICONA VOLUME
