@@ -496,10 +496,122 @@
 >
 </div>
 
-    <div
-        id="editor-anemodromo"
-    >
 
+<!-- =================================================
+     ACCOUNT ANEMOS
+================================================== -->
+
+<div
+    id="anemos-auth-overlay"
+    class="anemos-auth-overlay"
+>
+    <div class="anemos-auth-pannello">
+
+        <div class="anemos-auth-testa">
+
+            <h2>
+                Account ANEMOS
+            </h2>
+
+            <button
+                id="anemos-auth-chiudi"
+                class="anemos-auth-chiudi"
+                type="button"
+                aria-label="Chiudi"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            id="anemos-auth-form"
+        >
+
+            <div class="anemos-auth-campo">
+
+                <label for="anemos-auth-email">
+                    Email
+                </label>
+
+                <input
+                    id="anemos-auth-email"
+                    type="email"
+                    autocomplete="email"
+                >
+
+            </div>
+
+
+            <div class="anemos-auth-campo">
+
+                <label for="anemos-auth-password">
+                    Password
+                </label>
+
+                <input
+                    id="anemos-auth-password"
+                    type="password"
+                    autocomplete="current-password"
+                >
+
+            </div>
+
+
+            <div class="anemos-auth-azioni">
+
+                <button
+                    id="anemos-auth-accedi"
+                    type="button"
+                >
+                    Accedi
+                </button>
+
+                <button
+                    id="anemos-auth-registrati"
+                    type="button"
+                >
+                    Registrati
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="anemos-auth-utente"
+            class="anemos-auth-utente"
+            hidden
+        >
+        </div>
+
+
+        <button
+            id="anemos-auth-esci"
+            type="button"
+            hidden
+        >
+            Esci dall'account
+        </button>
+
+
+        <div
+            id="anemos-auth-stato"
+            class="anemos-auth-stato"
+            role="status"
+            aria-live="polite"
+        >
+        </div>
+
+    </div>
+</div>
+
+
+<div
+    id="editor-anemodromo"
+>
         <div
             class="editor-sheet"
         >
