@@ -1,0 +1,117 @@
+/* =====================================================
+   ANEMOS 3.1
+   AUTENTICAZIONE
+===================================================== */
+
+.anemos-auth-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.anemos-auth-overlay.aperto {
+    display: flex;
+}
+
+.anemos-auth-pannello {
+    width: min(100%, 380px);
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 22px;
+    box-sizing: border-box;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
+}
+
+.anemos-auth-testa {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.anemos-auth-testa h2 {
+    margin: 0;
+    font-size: 22px;
+}
+
+.anemos-auth-chiudi {
+    border: 0;
+    background: transparent;
+    font-size: 28px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.anemos-auth-campo {
+    margin-bottom: 14px;
+}
+
+.anemos-auth-campo label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.anemos-auth-campo input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #d6d6d6;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.anemos-auth-azioni {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.anemos-auth-azioni button {
+    min-height: 44px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#anemos-auth-accedi {
+    border: 0;
+    background: #222222;
+    color: #ffffff;
+}
+
+#anemos-auth-registrati {
+    border: 1px solid #222222;
+    background: #ffffff;
+    color: #222222;
+}
+
+#anemos-auth-esci {
+    width: 100%;
+    min-height: 44px;
+    margin-top: 18px;
+    border: 1px solid #222222;
+    border-radius: 10px;
+    background: #ffffff;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.anemos-auth-stato {
+    margin-top: 14px;
+    font-size: 13px;
+    line-height: 1.4;
+}
+
+.anemos-auth-utente {
+    font-size: 14px;
+    line-height: 1.5;
+    word-break: break-word;
+}
