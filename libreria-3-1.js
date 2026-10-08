@@ -2217,3 +2217,28 @@ if (pannelloLibreria) {
 
     }
 );
+
+/* TEST TEMPORANEO LETTURA SUPABASE */
+window.anemosTestLibreriaSupabase =
+    async function () {
+
+        const risultato =
+            await anemosLibreriaLeggiSupabase();
+
+        if (risultato.successo) {
+
+            alert(
+                "Supabase OK — Anemodromi trovati: " +
+                risultato.libreria.length
+            );
+
+        } else {
+
+            alert(
+                "Supabase ERRORE — " +
+                risultato.motivo
+            );
+
+        }
+
+    };
