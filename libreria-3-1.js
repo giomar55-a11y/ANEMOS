@@ -223,6 +223,82 @@ async function anemosLibreriaScriviSupabase(
 }
 
 /* =====================================================
+   MODIFICA LIBRERIA SU SUPABASE
+===================================================== */
+
+async function anemosLibreriaModificaSupabase(
+    id,
+    nome,
+    intentoId,
+    note,
+    sequenza
+) {
+
+    try {
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } =
+            await anemosSupabase.auth.getSession();
+
+        if (
+            sessionError ||
+            !sessionData.session
+        ) {
+            return {
+                successo: false,
+                motivo: "utente-non-autenticato"
+            };
+        }
+
+        const {
+            data,
+            error
+        } =
+            await anemosSupabase
+                .from("anemodromi")
+                .update({
+                    nome: String(nome ?? "").trim(),
+                    intento_id: String(intentoId ?? "").trim(),
+                    note: String(note ?? "").trim(),
+                    sequenza: sequenza,
+                    versione: ANEMOS_LIBRERIA_VERSIONE,
+                    updated_at: new Date().toISOString()
+                })
+                .eq(
+                    "id",
+                    String(id)
+                )
+                .select(
+                    "id, user_id, nome, intento_id, note, sequenza, versione, created_at, updated_at"
+                )
+                .single();
+
+        if (error) {
+            return {
+                successo: false,
+                motivo: "errore-modifica",
+                errore: error
+            };
+        }
+
+        return {
+            successo: true,
+            voce: data
+        };
+
+    } catch (errore) {
+        return {
+            successo: false,
+            motivo: "errore-modifica",
+            errore: errore
+        };
+    }
+
+}
+
+/* =====================================================
    ELIMINAZIONE LIBRERIA DA SUPABASE
 ===================================================== */
 
