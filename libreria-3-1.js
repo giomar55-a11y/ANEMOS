@@ -329,16 +329,18 @@ async function anemosLibreriaEliminaSupabase(
 
 
         const {
-            error
-        } =
-            await anemosSupabase
-                .from("anemodromi")
-                .delete()
-                .eq(
-                    "id",
-                    id
-                );
-
+    data,
+    error
+} =
+    await anemosSupabase
+        .from("anemodromi")
+        .delete()
+        .eq(
+            "id",
+            String(id)
+        )
+        .select("id")
+        .single();
 
         if (error) {
 
@@ -352,9 +354,9 @@ async function anemosLibreriaEliminaSupabase(
 
 
         return {
-            successo: true
-        };
-
+    successo: true,
+    id: data.id
+};
 
     } catch (errore) {
 
