@@ -137,6 +137,92 @@ async function anemosLibreriaLeggiSupabase() {
 }
 
 /* =====================================================
+   SCRITTURA LIBRERIA SU SUPABASE
+===================================================== */
+
+async function anemosLibreriaScriviSupabase(
+    nome,
+    intentoId,
+    note,
+    sequenza
+) {
+
+    try {
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } =
+            await anemosSupabase.auth.getSession();
+
+
+        if (
+            sessionError ||
+            !sessionData.session
+        ) {
+
+            return {
+                successo: false,
+                motivo: "utente-non-autenticato"
+            };
+
+        }
+
+
+        const utente =
+            sessionData.session.user;
+
+
+        const {
+            data,
+            error
+        } =
+            await anemosSupabase
+                .from("anemodromi")
+                .insert({
+                    user_id: utente.id,
+                    nome: String(nome ?? "").trim(),
+                    intento_id: String(intentoId ?? "").trim(),
+                    note: String(note ?? "").trim(),
+                    sequenza: sequenza,
+                    versione: ANEMOS_LIBRERIA_VERSIONE
+                })
+                .select(
+                    "id, user_id, nome, intento_id, note, sequenza, versione, created_at, updated_at"
+                )
+                .single();
+
+
+        if (error) {
+
+            return {
+                successo: false,
+                motivo: "errore-scrittura",
+                errore: error
+            };
+
+        }
+
+
+        return {
+            successo: true,
+            voce: data
+        };
+
+
+    } catch (errore) {
+
+        return {
+            successo: false,
+            motivo: "errore-scrittura",
+            errore: errore
+        };
+
+    }
+
+}
+
+/* =====================================================
    SCRITTURA LIBRERIA
 ===================================================== */
 
