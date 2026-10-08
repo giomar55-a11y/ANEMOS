@@ -2241,10 +2241,12 @@ window.anemosTestLibreriaSupabase =
 
         }
 
-    };window.addEventListener(
+      };
+
+window.addEventListener(
     "load",
     function () {
-        anemosTestLibreriaSupabase();
+        window.anemosTestLibreriaSupabase();
     },
     { once: true }
 );
