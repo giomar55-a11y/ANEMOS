@@ -2338,6 +2338,9 @@ window.anemosTestScritturaSupabase =
 window.addEventListener(
     "load",
     function () {
+
+        alert("TEST INSERT AVVIATO");
+
         window.anemosTestScritturaSupabase();
     },
     { once: true }
