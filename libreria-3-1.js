@@ -2304,3 +2304,33 @@ if (pannelloLibreria) {
     }
 );
 
+/* TEST TEMPORANEO SCRITTURA SUPABASE */
+
+window.anemosTestScritturaSupabase =
+    async function () {
+
+        const risultato =
+            await anemosLibreriaScriviSupabase(
+                "TEST SUPABASE",
+                "test",
+                "Riga temporanea di verifica",
+                []
+            );
+
+        if (risultato.successo) {
+
+            alert(
+                "Supabase INSERT OK — ID: " +
+                risultato.voce.id
+            );
+
+        } else {
+
+            alert(
+                "Supabase INSERT ERRORE — " +
+                risultato.motivo
+            );
+
+        }
+
+    };
