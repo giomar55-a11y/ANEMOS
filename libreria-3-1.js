@@ -2334,3 +2334,11 @@ window.anemosTestScritturaSupabase =
         }
 
     };
+
+window.addEventListener(
+    "load",
+    function () {
+        window.anemosTestScritturaSupabase();
+    },
+    { once: true }
+);
