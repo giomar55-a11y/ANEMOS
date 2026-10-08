@@ -59,6 +59,82 @@ function anemosLibreriaLeggi() {
     }
 }
 
+/* =====================================================
+   LETTURA LIBRERIA DA SUPABASE
+===================================================== */
+
+async function anemosLibreriaLeggiSupabase() {
+
+    try {
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } =
+            await anemosSupabase.auth.getSession();
+
+
+        if (
+            sessionError ||
+            !sessionData.session
+        ) {
+
+            return {
+                successo: false,
+                motivo: "utente-non-autenticato",
+                libreria: []
+            };
+
+        }
+
+
+        const {
+            data,
+            error
+        } =
+            await anemosSupabase
+                .from("anemodromi")
+                .select(
+                    "id, user_id, nome, intento_id, note, sequenza, versione, created_at, updated_at"
+                )
+                .order(
+                    "created_at",
+                    {
+                        ascending: false
+                    }
+                );
+
+
+        if (error) {
+
+            return {
+                successo: false,
+                motivo: "errore-lettura",
+                errore: error,
+                libreria: []
+            };
+
+        }
+
+
+        return {
+            successo: true,
+            libreria: data || []
+        };
+
+
+    } catch (errore) {
+
+        return {
+            successo: false,
+            motivo: "errore-lettura",
+            errore: errore,
+            libreria: []
+        };
+
+    }
+
+}
 
 /* =====================================================
    SCRITTURA LIBRERIA
