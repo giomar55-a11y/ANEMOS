@@ -2505,3 +2505,13 @@ window.anemosTestModificaSupabase =
 
     };
 
+window.addEventListener(
+    "load",
+    function () {
+
+        window.anemosTestModificaSupabase();
+
+    },
+    { once: true }
+);
+
