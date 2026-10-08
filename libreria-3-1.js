@@ -223,6 +223,76 @@ async function anemosLibreriaScriviSupabase(
 }
 
 /* =====================================================
+   ELIMINAZIONE LIBRERIA DA SUPABASE
+===================================================== */
+
+async function anemosLibreriaEliminaSupabase(
+    id
+) {
+
+    try {
+
+        const {
+            data: sessionData,
+            error: sessionError
+        } =
+            await anemosSupabase.auth.getSession();
+
+
+        if (
+            sessionError ||
+            !sessionData.session
+        ) {
+
+            return {
+                successo: false,
+                motivo: "utente-non-autenticato"
+            };
+
+        }
+
+
+        const {
+            error
+        } =
+            await anemosSupabase
+                .from("anemodromi")
+                .delete()
+                .eq(
+                    "id",
+                    id
+                );
+
+
+        if (error) {
+
+            return {
+                successo: false,
+                motivo: "errore-eliminazione",
+                errore: error
+            };
+
+        }
+
+
+        return {
+            successo: true
+        };
+
+
+    } catch (errore) {
+
+        return {
+            successo: false,
+            motivo: "errore-eliminazione",
+            errore: errore
+        };
+
+    }
+
+}
+
+/* =====================================================
    SCRITTURA LIBRERIA
 ===================================================== */
 
