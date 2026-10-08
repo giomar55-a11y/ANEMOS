@@ -2374,39 +2374,3 @@ if (pannelloLibreria) {
     }
 );
 
-/* TEST TEMPORANEO ELIMINAZIONE SUPABASE */
-
-window.anemosTestEliminazioneSupabase =
-    async function () {
-
-        const risultato =
-            await anemosLibreriaEliminaSupabase(
-                "bd5f00a3-9b67-47c0-93b0-322f656ccda8"
-            );
-
-        if (risultato.successo) {
-
-            alert(
-                "Supabase DELETE OK"
-            );
-
-        } else {
-
-            alert(
-                "Supabase DELETE ERRORE — " +
-                risultato.motivo
-            );
-
-        }
-
-    };
-
-window.addEventListener(
-    "load",
-    function () {
-
-        window.anemosTestEliminazioneSupabase();
-
-    },
-    { once: true }
-);
