@@ -2452,3 +2452,30 @@ if (pannelloLibreria) {
     }
 );
 
+/* TEST TEMPORANEO DELETE VERIFICATO SUPABASE */
+
+window.anemosTestEliminazioneVerificataSupabase =
+    async function () {
+
+        const risultato =
+            await anemosLibreriaEliminaSupabase(
+                "2f9aac5b-07ad-4e95-b3fc-43f8d2cc7867"
+            );
+
+        if (risultato.successo) {
+
+            alert(
+                "Supabase DELETE VERIFICATO OK — ID: " +
+                risultato.id
+            );
+
+        } else {
+
+            alert(
+                "Supabase DELETE VERIFICATO ERRORE — " +
+                risultato.motivo
+            );
+
+        }
+
+    };
