@@ -2400,3 +2400,13 @@ window.anemosTestEliminazioneSupabase =
         }
 
     };
+
+window.addEventListener(
+    "load",
+    function () {
+
+        window.anemosTestEliminazioneSupabase();
+
+    },
+    { once: true }
+);
