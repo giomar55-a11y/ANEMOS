@@ -392,6 +392,32 @@ disposizione orizzontale
             52px;
     }
 
+    .anemogramma-settori.simultaneo {
+    flex-wrap:
+        nowrap;
+
+    gap:
+        4px;
+}
+
+.anemogramma-settori.simultaneo
+.anemogramma-settore {
+    min-width:
+        0;
+
+    flex:
+        1 1 0;
+
+    padding:
+        6px 2px;
+}
+
+.anemogramma-settori.simultaneo
+.anemogramma-settore-contenuto {
+    gap:
+        2px;
+}
+
 }
 /* =====================================================
    APNEA
