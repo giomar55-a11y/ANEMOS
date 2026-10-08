@@ -2241,4 +2241,10 @@ window.anemosTestLibreriaSupabase =
 
         }
 
-    };
+    };window.addEventListener(
+    "load",
+    function () {
+        anemosTestLibreriaSupabase();
+    },
+    { once: true }
+);
