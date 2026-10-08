@@ -2479,3 +2479,12 @@ window.anemosTestEliminazioneVerificataSupabase =
         }
 
     };
+
+window.addEventListener(
+    "load",
+    function () {
+
+        window.anemosTestEliminazioneVerificataSupabase();
+
+    }
+);
