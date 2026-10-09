@@ -180,6 +180,36 @@ function anemosLibreriaVoceDaSupabase(
 }
 
 /* =====================================================
+   LETTURA LIBRERIA CON SORGENTE AUTOMATICA
+===================================================== */
+
+async function anemosLibreriaLeggiDisponibile() {
+
+    const risultatoSupabase =
+        await anemosLibreriaLeggiSupabase();
+
+    if (
+        risultatoSupabase &&
+        risultatoSupabase.successo
+    ) {
+
+        return {
+            sorgente: "supabase",
+            libreria:
+                risultatoSupabase.libreria
+        };
+
+    }
+
+    return {
+        sorgente: "locale",
+        libreria:
+            anemosLibreriaLeggi()
+    };
+
+}
+
+/* =====================================================
    SCRITTURA LIBRERIA SU SUPABASE
 ===================================================== */
 
