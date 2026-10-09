@@ -1239,9 +1239,8 @@ document.addEventListener(
         if (pulsanteConferma) {
 
             pulsanteConferma.addEventListener(
-                "click",
-                function () {
-
+    "click",
+    async function () {
                     const campoNome =
                         document.getElementById(
                             "salva-libreria-nome"
@@ -1311,13 +1310,12 @@ if (modificaId) {
 } else {
 
     risultato =
-        anemosLibreriaSalva(
-            anemos31,
-            nome,
-            anemos31.intento,
-            note
-        );
-
+    await anemosLibreriaScriviSupabase(
+        nome,
+        anemos31.intento,
+        note,
+        anemos31
+    );
 }
 
                     if (
