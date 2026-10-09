@@ -137,6 +137,45 @@ async function anemosLibreriaLeggiSupabase() {
 }
 
 /* =====================================================
+   CONVERSIONE VOCE SUPABASE → FORMATO LIBRERIA ANEMOS
+===================================================== */
+
+function anemosLibreriaVoceDaSupabase(
+    riga
+) {
+
+    if (!riga) {
+        return null;
+    }
+
+    return {
+
+        id:
+            riga.id,
+
+        versione:
+            riga.versione,
+
+        creatoIl:
+            riga.created_at,
+
+        nome:
+            riga.nome,
+
+        intento:
+            riga.intento_id,
+
+        note:
+            riga.note || "",
+
+        sequenza:
+            riga.sequenza
+
+    };
+
+}
+
+/* =====================================================
    SCRITTURA LIBRERIA SU SUPABASE
 ===================================================== */
 
