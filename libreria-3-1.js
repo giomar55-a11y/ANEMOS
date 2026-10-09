@@ -215,6 +215,31 @@ async function anemosLibreriaLeggiDisponibile() {
 
 async function anemosLibreriaMigraLocaleSupabase() {
 
+   const risultatoSupabase =
+    await anemosLibreriaLeggiSupabase();
+
+if (
+    !risultatoSupabase.successo
+) {
+    return {
+        successo: false,
+        migrate: 0,
+        motivo:
+            risultatoSupabase.motivo
+    };
+}
+
+if (
+    risultatoSupabase.libreria.length > 0
+) {
+    return {
+        successo: false,
+        migrate: 0,
+        motivo:
+            "supabase-non-vuoto"
+    };
+}
+
     const libreriaLocale =
         anemosLibreriaLeggi();
 
