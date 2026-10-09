@@ -118,10 +118,14 @@ async function anemosLibreriaLeggiSupabase() {
 
 
         return {
-            successo: true,
-            libreria: data || []
-        };
-
+    successo: true,
+    libreria:
+        (data || [])
+            .map(
+                anemosLibreriaVoceDaSupabase
+            )
+            .filter(Boolean)
+};
 
     } catch (errore) {
 
