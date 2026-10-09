@@ -1575,11 +1575,13 @@ document.addEventListener(
    dalla sequenza originale salvata.
 */
 
-function renderLibreria() {
+async function renderLibreria() {
+
+    const risultato =
+        await anemosLibreriaLeggiDisponibile();
 
     const libreria =
-        anemosLibreriaLeggi();
-
+        risultato.libreria;
 
     aggiornaFiltroIntenti(
         libreria
