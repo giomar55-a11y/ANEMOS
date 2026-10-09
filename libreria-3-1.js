@@ -1011,9 +1011,25 @@ document.addEventListener(
 
 
         pulsanteSalva.addEventListener(
-            "click",
-            function () {
+    "click",
+    async function () {
 
+        const {
+            data: sessionData
+        } =
+            await anemosSupabase.auth.getSession();
+
+        if (
+            !sessionData.session
+        ) {
+
+            alert(
+                "Per salvare un Anemodromo nella Libreria devi accedere al tuo account ANEMOS."
+            );
+
+            return;
+
+        }
                 /*
                    Deve esistere almeno
                    un Anemomero.
