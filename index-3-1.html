@@ -1011,13 +1011,14 @@ Eliminazione intera sequenza
 pulsanteEliminaTutto
     .addEventListener(
         "click",
-        function () {
+        async function () {
 
             const conferma =
-                window.confirm(
-                    "Eliminare tutti gli Anemodromi e tutte le apnee della sequenza?"
+                await anemosConferma(
+                    "Eliminare tutti gli Anemodromi e tutte le apnee della sequenza?",
+                    "Elimina tutta la sequenza"
                 );
-
+            
             if (!conferma) {
                 return;
             }
