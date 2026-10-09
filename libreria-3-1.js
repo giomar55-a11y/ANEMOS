@@ -2255,8 +2255,7 @@ anemogramma.addEventListener(
        
 modifica.addEventListener(
     "click",
-    function () {
-
+async function () {
         const pannello =
             document.getElementById(
                 "salva-libreria"
@@ -2425,10 +2424,9 @@ if (pannelloLibreria) {
 
 
         const risultato =
-            anemosLibreriaElimina(
-                voce.id
-            );
-
+    await anemosLibreriaEliminaSupabase(
+        voce.id
+    );
 
         if (
             !risultato.successo
