@@ -1301,14 +1301,17 @@ let risultato;
 if (modificaId) {
 
     risultato =
-        anemosLibreriaModifica(
+        await anemosLibreriaModificaSupabase(
             modificaId,
             nome,
-            note
+            pannello.dataset.modificaIntento || "",
+            note,
+            JSON.parse(
+                pannello.dataset.modificaSequenza
+            )
         );
 
 } else {
-
     risultato =
     await anemosLibreriaScriviSupabase(
         nome,
