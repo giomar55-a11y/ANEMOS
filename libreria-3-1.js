@@ -2310,6 +2310,13 @@ modifica.addEventListener(
         pannello.dataset.modificaId =
             voce.id;
 
+       pannello.dataset.modificaIntento =
+    voce.intento || "";
+
+pannello.dataset.modificaSequenza =
+    JSON.stringify(
+        voce.sequenza
+    );
 
         conferma.textContent =
             "Salva modifiche";
