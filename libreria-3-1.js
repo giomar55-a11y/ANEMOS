@@ -2358,13 +2358,17 @@ if (pannelloLibreria) {
 
        duplica.addEventListener(
     "click",
-    function () {
+    async function () {
 
         const risultato =
-            anemosLibreriaDuplica(
-                voce.id
+            await anemosLibreriaScriviSupabase(
+                voce.nome + " copia",
+                voce.intento,
+                voce.note || "",
+                anemosLibreriaClona(
+                    voce.sequenza
+                )
             );
-
 
         if (
             !risultato.successo
