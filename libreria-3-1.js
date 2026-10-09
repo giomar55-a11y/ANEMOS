@@ -1372,6 +1372,8 @@ if (modificaId) {
 
 
 delete pannello.dataset.modificaId;
+delete pannello.dataset.modificaIntento;
+delete pannello.dataset.modificaSequenza;
 
 
 pulsanteConferma.textContent =
