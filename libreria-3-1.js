@@ -2408,8 +2408,7 @@ if (pannelloLibreria) {
 
         elimina.addEventListener(
     "click",
-    function () {
-
+    async function () {
         const conferma =
             confirm(
                 "Vuoi eliminare \"" +
