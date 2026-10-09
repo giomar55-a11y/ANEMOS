@@ -210,6 +210,59 @@ async function anemosLibreriaLeggiDisponibile() {
 }
 
 /* =====================================================
+   MIGRAZIONE LIBRERIA LOCALE → SUPABASE
+===================================================== */
+
+async function anemosLibreriaMigraLocaleSupabase() {
+
+    const libreriaLocale =
+        anemosLibreriaLeggi();
+
+    if (
+        libreriaLocale.length === 0
+    ) {
+        return {
+            successo: true,
+            migrate: 0
+        };
+    }
+
+    let migrate = 0;
+
+    for (
+        const voce of libreriaLocale
+    ) {
+
+        const risultato =
+            await anemosLibreriaScriviSupabase(
+                voce.nome,
+                voce.intento,
+                voce.note || "",
+                voce.sequenza
+            );
+
+        if (
+            !risultato.successo
+        ) {
+            return {
+                successo: false,
+                migrate: migrate,
+                motivo:
+                    risultato.motivo
+            };
+        }
+
+        migrate += 1;
+    }
+
+    return {
+        successo: true,
+        migrate: migrate
+    };
+
+}
+
+/* =====================================================
    SCRITTURA LIBRERIA SU SUPABASE
 ===================================================== */
 
