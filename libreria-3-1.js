@@ -2523,12 +2523,12 @@ if (pannelloLibreria) {
     "click",
     async function () {
         const conferma =
-            confirm(
-                "Vuoi eliminare \"" +
-                voce.nome +
-                "\" dalla Libreria?"
-            );
-
+    await anemosConferma(
+        "Vuoi eliminare \"" +
+        voce.nome +
+        "\" dalla Libreria?",
+        "Elimina Anemodromo"
+    );
 
         if (!conferma) {
             return;
