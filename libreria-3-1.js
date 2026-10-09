@@ -964,6 +964,101 @@ function anemosLibreriaElimina(
 
 }
 
+function anemosConferma(
+    messaggio,
+    titolo = "Conferma"
+) {
+
+    return new Promise(
+        function (resolve) {
+
+            const overlay =
+                document.getElementById(
+                    "anemos-conferma-overlay"
+                );
+
+            const titoloElemento =
+                document.getElementById(
+                    "anemos-conferma-titolo"
+                );
+
+            const messaggioElemento =
+                document.getElementById(
+                    "anemos-conferma-messaggio"
+                );
+
+            const annulla =
+                document.getElementById(
+                    "anemos-conferma-annulla"
+                );
+
+            const conferma =
+                document.getElementById(
+                    "anemos-conferma-ok"
+                );
+
+            if (
+                !overlay ||
+                !messaggioElemento ||
+                !annulla ||
+                !conferma
+            ) {
+                resolve(false);
+                return;
+            }
+
+            if (titoloElemento) {
+                titoloElemento.textContent =
+                    titolo;
+            }
+
+            messaggioElemento.textContent =
+                messaggio;
+
+            function chiudi(
+                risultato
+            ) {
+
+                overlay.hidden = true;
+
+                annulla.removeEventListener(
+                    "click",
+                    annullaAzione
+                );
+
+                conferma.removeEventListener(
+                    "click",
+                    confermaAzione
+                );
+
+                resolve(
+                    risultato
+                );
+            }
+
+            function annullaAzione() {
+                chiudi(false);
+            }
+
+            function confermaAzione() {
+                chiudi(true);
+            }
+
+            annulla.addEventListener(
+                "click",
+                annullaAzione
+            );
+
+            conferma.addEventListener(
+                "click",
+                confermaAzione
+            );
+
+            overlay.hidden = false;
+        }
+    );
+}
+
 /* =====================================================
    INTERFACCIA SALVATAGGIO
 ===================================================== */
