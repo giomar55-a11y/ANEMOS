@@ -194,6 +194,7 @@ async function anemosLibreriaLeggiDisponibile() {
     ) {
 
         return {
+            successo: true,
             sorgente: "supabase",
             libreria:
                 risultatoSupabase.libreria
@@ -202,13 +203,16 @@ async function anemosLibreriaLeggiDisponibile() {
     }
 
     return {
-        sorgente: "locale",
-        libreria:
-            anemosLibreriaLeggi()
+        successo: false,
+        sorgente: "supabase",
+        motivo:
+            risultatoSupabase
+                ? risultatoSupabase.motivo
+                : "errore-lettura",
+        libreria: []
     };
 
 }
-
 /* =====================================================
    MIGRAZIONE LIBRERIA LOCALE → SUPABASE
 ===================================================== */
