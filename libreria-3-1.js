@@ -1701,6 +1701,32 @@ async function renderLibreria() {
     const libreria =
         risultato.libreria;
 
+   if (
+    !risultato.successo &&
+    risultato.motivo ===
+        "utente-non-autenticato"
+) {
+
+    contenitore.innerHTML = "";
+
+    const messaggio =
+        document.createElement(
+            "div"
+        );
+
+    messaggio.className =
+        "libreria-vuota";
+
+    messaggio.textContent =
+        "Accedi al tuo account ANEMOS per usare la Libreria.";
+
+    contenitore.appendChild(
+        messaggio
+    );
+
+    return;
+}
+
     aggiornaFiltroIntenti(
         libreria
     );
