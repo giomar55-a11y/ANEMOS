@@ -30,7 +30,7 @@ function anemosSystemaCrea() {
         tipo:
             ANEMOS_TIPO_ANEMOSYSTEMA,
 
-        anemodromi: []
+        blocchi: []
     };
 
 }
