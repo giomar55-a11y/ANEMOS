@@ -18,6 +18,12 @@ const ANEMOS_LIBRERIA_CHIAVE =
 const ANEMOS_LIBRERIA_VERSIONE =
     1;
 
+const ANEMOS_TIPO_ANEMODROMO =
+    "anemodromo";
+
+const ANEMOS_TIPO_ANEMOSYSTEMA =
+    "anemosystema";
+
 
 /* =====================================================
    LETTURA LIBRERIA
