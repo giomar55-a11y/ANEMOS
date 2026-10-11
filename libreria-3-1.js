@@ -230,6 +230,22 @@ function anemosSystemaContaCicli(
     );
 }
 
+function anemosSystemaContaBlocchi(
+    anemosystema
+) {
+
+    if (
+        !anemosystema ||
+        !Array.isArray(
+            anemosystema.blocchi
+        )
+    ) {
+        return 0;
+    }
+
+    return anemosystema.blocchi.length;
+}
+
 function anemosSystemaValido(
     anemosystema
 ) {
