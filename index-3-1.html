@@ -1451,6 +1451,25 @@ cicli.value = blocco.cicli;
 elemento.appendChild(
     cicli
 );
+const fineModifica =
+    document.createElement(
+        "button"
+    );
+
+fineModifica.type = "button";
+fineModifica.textContent =
+    "Fine modifica";
+
+fineModifica.addEventListener(
+    "click",
+    function () {
+        cicli.blur();
+    }
+);
+
+elemento.appendChild(
+    fineModifica
+);
             contenitore.appendChild(
                 elemento
             );
