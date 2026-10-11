@@ -59,7 +59,7 @@ function anemosSystemaAggiungiAnemodromo(
             )
         );
 
-    anemosystema.anemodromi.push({
+    anemosystema.blocchi.push({
         cicli:
             numeroCicli,
 
