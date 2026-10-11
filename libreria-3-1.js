@@ -44,7 +44,7 @@ function anemosSystemaAggiungiAnemodromo(
     if (
         !anemosystema ||
         !Array.isArray(
-            anemosystema.anemodromi
+            anemosystema.blocchi
         ) ||
         !anemodromo
     ) {
@@ -81,7 +81,7 @@ function anemosSystemaValido(
         anemosystema.tipo ===
             ANEMOS_TIPO_ANEMOSYSTEMA &&
         Array.isArray(
-            anemosystema.anemodromi
+            anemosystema.blocchi
         ) &&
         anemosystema.anemodromi.length >= 2
     );
