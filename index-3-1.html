@@ -1336,7 +1336,21 @@ if (
             "selettore-intento"
         );
 
+const areaAnemosystema =
+    document.getElementById(
+        "anemosystema-area"
+    );
 
+function aggiornaModalitaAnemosystema() {
+
+    if (!areaAnemosystema) {
+        return;
+    }
+
+    areaAnemosystema.hidden =
+        selettoreIntento.value !== "";
+}
+    
    function popolaSelettoreIntenti() {
 
     if (
