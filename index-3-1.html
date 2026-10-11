@@ -1372,6 +1372,46 @@ pulsanteAggiungiAnemosystema
         }
     );
 
+    function renderAnemosystema() {
+
+    const contenitore =
+        document.getElementById(
+            "anemosystema-blocchi"
+        );
+
+    if (!contenitore) {
+        return;
+    }
+
+    contenitore.innerHTML = "";
+
+    anemosystemaCorrente.blocchi.forEach(
+        function (
+            blocco,
+            indice
+        ) {
+
+            const elemento =
+                document.createElement(
+                    "div"
+                );
+
+            elemento.className =
+                "anemosystema-blocco";
+
+            elemento.textContent =
+                "Anemodromo " +
+                (indice + 1) +
+                " ×" +
+                blocco.cicli;
+
+            contenitore.appendChild(
+                elemento
+            );
+        }
+    );
+}
+
 function aggiornaModalitaAnemosystema() {
 
     if (!areaAnemosystema) {
