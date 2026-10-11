@@ -1423,6 +1423,16 @@ cicli.type = "number";
 cicli.min = "1";
 cicli.value = blocco.cicli;
 
+            elemento.addEventListener(
+    "click",
+    function (evento) {
+
+        if (evento.target !== cicli) {
+            cicli.blur();
+        }
+    }
+);
+
             cicli.addEventListener(
     "change",
     function () {
