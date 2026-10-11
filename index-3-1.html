@@ -1340,6 +1340,11 @@ const areaAnemosystema =
         "anemosystema-area"
     );
 
+    const comandiAnemosystema =
+    document.getElementById(
+        "anemosystema-comandi"
+    );
+
 function aggiornaModalitaAnemosystema() {
 
     if (!areaAnemosystema) {
@@ -1348,6 +1353,11 @@ function aggiornaModalitaAnemosystema() {
 
     areaAnemosystema.hidden =
         selettoreIntento.value !== "";
+if (comandiAnemosystema) {
+    comandiAnemosystema.hidden =
+        selettoreIntento.value !== "";
+}
+    
 }
     
    function popolaSelettoreIntenti() {
