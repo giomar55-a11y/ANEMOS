@@ -115,6 +115,38 @@ function anemosSystemaImpostaCicli(
     return true;
 }
 
+function anemosSystemaEliminaBlocco(
+    anemosystema,
+    bloccoId
+) {
+
+    if (
+        !anemosystema ||
+        !Array.isArray(
+            anemosystema.blocchi
+        )
+    ) {
+        return false;
+    }
+
+    const indice =
+        anemosystema.blocchi.findIndex(
+            elemento =>
+                elemento.id === bloccoId
+        );
+
+    if (indice === -1) {
+        return false;
+    }
+
+    anemosystema.blocchi.splice(
+        indice,
+        1
+    );
+
+    return true;
+}
+
 function anemosSystemaValido(
     anemosystema
 ) {
