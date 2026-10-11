@@ -1423,6 +1423,21 @@ cicli.type = "number";
 cicli.min = "1";
 cicli.value = blocco.cicli;
 
+            cicli.addEventListener(
+    "change",
+    function () {
+
+        anemosSystemaImpostaCicli(
+            anemosystemaCorrente,
+            blocco.id,
+            cicli.value
+        );
+
+        cicli.value =
+            blocco.cicli;
+    }
+);
+
 elemento.appendChild(
     cicli
 );
