@@ -62,9 +62,10 @@ function anemosSystemaAggiungiAnemodromo(
     anemosystema.blocchi.push({
        id:
     (
-        crypto.randomUUID
-            ? crypto.randomUUID()
-            : Date.now().toString()
+              window.crypto &&
+              window.crypto.randomUUID
+                  ? window.crypto.randomUUID()
+                  : Date.now().toString()
     ),
         cicli:
             numeroCicli,
