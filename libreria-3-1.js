@@ -79,6 +79,42 @@ function anemosSystemaAggiungiAnemodromo(
     return true;
 }
 
+function anemosSystemaImpostaCicli(
+    anemosystema,
+    bloccoId,
+    cicli
+) {
+
+    if (
+        !anemosystema ||
+        !Array.isArray(
+            anemosystema.blocchi
+        )
+    ) {
+        return false;
+    }
+
+    const blocco =
+        anemosystema.blocchi.find(
+            elemento =>
+                elemento.id === bloccoId
+        );
+
+    if (!blocco) {
+        return false;
+    }
+
+    blocco.cicli =
+        Math.max(
+            1,
+            Math.floor(
+                Number(cicli) || 1
+            )
+        );
+
+    return true;
+}
+
 function anemosSystemaValido(
     anemosystema
 ) {
