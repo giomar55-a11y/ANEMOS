@@ -1348,6 +1348,30 @@ const areaAnemosystema =
     let anemosystemaCorrente =
     anemosSystemaCrea();
 
+    const pulsanteAggiungiAnemosystema =
+    document.getElementById(
+        "aggiungi-anemodromo-anemosystema"
+    );
+
+pulsanteAggiungiAnemosystema
+    .addEventListener(
+        "click",
+        function () {
+
+            if (
+                anemos31.anemodromi.length === 0
+            ) {
+                return;
+            }
+
+            anemosSystemaAggiungiAnemodromo(
+                anemosystemaCorrente,
+                anemos31,
+                1
+            );
+        }
+    );
+
 function aggiornaModalitaAnemosystema() {
 
     if (!areaAnemosystema) {
