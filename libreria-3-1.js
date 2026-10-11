@@ -198,6 +198,38 @@ function anemosSystemaSpostaBlocco(
     return true;
 }
 
+function anemosSystemaContaCicli(
+    anemosystema
+) {
+
+    if (
+        !anemosystema ||
+        !Array.isArray(
+            anemosystema.blocchi
+        )
+    ) {
+        return 0;
+    }
+
+    return anemosystema.blocchi.reduce(
+        function (
+            totale,
+            blocco
+        ) {
+            return totale +
+                Math.max(
+                    1,
+                    Math.floor(
+                        Number(
+                            blocco.cicli
+                        ) || 1
+                    )
+                );
+        },
+        0
+    );
+}
+
 function anemosSystemaValido(
     anemosystema
 ) {
