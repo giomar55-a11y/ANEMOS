@@ -72,6 +72,21 @@ function anemosSystemaAggiungiAnemodromo(
     return true;
 }
 
+function anemosSystemaValido(
+    anemosystema
+) {
+
+    return Boolean(
+        anemosystema &&
+        anemosystema.tipo ===
+            ANEMOS_TIPO_ANEMOSYSTEMA &&
+        Array.isArray(
+            anemosystema.anemodromi
+        ) &&
+        anemosystema.anemodromi.length >= 2
+    );
+}
+
 /* =====================================================
    LETTURA LIBRERIA
 ===================================================== */
