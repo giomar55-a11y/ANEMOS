@@ -341,8 +341,7 @@ function renderTimeline() {
 
 
         vuoto.textContent =
-            "Nessun Anemodromo";
-
+    "Composizione libera di un ANEMOSYSTEMA";
 
         ui.timeline.appendChild(
             vuoto
