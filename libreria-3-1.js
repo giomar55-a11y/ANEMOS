@@ -35,6 +35,42 @@ function anemosSystemaCrea() {
 
 }
 
+function anemosSystemaAggiungiAnemodromo(
+    anemosystema,
+    anemodromo,
+    cicli = 1
+) {
+
+    if (
+        !anemosystema ||
+        !Array.isArray(
+            anemosystema.anemodromi
+        ) ||
+        !anemodromo
+    ) {
+        return false;
+    }
+
+    const numeroCicli =
+        Math.max(
+            1,
+            Math.floor(
+                Number(cicli) || 1
+            )
+        );
+
+    anemosystema.anemodromi.push({
+        cicli:
+            numeroCicli,
+
+        sequenza:
+            anemosLibreriaClona(
+                anemodromo
+            )
+    });
+
+    return true;
+}
 
 /* =====================================================
    LETTURA LIBRERIA
