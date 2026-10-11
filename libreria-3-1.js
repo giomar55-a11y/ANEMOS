@@ -147,6 +147,57 @@ function anemosSystemaEliminaBlocco(
     return true;
 }
 
+function anemosSystemaSpostaBlocco(
+    anemosystema,
+    bloccoId,
+    nuovoIndice
+) {
+
+    if (
+        !anemosystema ||
+        !Array.isArray(
+            anemosystema.blocchi
+        )
+    ) {
+        return false;
+    }
+
+    const indiceAttuale =
+        anemosystema.blocchi.findIndex(
+            elemento =>
+                elemento.id === bloccoId
+        );
+
+    if (indiceAttuale === -1) {
+        return false;
+    }
+
+    const indiceDestinazione =
+        Math.max(
+            0,
+            Math.min(
+                anemosystema.blocchi.length - 1,
+                Math.floor(
+                    Number(nuovoIndice) || 0
+                )
+            )
+        );
+
+    const [blocco] =
+        anemosystema.blocchi.splice(
+            indiceAttuale,
+            1
+        );
+
+    anemosystema.blocchi.splice(
+        indiceDestinazione,
+        0,
+        blocco
+    );
+
+    return true;
+}
+
 function anemosSystemaValido(
     anemosystema
 ) {
