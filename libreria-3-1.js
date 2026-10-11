@@ -83,7 +83,7 @@ function anemosSystemaValido(
         Array.isArray(
             anemosystema.blocchi
         ) &&
-        anemosystema.anemodromi.length >= 2
+        anemosystema.blocchi.length >= 2
     );
 }
 
