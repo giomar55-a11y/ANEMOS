@@ -1410,11 +1410,22 @@ renderAnemos31();
                 "anemosystema-blocco";
 
             elemento.textContent =
-                "Anemodromo " +
-                (indice + 1) +
-                " ×" +
-                blocco.cicli;
+    "Anemodromo " +
+    (indice + 1) +
+    " ×";
 
+const cicli =
+    document.createElement(
+        "input"
+    );
+
+cicli.type = "number";
+cicli.min = "1";
+cicli.value = blocco.cicli;
+
+elemento.appendChild(
+    cicli
+);
             contenitore.appendChild(
                 elemento
             );
