@@ -24,6 +24,17 @@ const ANEMOS_TIPO_ANEMODROMO =
 const ANEMOS_TIPO_ANEMOSYSTEMA =
     "anemosystema";
 
+function anemosSystemaCrea() {
+
+    return {
+        tipo:
+            ANEMOS_TIPO_ANEMOSYSTEMA,
+
+        anemodromi: []
+    };
+
+}
+
 
 /* =====================================================
    LETTURA LIBRERIA
