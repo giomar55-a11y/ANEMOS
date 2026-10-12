@@ -341,7 +341,7 @@ function renderTimeline() {
 
 
         vuoto.textContent =
-    "Composizione di un ANEMOSYSTEMA";
+    "Composizione di un ANEMODROMO";
 
         ui.timeline.appendChild(
             vuoto
