@@ -1479,19 +1479,24 @@ elemento.appendChild(
 
 function aggiornaModalitaAnemosystema() {
 
-    if (!areaAnemosystema) {
-        return;
+    const composizioneLibera =
+        selettoreIntento.value === "";
+
+    if (areaAnemosystema) {
+        areaAnemosystema.hidden =
+            !composizioneLibera;
     }
 
-    areaAnemosystema.hidden =
-        selettoreIntento.value !== "";
-if (comandiAnemosystema) {
-    comandiAnemosystema.hidden =
-        selettoreIntento.value !== "";
-}
-    
-}
-    
+    if (comandiAnemosystema) {
+        comandiAnemosystema.hidden =
+            !composizioneLibera;
+
+        comandiAnemosystema.style.display =
+            composizioneLibera
+                ? ""
+                : "none";
+    }
+}    
    function popolaSelettoreIntenti() {
 
     if (
