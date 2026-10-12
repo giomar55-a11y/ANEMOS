@@ -1354,6 +1354,23 @@ if (
             "selettore-intento"
         );
 
+    const pulsanteModalitaAnemodromo =
+    document.getElementById(
+        "modalita-anemodromo"
+    );
+
+const sezioneIntento =
+    document.getElementById(
+        "intento-anemoschesi"
+    );
+
+pulsanteModalitaAnemodromo.addEventListener(
+    "click",
+    function () {
+        sezioneIntento.hidden = false;
+    }
+);
+
 const areaAnemosystema =
     document.getElementById(
         "anemosystema-area"
