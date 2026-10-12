@@ -1482,6 +1482,11 @@ function aggiornaModalitaAnemosystema() {
     const composizioneLibera =
         selettoreIntento.value === "";
 
+    pulsanteAggiungiAnemosystema.style.display =
+    composizioneLibera
+        ? ""
+        : "none";
+
     if (areaAnemosystema) {
         areaAnemosystema.hidden =
             !composizioneLibera;
