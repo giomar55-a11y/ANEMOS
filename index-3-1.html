@@ -1378,14 +1378,16 @@ const areaAnemosystema =
         "modalita-anemosystema"
     );
 
-pulsanteModalitaAnemosystema.addEventListener(
+pulsanteModalitaAnemodromo.addEventListener(
     "click",
     function () {
-        sezioneIntento.hidden = true;
-        areaAnemosystema.hidden = false;
+        areaAnemosystema.hidden = true;
+        sezioneIntento.hidden = false;
+
+        selettoreIntento.focus();
+        selettoreIntento.click();
     }
 );
-
     const comandiAnemosystema =
     document.getElementById(
         "anemosystema-comandi"
