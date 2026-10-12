@@ -1370,6 +1370,19 @@ const areaAnemosystema =
         "anemosystema-area"
     );
 
+    const pulsanteModalitaAnemosystema =
+    document.getElementById(
+        "modalita-anemosystema"
+    );
+
+pulsanteModalitaAnemosystema.addEventListener(
+    "click",
+    function () {
+        sezioneIntento.hidden = true;
+        areaAnemosystema.hidden = false;
+    }
+);
+
     const comandiAnemosystema =
     document.getElementById(
         "anemosystema-comandi"
