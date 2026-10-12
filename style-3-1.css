@@ -249,6 +249,21 @@ button {
     cursor: pointer;
 }
 
+.intento-riga {
+    margin-bottom: 0;
+    min-height: 20px;
+}
+
+.intento-riga #selettore-intento {
+    width: auto;
+    min-height: 20px;
+    margin-left: auto;
+    padding: 0 24px 0 16px;
+
+    font-size: 14px;
+    text-align: right;
+}
+
 /* =====================================================
    BUILDER
 ===================================================== */
