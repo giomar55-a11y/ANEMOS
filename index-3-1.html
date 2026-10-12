@@ -1398,40 +1398,7 @@ const areaAnemosystema =
     let anemosystemaCorrente =
     anemosSystemaCrea();
 
-    const pulsanteAggiungiAnemosystema =
-    document.getElementById(
-        "aggiungi-anemodromo-anemosystema"
-    );
-
-pulsanteAggiungiAnemosystema
-    .addEventListener(
-        "click",
-        function () {
-
-            if (
-                anemos31.anemodromi.length === 0
-            ) {
-                return;
-            }
-
-            anemosSystemaAggiungiAnemodromo(
-                anemosystemaCorrente,
-                anemos31,
-                1
-            );
-            renderAnemosystema();
-           anemos31.anemodromi = [];
-anemos31.ordine = [];
-anemos31.apnee = [];
-
-anemodromoSelezionatoId = null;
-
-chiudiEditorAnemodromo();
-
-renderAnemos31(); 
-        }
-    );
-
+    
     function renderAnemosystema() {
 
     const contenitore =
