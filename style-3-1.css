@@ -177,6 +177,27 @@ button {
     background: var(--surface);
 }
 
+.selezione-composizione {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.selezione-composizione button {
+    min-height: 48px;
+    padding: 7px 10px;
+
+    border: 1px solid var(--line);
+    border-radius: 13px;
+
+    background: var(--surface);
+
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1.25;
+}
+
 /* =====================================================
    INTENTO — INGRESSO ALLA COMPOSIZIONE
 ===================================================== */
