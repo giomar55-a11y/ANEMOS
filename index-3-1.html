@@ -1385,6 +1385,17 @@ const areaAnemosystema =
     pulsanteModalitaAnemosystema.addEventListener(
     "click",
     function () {
+        impostaIntento(
+            anemos31,
+            null
+        );
+
+        selettoreIntento.value = "";
+
+        localStorage.removeItem(
+            "ANEMOS_INTENTO_SELEZIONATO"
+        );
+
         sezioneIntento.hidden = true;
         areaAnemosystema.hidden = false;
     }
