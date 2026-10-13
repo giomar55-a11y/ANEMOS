@@ -1471,11 +1471,25 @@ sequenzaAnemomeri.forEach(
     ) {
 
         const nodo =
-            creaNodoAnemodromo(
-                anemomero,
-                indiceAnemomero
+    creaNodoAnemodromo(
+        anemomero,
+        indiceAnemomero,
+        function () {
+
+            const anemos31Originale =
+                anemos31;
+
+            anemos31 =
+                blocco.sequenza;
+
+            apriEditor(
+                anemomero.id
             );
 
+            anemos31 =
+                anemos31Originale;
+        }
+    );
         timelineBlocco.appendChild(
             nodo
         );
