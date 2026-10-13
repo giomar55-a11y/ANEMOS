@@ -1372,8 +1372,15 @@ function creaBloccoTipo(
                     );
 
 
-                    renderAnemos31();
+                    if (sequenzaEditorAttiva) {
 
+    renderAnemosystema();
+    renderEditor();
+
+} else {
+
+    renderAnemos31();
+}
                 }
             );
 
