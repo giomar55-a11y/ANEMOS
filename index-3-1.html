@@ -1481,7 +1481,30 @@ sequenzaAnemomeri.forEach(
         );
     }
 );
+const legatura =
+    document.createElement(
+        "div"
+    );
 
+legatura.className =
+    "anemosystema-legatura";
+
+const etichettaLegatura =
+    document.createElement(
+        "span"
+    );
+
+etichettaLegatura.textContent =
+    "ANEMODROMO " +
+    (indice + 1);
+
+legatura.appendChild(
+    etichettaLegatura
+);
+
+elemento.appendChild(
+    legatura
+);
 elemento.appendChild(
     timelineBlocco
 );
