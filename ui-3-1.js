@@ -2181,13 +2181,13 @@ if (
                         } else {
 
                             const volumeIniziale =
-                                primoVolumeDisponibilePerSettore(
-                                    anemos31,
-                                    anemodromo.id,
-                                    configurazione.valore,
-                                    anemodromo.tipo
-                                );
-
+    primoVolumeDisponibilePerSettore(
+        sequenzaEditorAttiva ||
+            anemos31,
+        anemodromo.id,
+        configurazione.valore,
+        anemodromo.tipo
+    );
 
                             if (
                                 volumeIniziale
