@@ -1529,12 +1529,20 @@ if (
                 )
             );
 
-localStorage.setItem(
-    "ANEMOS_SEQUENZA_TEST",
-    JSON.stringify(anemos31)
-);
-            renderAnemos31();
+if (sequenzaEditorAttiva) {
 
+    renderAnemosystema();
+    renderEditor();
+
+} else {
+
+    localStorage.setItem(
+        "ANEMOS_SEQUENZA_TEST",
+        JSON.stringify(anemos31)
+    );
+
+    renderAnemos31();
+}
         }
     );
 
