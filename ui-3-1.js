@@ -1145,6 +1145,10 @@ function normalizzaSettoriIncoerenti(
     anemodromo
 ) {
 
+    const sequenzaAttiva =
+        sequenzaEditorAttiva ||
+        anemos31;
+
     anemodromo.settori =
         anemodromo.settori.filter(
             settore => {
@@ -1160,15 +1164,13 @@ function normalizzaSettoriIncoerenti(
 
                 }
 
-
                 const disponibili =
                     volumiDisponibiliPerSettore(
-                        anemos31,
+                        sequenzaAttiva,
                         anemodromo.id,
                         settore.nome,
                         anemodromo.tipo
                     );
-
 
                 return disponibili.includes(
                     settore.volume
@@ -1178,8 +1180,6 @@ function normalizzaSettoriIncoerenti(
         );
 
 }
-
-
 
 /* =====================================================
    EDITOR
