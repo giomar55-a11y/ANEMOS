@@ -1818,11 +1818,12 @@ function creaBloccoFlusso(
     ];
 
    const guidaFlusso =
-    creaGuidaFlussoAnemoschesi(
-        anemos31,
-        anemodromo
-    );
-   
+    sequenzaEditorAttiva
+        ? null
+        : creaGuidaFlussoAnemoschesi(
+            anemos31,
+            anemodromo
+        );   
     opzioni.forEach(
         opzione => {
 
