@@ -2057,11 +2057,12 @@ function creaBloccoSettori(
     ];
 
 const guidaSettori =
-    creaGuidaSettoriAnemoschesi(
-        anemos31,
-        anemodromo
-    );
-   
+    sequenzaEditorAttiva
+        ? null
+        : creaGuidaSettoriAnemoschesi(
+            anemos31,
+            anemodromo
+        );   
     settori.forEach(
         configurazione => {
 
