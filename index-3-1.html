@@ -1405,6 +1405,24 @@ const areaAnemosystema =
     let anemosystemaCorrente =
     anemosSystemaCrea();
 
+    const pulsanteSpostaAnemodromo =
+    document.getElementById(
+        "sposta-anemodromo"
+    );
+
+pulsanteSpostaAnemodromo.addEventListener(
+    "click",
+    function () {
+
+        anemosSystemaAggiungiAnemodromo(
+            anemosystemaCorrente,
+            anemos31,
+            1
+        );
+
+        renderAnemosystema();
+    }
+);
     
     function renderAnemosystema() {
 
