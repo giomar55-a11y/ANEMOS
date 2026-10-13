@@ -1707,20 +1707,26 @@ if (
 }
 
             pulsante.addEventListener(
-                "click",
-                function () {
+    "click",
+    function () {
 
-                    impostaPercorso(
-                        anemodromo,
-                        opzione.valore
-                    );
+        impostaPercorso(
+            anemodromo,
+            opzione.valore
+        );
 
+        if (sequenzaEditorAttiva) {
 
-                    renderAnemos31();
+            renderAnemosystema();
+            renderEditor();
 
-                }
-            );
+        } else {
 
+            renderAnemos31();
+        }
+
+    }
+);
 
             gruppo.appendChild(
                 pulsante
