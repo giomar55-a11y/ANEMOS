@@ -1479,6 +1479,39 @@ sequenzaAnemomeri.forEach(
         timelineBlocco.appendChild(
             nodo
         );
+        const successivo =
+    sequenzaAnemomeri[
+        indiceAnemomero + 1
+    ] || null;
+
+const apnea =
+    trovaApneaTra(
+        blocco.sequenza,
+        anemomero.id,
+        successivo
+            ? successivo.id
+            : null
+    );
+
+if (apnea) {
+
+    const collegamento =
+        document.createElement(
+            "div"
+        );
+
+    collegamento.className =
+        "apnea-link attiva";
+
+    collegamento.textContent =
+        "⏸ " +
+        apnea.durata +
+        " s";
+
+    timelineBlocco.appendChild(
+        collegamento
+    );
+}
     }
 );
 const legatura =
