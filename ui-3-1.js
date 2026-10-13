@@ -1079,10 +1079,12 @@ function chiudiEditorAnemodromo() {
     anemodromoSelezionatoId =
         null;
 
+    sequenzaEditorAttiva =
+        null;
+
 
     const ui =
         ottieniElementiUI();
-
 
     if (!ui.editor) {
         return;
