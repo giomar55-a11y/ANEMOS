@@ -444,9 +444,9 @@ function ottieniValutazioneNodoAnemoschesi(
 
 function creaNodoAnemodromo(
     anemodromo,
-    indice
+    indice,
+    onClick = null
 ) {
-
     const wrapper =
         document.createElement(
             "button"
@@ -501,16 +501,24 @@ if (
 
 
     wrapper.addEventListener(
-        "click",
-        function () {
+    "click",
+    function () {
 
-            apriEditor(
-                anemodromo.id
+        if (onClick) {
+
+            onClick(
+                anemodromo
             );
 
+            return;
         }
-    );
 
+        apriEditor(
+            anemodromo.id
+        );
+
+    }
+);
 
     const numero =
         document.createElement(
