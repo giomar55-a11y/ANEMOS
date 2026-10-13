@@ -1197,12 +1197,15 @@ function renderEditor() {
     }
 
 
-    const anemodromo =
-        trovaAnemodromo(
-            anemos31,
-            anemodromoSelezionatoId
-        );
+    const sequenzaAttiva =
+    sequenzaEditorAttiva ||
+    anemos31;
 
+const anemodromo =
+    trovaAnemodromo(
+        sequenzaAttiva,
+        anemodromoSelezionatoId
+    );
 
     if (!anemodromo) {
         return;
