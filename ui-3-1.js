@@ -1475,11 +1475,12 @@ function creaBloccoDurata(
         "+";
 
 const guidaDurata =
-    creaGuidaDurataAnemoschesi(
-        anemos31,
-        anemodromo
-    );
-
+    sequenzaEditorAttiva
+        ? null
+        : creaGuidaDurataAnemoschesi(
+            anemos31,
+            anemodromo
+        );
 
 if (
     guidaDurata
