@@ -1661,6 +1661,22 @@ function aggiornaModalitaAnemosystema() {
 
 popolaSelettoreIntenti();
 aggiornaModalitaAnemosystema();
+    const manigliaAnemodromo =
+    document.getElementById(
+        "trascina-anemodromo"
+    );
+
+manigliaAnemodromo.addEventListener(
+    "pointerdown",
+    function (evento) {
+        manigliaAnemodromo.setPointerCapture(
+            evento.pointerId
+        );
+
+        manigliaAnemodromo.dataset.trascinamento =
+            "attivo";
+    }
+);
 </script>
 </body>
 
