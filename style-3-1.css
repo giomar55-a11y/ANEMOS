@@ -329,6 +329,24 @@ button {
     gap: 7px;
 }
 
+.anemosystema-blocchi {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    min-width: max-content;
+}
+
+.anemosystema-blocco {
+    flex: 0 0 auto;
+}
+
+.anemosystema-timeline-blocco {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    min-width: max-content;
+}
+
 .timeline-vuota {
     width: 100%;
     min-width: 250px;
