@@ -1670,11 +1670,12 @@ function creaBloccoPercorso(
     ];
 
 const guidaPercorso =
-    creaGuidaPercorsoAnemoschesi(
-        anemos31,
-        anemodromo
-    );
-   
+    sequenzaEditorAttiva
+        ? null
+        : creaGuidaPercorsoAnemoschesi(
+            anemos31,
+            anemodromo
+        );   
     opzioni.forEach(
         opzione => {
 
