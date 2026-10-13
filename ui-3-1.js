@@ -27,6 +27,7 @@ model-3-1.js
 ===================================================== */
 
 let anemodromoSelezionatoId = null;
+let sequenzaEditorAttiva = null;
 let intentiAnemoschesiDisponibili =
     [];
 
@@ -1043,9 +1044,12 @@ function modificaApneaTra(
 ===================================================== */
 
 function apriEditor(
-    anemodromoId
+    anemodromoId,
+    sequenza = null
 ) {
 
+    sequenzaEditorAttiva =
+        sequenza;
     anemodromoSelezionatoId =
         anemodromoId;
 
