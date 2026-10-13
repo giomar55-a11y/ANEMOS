@@ -2763,13 +2763,13 @@ function creaSelettoreVolume(
 
 
     const disponibili =
-        volumiDisponibiliPerSettore(
+    volumiDisponibiliPerSettore(
+        sequenzaEditorAttiva ||
             anemos31,
-            anemodromo.id,
-            settore.nome,
-            anemodromo.tipo
-        );
-
+        anemodromo.id,
+        settore.nome,
+        anemodromo.tipo
+    );
    const guidaVolumi =
     creaGuidaVolumiAnemoschesi(
         anemos31,
