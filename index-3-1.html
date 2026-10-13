@@ -1451,10 +1451,40 @@ pulsanteSpostaAnemodromo.addEventListener(
             elemento.className =
                 "anemosystema-blocco";
 
-            elemento.textContent =
-    "Anemodromo " +
-    (indice + 1) +
-    " ×";
+            const sequenzaAnemomeri =
+    ottieniAnemodromiOrdinati(
+        blocco.sequenza
+    );
+
+const timelineBlocco =
+    document.createElement(
+        "div"
+    );
+
+timelineBlocco.className =
+    "anemosystema-timeline-blocco";
+
+sequenzaAnemomeri.forEach(
+    function (
+        anemomero,
+        indiceAnemomero
+    ) {
+
+        const nodo =
+            creaNodoAnemodromo(
+                anemomero,
+                indiceAnemomero
+            );
+
+        timelineBlocco.appendChild(
+            nodo
+        );
+    }
+);
+
+elemento.appendChild(
+    timelineBlocco
+);
 
 const cicli =
     document.createElement(
