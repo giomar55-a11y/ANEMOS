@@ -1111,28 +1111,30 @@ function settoreDisponibilePerTipo(
     nomeSettore
 ) {
 
+    const sequenzaAttiva =
+        sequenzaEditorAttiva ||
+        anemos31;
+
     if (
         anemodromo.tipo ===
         ANEMOS_TIPI.IN
     ) {
 
         return settoreDisponibilePerInspirazione(
-            anemos31,
+            sequenzaAttiva,
             anemodromo.id,
             nomeSettore
         );
 
     }
 
-
     return settoreDisponibilePerEspirazione(
-        anemos31,
+        sequenzaAttiva,
         anemodromo.id,
         nomeSettore
     );
 
 }
-
 
 
 /* =====================================================
