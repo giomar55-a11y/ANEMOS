@@ -1661,51 +1661,7 @@ function aggiornaModalitaAnemosystema() {
 
 popolaSelettoreIntenti();
 aggiornaModalitaAnemosystema();
-    const manigliaAnemodromo =
-    document.getElementById(
-        "trascina-anemodromo"
-    );
-
-manigliaAnemodromo.addEventListener(
-    "pointerdown",
-    function (evento) {
-        manigliaAnemodromo.setPointerCapture(
-            evento.pointerId
-        );
-
-        manigliaAnemodromo.dataset.trascinamento =
-            "attivo";
-    }
-);
-
-   
-manigliaAnemodromo.addEventListener(
-    "pointermove",
-    function (evento) {
-
-        if (
-            manigliaAnemodromo.dataset.trascinamento !==
-            "attivo"
-        ) {
-            return;
-        }
-
-        manigliaAnemodromo.style.position =
-            "fixed";
-
-        manigliaAnemodromo.style.left =
-            evento.clientX + "px";
-
-        manigliaAnemodromo.style.top =
-            evento.clientY + "px";
-
-        manigliaAnemodromo.style.zIndex =
-            "9999";
-
-        manigliaAnemodromo.style.transform =
-            "translate(-50%, -50%)";
-    }
-);
+    
 </script> 
 </body>
 
