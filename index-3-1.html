@@ -1677,18 +1677,7 @@ manigliaAnemodromo.addEventListener(
     }
 );
 
-   manigliaAnemodromo.addEventListener(
-    "pointerdown",
-    function (evento) {
-        manigliaAnemodromo.setPointerCapture(
-            evento.pointerId
-        );
-
-        manigliaAnemodromo.dataset.trascinamento =
-            "attivo";
-    }
-);
-
+   
 manigliaAnemodromo.addEventListener(
     "pointermove",
     function (evento) {
