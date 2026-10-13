@@ -2771,12 +2771,13 @@ function creaSelettoreVolume(
         anemodromo.tipo
     );
    const guidaVolumi =
-    creaGuidaVolumiAnemoschesi(
-        anemos31,
-        anemodromo,
-        settore.nome
-    );
-
+    sequenzaEditorAttiva
+        ? null
+        : creaGuidaVolumiAnemoschesi(
+            anemos31,
+            anemodromo,
+            settore.nome
+        );
     tutteLeOpzioni.forEach(
         volume => {
 
