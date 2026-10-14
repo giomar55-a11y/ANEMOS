@@ -1656,90 +1656,85 @@ const legatura =
 legatura.className =
     "anemosystema-legatura";
 
-const etichettaLegatura =
-    document.createElement(
-        "span"
-    );
+const controlloCicli =
+    document.createElement("span");
 
-etichettaLegatura.textContent =
+const menoCicli =
+    document.createElement("button");
+
+menoCicli.type = "button";
+menoCicli.textContent = "−";
+
+const valoreCicli =
+    document.createElement("span");
+
+valoreCicli.textContent =
     "ANEMODROMO " +
     (indice + 1) +
     " × " +
     blocco.cicli;
-legatura.appendChild(
-    etichettaLegatura
-);
 
-elemento.appendChild(
-    legatura
-);
-elemento.appendChild(
-    timelineBlocco
-);
+const piuCicli =
+    document.createElement("button");
 
-const cicli =
-    document.createElement(
-        "input"
-    );
+piuCicli.type = "button";
+piuCicli.textContent = "+";
 
-cicli.type = "number";
-cicli.min = "1";
-cicli.value = blocco.cicli;
-
-            elemento.addEventListener(
+menoCicli.addEventListener(
     "click",
-    function (evento) {
+    function () {
 
-        if (evento.target !== cicli) {
-            cicli.blur();
+        if (blocco.cicli <= 1) {
+            return;
         }
+
+        anemosSystemaImpostaCicli(
+            anemosystemaCorrente,
+            blocco.id,
+            blocco.cicli - 1
+        );
+
+        renderAnemosystema();
     }
 );
 
-            cicli.addEventListener(
-    "change",
+piuCicli.addEventListener(
+    "click",
     function () {
 
         anemosSystemaImpostaCicli(
             anemosystemaCorrente,
             blocco.id,
-            cicli.value
+            blocco.cicli + 1
         );
 
-        cicli.value =
-    blocco.cicli;
-
-etichettaLegatura.textContent =
-    "ANEMODROMO " +
-    (indice + 1) +
-    " × " +
-    blocco.cicli;
+        renderAnemosystema();
     }
 );
 
-elemento.appendChild(
-    cicli
+controlloCicli.appendChild(
+    menoCicli
 );
-const fineModifica =
-    document.createElement(
-        "button"
-    );
 
-fineModifica.type = "button";
-fineModifica.textContent =
-    "Fine modifica";
+controlloCicli.appendChild(
+    valoreCicli
+);
 
-fineModifica.addEventListener(
-    "click",
-    function () {
-        cicli.blur();
-    }
+controlloCicli.appendChild(
+    piuCicli
+);
+
+legatura.appendChild(
+    controlloCicli
 );
 
 elemento.appendChild(
-    fineModifica
+    legatura
 );
-            contenitore.appendChild(
+
+elemento.appendChild(
+    timelineBlocco
+);            contenitore.appendChild(
                 elemento
             );
         }
