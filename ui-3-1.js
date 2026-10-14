@@ -462,10 +462,11 @@ function creaNodoAnemodromo(
         "anemodromo-node";
 
    const valutazioneAnemoschesi =
-    ottieniValutazioneNodoAnemoschesi(
-        anemodromo
-    );
-
+    onClick
+        ? null
+        : ottieniValutazioneNodoAnemoschesi(
+            anemodromo
+        );
 
 if (
     valutazioneAnemoschesi
