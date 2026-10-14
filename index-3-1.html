@@ -1527,11 +1527,24 @@ if (apnea) {
     collegamento.className =
         "apnea-link attiva";
 
-    collegamento.textContent =
-        "⏸ " +
-        apnea.durata +
-        " s";
+    const meno =
+    document.createElement(
+        "button"
+    );
 
+meno.type = "button";
+meno.className = "apnea-comando";
+meno.textContent = "−";
+
+collegamento.appendChild(
+    meno
+);
+
+collegamento.append(
+    "⏸ " +
+    apnea.durata +
+    " s"
+);
     timelineBlocco.appendChild(
         collegamento
     );
