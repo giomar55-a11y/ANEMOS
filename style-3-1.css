@@ -703,6 +703,11 @@ button {
         rgba(28, 38, 33, 0.07);
 }
 
+#elimina-anemosystema {
+    min-height: 49px;
+    padding: 0 16px;
+}
+
 
 /* =====================================================
    OVERLAY EDITOR
