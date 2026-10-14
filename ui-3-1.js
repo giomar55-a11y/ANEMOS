@@ -1064,12 +1064,17 @@ function apriEditor(
 
 
     ui.editor.classList.add(
-        "aperto"
-    );
+    "aperto"
+);
 
+if (sequenzaEditorAttiva) {
+
+    renderEditor();
+
+} else {
 
     renderAnemos31();
-
+}
 }
 
 
