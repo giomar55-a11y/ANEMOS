@@ -1625,9 +1625,26 @@ timelineBlocco.appendChild(
         "apnea-link";
     aggiungiApnea.textContent = "+";
 
-    timelineBlocco.appendChild(
-        aggiungiApnea
-    );
+aggiungiApnea.addEventListener(
+    "click",
+    function () {
+
+        inserisciApnea(
+            blocco.sequenza,
+            anemomero.id,
+            successivo
+                ? successivo.id
+                : null,
+            1
+        );
+
+        renderAnemosystema();
+    }
+);
+
+timelineBlocco.appendChild(
+    aggiungiApnea
+);
 }
     }
 );
