@@ -1612,10 +1612,25 @@ collegamento.appendChild(
 timelineBlocco.appendChild(
     collegamento
 );
+
+} else {
+
+    const aggiungiApnea =
+        document.createElement(
+            "button"
+        );
+
+    aggiungiApnea.type = "button";
+    aggiungiApnea.className =
+        "apnea-link";
+    aggiungiApnea.textContent = "+";
+
+    timelineBlocco.appendChild(
+        aggiungiApnea
+    );
 }
     }
 );
-
 const legatura =
     document.createElement(
         "div"
