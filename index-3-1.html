@@ -1423,8 +1423,33 @@ const areaAnemosystema =
     let anemosystemaCorrente =
     anemosSystemaCrea();
 
-    const pulsanteSpostaAnemodromo =
+const pulsanteEliminaAnemosystema =
     document.getElementById(
+        "elimina-anemosystema"
+    );
+
+pulsanteEliminaAnemosystema.addEventListener(
+    "click",
+    async function () {
+
+        const conferma =
+            await anemosConferma(
+                "Eliminare tutti gli Anemodromi dell’ANEMOSYSTEMA?",
+                "Elimina ANEMOSYSTEMA"
+            );
+
+        if (!conferma) {
+            return;
+        }
+
+        anemosystemaCorrente =
+            anemosSystemaCrea();
+
+        renderAnemosystema();
+    }
+);
+
+const pulsanteSpostaAnemodromo =    document.getElementById(
         "sposta-anemodromo"
     );
 
