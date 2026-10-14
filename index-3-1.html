@@ -1573,8 +1573,33 @@ collegamento.appendChild(
     meno
 );
 
-collegamento.append(
-    "⏸ " +
+const piu =
+    document.createElement(
+        "button"
+    );
+
+piu.type = "button";
+piu.className = "apnea-comando";
+piu.textContent = "+";
+
+piu.addEventListener(
+    "click",
+    function () {
+
+        inserisciApnea(
+            blocco.sequenza,
+            anemomero.id,
+            successivo
+                ? successivo.id
+                : null,
+            Number(apnea.durata) + 1
+        );
+
+        renderAnemosystema();
+    }
+);
+
+collegamento.append(    "⏸ " +
     apnea.durata +
     " s"
 );
