@@ -1035,11 +1035,15 @@ pulsanteAggiungiES.classList.toggle(
     anemodromoSelezionatoId
 );
 
-                    chiudiEditorAnemodromo();
+                    const editorDaAnemosystema =
+    Boolean(sequenzaEditorAttiva);
 
+chiudiEditorAnemodromo();
 
-                    aggiornaDurataTotale();
+if (!editorDaAnemosystema) {
 
+    aggiornaDurataTotale();
+}
                 }
             );
 /*
