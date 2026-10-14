@@ -1081,12 +1081,14 @@ if (sequenzaEditorAttiva) {
 
 function chiudiEditorAnemodromo() {
 
+    const editorDaAnemosystema =
+        Boolean(sequenzaEditorAttiva);
+
     anemodromoSelezionatoId =
         null;
 
     sequenzaEditorAttiva =
         null;
-
 
     const ui =
         ottieniElementiUI();
@@ -1095,16 +1097,20 @@ function chiudiEditorAnemodromo() {
         return;
     }
 
-
     ui.editor.classList.remove(
         "aperto"
     );
 
+    if (editorDaAnemosystema) {
 
-    renderTimeline();
+        renderAnemosystema();
+
+    } else {
+
+        renderTimeline();
+    }
 
 }
-
 
 
 /* =====================================================
