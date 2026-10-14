@@ -2912,14 +2912,21 @@ pulsante.appendChild(
 
 
                         impostaVolumeSettore(
-                            anemodromo,
-                            settore.nome,
-                            volume
-                        );
+    anemodromo,
+    settore.nome,
+    volume
+);
 
+if (sequenzaEditorAttiva) {
 
-                        renderAnemos31();
+    renderAnemosystema();
+    renderEditor();
 
+} else {
+
+    renderAnemos31();
+}
+                       
                     }
                 );
 
