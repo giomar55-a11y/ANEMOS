@@ -1102,10 +1102,15 @@ pulsanteEliminaTutto
                 "click",
                 function () {
 
-                    chiudiEditorAnemodromo();
+                    const editorDaAnemosystema =
+    Boolean(sequenzaEditorAttiva);
 
-                    aggiornaDurataTotale();
+chiudiEditorAnemodromo();
 
+if (!editorDaAnemosystema) {
+
+    aggiornaDurataTotale();
+}
                 }
             );
 
