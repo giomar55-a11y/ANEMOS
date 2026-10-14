@@ -1536,6 +1536,39 @@ meno.type = "button";
 meno.className = "apnea-comando";
 meno.textContent = "−";
 
+    meno.addEventListener(
+    "click",
+    function () {
+
+        const nuovaDurata =
+            Number(apnea.durata) - 1;
+
+        if (nuovaDurata <= 0) {
+
+            rimuoviApnea(
+                blocco.sequenza,
+                anemomero.id,
+                successivo
+                    ? successivo.id
+                    : null
+            );
+
+        } else {
+
+            inserisciApnea(
+                blocco.sequenza,
+                anemomero.id,
+                successivo
+                    ? successivo.id
+                    : null,
+                nuovaDurata
+            );
+        }
+
+        renderAnemosystema();
+    }
+);
+
 collegamento.appendChild(
     meno
 );
