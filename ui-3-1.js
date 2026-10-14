@@ -932,18 +932,7 @@ function creaCollegamento(
     resta disponibile il prompt originale.
     */
 
-    valore.addEventListener(
-        "click",
-        function () {
-
-            modificaApneaTra(
-                precedente.id,
-                successivoId
-            );
-
-        }
-    );
-
+    valore.disabled = true;
 
     contenitore.appendChild(
         meno
