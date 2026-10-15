@@ -666,10 +666,10 @@ async function anemosLibreriaModificaSupabase(
                     intento_id: String(intentoId ?? "").trim(),
                     note: String(note ?? "").trim(),
                     sequenza: sequenza,
+                    tipo: tipo,
                     versione: ANEMOS_LIBRERIA_VERSIONE,
-                    updated_at: new Date().toISOString()
-                })
-                .eq(
+                    updated_at: new Date().toISOString()                })
+                    .eq(
                     "id",
                     String(id)
                 )
