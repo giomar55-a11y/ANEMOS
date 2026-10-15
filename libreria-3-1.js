@@ -1059,6 +1059,43 @@ function anemosLibreriaSalvaAnemosystema(
 }
 
 /* =====================================================
+   SALVATAGGIO ANEMOSYSTEMA SU SUPABASE
+===================================================== */
+
+async function anemosLibreriaSalvaAnemosystemaSupabase(
+    anemosystema,
+    nome,
+    note = ""
+) {
+
+    const nomePulito =
+        String(nome ?? "").trim();
+
+    const notePulite =
+        String(note ?? "").trim();
+
+    if (
+        !nomePulito ||
+        !anemosSystemaValido(anemosystema)
+    ) {
+        return {
+            successo: false,
+            motivo: "dati-mancanti"
+        };
+    }
+
+    return await anemosLibreriaScriviSupabase(
+        nomePulito,
+        "",
+        notePulite,
+        anemosLibreriaClona(
+            anemosystema
+        ),
+        ANEMOS_TIPO_ANEMOSYSTEMA
+    );
+}
+
+/* =====================================================
    MODIFICA DATI VOCE LIBRERIA
 ===================================================== */
 
