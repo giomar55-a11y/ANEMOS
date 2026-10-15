@@ -1,3 +1,5 @@
+
+
 /* =====================================================
    ANEMOS 3.1
    LIBRERIA ANEMODROMI v1.0
@@ -584,8 +586,9 @@ async function anemosLibreriaScriviSupabase(
                     nome: String(nome ?? "").trim(),
                     intento_id: String(intentoId ?? "").trim(),
                     note: String(note ?? "").trim(),
-                    sequenza: sequenza,
-                    versione: ANEMOS_LIBRERIA_VERSIONE
+sequenza: sequenza,
+tipo: tipo,
+versione: ANEMOS_LIBRERIA_VERSIONE
                 })
                 .select(
                     "id, user_id, nome, intento_id, note, sequenza, versione, created_at, updated_at"
