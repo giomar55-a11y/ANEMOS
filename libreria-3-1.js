@@ -406,11 +406,14 @@ function anemosLibreriaVoceDaSupabase(
             riga.created_at,
 
         nome:
-            riga.nome,
+    riga.nome,
 
-        intento:
-            riga.intento_id,
+tipo:
+    riga.tipo ||
+    ANEMOS_TIPO_ANEMODROMO,
 
+intento:
+    riga.intento_id,
         note:
             riga.note || "",
 
