@@ -2133,7 +2133,11 @@ async function renderLibreria() {
         )
         .trim()
         .toLowerCase();
-
+   
+const filtroTipo =
+    document.getElementById(
+        "libreria-filtro-tipo"
+    )?.value || "";
 
     const filtroIntento =
         document.getElementById(
@@ -2202,6 +2206,13 @@ async function renderLibreria() {
                     const voce =
                         elemento.voce;
 
+                   if (
+    filtroTipo &&
+    (voce.tipo || ANEMOS_TIPO_ANEMODROMO) !==
+        filtroTipo
+) {
+    return false;
+}
 
                     if (
                         ricerca &&
@@ -3024,6 +3035,11 @@ if (pannelloLibreria) {
            quando cambiano i filtri.
         */
 
+const filtroTipoLibreria =
+    document.getElementById(
+        "libreria-filtro-tipo"
+    );
+       
         const ricercaLibreria =
             document.getElementById(
                 "libreria-ricerca"
@@ -3039,6 +3055,14 @@ if (pannelloLibreria) {
                 "libreria-filtro-anemosinthesis"
             );
 
+       if (filtroTipoLibreria) {
+
+    filtroTipoLibreria.addEventListener(
+        "change",
+        renderLibreria
+    );
+
+}
 
         if (ricercaLibreria) {
 
