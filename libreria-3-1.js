@@ -983,6 +983,81 @@ intento:
     };
 }
 
+function anemosLibreriaSalvaAnemosystema(
+    anemosystema,
+    nome,
+    note = ""
+) {
+
+    const nomePulito =
+        String(nome ?? "").trim();
+
+    const notePulite =
+        String(note ?? "").trim();
+
+    if (
+        !nomePulito ||
+        !anemosSystemaValido(anemosystema)
+    ) {
+        return {
+            successo: false,
+            motivo: "dati-mancanti"
+        };
+    }
+
+    const voce = {
+
+        id:
+            anemosLibreriaCreaId(),
+
+        versione:
+            ANEMOS_LIBRERIA_VERSIONE,
+
+        creatoIl:
+            new Date().toISOString(),
+
+        nome:
+            nomePulito,
+
+        tipo:
+            ANEMOS_TIPO_ANEMOSYSTEMA,
+
+        intento:
+            "",
+
+        note:
+            notePulite,
+
+        sequenza:
+            anemosLibreriaClona(
+                anemosystema
+            )
+
+    };
+
+    const libreria =
+        anemosLibreriaLeggi();
+
+    libreria.push(voce);
+
+    const scritto =
+        anemosLibreriaScrivi(
+            libreria
+        );
+
+    if (!scritto) {
+        return {
+            successo: false,
+            motivo: "errore-scrittura"
+        };
+    }
+
+    return {
+        successo: true,
+        voce: voce
+    };
+}
+
 /* =====================================================
    MODIFICA DATI VOCE LIBRERIA
 ===================================================== */
