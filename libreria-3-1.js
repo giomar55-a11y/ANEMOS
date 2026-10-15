@@ -674,8 +674,8 @@ async function anemosLibreriaModificaSupabase(
                     String(id)
                 )
                 .select(
-                    "id, user_id, nome, intento_id, note, sequenza, versione, created_at, updated_at"
-                )
+    "id, user_id, nome, intento_id, note, sequenza, tipo, versione, created_at, updated_at"
+)
                 .single();
 
         if (error) {
