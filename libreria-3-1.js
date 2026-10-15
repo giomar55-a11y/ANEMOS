@@ -634,9 +634,9 @@ async function anemosLibreriaModificaSupabase(
     nome,
     intentoId,
     note,
-    sequenza
+    sequenza,
+    tipo = ANEMOS_TIPO_ANEMODROMO
 ) {
-
     try {
 
         const {
