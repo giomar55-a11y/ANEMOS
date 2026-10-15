@@ -936,11 +936,13 @@ function anemosLibreriaSalva(
             new Date().toISOString(),
 
         nome:
-            nomePulito,
+    nomePulito,
 
-        intento:
-            intentoPulito,
+tipo:
+    ANEMOS_TIPO_ANEMODROMO,
 
+intento:
+    intentoPulito,
         note:
             notePulite,
 
