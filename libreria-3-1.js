@@ -3031,15 +3031,17 @@ if (pannelloLibreria) {
     async function () {
 
         const risultato =
-            await anemosLibreriaScriviSupabase(
-                voce.nome + " copia",
-                voce.intento,
-                voce.note || "",
-                anemosLibreriaClona(
-                    voce.sequenza
-                )
-            );
-
+    await anemosLibreriaScriviSupabase(
+        voce.nome + " copia",
+        voce.intento,
+        voce.note || "",
+        anemosLibreriaClona(
+            voce.sequenza
+        ),
+        voce.tipo ||
+            ANEMOS_TIPO_ANEMODROMO
+    );
+       
         if (
             !risultato.successo
         ) {
