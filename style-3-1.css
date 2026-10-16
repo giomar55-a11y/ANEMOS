@@ -338,8 +338,8 @@ button {
 
 .anemosystema-blocco {
     flex: 0 0 auto;
+    min-width: 180px;
 }
-
 .anemosystema-legatura {
     position: relative;
     height: 28px;
