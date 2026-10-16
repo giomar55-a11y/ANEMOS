@@ -2412,6 +2412,8 @@ if (
                 document.createElement(
                     "div"
                 );
+           meta.className =
+    "libreria-card-meta";
 
             const tipoVoceMeta =
     voce.tipo ||
