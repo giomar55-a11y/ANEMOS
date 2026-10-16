@@ -750,6 +750,9 @@ button {
     pointer-events: auto;
 }
 
+.azioni-generali {
+    margin-bottom: 16px;
+}
 
 /* =====================================================
    BOTTOM SHEET
