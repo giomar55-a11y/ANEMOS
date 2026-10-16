@@ -1778,16 +1778,18 @@ let risultato;
 if (modificaId) {
 
     risultato =
-        await anemosLibreriaModificaSupabase(
-            modificaId,
-            nome,
-            pannello.dataset.modificaIntento || "",
-            note,
-            JSON.parse(
-                pannello.dataset.modificaSequenza
-            )
-        );
-
+    await anemosLibreriaModificaSupabase(
+        modificaId,
+        nome,
+        pannello.dataset.modificaIntento || "",
+        note,
+        JSON.parse(
+            pannello.dataset.modificaSequenza
+        ),
+        pannello.dataset.modificaTipo ||
+            ANEMOS_TIPO_ANEMODROMO
+    );
+   
 } else {
     risultato =
     await anemosLibreriaScriviSupabase(
@@ -1851,6 +1853,7 @@ if (modificaId) {
 delete pannello.dataset.modificaId;
 delete pannello.dataset.modificaIntento;
 delete pannello.dataset.modificaSequenza;
+delete pannello.dataset.modificaTipo;
 
 
 pulsanteConferma.textContent =
@@ -2978,6 +2981,10 @@ async function () {
 
        pannello.dataset.modificaIntento =
     voce.intento || "";
+
+   pannello.dataset.modificaTipo =
+    voce.tipo ||
+    ANEMOS_TIPO_ANEMODROMO;
 
 pannello.dataset.modificaSequenza =
     JSON.stringify(
