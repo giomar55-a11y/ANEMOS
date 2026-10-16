@@ -2171,28 +2171,46 @@ const filtroTipo =
             .map(
                 function (voce) {
 
-                    return {
+    const tipo =
+        voce.tipo ||
+        ANEMOS_TIPO_ANEMODROMO;
 
-                        voce,
+    if (
+        tipo ===
+        ANEMOS_TIPO_ANEMOSYSTEMA
+    ) {
 
-                        risultatoAnemoschesi:
-                            valutaAnemodromoPerIntentoAnemoschesi(
-                                voce.sequenza
-                            ),
+        return {
+            voce,
+            risultatoAnemoschesi: null,
+            risultatoAnemobaros: null,
+            risultatoAnemosinthesis: null
+        };
 
-                        risultatoAnemobaros:
-                            calcolaAnemobaros(
-                                voce.sequenza
-                            ),
+    }
 
-                        risultatoAnemosinthesis:
-                            calcolaAnemosinthesis(
-                                voce.sequenza
-                            )
+    return {
 
-                    };
+        voce,
 
-                }
+        risultatoAnemoschesi:
+            valutaAnemodromoPerIntentoAnemoschesi(
+                voce.sequenza
+            ),
+
+        risultatoAnemobaros:
+            calcolaAnemobaros(
+                voce.sequenza
+            ),
+
+        risultatoAnemosinthesis:
+            calcolaAnemosinthesis(
+                voce.sequenza
+            )
+
+    };
+
+}
             )
 
 
