@@ -3135,17 +3135,27 @@ if (pannelloLibreria) {
 );
 
             azioni.appendChild(
-                carica
-            );
+    carica
+);
 
-            azioni.appendChild(
-                anemogramma
-            );
+const tipoAzioni =
+    voce.tipo ||
+    ANEMOS_TIPO_ANEMODROMO;
 
-            azioni.appendChild(
-                menu
-            );
+if (
+    tipoAzioni ===
+    ANEMOS_TIPO_ANEMODROMO
+) {
 
+    azioni.appendChild(
+        anemogramma
+    );
+
+}
+
+azioni.appendChild(
+    menu
+);
 
             /*
                COMPOSIZIONE CARD
