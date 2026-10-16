@@ -2260,30 +2260,31 @@ const filtroTipo =
 
 
                     if (
-                        filtroAnemobaros &&
-                        elemento
-                            .risultatoAnemobaros
-                            .livello !==
-                            filtroAnemobaros
-                    ) {
+    filtroAnemobaros &&
+    (
+        !elemento.risultatoAnemobaros ||
+        elemento.risultatoAnemobaros.livello !==
+            filtroAnemobaros
+    )
+) {
 
-                        return false;
+    return false;
 
-                    }
+}
 
 
-                    if (
-                        filtroAnemosinthesis &&
-                        elemento
-                            .risultatoAnemosinthesis
-                            .livello !==
-                            filtroAnemosinthesis
-                    ) {
+if (
+    filtroAnemosinthesis &&
+    (
+        !elemento.risultatoAnemosinthesis ||
+        elemento.risultatoAnemosinthesis.livello !==
+            filtroAnemosinthesis
+    )
+) {
 
-                        return false;
+    return false;
 
-                    }
-
+}
 
                     return true;
 
@@ -2300,18 +2301,27 @@ const filtroTipo =
             */
 
             .sort(
-                function (a, b) {
+    function (a, b) {
 
-                    return (
-                        b.risultatoAnemoschesi
-                            .punteggioComplessivo -
-                        a.risultatoAnemoschesi
-                            .punteggioComplessivo
-                    );
+        const punteggioA =
+            a.risultatoAnemoschesi
+                ? a.risultatoAnemoschesi
+                    .punteggioComplessivo
+                : -1;
 
-                }
-            );
+        const punteggioB =
+            b.risultatoAnemoschesi
+                ? b.risultatoAnemoschesi
+                    .punteggioComplessivo
+                : -1;
 
+        return (
+            punteggioB -
+            punteggioA
+        );
+
+    }
+);
 
     /*
        Nessun risultato dopo i filtri.
