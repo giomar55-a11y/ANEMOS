@@ -1665,7 +1665,74 @@ document.addEventListener(
             }
         );
 
+        if (pulsanteSalvaAnemosystema) {
 
+            pulsanteSalvaAnemosystema.addEventListener(
+                "click",
+                async function () {
+
+                    const {
+                        data: sessionData
+                    } =
+                        await anemosSupabase.auth.getSession();
+
+                    if (
+                        !sessionData.session
+                    ) {
+
+                        alert(
+                            "Per salvare un Anemosystema nella Libreria devi accedere al tuo account ANEMOS."
+                        );
+
+                        return;
+                    }
+
+                    if (
+                        typeof anemosystemaCorrente === "undefined" ||
+                        !anemosSystemaValido(
+                            anemosystemaCorrente
+                        )
+                    ) {
+
+                        alert(
+                            "L'Anemosystema deve contenere almeno 2 Anemodromi."
+                        );
+
+                        return;
+                    }
+
+                    const nomePrincipale =
+                        document.getElementById(
+                            "nome-respirazione"
+                        );
+
+                    const nomeSalvataggio =
+                        document.getElementById(
+                            "salva-libreria-nome"
+                        );
+
+                    if (
+                        nomePrincipale &&
+                        nomeSalvataggio
+                    ) {
+
+                        nomeSalvataggio.value =
+                            nomePrincipale.value;
+                    }
+
+                    pannello.dataset.tipoSalvataggio =
+                        ANEMOS_TIPO_ANEMOSYSTEMA;
+
+                    pannello.classList.add(
+                        "aperto"
+                    );
+                }
+            );
+        }
+
+
+        if (pulsanteChiudi) {
+       
         if (pulsanteChiudi) {
 
             pulsanteChiudi.addEventListener(
