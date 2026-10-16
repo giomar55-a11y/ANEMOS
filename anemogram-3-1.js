@@ -1356,20 +1356,33 @@ function ottieniTimelineAnemosystema(
                 );
 
             for (
-                let ciclo = 0;
-                ciclo < cicli;
-                ciclo += 1
-            ) {
+    let ciclo = 0;
+    ciclo < cicli;
+    ciclo += 1
+) {
 
-                const timelineAnemodromo =
-                    ottieniTimelineAnemogramma(
-                        blocco.sequenza
-                    );
+    timeline.push({
 
-                timeline.push(
-                    ...timelineAnemodromo
-                );
-            }
+        tipo:
+            "inizio-anemodromo",
+
+        ciclo:
+            ciclo + 1,
+
+        cicliTotali:
+            cicli
+
+    });
+
+    const timelineAnemodromo =
+        ottieniTimelineAnemogramma(
+            blocco.sequenza
+        );
+
+    timeline.push(
+        ...timelineAnemodromo
+    );
+}
         }
     );
 
