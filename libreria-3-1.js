@@ -2619,6 +2619,64 @@ if (
                             voce.sequenza
                         );
 
+                   const tipoCaricato =
+    voce.tipo ||
+    ANEMOS_TIPO_ANEMODROMO;
+
+if (
+    tipoCaricato ===
+    ANEMOS_TIPO_ANEMOSYSTEMA
+) {
+
+    anemosystemaCorrente =
+        sequenzaCaricata;
+
+    const nomePrincipale =
+        document.getElementById(
+            "nome-respirazione"
+        );
+
+    if (nomePrincipale) {
+
+        nomePrincipale.value =
+            voce.nome;
+
+    }
+
+    const sezioneIntento =
+        document.getElementById(
+            "intento-anemoschesi"
+        );
+
+    const areaSistema =
+        document.getElementById(
+            "anemosystema-area"
+        );
+
+    if (sezioneIntento) {
+
+        sezioneIntento.hidden =
+            true;
+
+    }
+
+    if (areaSistema) {
+
+        areaSistema.hidden =
+            false;
+
+    }
+
+    libreriaPannello.classList.remove(
+        "aperta"
+    );
+
+    renderAnemosystema();
+
+    return;
+
+}
+
 
                     /*
                        Svuota lo stato corrente
