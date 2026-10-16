@@ -1592,11 +1592,25 @@ if (apnea) {
     collegamento.className =
         "apnea-link attiva";
 
-    collegamento.textContent =
-        "⏸ " +
-        apnea.durata +
-        " s";
+    const testoApnea =
+    document.createElement(
+        "span"
+    );
 
+testoApnea.style.position =
+    "relative";
+
+testoApnea.style.top =
+    "2px";
+
+testoApnea.textContent =
+    "⏸ " +
+    apnea.durata +
+    " s";
+
+collegamento.appendChild(
+    testoApnea
+);
     timelineBlocco.appendChild(
         collegamento
     );
