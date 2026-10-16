@@ -2437,6 +2437,52 @@ if (
             indici.className =
                 "libreria-card-indici";
 
+           const tipoVoce =
+    voce.tipo ||
+    ANEMOS_TIPO_ANEMODROMO;
+
+if (
+    tipoVoce ===
+    ANEMOS_TIPO_ANEMOSYSTEMA
+) {
+
+    const schedaSistema =
+        document.createElement(
+            "div"
+        );
+
+    schedaSistema.className =
+        "libreria-card-indice";
+
+    const numeroBlocchi =
+        anemosSystemaContaBlocchi(
+            voce.sequenza
+        );
+
+    const numeroCicli =
+        anemosSystemaContaCicli(
+            voce.sequenza
+        );
+
+    schedaSistema.innerHTML =
+        "<span>ANEMOSYSTEMA</span>" +
+        "<strong>" +
+        numeroBlocchi +
+        " blocchi · " +
+        numeroCicli +
+        " cicli</strong>";
+
+    indici.appendChild(
+        schedaSistema
+    );
+
+}
+
+           if (
+    tipoVoce ===
+    ANEMOS_TIPO_ANEMODROMO
+) {
+
 
             const schedaAnemoschesi =
                 document.createElement(
@@ -2506,6 +2552,8 @@ if (
             indici.appendChild(
                 schedaAnemosinthesis
             );
+
+              }
 
 
             /*
