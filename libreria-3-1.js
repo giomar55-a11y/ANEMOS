@@ -1438,6 +1438,11 @@ document.addEventListener(
                 "salva-anemodromo"
             );
 
+       const pulsanteSalvaAnemosystema =
+    document.getElementById(
+        "salva-anemosystema"
+    );
+
         const pannello =
             document.getElementById(
                 "salva-libreria"
