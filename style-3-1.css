@@ -378,8 +378,9 @@ button {
 .anemosystema-timeline-blocco {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 7px;
-    min-width: max-content;
+    min-width: 100%;
 }
 .anemosystema-timeline-blocco .apnea-link {
     align-self: center;
