@@ -2013,7 +2013,8 @@ async function eseguiTimelineAnemogramma(
 
 }
 function creaPannelloAnemogramma(
-    sequenza = anemos31
+    sequenza = anemos31,
+    timelineRicevuta = null
 ) {
    
    anemogrammaInPausa =
@@ -2376,9 +2377,13 @@ intestazione.appendChild(
 
 
     const timeline =
-    ottieniTimelineAnemogramma(
-        sequenza
-    );
+    Array.isArray(
+        timelineRicevuta
+    )
+        ? timelineRicevuta
+        : ottieniTimelineAnemogramma(
+            sequenza
+        );
    
     if (
     timeline.length === 0
