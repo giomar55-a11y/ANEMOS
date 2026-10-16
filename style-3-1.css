@@ -492,6 +492,9 @@ button {
 
 .apnea-link {
     flex: 0 0 auto;
+       display: inline-flex;
+    align-items: center;
+    justify-content: center;
 
     min-width: 49px;
     height: 30px;
