@@ -2421,6 +2421,44 @@ intestazione.appendChild(
     timeline.forEach(
         elemento => {
 
+if (
+    elemento.tipo ===
+    "inizio-anemodromo"
+) {
+
+    const separatore =
+        document.createElement(
+            "div"
+        );
+
+    separatore.className =
+        "anemogramma-inizio-anemodromo";
+
+    separatore.textContent =
+        "ANEMODROMO · ciclo " +
+        elemento.ciclo +
+        "/" +
+        elemento.cicliTotali;
+
+    separatore.style.margin =
+        "24px 0 12px";
+
+    separatore.style.padding =
+        "8px 0";
+
+    separatore.style.fontWeight =
+        "700";
+
+    separatore.style.borderTop =
+        "1px solid #cccccc";
+
+    contenuto.appendChild(
+        separatore
+    );
+
+    return;
+}
+           
             if (
                 elemento.tipo ===
                 "anemomero"
