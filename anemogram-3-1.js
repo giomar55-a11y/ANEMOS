@@ -1339,8 +1339,10 @@ function ottieniTimelineAnemosystema(
     }
 
     anemosystema.blocchi.forEach(
-        function (blocco) {
-
+    function (
+        blocco,
+        indiceBlocco
+    ) {
             if (!blocco.sequenza) {
                 return;
             }
@@ -1363,17 +1365,19 @@ function ottieniTimelineAnemosystema(
 
     timeline.push({
 
-        tipo:
-            "inizio-anemodromo",
+    tipo:
+        "inizio-anemodromo",
 
-        ciclo:
-            ciclo + 1,
+    anemodromo:
+        indiceBlocco + 1,
 
-        cicliTotali:
-            cicli
+    ciclo:
+        ciclo + 1,
 
-    });
+    cicliTotali:
+        cicli
 
+});
     const timelineAnemodromo =
         ottieniTimelineAnemogramma(
             blocco.sequenza
@@ -2435,11 +2439,12 @@ if (
         "anemogramma-inizio-anemodromo";
 
     separatore.textContent =
-        "ANEMODROMO · ciclo " +
-        elemento.ciclo +
-        "/" +
-        elemento.cicliTotali;
-
+    "ANEMODROMO " +
+    elemento.anemodromo +
+    " · ciclo " +
+    elemento.ciclo +
+    "/" +
+    elemento.cicliTotali;
     separatore.style.margin =
         "24px 0 12px";
 
