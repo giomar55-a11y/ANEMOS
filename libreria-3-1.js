@@ -1861,16 +1861,28 @@ if (modificaId) {
             ANEMOS_TIPO_ANEMODROMO
     );
    
-} else {
-    risultato =
-    await anemosLibreriaScriviSupabase(
-        nome,
-        anemos31.intento,
-        note,
-        anemos31
-    );
-}
+} else if (
+    pannello.dataset.tipoSalvataggio ===
+        ANEMOS_TIPO_ANEMOSYSTEMA
+) {
 
+    risultato =
+        await anemosLibreriaSalvaAnemosystemaSupabase(
+            anemosystemaCorrente,
+            nome,
+            note
+        );
+
+} else {
+
+    risultato =
+        await anemosLibreriaScriviSupabase(
+            nome,
+            anemos31.intento,
+            note,
+            anemos31
+        );
+}
                     if (
                         !risultato.successo
                     ) {
