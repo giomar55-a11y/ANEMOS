@@ -670,17 +670,24 @@ function creaCollegamento(
 
 
         aggiungi.addEventListener(
-            "click",
-            function () {
+    "click",
+    function () {
 
-                modificaApneaTra(
-                    precedente.id,
-                    successivoId
-                );
-
-            }
+        inserisciApnea(
+            anemos31,
+            precedente.id,
+            successivoId,
+            1
         );
 
+        localStorage.setItem(
+            "ANEMOS_SEQUENZA_TEST",
+            JSON.stringify(anemos31)
+        );
+
+        renderAnemos31();
+    }
+);
 
         return aggiungi;
 
