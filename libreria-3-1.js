@@ -1828,6 +1828,8 @@ document.addEventListener(
 
 if (
     !modificaId &&
+    pannello.dataset.tipoSalvataggio !==
+        ANEMOS_TIPO_ANEMOSYSTEMA &&
     (
         typeof anemos31 === "undefined" ||
         !anemos31.intento
@@ -1841,7 +1843,6 @@ if (
     return;
 
 }
-
                  
 let risultato;
 
