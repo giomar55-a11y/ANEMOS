@@ -3030,6 +3030,14 @@ if (pannelloLibreria) {
     "click",
     async function () {
 
+       const tipoNome =
+    (
+        voce.tipo ===
+        ANEMOS_TIPO_ANEMOSYSTEMA
+    )
+        ? "Anemosystema"
+        : "Anemodromo";
+
         const risultato =
     await anemosLibreriaScriviSupabase(
         voce.nome + " copia",
@@ -3047,9 +3055,10 @@ if (pannelloLibreria) {
         ) {
 
             alert(
-                "Non è stato possibile duplicare l'Anemodromo."
-            );
-
+    "Non è stato possibile duplicare " +
+    tipoNome +
+    "."
+);
             return;
 
         }
@@ -3059,9 +3068,9 @@ if (pannelloLibreria) {
 
 
         alert(
-            "Anemodromo duplicato."
-        );
-
+    tipoNome +
+    " duplicato."
+);
     }
 );
        
