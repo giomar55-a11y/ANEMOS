@@ -2760,8 +2760,18 @@ if (
 
     renderAnemosystema();
 
-    return;
+const timelineSistema =
+    document.querySelector(
+        "#anemosystema-area .timeline-scroll"
+    );
 
+if (timelineSistema) {
+
+    timelineSistema.scrollLeft = 0;
+
+}
+
+return;
 }
 
 
