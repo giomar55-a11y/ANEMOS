@@ -1733,7 +1733,6 @@ document.addEventListener(
 
         if (pulsanteChiudi) {
        
-        if (pulsanteChiudi) {
 
             pulsanteChiudi.addEventListener(
                 "click",
