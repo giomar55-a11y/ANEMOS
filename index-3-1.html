@@ -1592,126 +1592,15 @@ if (apnea) {
     collegamento.className =
         "apnea-link attiva";
 
-    const meno =
-    document.createElement(
-        "button"
+    collegamento.textContent =
+        "⏸ " +
+        apnea.durata +
+        " s";
+
+    timelineBlocco.appendChild(
+        collegamento
     );
-
-meno.type = "button";
-meno.className = "apnea-comando";
-meno.textContent = "−";
-
-    meno.addEventListener(
-    "click",
-    function () {
-
-        const nuovaDurata =
-            Number(apnea.durata) - 1;
-
-        if (nuovaDurata <= 0) {
-
-            rimuoviApnea(
-                blocco.sequenza,
-                anemomero.id,
-                successivo
-                    ? successivo.id
-                    : null
-            );
-
-        } else {
-
-            inserisciApnea(
-                blocco.sequenza,
-                anemomero.id,
-                successivo
-                    ? successivo.id
-                    : null,
-                nuovaDurata
-            );
-        }
-
-        renderAnemosystema();
-    }
-);
-
-collegamento.appendChild(
-    meno
-);
-
-const piu =
-    document.createElement(
-        "button"
-    );
-
-piu.type = "button";
-piu.className = "apnea-comando";
-piu.textContent = "+";
-
-piu.addEventListener(
-    "click",
-    function () {
-
-        inserisciApnea(
-            blocco.sequenza,
-            anemomero.id,
-            successivo
-                ? successivo.id
-                : null,
-            Number(apnea.durata) + 1
-        );
-
-        renderAnemosystema();
-    }
-);
-
-collegamento.append(
-    "⏸ " +
-    apnea.durata +
-    " s"
-);
-
-collegamento.appendChild(
-    piu
-);
-
-timelineBlocco.appendChild(
-    collegamento
-);
-
-} else {
-
-    const aggiungiApnea =
-        document.createElement(
-            "button"
-        );
-
-    aggiungiApnea.type = "button";
-    aggiungiApnea.className =
-        "apnea-link";
-    aggiungiApnea.textContent = "+";
-
-aggiungiApnea.addEventListener(
-    "click",
-    function () {
-
-        inserisciApnea(
-            blocco.sequenza,
-            anemomero.id,
-            successivo
-                ? successivo.id
-                : null,
-            1
-        );
-
-        renderAnemosystema();
-    }
-);
-
-timelineBlocco.appendChild(
-    aggiungiApnea
-);
-}
-    }
+}    }
 );
 const legatura =
     document.createElement(
