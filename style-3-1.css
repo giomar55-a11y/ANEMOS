@@ -381,6 +381,10 @@ button {
     gap: 7px;
     min-width: max-content;
 }
+.anemosystema-timeline-blocco .apnea-link {
+    align-self: center;
+    transform: translateY(2px);
+}
 
 .timeline-vuota {
     width: 100%;
