@@ -1318,6 +1318,63 @@ function ottieniTimelineAnemogramma(
     return timeline;
 
 }
+
+/* =====================================================
+   TIMELINE ANEMOSYSTEMA
+===================================================== */
+
+function ottieniTimelineAnemosystema(
+    anemosystema
+) {
+
+    const timeline = [];
+
+    if (
+        !anemosystema ||
+        !Array.isArray(
+            anemosystema.blocchi
+        )
+    ) {
+        return timeline;
+    }
+
+    anemosystema.blocchi.forEach(
+        function (blocco) {
+
+            if (!blocco.sequenza) {
+                return;
+            }
+
+            const cicli =
+                Math.max(
+                    1,
+                    Math.floor(
+                        Number(
+                            blocco.cicli
+                        ) || 1
+                    )
+                );
+
+            for (
+                let ciclo = 0;
+                ciclo < cicli;
+                ciclo += 1
+            ) {
+
+                const timelineAnemodromo =
+                    ottieniTimelineAnemogramma(
+                        blocco.sequenza
+                    );
+
+                timeline.push(
+                    ...timelineAnemodromo
+                );
+            }
+        }
+    );
+
+    return timeline;
+}
 /* =====================================================
    PANNELLO ANEMOGRAMMA
 ===================================================== */
