@@ -2483,14 +2483,41 @@ function inizializzaAnemogramma() {
 
 
     pulsanteAvvia.addEventListener(
-        "click",
-        function () {
+    "click",
+    function () {
 
-            creaPannelloAnemogramma();
+        const areaAnemosystema =
+            document.getElementById(
+                "anemosystema-area"
+            );
 
+        const modalitaAnemosystema =
+            areaAnemosystema &&
+            !areaAnemosystema.hidden;
+
+        if (
+            modalitaAnemosystema &&
+            typeof anemosystemaCorrente !==
+                "undefined"
+        ) {
+
+            const timeline =
+                ottieniTimelineAnemosystema(
+                    anemosystemaCorrente
+                );
+
+            creaPannelloAnemogramma(
+                null,
+                timeline
+            );
+
+            return;
         }
-    );
 
+        creaPannelloAnemogramma();
+
+    }
+);
 }
 
 
