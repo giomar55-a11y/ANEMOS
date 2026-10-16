@@ -2413,17 +2413,29 @@ if (
                     "div"
                 );
 
-            meta.className =
-                "libreria-card-meta";
+            const tipoVoceMeta =
+    voce.tipo ||
+    ANEMOS_TIPO_ANEMODROMO;
 
-            meta.textContent =
-                nomeIntento(
-                    voce.intento
-                ) +
-                " · " +
-                durata +
-                " s";
+if (
+    tipoVoceMeta ===
+    ANEMOS_TIPO_ANEMOSYSTEMA
+) {
 
+    meta.textContent =
+        "ANEMOSYSTEMA";
+
+} else {
+
+    meta.textContent =
+        nomeIntento(
+            voce.intento
+        ) +
+        " · " +
+        durata +
+        " s";
+
+}
 
             /*
                INDICI
