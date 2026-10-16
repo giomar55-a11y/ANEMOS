@@ -3082,42 +3082,50 @@ if (pannelloLibreria) {
         elimina.addEventListener(
     "click",
     async function () {
+
+        const tipoNome =
+            (
+                voce.tipo ===
+                ANEMOS_TIPO_ANEMOSYSTEMA
+            )
+                ? "Anemosystema"
+                : "Anemodromo";
+
         const conferma =
-    await anemosConferma(
-        "Vuoi eliminare \"" +
-        voce.nome +
-        "\" dalla Libreria?",
-        "Elimina Anemodromo"
-    );
+            await anemosConferma(
+                "Vuoi eliminare \"" +
+                voce.nome +
+                "\" dalla Libreria?",
+                "Elimina " + tipoNome
+            );
 
         if (!conferma) {
             return;
         }
 
-
         const risultato =
-    await anemosLibreriaEliminaSupabase(
-        voce.id
-    );
+            await anemosLibreriaEliminaSupabase(
+                voce.id
+            );
 
         if (
             !risultato.successo
         ) {
 
             alert(
-                "Non è stato possibile eliminare l'Anemodromo."
+                "Non è stato possibile eliminare " +
+                tipoNome +
+                "."
             );
 
             return;
-
         }
-
 
         renderLibreria();
 
-
         alert(
-            "Anemodromo eliminato."
+            tipoNome +
+            " eliminato."
         );
 
     }
