@@ -708,12 +708,12 @@ button {
 
 .azione.secondary {
     background: var(--surface);
+    border: 1px solid var(--line);
 
     box-shadow:
         0 4px 14px
         rgba(28, 38, 33, 0.07);
 }
-
 #apri-libreria {
     border: 1px solid var(--line);
 }
