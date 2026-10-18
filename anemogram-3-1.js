@@ -2393,16 +2393,48 @@ testAudio.style.cursor =
 
 testAudio.addEventListener(
     "click",
-    function () {
+    async function () {
 
-        testAudio.textContent =
-            "✅";
+        try {
 
-        anemosAudioImpulsoMetronomo();
+            const context =
+                ottieniAnemosAudioContext();
+
+            if (!context) {
+
+                testAudio.textContent =
+                    "NO AUDIO";
+
+                return;
+            }
+
+            if (
+                context.state ===
+                "suspended"
+            ) {
+                await context.resume();
+            }
+
+            testAudio.textContent =
+                context.state;
+
+            await anemosAudioImpulsoMetronomo();
+
+        } catch (errore) {
+
+            testAudio.textContent =
+                "ERRORE";
+
+            alert(
+                errore.name +
+                ": " +
+                errore.message
+            );
+
+        }
 
     }
-);   
-   intestazione.appendChild(
+);   intestazione.appendChild(
     titolo
 );
 
