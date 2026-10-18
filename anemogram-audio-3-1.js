@@ -88,20 +88,14 @@ async function anemosAudioImpulsoMetronomo() {
 
 
     volume.gain.setValueAtTime(
-        0.0001,
-        context.currentTime
-    );
+    0.5,
+    context.currentTime
+);
 
-    volume.gain.exponentialRampToValueAtTime(
-        0.12,
-        context.currentTime + 0.005
-    );
-
-    volume.gain.exponentialRampToValueAtTime(
-        0.0001,
-        context.currentTime + 0.07
-    );
-
+volume.gain.setValueAtTime(
+    0.5,
+    context.currentTime + 1
+);
 
     oscillatore.connect(
         volume
@@ -117,8 +111,8 @@ async function anemosAudioImpulsoMetronomo() {
     );
 
     oscillatore.stop(
-        context.currentTime + 0.08
-    );
+    context.currentTime + 1
+);
 }
 document.addEventListener(
     "dblclick",
