@@ -2395,11 +2395,13 @@ testAudio.addEventListener(
     "click",
     function () {
 
+        testAudio.textContent =
+            "✅";
+
         anemosAudioImpulsoMetronomo();
 
     }
-);
-   
+);   
    intestazione.appendChild(
     titolo
 );
