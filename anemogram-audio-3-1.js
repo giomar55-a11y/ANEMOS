@@ -58,8 +58,7 @@ async function ottieniAnemosAudioContext() {
 async function anemosAudioImpulsoMetronomo() {
 
     const context =
-        ottieniAnemosAudioContext();
-
+    await ottieniAnemosAudioContext();
     if (!context) {
         return;
     }
