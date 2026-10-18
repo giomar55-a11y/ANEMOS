@@ -56,7 +56,7 @@ function ottieniAnemosAudioContext() {
    IMPULSO METRONOMO
 ===================================================== */
 
-function anemosAudioImpulsoMetronomo() {
+async function anemosAudioImpulsoMetronomo() {
 
     const context =
         ottieniAnemosAudioContext();
@@ -65,6 +65,12 @@ function anemosAudioImpulsoMetronomo() {
         return;
     }
 
+    if (
+        context.state ===
+        "suspended"
+    ) {
+        await context.resume();
+    }
     const oscillatore =
         context.createOscillator();
 
