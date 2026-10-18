@@ -114,3 +114,9 @@ function anemosAudioImpulsoMetronomo() {
         context.currentTime + 0.08
     );
 }
+document.addEventListener(
+    "dblclick",
+    function () {
+        anemosAudioImpulsoMetronomo();
+    }
+);
