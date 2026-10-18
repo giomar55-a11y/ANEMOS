@@ -2355,16 +2355,64 @@ reset.addEventListener(
         }
     );
 
+const testAudio =
+    document.createElement(
+        "button"
+    );
 
+
+testAudio.type =
+    "button";
+
+
+testAudio.textContent =
+    "🔊";
+
+
+testAudio.setAttribute(
+    "aria-label",
+    "Audio Anemografo"
+);
+
+
+testAudio.style.fontSize =
+    "22px";
+
+
+testAudio.style.border =
+    "0";
+
+
+testAudio.style.background =
+    "transparent";
+
+
+testAudio.style.cursor =
+    "pointer";
+
+
+testAudio.addEventListener(
+    "click",
+    function () {
+
+        anemosAudioImpulsoMetronomo();
+
+    }
+);
+   
    intestazione.appendChild(
     titolo
 );
 
 
 intestazione.appendChild(
-    playPausa
+    testAudio
 );
 
+
+intestazione.appendChild(
+    playPausa
+);
 
 intestazione.appendChild(
     reset
