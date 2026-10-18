@@ -25,7 +25,7 @@ let anemosAudioContext =
     null;
 
 
-function ottieniAnemosAudioContext() {
+async function ottieniAnemosAudioContext() {
 
     if (!anemosAudioContext) {
 
@@ -45,12 +45,11 @@ function ottieniAnemosAudioContext() {
         anemosAudioContext.state ===
         "suspended"
     ) {
-        anemosAudioContext.resume();
+        await anemosAudioContext.resume();
     }
 
     return anemosAudioContext;
 }
-
 
 /* =====================================================
    IMPULSO METRONOMO
