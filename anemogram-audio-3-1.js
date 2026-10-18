@@ -98,13 +98,8 @@ volume.gain.setValueAtTime(
 );
 
     oscillatore.connect(
-        volume
-    );
-
-    volume.connect(
-        context.destination
-    );
-
+    context.destination
+);
 
     oscillatore.start(
         context.currentTime
