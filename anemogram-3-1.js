@@ -1679,13 +1679,17 @@ async function animaAnemomeroAnemogramma(
 
 
     let trascorso =
-        0;
+    0;
+
+let secondoMetronomo =
+    0;
 
 
-    while (
-        trascorso < durata
-    ) {
-        if (
+while (
+    trascorso < durata
+) {
+   
+   if (
             esecuzione !==
             anemogrammaEsecuzione
         ) {
@@ -1715,14 +1719,37 @@ async function animaAnemomeroAnemogramma(
 
 
         trascorso =
-            Math.min(
-                trascorso + intervallo,
-                durata
-            );
+    Math.min(
+        trascorso + intervallo,
+        durata
+    );
+
+const secondoCorrente =
+    Math.floor(
+        trascorso / 1000
+    );
+
+if (
+    secondoCorrente >
+    secondoMetronomo
+) {
+
+    secondoMetronomo =
+        secondoCorrente;
+
+    const tac =
+        new Audio(
+            "tac-metronomo.mp3"
+        );
+
+    tac.play().catch(
+        function () {}
+    );
+}
 
 
-        const percentuale =
-            durata > 0
+const percentuale =
+   durata > 0
                 ? (
                     trascorso /
                     durata
