@@ -2397,27 +2397,18 @@ testAudio.addEventListener(
 
         try {
 
-            const context =
-    await ottieniAnemosAudioContext();
-            if (!context) {
+            const audio =
+                new Audio(
+                    "tac-metronomo.mp3"
+                );
 
-                testAudio.textContent =
-                    "NO AUDIO";
+            audio.currentTime =
+                0;
 
-                return;
-            }
-
-            if (
-                context.state ===
-                "suspended"
-            ) {
-                await context.resume();
-            }
+            await audio.play();
 
             testAudio.textContent =
-                context.state;
-
-            await anemosAudioImpulsoMetronomo();
+                "🔊";
 
         } catch (errore) {
 
@@ -2433,7 +2424,8 @@ testAudio.addEventListener(
         }
 
     }
-);   intestazione.appendChild(
+);
+   intestazione.appendChild(
     titolo
 );
 
