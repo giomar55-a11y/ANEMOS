@@ -2398,8 +2398,7 @@ testAudio.addEventListener(
         try {
 
             const context =
-                ottieniAnemosAudioContext();
-
+    await ottieniAnemosAudioContext();
             if (!context) {
 
                 testAudio.textContent =
