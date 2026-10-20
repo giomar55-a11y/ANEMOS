@@ -1679,17 +1679,13 @@ async function animaAnemomeroAnemogramma(
 
 
     let trascorso =
-    0;
-
-let secondoMetronomo =
-    0;
+        0;
 
 
-while (
-    trascorso < durata
-) {
-   
-   if (
+    while (
+        trascorso < durata
+    ) {
+        if (
             esecuzione !==
             anemogrammaEsecuzione
         ) {
@@ -1719,37 +1715,14 @@ while (
 
 
         trascorso =
-    Math.min(
-        trascorso + intervallo,
-        durata
-    );
-
-const secondoCorrente =
-    Math.floor(
-        trascorso / 1000
-    );
-
-if (
-    secondoCorrente >
-    secondoMetronomo
-) {
-
-    secondoMetronomo =
-        secondoCorrente;
-
-    const tac =
-        new Audio(
-            "tac-metronomo.mp3"
-        );
-
-    tac.play().catch(
-        function () {}
-    );
-}
+            Math.min(
+                trascorso + intervallo,
+                durata
+            );
 
 
-const percentuale =
-   durata > 0
+        const percentuale =
+            durata > 0
                 ? (
                     trascorso /
                     durata
@@ -2382,89 +2355,16 @@ reset.addEventListener(
         }
     );
 
-const testAudio =
-    document.createElement(
-        "button"
-    );
 
-
-testAudio.type =
-    "button";
-
-
-testAudio.textContent =
-    "🔊";
-
-
-testAudio.setAttribute(
-    "aria-label",
-    "Audio Anemografo"
-);
-
-
-testAudio.style.fontSize =
-    "22px";
-
-
-testAudio.style.border =
-    "0";
-
-
-testAudio.style.background =
-    "transparent";
-
-
-testAudio.style.cursor =
-    "pointer";
-
-
-testAudio.addEventListener(
-    "click",
-    async function () {
-
-        try {
-
-            const audio =
-                new Audio(
-                    "tac-metronomo.mp3"
-                );
-
-            audio.currentTime =
-                0;
-
-            await audio.play();
-
-            testAudio.textContent =
-                "🔊";
-
-        } catch (errore) {
-
-            testAudio.textContent =
-                "ERRORE";
-
-            alert(
-                errore.name +
-                ": " +
-                errore.message
-            );
-
-        }
-
-    }
-);
    intestazione.appendChild(
     titolo
 );
 
 
 intestazione.appendChild(
-    testAudio
-);
-
-
-intestazione.appendChild(
     playPausa
 );
+
 
 intestazione.appendChild(
     reset
