@@ -939,6 +939,11 @@ const titoloAnemosystema =
         "sposta-anemodromo"
     );
 
+    const pulsanteEliminaAnemosystema =
+    document.getElementById(
+        "elimina-anemosystema"
+    );
+
 function aggiornaLinguaInterfaccia() {
 
     titoloBrand.textContent =
@@ -964,7 +969,10 @@ titoloAnemosystema.textContent =
     "Sequenza di atti respiratori";
 
     pulsanteSpostaAnemodromo.textContent =
-    "AGGIUNGI ALLA SEQUENZA";    
+    "AGGIUNGI ALLA SEQUENZA";   
+
+    pulsanteEliminaAnemosystema.textContent =
+    "ELIMINA SEQUENZA";
 
     } else {
 
@@ -983,6 +991,9 @@ titoloAnemosystema.textContent =
   pulsanteSpostaAnemodromo.textContent =
     "SPOSTA IN ANEMOSYSTEMA";      
 
+    pulsanteEliminaAnemosystema.textContent =
+    "Elimina ANEMOSYSTEMA";
+        
     }
 
 }
