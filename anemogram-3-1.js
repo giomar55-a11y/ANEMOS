@@ -2571,6 +2571,15 @@ function inizializzaAnemogramma() {
     "click",
     function () {
 
+       const avvisoAvvio =
+    document.getElementById(
+        "avviso-avvio-anemos"
+    );
+
+if (avvisoAvvio) {
+    avvisoAvvio.hidden = true;
+}
+
         const areaAnemosystema =
             document.getElementById(
                 "anemosystema-area"
@@ -2605,10 +2614,6 @@ function inizializzaAnemogramma() {
             )
         ) {
 
-            const avvisoAvvio =
-    document.getElementById(
-        "avviso-avvio-anemos"
-    );
 
 if (avvisoAvvio) {
     avvisoAvvio.hidden = false;
