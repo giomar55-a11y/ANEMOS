@@ -265,10 +265,9 @@
         class="riepilogo-voce"
     >
 
-        <span>
-            ANEMOSINTHESIS
-        </span>
-
+        <span id="etichetta-anemosinthesis">
+    ANEMOSINTHESIS
+</span>
         <strong
             id="anemosinthesis-esito"
         >
@@ -281,10 +280,10 @@
     id="anemobaros-riepilogo"
     class="riepilogo-voce"
 >
-    <span>
-        ANEMOBAROS
-    </span>
-    <strong
+    <span id="etichetta-anemobaros">
+    ANEMOBAROS
+</span>
+        <strong
         id="anemobaros-esito"
     >
         —
@@ -297,10 +296,9 @@
         class="riepilogo-voce anemoschesi-riepilogo"
     >
 
-        <span>
-            ANEMOSCHESI
-        </span>
-
+        <span id="etichetta-anemoschesi">
+    ANEMOSCHESI
+</span>
         <strong
             id="anemoschesi-esito"
         >
@@ -944,6 +942,21 @@ const titoloAnemosystema =
         "elimina-anemosystema"
     );
 
+    const etichettaAnemosinthesis =
+    document.getElementById(
+        "etichetta-anemosinthesis"
+    );
+
+const etichettaAnemobaros =
+    document.getElementById(
+        "etichetta-anemobaros"
+    );
+
+const etichettaAnemoschesi =
+    document.getElementById(
+        "etichetta-anemoschesi"
+    );
+
 function aggiornaLinguaInterfaccia() {
 
     titoloBrand.textContent =
@@ -974,6 +987,15 @@ titoloAnemosystema.textContent =
     pulsanteEliminaAnemosystema.textContent =
     "ELIMINA SEQUENZA";
 
+    etichettaAnemosinthesis.textContent =
+    "COMPLESSITÀ";
+
+etichettaAnemobaros.textContent =
+    "INTENSITÀ";
+
+etichettaAnemoschesi.textContent =
+    "COERENZA";    
+
     pulsanteLinguaAggiungiIN.textContent =
     "+ INSPIRAZIONE";
 
@@ -999,6 +1021,15 @@ titoloAnemosystema.textContent =
 
     pulsanteEliminaAnemosystema.textContent =
     "Elimina ANEMOSYSTEMA";
+
+    etichettaAnemosinthesis.textContent =
+    "ANEMOSINTHESIS";
+
+etichettaAnemobaros.textContent =
+    "ANEMOBAROS";
+
+etichettaAnemoschesi.textContent =
+    "ANEMOSCHESI";    
 
     pulsanteLinguaAggiungiIN.textContent =
     "+ IN";
