@@ -2607,7 +2607,7 @@ function inizializzaAnemogramma() {
 
             alert(
                 "Atto respiratorio incompleto.\n\n" +
-                "Seleziona almeno una zona respiratoria " +
+                "Seleziona almeno un settore" +
                 "per ogni fase prima di avviare l'animazione."
             );
 
