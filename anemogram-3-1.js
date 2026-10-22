@@ -2605,12 +2605,14 @@ function inizializzaAnemogramma() {
             )
         ) {
 
-            alert(
-                "Atto respiratorio incompleto.\n\n" +
-                "Seleziona almeno un settore " +
-                "per ogni fase prima di avviare l'animazione."
-            );
+            const avvisoAvvio =
+    document.getElementById(
+        "avviso-avvio-anemos"
+    );
 
+if (avvisoAvvio) {
+    avvisoAvvio.hidden = false;
+}
             return;
         }
 
