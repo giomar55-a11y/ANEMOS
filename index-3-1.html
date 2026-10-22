@@ -1020,6 +1020,11 @@ const etichettaSalvaAnemoschesi =
     document.getElementById(
         "etichetta-salva-anemoschesi"
     );
+
+    const etichettaSalvaAnemobaros =
+    document.getElementById(
+        "etichetta-salva-anemobaros"
+    );
     
 function aggiornaLinguaInterfaccia() {
 
@@ -1066,6 +1071,9 @@ titoloAnemosystema.textContent =
 filtroTipoAnemosystema.textContent =
     "SEQUENZE DI ATTI RESPIRATORI";
 
+  etichettaSalvaAnemobaros.textContent =
+    "INTENSITÀ";      
+
 etichettaSalvaAnemoschesi.textContent =
     "COERENZA";
         
@@ -1085,6 +1093,9 @@ pulsanteLinguaAggiungiES.textContent =
     "+ ESPIRAZIONE";    
 
     } else {
+
+        etichettaSalvaAnemobaros.textContent =
+    "ANEMOBAROS";
 
         etichettaSalvaAnemoschesi.textContent =
     "ANEMOSCHESI";
