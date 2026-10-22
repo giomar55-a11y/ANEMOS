@@ -2523,6 +2523,35 @@ requestAnimationFrame(
    COMANDO AVVIA
 ===================================================== */
 
+function anemodromoHaSettoriCompleti(
+    sequenza
+) {
+
+    if (
+        !sequenza ||
+        !Array.isArray(
+            sequenza.anemodromi
+        )
+    ) {
+        return false;
+    }
+
+    return sequenza.anemodromi.every(
+        function (
+            anemomero
+        ) {
+
+            return (
+                Array.isArray(
+                    anemomero.settori
+                ) &&
+                anemomero.settori.length > 0
+            );
+
+        }
+    );
+}
+
 function inizializzaAnemogramma() {
 
     const pulsanteAvvia =
