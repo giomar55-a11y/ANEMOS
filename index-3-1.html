@@ -922,8 +922,28 @@ function aggiornaLinguaInterfaccia() {
             "ANEMOS"
         );
 
-}
+    if (
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+    ) {
 
+        pulsanteModalitaAnemodromo.textContent =
+            "Montaggio atto respiratorio";
+
+        pulsanteModalitaAnemosystema.textContent =
+            "Montaggio sequenza atti respiratori";
+
+    } else {
+
+        pulsanteModalitaAnemodromo.textContent =
+            "Composizione guidata ANEMODROMO";
+
+        pulsanteModalitaAnemosystema.textContent =
+            "Composizione libera ANEMOSYSTEMA";
+
+    }
+
+}
 
 selettoreLingua.value =
     anemosOttieniLingua();
