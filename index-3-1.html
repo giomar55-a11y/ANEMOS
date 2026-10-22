@@ -903,6 +903,48 @@
 ></script>
 
 <script>
+
+const selettoreLingua =
+    document.getElementById(
+        "selettore-lingua"
+    );
+
+const titoloBrand =
+    document.querySelector(
+        ".brand"
+    );
+
+
+function aggiornaLinguaInterfaccia() {
+
+    titoloBrand.textContent =
+        anemosTermine(
+            "ANEMOS"
+        );
+
+}
+
+
+selettoreLingua.value =
+    anemosOttieniLingua();
+
+
+selettoreLingua.addEventListener(
+    "change",
+    function () {
+
+        anemosImpostaLingua(
+            selettoreLingua.value
+        );
+
+        aggiornaLinguaInterfaccia();
+
+    }
+);
+
+
+aggiornaLinguaInterfaccia();
+    
     /*
         =================================================
         ANEMOS 3.1
