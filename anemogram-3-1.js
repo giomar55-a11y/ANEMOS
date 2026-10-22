@@ -2599,6 +2599,21 @@ function inizializzaAnemogramma() {
             return;
         }
 
+               if (
+            !anemodromoHaSettoriCompleti(
+                anemos31
+            )
+        ) {
+
+            alert(
+                "Atto respiratorio incompleto.\n\n" +
+                "Seleziona almeno una zona respiratoria " +
+                "per ogni fase prima di avviare l'animazione."
+            );
+
+            return;
+        }
+
         creaPannelloAnemogramma();
 
     }
