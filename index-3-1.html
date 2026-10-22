@@ -139,9 +139,9 @@
     hidden
 >
     <div class="builder-title">
-    <h2>
-        ANEMOSYSTEMA
-    </h2>
+    <h2 id="titolo-anemosystema">
+    ANEMOSYSTEMA
+</h2>
 </div>
 
 <div class="timeline-scroll">
@@ -196,7 +196,7 @@
 
             <div class="builder-title">
 
-                <h2>
+                <h2 id="titolo-anemodromo">
     ANEMODROMO
 </h2>
 
@@ -924,6 +924,15 @@ const pulsanteModalitaAnemosystema =
         "modalita-anemosystema"
     );
 
+    const titoloAnemodromo =
+    document.getElementById(
+        "titolo-anemodromo"
+    );
+
+const titoloAnemosystema =
+    document.getElementById(
+        "titolo-anemosystema"
+    );
 
 function aggiornaLinguaInterfaccia() {
 
@@ -943,6 +952,12 @@ function aggiornaLinguaInterfaccia() {
         pulsanteModalitaAnemosystema.textContent =
             "composizione sequenza atti respiratori";
 
+        titoloAnemodromo.textContent =
+    "Atto respiratorio";
+
+titoloAnemosystema.textContent =
+    "Sequenza di atti respiratori";
+
     } else {
 
         pulsanteModalitaAnemodromo.textContent =
@@ -950,6 +965,12 @@ function aggiornaLinguaInterfaccia() {
 
         pulsanteModalitaAnemosystema.textContent =
             "Composizione libera ANEMOSYSTEMA";
+
+    titoloAnemodromo.textContent =
+    "ANEMODROMO";
+
+titoloAnemosystema.textContent =
+    "ANEMOSYSTEMA";    
 
     }
 
