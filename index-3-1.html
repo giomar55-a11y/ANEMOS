@@ -1014,6 +1014,11 @@ const pulsanteLinguaAggiungiES =
         "etichetta-nome-anemodromo"
     ); 
 
+const etichettaSalvaAnemoschesi =
+    document.getElementById(
+        "etichetta-salva-anemoschesi"
+    );
+    
 function aggiornaLinguaInterfaccia() {
 
     titoloBrand.textContent =
@@ -1059,6 +1064,9 @@ titoloAnemosystema.textContent =
 filtroTipoAnemosystema.textContent =
     "SEQUENZE DI ATTI RESPIRATORI";
 
+etichettaSalvaAnemoschesi.textContent =
+    "COERENZA";
+        
     etichettaAnemosinthesis.textContent =
     "COMPLESSITÀ";
 
@@ -1075,6 +1083,9 @@ pulsanteLinguaAggiungiES.textContent =
     "+ ESPIRAZIONE";    
 
     } else {
+
+        etichettaSalvaAnemoschesi.textContent =
+    "ANEMOSCHESI";
 
         etichettaNomeAnemodromo.textContent =
     "Nome Anemodromo";
