@@ -1007,6 +1007,11 @@ const pulsanteLinguaAggiungiES =
         "aggiungi-es"
     );
 
+   const etichettaNomeAnemodromo =
+    document.getElementById(
+        "etichetta-nome-anemodromo"
+    ); 
+
 function aggiornaLinguaInterfaccia() {
 
     titoloBrand.textContent =
@@ -1021,6 +1026,9 @@ function aggiornaLinguaInterfaccia() {
 
         pulsanteModalitaAnemodromo.textContent =
             "composizione atto respiratorio per intento";
+
+        etichettaNomeAnemodromo.textContent =
+    "Nome atto respiratorio";
 
         pulsanteModalitaAnemosystema.textContent =
             "composizione sequenza atti respiratori";
@@ -1065,6 +1073,9 @@ pulsanteLinguaAggiungiES.textContent =
     "+ ESPIRAZIONE";    
 
     } else {
+
+        etichettaNomeAnemodromo.textContent =
+    "Nome Anemodromo";
 
         pulsanteModalitaAnemodromo.textContent =
             "Composizione guidata ANEMODROMO";
