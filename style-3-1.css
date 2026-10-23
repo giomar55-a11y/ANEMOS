@@ -340,38 +340,41 @@ button {
 }
 
 .menu-azioni-anemodromo-pannello button {
-    display: block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     width: 100%;
     min-height: 44px;
 
-    margin: 0;
+    margin: 0 0 6px;
     padding: 9px 12px;
 
-    border: 0;
-    border-radius: 0;
+    border: 1px solid var(--line) !important;
+    border-radius: var(--radius-medium);
 
-    background: transparent;
+    background: var(--surface) !important;
+
+    color: var(--text);
 
     font-size: 12px;
-    font-weight: 750;
+    font-weight: 800;
     line-height: 1.2;
-    text-align: left;
+    text-align: center;
 }
 
-.menu-azioni-anemodromo-pannello button + button {
-    border-top: 1px solid var(--line);
+.menu-azioni-anemodromo-pannello button:last-child {
+    margin-bottom: 0;
+}
+
+.menu-azioni-anemodromo-pannello #sposta-anemodromo {
+    border: 1px solid var(--line) !important;
+    background: var(--surface) !important;
 }
 
 .menu-azioni-anemodromo-pannello #elimina-tutto {
-    margin-top: 5px;
-    padding-top: 12px;
-
-    border-top: 1px solid var(--line);
-
     color: var(--danger);
 }
-
 /* =====================================================
    TIMELINE
 ===================================================== */
