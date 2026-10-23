@@ -304,7 +304,8 @@ button {
     position: relative;
 }
 
-#menu-azioni-anemodromo {
+#menu-azioni-anemodromo,
+#menu-azioni-anemosystema {
     width: 34px;
     height: 34px;
 
@@ -318,7 +319,6 @@ button {
     font-size: 20px;
     line-height: 1;
 }
-
 .menu-azioni-anemodromo-pannello {
     position: absolute;
 
