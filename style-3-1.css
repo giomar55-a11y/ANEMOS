@@ -300,6 +300,44 @@ button {
     font-size: 11px;
 }
 
+.builder-title {
+    position: relative;
+}
+
+#menu-azioni-anemodromo {
+    width: 34px;
+    height: 34px;
+
+    padding: 0;
+
+    border: 1px solid var(--line);
+    border-radius: 50%;
+
+    background: var(--surface);
+
+    font-size: 20px;
+    line-height: 1;
+}
+
+.menu-azioni-anemodromo-pannello {
+    position: absolute;
+
+    top: 40px;
+    right: 0;
+
+    z-index: 20;
+
+    width: 220px;
+
+    padding: 6px;
+
+    border: 1px solid var(--line);
+    border-radius: var(--radius-medium);
+
+    background: var(--surface);
+
+    box-shadow: var(--shadow);
+}
 
 /* =====================================================
    TIMELINE
