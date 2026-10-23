@@ -1037,6 +1037,16 @@ const etichettaSalvaAnemoschesi =
     document.getElementById(
         "etichetta-salva-anemosinthesis"
     ); 
+
+    const etichettaLibreriaAnemobaros =
+    document.getElementById(
+        "etichetta-libreria-anemobaros"
+    );
+
+const etichettaLibreriaAnemosinthesis =
+    document.getElementById(
+        "etichetta-libreria-anemosinthesis"
+    );
     
 function aggiornaLinguaInterfaccia() {
 
@@ -1083,6 +1093,12 @@ titoloAnemosystema.textContent =
 filtroTipoAnemosystema.textContent =
     "SEQUENZE DI ATTI RESPIRATORI";
 
+  etichettaLibreriaAnemobaros.textContent =
+    "INTENSITÀ";
+
+etichettaLibreriaAnemosinthesis.textContent =
+    "COMPLESSITÀ";      
+
  etichettaSalvaAnemosinthesis.textContent =
     "COMPLESSITÀ";       
 
@@ -1108,6 +1124,12 @@ pulsanteLinguaAggiungiES.textContent =
     "+ ESPIRAZIONE";    
 
     } else {
+
+        etichettaLibreriaAnemobaros.textContent =
+    "ANEMOBAROS";
+
+etichettaLibreriaAnemosinthesis.textContent =
+    "ANEMOSINTHESIS";
 
         etichettaSalvaAnemosinthesis.textContent =
     "ANEMOSINTHESIS";
