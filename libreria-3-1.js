@@ -2645,7 +2645,14 @@ if (
                 "libreria-card-indice";
 
             schedaAnemosinthesis.innerHTML =
-                "<span>ANEMOSINTHESIS</span>" +
+    "<span>" +
+    (
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+            ? "COMPLESSITÀ"
+            : "ANEMOSINTHESIS"
+    ) +
+    "</span>" +
                 "<strong>" +
                 risultatoAnemosinthesis
                     .anemosinthesis +
