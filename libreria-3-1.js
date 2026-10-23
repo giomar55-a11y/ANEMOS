@@ -2964,7 +2964,10 @@ return;
                 "button";
 
             anemogramma.textContent =
-                "ANEMOGRAMMA";
+    anemosOttieniLingua() ===
+    ANEMOS_LINGUA.ITALIANO
+        ? "ANIMAZIONE"
+        : "ANEMOGRAMMA";
 
             anemogramma.dataset.id =
                 voce.id;
