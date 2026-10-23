@@ -308,6 +308,7 @@ button {
 #menu-azioni-anemosystema {
     width: 34px;
     height: 34px;
+    flex: 0 0 34px;
 
     padding: 0;
 
