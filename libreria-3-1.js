@@ -2619,8 +2619,15 @@ if (
                 "libreria-card-indice";
 
             schedaAnemobaros.innerHTML =
-                "<span>ANEMOBAROS</span>" +
-                "<strong>" +
+    "<span>" +
+    (
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+            ? "INTENSITÀ"
+            : "ANEMOBAROS"
+    ) +
+    "</span>" +
+               "<strong>" +
                 risultatoAnemobaros.anemobaros +
                 "/100 · " +
                 risultatoAnemobaros.simbolo +
