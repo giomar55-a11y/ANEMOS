@@ -966,6 +966,16 @@ const pannelloMenuAzioniAnemodromo =
         "menu-azioni-anemodromo-pannello"
     );
 
+    const pulsanteMenuAzioniAnemosystema =
+    document.getElementById(
+        "menu-azioni-anemosystema"
+    );
+
+const pannelloMenuAzioniAnemosystema =
+    document.getElementById(
+        "menu-azioni-anemosystema-pannello"
+    );
+
 const selettoreLingua =
     document.getElementById(
         "selettore-lingua"
@@ -1091,6 +1101,14 @@ const etichettaLibreriaAnemosinthesis =
     () => {
         pannelloMenuAzioniAnemodromo.hidden =
             !pannelloMenuAzioniAnemodromo.hidden;
+    }
+);
+
+    pulsanteMenuAzioniAnemosystema.addEventListener(
+    "click",
+    () => {
+        pannelloMenuAzioniAnemosystema.hidden =
+            !pannelloMenuAzioniAnemosystema.hidden;
     }
 );
     
