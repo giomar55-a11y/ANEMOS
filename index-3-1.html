@@ -1049,6 +1049,11 @@ const etichettaLibreriaAnemosinthesis =
     document.getElementById(
         "etichetta-libreria-anemosinthesis"
     );
+
+    const messaggioLibreriaVuota =
+    document.getElementById(
+        "messaggio-libreria-vuota"
+    );
     
 function aggiornaLinguaInterfaccia() {
 
@@ -1095,6 +1100,9 @@ titoloAnemosystema.textContent =
 filtroTipoAnemosystema.textContent =
     "SEQUENZE DI ATTI RESPIRATORI";
 
+        messaggioLibreriaVuota.textContent =
+    "Nessun atto respiratorio salvato.";
+
   etichettaLibreriaAnemobaros.textContent =
     "INTENSITÀ";
 
@@ -1126,6 +1134,9 @@ pulsanteLinguaAggiungiES.textContent =
     "+ ESPIRAZIONE";    
 
     } else {
+
+        messaggioLibreriaVuota.textContent =
+    "Nessun Anemodromo salvato.";
 
         etichettaLibreriaAnemobaros.textContent =
     "ANEMOBAROS";
