@@ -946,6 +946,16 @@
 
 <script>
 
+const pulsanteMenuAzioniAnemodromo =
+    document.getElementById(
+        "menu-azioni-anemodromo"
+    );
+
+const pannelloMenuAzioniAnemodromo =
+    document.getElementById(
+        "menu-azioni-anemodromo-pannello"
+    );
+
 const selettoreLingua =
     document.getElementById(
         "selettore-lingua"
@@ -1065,6 +1075,14 @@ const etichettaLibreriaAnemosinthesis =
     document.getElementById(
         "messaggio-libreria-vuota"
     );
+
+    pulsanteMenuAzioniAnemodromo.addEventListener(
+    "click",
+    () => {
+        pannelloMenuAzioniAnemodromo.hidden =
+            !pannelloMenuAzioniAnemodromo.hidden;
+    }
+);
     
 function aggiornaLinguaInterfaccia() {
 
