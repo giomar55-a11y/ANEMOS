@@ -2593,9 +2593,16 @@ if (
             schedaAnemoschesi.className =
                 "libreria-card-indice";
 
-            schedaAnemoschesi.innerHTML =
-                "<span>ANEMOSCHESI</span>" +
-                "<strong>" +
+           schedaAnemoschesi.innerHTML =
+    "<span>" +
+    (
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+            ? "COERENZA"
+            : "ANEMOSCHESI"
+    ) +
+    "</span>" +
+              "<strong>" +
                 Math.round(
                     risultatoAnemoschesi
                         .punteggioComplessivo
