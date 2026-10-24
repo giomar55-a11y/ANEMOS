@@ -1844,3 +1844,21 @@ quando è presente il semaforo.
     -webkit-user-select: none;
     cursor: grab;
 }
+
+#avvia-anemos {
+    width: 100%;
+    min-height: 52px;
+
+    background: #2f7d4a;
+    color: #ffffff;
+
+    border: 0;
+    border-radius: var(--radius-medium);
+
+    font-weight: 800;
+}
+
+.azioni-generali {
+    width: 100%;
+    margin-top: 12px;
+}
