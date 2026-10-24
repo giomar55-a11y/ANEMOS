@@ -1807,25 +1807,7 @@ const areaAnemosystema =
         "anemosystema-area"
     );
 
-    pulsanteModalitaAnemosystema.addEventListener(
-    "click",
-    function () {
-        impostaIntento(
-            anemos31,
-            null
-        );
-
-        selettoreIntento.value = "";
-
-        localStorage.removeItem(
-            "ANEMOS_INTENTO_SELEZIONATO"
-        );
-
-        sezioneIntento.hidden = true;
-        areaAnemosystema.hidden = false;
-    }
-);
-
+    
     
     let anemosystemaCorrente =
     anemosSystemaCrea();
@@ -1863,9 +1845,18 @@ pulsanteSpostaAnemodromo.addEventListener(
 
         areaAnemosystema.hidden = false;
 
+        const areaAvvia =
+            document.querySelector(
+                ".azioni-generali"
+            );
+
+        areaAnemosystema.after(
+            areaAvvia
+        );
+
         renderAnemosystema();
     }
-);    
+);
     function renderAnemosystema() {
 
     const contenitore =
