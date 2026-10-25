@@ -1490,9 +1490,10 @@ document.addEventListener(
         ) {
 
             alert(
-                "Per salvare un Anemodromo nella Libreria devi accedere al tuo account ANEMOS."
-            );
-
+    anemosOttieniLingua() === ANEMOS_LINGUA.ITALIANO
+        ? "Per salvare un respiro nella Libreria devi accedere al tuo account ANEMOS."
+        : "Per salvare un Anemodromo nella Libreria devi accedere al tuo account ANEMOS."
+);
             return;
 
         }
@@ -1510,9 +1511,10 @@ document.addEventListener(
                 ) {
 
                     alert(
-                        "Crea almeno un Anemomero prima di salvare."
-                    );
-
+    anemosOttieniLingua() === ANEMOS_LINGUA.ITALIANO
+        ? "Crea almeno una fase respiratoria prima di salvare."
+        : "Crea almeno un Anemomero prima di salvare."
+);
                     return;
 
                 }
@@ -1680,10 +1682,11 @@ document.addEventListener(
                         !sessionData.session
                     ) {
 
-                        alert(
-                            "Per salvare un Anemosystema nella Libreria devi accedere al tuo account ANEMOS."
-                        );
-
+                       alert(
+    anemosOttieniLingua() === ANEMOS_LINGUA.ITALIANO
+        ? "Per salvare una respirazione nella Libreria devi accedere al tuo account ANEMOS."
+        : "Per salvare un Anemosystema nella Libreria devi accedere al tuo account ANEMOS."
+);
                         return;
                     }
 
@@ -1695,9 +1698,10 @@ document.addEventListener(
                     ) {
 
                         alert(
-                            "L'Anemosystema deve contenere almeno 2 Anemodromi."
-                        );
-
+    anemosOttieniLingua() === ANEMOS_LINGUA.ITALIANO
+        ? "La respirazione deve contenere almeno 2 respiri."
+        : "L'Anemosystema deve contenere almeno 2 Anemodromi."
+);
                         return;
                     }
 
@@ -1814,9 +1818,10 @@ document.addEventListener(
                     if (!nome) {
 
                         alert(
-                            "Inserisci un nome per l'Anemodromo."
-                        );
-
+    anemosOttieniLingua() === ANEMOS_LINGUA.ITALIANO
+        ? "Inserisci un nome."
+        : "Inserisci un nome per l'Anemodromo."
+);
                         return;
 
                     }
@@ -1889,9 +1894,10 @@ if (modificaId) {
                     ) {
 
                         alert(
-                            "Non è stato possibile salvare l'Anemodromo."
-                        );
-
+    anemosOttieniLingua() === ANEMOS_LINGUA.ITALIANO
+        ? "Non è stato possibile completare il salvataggio."
+        : "Non è stato possibile salvare l'Anemodromo."
+);
                         return;
 
                     }
