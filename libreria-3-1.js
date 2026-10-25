@@ -1691,6 +1691,10 @@ if (etichettaNome) {
                 "click",
                 async function () {
 
+                   document.getElementById(
+    "menu-azioni-anemosystema-pannello"
+).hidden = true;
+
                     const {
                         data: sessionData
                     } =
