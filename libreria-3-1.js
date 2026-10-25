@@ -2479,9 +2479,9 @@ if (
         vuota.textContent =
     anemosOttieniLingua() ===
     ANEMOS_LINGUA.ITALIANO
-        ? "Nessun respiro corrisponde ai filtri."
+        ? "Nessun elemento corrisponde ai filtri."
         : "Nessun Anemodromo corrisponde ai filtri.";
-        contenitore.appendChild(
+       contenitore.appendChild(
             vuota
         );
 
