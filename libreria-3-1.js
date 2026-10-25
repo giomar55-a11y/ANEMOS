@@ -3293,13 +3293,20 @@ if (pannelloLibreria) {
     async function () {
 
         const tipoNome =
-            (
-                voce.tipo ===
-                ANEMOS_TIPO_ANEMOSYSTEMA
-            )
+    anemosOttieniLingua() ===
+    ANEMOS_LINGUA.ITALIANO
+        ? (
+            voce.tipo ===
+            ANEMOS_TIPO_ANEMOSYSTEMA
+                ? "Respirazione"
+                : "Respiro"
+        )
+        : (
+            voce.tipo ===
+            ANEMOS_TIPO_ANEMOSYSTEMA
                 ? "Anemosystema"
-                : "Anemodromo";
-
+                : "Anemodromo"
+        );
         const conferma =
             await anemosConferma(
                 "Vuoi eliminare \"" +
