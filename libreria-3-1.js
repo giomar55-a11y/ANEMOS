@@ -1963,8 +1963,6 @@ if (eraModifica) {
 
 } else {
 
-    } else {
-
     const salvaRespirazione =
         pannello.dataset.tipoSalvataggio ===
         ANEMOS_TIPO_ANEMOSYSTEMA;
