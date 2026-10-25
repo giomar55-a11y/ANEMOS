@@ -1752,6 +1752,20 @@ if (
 
         aggiornaDisponibilitaAggiunta();
 
+        const avvisoAvvio =
+    document.getElementById(
+        "avviso-avvio-anemos"
+    );
+
+if (
+    avvisoAvvio &&
+    anemodromoHaSettoriCompleti(
+        anemos31
+    )
+) {
+    avvisoAvvio.hidden = true;
+}
+
     };
 
     const avvisoAvvio =
