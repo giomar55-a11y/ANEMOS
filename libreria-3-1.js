@@ -3262,7 +3262,14 @@ if (pannelloLibreria) {
 
         alert(
     tipoNome +
-    " duplicato."
+    (
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO &&
+        voce.tipo ===
+        ANEMOS_TIPO_ANEMOSYSTEMA
+            ? " duplicata."
+            : " duplicato."
+    )
 );
     }
 );
