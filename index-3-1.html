@@ -1986,11 +1986,16 @@ const valoreCicli =
     document.createElement("span");
 
 valoreCicli.textContent =
-    "ANEMODROMO " +
+    (
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+            ? "RESPIRO "
+            : "ANEMODROMO "
+    ) +
     (indice + 1) +
     " × " +
     blocco.cicli;
-
+            
 const piuCicli =
     document.createElement("button");
 
