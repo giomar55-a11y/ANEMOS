@@ -1963,8 +1963,25 @@ if (eraModifica) {
 
 } else {
 
+    } else {
+
+    const salvaRespirazione =
+        pannello.dataset.tipoSalvataggio ===
+        ANEMOS_TIPO_ANEMOSYSTEMA;
+
     alert(
-        "Anemodromo salvato nella Libreria."
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+            ? (
+                salvaRespirazione
+                    ? "Respirazione salvata nella Libreria."
+                    : "Respiro salvato nella Libreria."
+            )
+            : (
+                salvaRespirazione
+                    ? "Anemosystema salvato nella Libreria."
+                    : "Anemodromo salvato nella Libreria."
+            )
     );
 
 }
