@@ -3340,10 +3340,16 @@ if (pannelloLibreria) {
         renderLibreria();
 
         alert(
-            tipoNome +
-            " eliminato."
-        );
-
+    tipoNome +
+    (
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO &&
+        voce.tipo ===
+        ANEMOS_TIPO_ANEMOSYSTEMA
+            ? " eliminata."
+            : " eliminato."
+    )
+);
     }
 );
        
