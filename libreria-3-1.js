@@ -1659,7 +1659,21 @@ document.addEventListener(
                 /*
                    Apertura pannello.
                 */
+pannello.dataset.tipoSalvataggio =
+    ANEMOS_TIPO_ANEMODROMO;
 
+const etichettaNome =
+    document.getElementById(
+        "etichetta-nome-anemodromo"
+    );
+
+if (etichettaNome) {
+    etichettaNome.textContent =
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+            ? "Nome respiro"
+            : "Nome Anemodromo";
+}
                 pannello.classList.add(
                     "aperto"
                 );
