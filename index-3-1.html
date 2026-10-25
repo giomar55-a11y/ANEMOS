@@ -1787,14 +1787,12 @@ const sezioneIntento =
 pulsanteModalitaAnemodromo.addEventListener(
     "click",
     function () {
-        areaAnemosystema.hidden = true;
-        sezioneIntento.hidden = false;
-
+        selettoreIntento.hidden = false;
         selettoreIntento.focus();
         selettoreIntento.click();
     }
-);    
-const areaAnemosystema =
+);
+    const areaAnemosystema =
     document.getElementById(
         "anemosystema-area"
     );
