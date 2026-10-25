@@ -2197,8 +2197,10 @@ async function renderLibreria() {
             "libreria-vuota";
 
         vuota.textContent =
-            "Nessun Anemodromo salvato.";
-
+    anemosOttieniLingua() ===
+    ANEMOS_LINGUA.ITALIANO
+        ? "Nessun respiro salvato."
+        : "Nessun Anemodromo salvato.";
         contenitore.appendChild(
             vuota
         );
@@ -2427,8 +2429,10 @@ if (
             "libreria-vuota";
 
         vuota.textContent =
-            "Nessun Anemodromo corrisponde ai filtri.";
-
+    anemosOttieniLingua() ===
+    ANEMOS_LINGUA.ITALIANO
+        ? "Nessun respiro corrisponde ai filtri."
+        : "Nessun Anemodromo corrisponde ai filtri.";
         contenitore.appendChild(
             vuota
         );
@@ -2512,8 +2516,11 @@ if (
 ) {
 
     meta.textContent =
-        "ANEMOSYSTEMA";
-
+    anemosOttieniLingua() ===
+    ANEMOS_LINGUA.ITALIANO
+        ? "RESPIRAZIONE"
+        : "ANEMOSYSTEMA";
+   
 } else {
 
     meta.textContent =
@@ -2566,13 +2573,25 @@ if (
         );
 
     schedaSistema.innerHTML =
-        "<span>ANEMOSYSTEMA</span>" +
-        "<strong>" +
-        numeroBlocchi +
-        " blocchi · " +
-        numeroCicli +
-        " cicli</strong>";
-
+    "<span>" +
+    (
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+            ? "RESPIRAZIONE"
+            : "ANEMOSYSTEMA"
+    ) +
+    "</span>" +
+    "<strong>" +
+    numeroBlocchi +
+    (
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+            ? " respiri · "
+            : " blocchi · "
+    ) +
+    numeroCicli +
+    " cicli</strong>";
+   
     indici.appendChild(
         schedaSistema
     );
