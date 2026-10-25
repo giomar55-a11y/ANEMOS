@@ -2094,10 +2094,25 @@ function aggiornaModalitaAnemosystema() {
 
 
     selettoreIntento.innerHTML =
-        "";
+    "";
 
-    ANEMOSCHESI_ELENCO_MACROAREE.forEach(
-        macroarea => {
+const opzioneLibera =
+    document.createElement(
+        "option"
+    );
+
+opzioneLibera.value =
+    "";
+
+opzioneLibera.textContent =
+    "Composizione libera";
+
+selettoreIntento.appendChild(
+    opzioneLibera
+);
+
+ANEMOSCHESI_ELENCO_MACROAREE.forEach(
+    macroarea => {
 
             const gruppo =
                 document.createElement(
