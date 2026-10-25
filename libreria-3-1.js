@@ -1480,6 +1480,10 @@ document.addEventListener(
     "click",
     async function () {
 
+       document.getElementById(
+    "menu-azioni-anemodromo-pannello"
+).hidden = true;
+
         const {
             data: sessionData
         } =
