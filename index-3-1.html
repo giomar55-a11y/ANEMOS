@@ -2080,7 +2080,30 @@ function aggiornaModalitaAnemosystema() {
             !composizioneLibera;
     }
 
-}    
+}   
+
+    function aggiornaTitoloRespiroIntento() {
+
+    const titoloIntento =
+        document.getElementById(
+            "titolo-respiro-intento"
+        );
+
+    if (!titoloIntento) {
+        return;
+    }
+
+    const opzioneSelezionata =
+        selettoreIntento.options[
+            selettoreIntento.selectedIndex
+        ];
+
+    titoloIntento.textContent =
+        opzioneSelezionata
+            ? " " + opzioneSelezionata.textContent
+            : " Composizione libera";
+}
+    
    function popolaSelettoreIntenti() {
 
     if (
@@ -2230,6 +2253,7 @@ ANEMOSCHESI_ELENCO_MACROAREE.forEach(
 
 
 popolaSelettoreIntenti();
+aggiornaTitoloRespiroIntento();    
 aggiornaModalitaAnemosystema();
     
 </script> 
