@@ -1741,6 +1741,19 @@ if (etichettaNome) {
                     pannello.dataset.tipoSalvataggio =
                         ANEMOS_TIPO_ANEMOSYSTEMA;
 
+                   const etichettaNome =
+    document.getElementById(
+        "etichetta-nome-anemodromo"
+    );
+
+if (etichettaNome) {
+    etichettaNome.textContent =
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+            ? "Nome respirazione"
+            : "Nome Anemosystema";
+}
+
                     pannello.classList.add(
                         "aperto"
                     );
