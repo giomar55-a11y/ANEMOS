@@ -1808,11 +1808,16 @@ pulsanteEliminaAnemosystema.addEventListener(
     async function () {
 
         const conferma =
-            await anemosConferma(
-                "Eliminare tutti gli Anemodromi dell’ANEMOSYSTEMA?",
-                "Elimina ANEMOSYSTEMA"
-            );
-
+    await anemosConferma(
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+            ? "Eliminare tutti i respiri della respirazione?"
+            : "Eliminare tutti gli Anemodromi dell’ANEMOSYSTEMA?",
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+            ? "Elimina respirazione"
+            : "Elimina ANEMOSYSTEMA"
+    );
         if (!conferma) {
             return;
         }
