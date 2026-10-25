@@ -342,8 +342,10 @@ function renderTimeline() {
 
 
         vuoto.textContent =
-    "Composizione di un ANEMODROMO";
-
+    anemosOttieniLingua() ===
+    ANEMOS_LINGUA.ITALIANO
+        ? "Composizione del respiro"
+        : "Composizione di un ANEMODROMO";
         ui.timeline.appendChild(
             vuoto
         );
