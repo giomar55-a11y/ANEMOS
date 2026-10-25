@@ -1232,9 +1232,13 @@ const anemodromo =
 
 
     ui.editorTitolo.textContent =
-        "Anemodromo " +
-        anemodromo.tipo;
-
+    (
+        anemosOttieniLingua() ===
+        ANEMOS_LINGUA.ITALIANO
+            ? "Fase respiratoria "
+            : "Anemodromo "
+    ) +
+    anemodromo.tipo;
 
     ui.editorContenuto.innerHTML =
         "";
