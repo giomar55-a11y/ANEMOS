@@ -1831,87 +1831,90 @@ function creaIconaFlusso(
 
 
     const posizioniY =
-        [7, 15, 23];
+    [7, 15, 23];
 
 
-    posizioniY.forEach(
-        function (
-            y,
-            indice
+posizioniY.forEach(
+    function (
+        y,
+        indice
+    ) {
+
+        const onda =
+            document.createElementNS(
+                svgNS,
+                "path"
+            );
+
+        const percorso =
+            "M 5 " + y +
+            " C 10 " + (y - 5) +
+            ", 15 " + (y - 5) +
+            ", 21 " + y +
+            " C 27 " + (y + 5) +
+            ", 32 " + (y + 5) +
+            ", 37 " + y;
+
+        onda.setAttribute(
+            "d",
+            percorso
+        );
+
+        onda.setAttribute(
+            "fill",
+            "none"
+        );
+
+        onda.setAttribute(
+            "stroke",
+            "currentColor"
+        );
+
+        onda.setAttribute(
+            "stroke-width",
+            indice < lineeAttive
+                ? "3"
+                : "1.5"
+        );
+
+        onda.setAttribute(
+            "stroke-linecap",
+            "round"
+        );
+
+        onda.setAttribute(
+            "stroke-linejoin",
+            "round"
+        );
+
+
+        if (
+            indice >= lineeAttive
         ) {
-
-            const linea =
-                document.createElementNS(
-                    svgNS,
-                    "line"
-                );
-
-            linea.setAttribute(
-                "x1",
-                "5"
+            onda.setAttribute(
+                "opacity",
+                "0.22"
             );
-
-            linea.setAttribute(
-                "x2",
-                "37"
-            );
-
-            linea.setAttribute(
-                "y1",
-                y
-            );
-
-            linea.setAttribute(
-                "y2",
-                y
-            );
-
-            linea.setAttribute(
-                "stroke",
-                "currentColor"
-            );
-
-            linea.setAttribute(
-                "stroke-width",
-                indice < lineeAttive
-                    ? "3"
-                    : "1.5"
-            );
-
-            linea.setAttribute(
-                "stroke-linecap",
-                "round"
-            );
-
-
-            if (
-                indice >= lineeAttive
-            ) {
-                linea.setAttribute(
-                    "opacity",
-                    "0.22"
-                );
-            }
-
-
-            if (
-                trattenuto &&
-                indice === 0
-            ) {
-                linea.setAttribute(
-                    "stroke-dasharray",
-                    "4 4"
-                );
-            }
-
-
-            svg.appendChild(
-                linea
-            );
-
         }
-    );
 
+
+        if (
+            trattenuto &&
+            indice === 0
+        ) {
+            onda.setAttribute(
+                "stroke-dasharray",
+                "4 3"
+            );
+        }
+
+
+        svg.appendChild(
+            onda
+        );
+
+    }
+);
 
     contenitore.appendChild(
         svg
