@@ -1861,3 +1861,27 @@ quando è presente il semaforo.
     width: 100%;
     margin-top: 12px;
 }
+
+/* =====================================================
+   ICONA FLUSSO — DIMENSIONE COMPATTA
+===================================================== */
+
+.flusso-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 24px;
+    height: 18px;
+
+    flex: 0 0 24px;
+
+    line-height: 0;
+}
+
+.flusso-icon svg {
+    display: block;
+
+    width: 24px;
+    height: 18px;
+}
