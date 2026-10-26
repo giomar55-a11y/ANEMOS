@@ -1759,7 +1759,168 @@ if (
 
 }
 
+/* =====================================================
+   ICONA GRAFICA DEL FLUSSO
+===================================================== */
 
+function creaIconaFlusso(
+    flusso
+) {
+
+    const contenitore =
+        document.createElement(
+            "span"
+        );
+
+    contenitore.className =
+        "flusso-icon";
+
+
+    const svgNS =
+        "http://www.w3.org/2000/svg";
+
+    const svg =
+        document.createElementNS(
+            svgNS,
+            "svg"
+        );
+
+    svg.setAttribute(
+        "viewBox",
+        "0 0 42 30"
+    );
+
+    svg.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    let lineeAttive = 0;
+    let trattenuto = false;
+
+
+    if (
+        flusso ===
+        ANEMOS_FLUSSI.TRATTENUTO
+    ) {
+        lineeAttive = 1;
+        trattenuto = true;
+    }
+
+    if (
+        flusso ===
+        ANEMOS_FLUSSI.DELICATO
+    ) {
+        lineeAttive = 1;
+    }
+
+    if (
+        flusso ===
+        ANEMOS_FLUSSI.SPONTANEO
+    ) {
+        lineeAttive = 2;
+    }
+
+    if (
+        flusso ===
+        ANEMOS_FLUSSI.FORZATO
+    ) {
+        lineeAttive = 3;
+    }
+
+
+    const posizioniY =
+        [7, 15, 23];
+
+
+    posizioniY.forEach(
+        function (
+            y,
+            indice
+        ) {
+
+            const linea =
+                document.createElementNS(
+                    svgNS,
+                    "line"
+                );
+
+            linea.setAttribute(
+                "x1",
+                "5"
+            );
+
+            linea.setAttribute(
+                "x2",
+                "37"
+            );
+
+            linea.setAttribute(
+                "y1",
+                y
+            );
+
+            linea.setAttribute(
+                "y2",
+                y
+            );
+
+            linea.setAttribute(
+                "stroke",
+                "currentColor"
+            );
+
+            linea.setAttribute(
+                "stroke-width",
+                indice < lineeAttive
+                    ? "3"
+                    : "1.5"
+            );
+
+            linea.setAttribute(
+                "stroke-linecap",
+                "round"
+            );
+
+
+            if (
+                indice >= lineeAttive
+            ) {
+                linea.setAttribute(
+                    "opacity",
+                    "0.22"
+                );
+            }
+
+
+            if (
+                trattenuto &&
+                indice === 0
+            ) {
+                linea.setAttribute(
+                    "stroke-dasharray",
+                    "4 4"
+                );
+            }
+
+
+            svg.appendChild(
+                linea
+            );
+
+        }
+    );
+
+
+    contenitore.appendChild(
+        svg
+    );
+
+
+    return contenitore;
+
+}
 
 /* =====================================================
    FLUSSO
