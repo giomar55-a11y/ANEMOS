@@ -1801,13 +1801,11 @@ function creaIconaFlusso(
 
 
     if (
-        flusso ===
-        ANEMOS_FLUSSI.TRATTENUTO
-    ) {
-        lineeAttive = 1;
-        trattenuto = true;
-    }
-
+    flusso ===
+    ANEMOS_FLUSSI.TRATTENUTO
+) {
+    lineeAttive = 0;
+}
     if (
         flusso ===
         ANEMOS_FLUSSI.DELICATO
