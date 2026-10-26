@@ -2009,15 +2009,18 @@ function creaBloccoFlusso(
         opzione => {
 
             const pulsante =
-                creaPulsanteOpzione(
-                    opzione.icona +
-                    " " +
-                    opzione.nome,
+    creaPulsanteOpzione(
+        opzione.nome,
 
-                    anemodromo.flusso ===
-                        opzione.valore
-                );
+        anemodromo.flusso ===
+            opzione.valore
+    );
 
+pulsante.prepend(
+    creaIconaFlusso(
+        opzione.valore
+    )
+);
 const guidaOpzione =
     guidaFlusso
         ? guidaFlusso[
