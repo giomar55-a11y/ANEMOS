@@ -115,21 +115,20 @@ button {
 }
 
 .menu-button {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
+    flex: 0 0 34px;
 
-    border: 0;
+    padding: 0;
+
+    border: 1px solid var(--line);
     border-radius: 50%;
 
     background: var(--surface);
 
-    box-shadow:
-        0 4px 14px
-        rgba(28, 38, 33, 0.07);
-
     font-size: 20px;
+    line-height: 1;
 }
-
 
 /* =====================================================
    NOME RESPIRAZIONE
