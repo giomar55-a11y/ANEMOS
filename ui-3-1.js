@@ -2227,6 +2227,21 @@ if (
 
                             }
 
+                           const avvisoAvvio =
+    document.getElementById(
+        "avviso-avvio-anemos"
+    );
+
+if (
+    avvisoAvvio &&
+    !sequenzaEditorAttiva &&
+    anemodromoHaSettoriCompleti(
+        anemos31
+    )
+) {
+    avvisoAvvio.hidden = true;
+}
+
                         }
 
 
