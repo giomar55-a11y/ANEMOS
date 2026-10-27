@@ -101,16 +101,142 @@ function creaIconaFlussoAnemogramma(
         );
 
 
-    icona.textContent =
-        ANEMOS_ICONE_FLUSSO[
-            flusso
-        ] || "";
+    const svgNS =
+        "http://www.w3.org/2000/svg";
+
+    const svg =
+        document.createElementNS(
+            svgNS,
+            "svg"
+        );
+
+    svg.setAttribute(
+        "viewBox",
+        "0 0 42 30"
+    );
+
+    svg.setAttribute(
+        "aria-hidden",
+        "true"
+    );
+
+
+    let lineeAttive = 0;
+
+
+    if (
+        flusso ===
+        ANEMOS_FLUSSI.TRATTENUTO
+    ) {
+        lineeAttive = 0;
+    }
+
+    if (
+        flusso ===
+        ANEMOS_FLUSSI.DELICATO
+    ) {
+        lineeAttive = 1;
+    }
+
+    if (
+        flusso ===
+        ANEMOS_FLUSSI.SPONTANEO
+    ) {
+        lineeAttive = 2;
+    }
+
+    if (
+        flusso ===
+        ANEMOS_FLUSSI.FORZATO
+    ) {
+        lineeAttive = 3;
+    }
+
+
+    const posizioniY =
+        [7, 15, 23];
+
+
+    posizioniY.forEach(
+        function (
+            y,
+            indice
+        ) {
+
+            const onda =
+                document.createElementNS(
+                    svgNS,
+                    "path"
+                );
+
+            const percorso =
+                "M 5 " + y +
+                " C 10 " + (y - 5) +
+                ", 15 " + (y - 5) +
+                ", 21 " + y +
+                " C 27 " + (y + 5) +
+                ", 32 " + (y + 5) +
+                ", 37 " + y;
+
+            onda.setAttribute(
+                "d",
+                percorso
+            );
+
+            onda.setAttribute(
+                "fill",
+                "none"
+            );
+
+            onda.setAttribute(
+                "stroke",
+                "currentColor"
+            );
+
+            onda.setAttribute(
+                "stroke-width",
+                indice < lineeAttive
+                    ? "3"
+                    : "1.5"
+            );
+
+            onda.setAttribute(
+                "stroke-linecap",
+                "round"
+            );
+
+            onda.setAttribute(
+                "stroke-linejoin",
+                "round"
+            );
+
+
+            if (
+                indice >= lineeAttive
+            ) {
+                onda.setAttribute(
+                    "opacity",
+                    "0.22"
+                );
+            }
+
+
+            svg.appendChild(
+                onda
+            );
+
+        }
+    );
+
+
+    icona.appendChild(
+        svg
+    );
 
 
     return icona;
 
 }
-
 /* =====================================================
    ICONA SETTORE — SAGOMA UMANA
 ===================================================== */
