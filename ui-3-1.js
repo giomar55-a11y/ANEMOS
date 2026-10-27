@@ -622,12 +622,15 @@ function creaCollegamento(
 
 
     const guidaApnea =
-        creaGuidaApneaAnemoschesi(
+    ottieniIntento(
+        anemos31
+    )
+        ? creaGuidaApneaAnemoschesi(
             anemos31,
             precedente,
             successivoId
-        );
-
+        )
+        : null;
 
     /*
     =================================================
