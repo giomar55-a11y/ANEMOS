@@ -2105,17 +2105,17 @@ function creaIconaSettore(
 
     svg.setAttribute(
         "viewBox",
-        "0 0 48 60"
+        "0 0 100 160"
     );
 
     svg.setAttribute(
         "width",
-        "22"
+        "25"
     );
 
     svg.setAttribute(
         "height",
-        "28"
+        "40"
     );
 
     svg.setAttribute(
@@ -2130,15 +2130,192 @@ function creaIconaSettore(
         "0";
 
 
-    const parti = [
+    const coloriSettori = {
+
+        [ANEMOS_SETTORI.TORACE_SUPERIORE]:
+            "#35C6E8",
+
+        [ANEMOS_SETTORI.TORACE_INFERIORE]:
+            "#9B51E0",
+
+        [ANEMOS_SETTORI.ADDOME]:
+            "#2457D6"
+
+    };
+
+
+    /*
+    TESTA
+    */
+
+    const testa =
+        document.createElementNS(
+            ns,
+            "circle"
+        );
+
+    testa.setAttribute(
+        "cx",
+        "50"
+    );
+
+    testa.setAttribute(
+        "cy",
+        "17"
+    );
+
+    testa.setAttribute(
+        "r",
+        "14"
+    );
+
+    testa.setAttribute(
+        "fill",
+        "#fff"
+    );
+
+    testa.setAttribute(
+        "stroke",
+        "#000"
+    );
+
+    testa.setAttribute(
+        "stroke-width",
+        "3"
+    );
+
+    svg.appendChild(
+        testa
+    );
+
+
+    /*
+    BRACCIO SINISTRO
+    */
+
+    const braccioSinistro =
+        document.createElementNS(
+            ns,
+            "path"
+        );
+
+    braccioSinistro.setAttribute(
+        "d",
+        [
+            "M49 39",
+            "C42 34 35 34 28 37",
+            "C21 40 13 45 6 51",
+            "C2 55 2 60 5 64",
+            "L18 81",
+            "C21 85 27 85 30 81",
+            "C33 77 32 72 30 68",
+            "L19 54",
+            "L27 49",
+            "C31 47 34 49 36 53"
+        ].join(" ")
+    );
+
+    braccioSinistro.setAttribute(
+        "fill",
+        "none"
+    );
+
+    braccioSinistro.setAttribute(
+        "stroke",
+        "#000"
+    );
+
+    braccioSinistro.setAttribute(
+        "stroke-width",
+        "3"
+    );
+
+    braccioSinistro.setAttribute(
+        "stroke-linecap",
+        "round"
+    );
+
+    braccioSinistro.setAttribute(
+        "stroke-linejoin",
+        "round"
+    );
+
+    svg.appendChild(
+        braccioSinistro
+    );
+
+
+    /*
+    BRACCIO DESTRO
+    */
+
+    const braccioDestro =
+        document.createElementNS(
+            ns,
+            "path"
+        );
+
+    braccioDestro.setAttribute(
+        "d",
+        [
+            "M51 39",
+            "C58 34 65 34 72 37",
+            "C79 40 87 45 94 51",
+            "C98 55 98 60 95 64",
+            "L82 81",
+            "C79 85 73 85 70 81",
+            "C67 77 68 72 70 68",
+            "L81 54",
+            "L73 49",
+            "C69 47 66 49 64 53"
+        ].join(" ")
+    );
+
+    braccioDestro.setAttribute(
+        "fill",
+        "none"
+    );
+
+    braccioDestro.setAttribute(
+        "stroke",
+        "#000"
+    );
+
+    braccioDestro.setAttribute(
+        "stroke-width",
+        "3"
+    );
+
+    braccioDestro.setAttribute(
+        "stroke-linecap",
+        "round"
+    );
+
+    braccioDestro.setAttribute(
+        "stroke-linejoin",
+        "round"
+    );
+
+    svg.appendChild(
+        braccioDestro
+    );
+
+
+    /*
+    TRE SETTORI RESPIRATORI
+    */
+
+    const moduli = [
 
         {
             nome:
                 ANEMOS_SETTORI
                     .TORACE_SUPERIORE,
 
-            d:
-                "M12 5 C16 2 32 2 36 5 L40 18 L8 18 Z"
+            x: 34,
+            y: 39,
+            width: 32,
+            height: 19
         },
 
         {
@@ -2146,70 +2323,199 @@ function creaIconaSettore(
                 ANEMOS_SETTORI
                     .TORACE_INFERIORE,
 
-            d:
-                "M8 18 L40 18 L37 36 L11 36 Z"
+            x: 34,
+            y: 60,
+            width: 32,
+            height: 19
         },
 
         {
             nome:
                 ANEMOS_SETTORI.ADDOME,
 
-            d:
-                "M11 36 L37 36 L34 55 L14 55 Z"
+            x: 34,
+            y: 81,
+            width: 32,
+            height: 19
         }
 
     ];
 
 
-    parti.forEach(
-        parte => {
+    moduli.forEach(
+        function (
+            modulo
+        ) {
 
-            const path =
+            const rettangolo =
                 document.createElementNS(
                     ns,
-                    "path"
+                    "rect"
                 );
 
-
-            path.setAttribute(
-                "d",
-                parte.d
+            rettangolo.setAttribute(
+                "x",
+                String(
+                    modulo.x
+                )
             );
 
-            path.setAttribute(
+            rettangolo.setAttribute(
+                "y",
+                String(
+                    modulo.y
+                )
+            );
+
+            rettangolo.setAttribute(
+                "width",
+                String(
+                    modulo.width
+                )
+            );
+
+            rettangolo.setAttribute(
+                "height",
+                String(
+                    modulo.height
+                )
+            );
+
+            rettangolo.setAttribute(
+                "rx",
+                "5"
+            );
+
+            rettangolo.setAttribute(
+                "ry",
+                "5"
+            );
+
+            rettangolo.setAttribute(
                 "fill",
-                parte.nome === settore
-                    ? "#000"
+                modulo.nome === settore
+                    ? coloriSettori[
+                        modulo.nome
+                    ]
                     : "#fff"
             );
 
-            path.setAttribute(
+            rettangolo.setAttribute(
                 "stroke",
                 "#000"
             );
 
-            path.setAttribute(
+            rettangolo.setAttribute(
                 "stroke-width",
-                "1.8"
+                "3"
             );
-
-            path.setAttribute(
-                "stroke-linejoin",
-                "round"
-            );
-
 
             svg.appendChild(
-                path
+                rettangolo
             );
 
         }
     );
 
 
+    /*
+    GAMBA SINISTRA
+    */
+
+    const gambaSinistra =
+        document.createElementNS(
+            ns,
+            "path"
+        );
+
+    gambaSinistra.setAttribute(
+        "d",
+        [
+            "M34 100",
+            "L34 146",
+            "C34 153 38 157 44 157",
+            "C48 157 50 154 50 149",
+            "L50 100",
+            "Z"
+        ].join(" ")
+    );
+
+    gambaSinistra.setAttribute(
+        "fill",
+        "#fff"
+    );
+
+    gambaSinistra.setAttribute(
+        "stroke",
+        "#000"
+    );
+
+    gambaSinistra.setAttribute(
+        "stroke-width",
+        "3"
+    );
+
+    gambaSinistra.setAttribute(
+        "stroke-linejoin",
+        "round"
+    );
+
+    svg.appendChild(
+        gambaSinistra
+    );
+
+
+    /*
+    GAMBA DESTRA
+    */
+
+    const gambaDestra =
+        document.createElementNS(
+            ns,
+            "path"
+        );
+
+    gambaDestra.setAttribute(
+        "d",
+        [
+            "M50 100",
+            "L50 149",
+            "C50 154 52 157 56 157",
+            "C62 157 66 153 66 146",
+            "L66 100",
+            "Z"
+        ].join(" ")
+    );
+
+    gambaDestra.setAttribute(
+        "fill",
+        "#fff"
+    );
+
+    gambaDestra.setAttribute(
+        "stroke",
+        "#000"
+    );
+
+    gambaDestra.setAttribute(
+        "stroke-width",
+        "3"
+    );
+
+    gambaDestra.setAttribute(
+        "stroke-linejoin",
+        "round"
+    );
+
+    svg.appendChild(
+        gambaDestra
+    );
+
+
     return svg;
 
 }
+
 function creaBloccoSettori(
     anemodromo
 ) {
