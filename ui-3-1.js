@@ -1807,7 +1807,7 @@ function creaIconaFlusso(
     flusso ===
     ANEMOS_FLUSSI.TRATTENUTO
 ) {
-    lineeAttive = 0;
+    lineeAttive = 1;
 }
     if (
         flusso ===
@@ -1888,6 +1888,18 @@ posizioniY.forEach(
             "round"
         );
 
+        if (
+    flusso ===
+        ANEMOS_FLUSSI.TRATTENUTO &&
+    indice === 0
+) {
+
+    onda.setAttribute(
+        "stroke-dasharray",
+        "4 6"
+    );
+
+}
 
         if (
             indice >= lineeAttive
