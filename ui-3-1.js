@@ -2838,7 +2838,6 @@ function creaIconaVolume(
             "span"
         );
 
-
     contenitore.className =
         "volume-icon";
 
@@ -2859,7 +2858,6 @@ function creaIconaVolume(
         "0 0 64 64"
     );
 
-
     svg.setAttribute(
         "aria-hidden",
         "true"
@@ -2867,17 +2865,17 @@ function creaIconaVolume(
 
 
     /*
-    LIVELLO DI RIEMPIMENTO
+    NUMERO DI LIVELLI PIENI
     */
 
-    let percentuale = 0;
+    let livelliPieni = 0;
 
 
     if (
         volume ===
         ANEMOS_VOLUMI.SCARSO
     ) {
-        percentuale = 25;
+        livelliPieni = 1;
     }
 
 
@@ -2885,7 +2883,7 @@ function creaIconaVolume(
         volume ===
         ANEMOS_VOLUMI.CONFORTEVOLE
     ) {
-        percentuale = 50;
+        livelliPieni = 2;
     }
 
 
@@ -2893,7 +2891,7 @@ function creaIconaVolume(
         volume ===
         ANEMOS_VOLUMI.ABBONDANTE
     ) {
-        percentuale = 75;
+        livelliPieni = 3;
     }
 
 
@@ -2901,7 +2899,7 @@ function creaIconaVolume(
         volume ===
         ANEMOS_VOLUMI.PIENO
     ) {
-        percentuale = 100;
+        livelliPieni = 4;
     }
 
 
@@ -2918,185 +2916,167 @@ function creaIconaVolume(
 
 
     /*
-    BASE CHIARA
+    4 LIVELLI DISTINTI
+    DAL BASSO VERSO L'ALTO
     */
 
-    [
-        polmoneSinistro,
-        polmoneDestro
-    ].forEach(
+    const livelli = [
+
+        {
+            y: 47,
+            altezza: 10
+        },
+
+        {
+            y: 37,
+            altezza: 10
+        },
+
+        {
+            y: 27,
+            altezza: 10
+        },
+
+        {
+            y: 17,
+            altezza: 10
+        }
+
+    ];
+
+
+    livelli.forEach(
         function (
-            d
+            livello,
+            indice
         ) {
 
-            const path =
+            const clipId =
+                "anemos-volume-" +
+                Math.random()
+                    .toString(36)
+                    .slice(2);
+
+
+            const defs =
                 document.createElementNS(
                     ns,
-                    "path"
+                    "defs"
                 );
 
 
-            path.setAttribute(
-                "d",
-                d
+            const clip =
+                document.createElementNS(
+                    ns,
+                    "clipPath"
+                );
+
+
+            clip.setAttribute(
+                "id",
+                clipId
             );
 
 
-            path.setAttribute(
+            [
+                polmoneSinistro,
+                polmoneDestro
+            ].forEach(
+                function (
+                    d
+                ) {
+
+                    const forma =
+                        document.createElementNS(
+                            ns,
+                            "path"
+                        );
+
+
+                    forma.setAttribute(
+                        "d",
+                        d
+                    );
+
+
+                    clip.appendChild(
+                        forma
+                    );
+
+                }
+            );
+
+
+            defs.appendChild(
+                clip
+            );
+
+
+            svg.appendChild(
+                defs
+            );
+
+
+            /*
+            FASCIA
+            */
+
+            const fascia =
+                document.createElementNS(
+                    ns,
+                    "rect"
+                );
+
+
+            fascia.setAttribute(
+                "x",
+                "11"
+            );
+
+
+            fascia.setAttribute(
+                "y",
+                String(
+                    livello.y
+                )
+            );
+
+
+            fascia.setAttribute(
+                "width",
+                "42"
+            );
+
+
+            fascia.setAttribute(
+                "height",
+                String(
+                    livello.altezza
+                )
+            );
+
+
+            fascia.setAttribute(
                 "fill",
-                "#F1F1F1"
+                indice < livelliPieni
+                    ? "#777"
+                    : "#F1F1F1"
             );
 
 
-            path.setAttribute(
+            fascia.setAttribute(
                 "stroke",
                 "#555"
             );
 
 
-            path.setAttribute(
+            fascia.setAttribute(
                 "stroke-width",
-                "2"
+                "1.5"
             );
 
 
-            path.setAttribute(
-                "stroke-linejoin",
-                "round"
-            );
-
-
-            svg.appendChild(
-                path
-            );
-
-        }
-    );
-
-
-    /*
-    RIEMPIMENTO GRIGIO
-    DAL BASSO VERSO L'ALTO
-    */
-
-    const altezzaMassima = 40;
-
-
-    const altezza =
-        altezzaMassima *
-        percentuale /
-        100;
-
-
-    const y =
-        57 - altezza;
-
-
-    const defs =
-        document.createElementNS(
-            ns,
-            "defs"
-        );
-
-
-    const clip =
-        document.createElementNS(
-            ns,
-            "clipPath"
-        );
-
-
-    const clipId =
-        "anemos-volume-" +
-        Math.random()
-            .toString(36)
-            .slice(2);
-
-
-    clip.setAttribute(
-        "id",
-        clipId
-    );
-
-
-    const rettangolo =
-        document.createElementNS(
-            ns,
-            "rect"
-        );
-
-
-    rettangolo.setAttribute(
-        "x",
-        "10"
-    );
-
-
-    rettangolo.setAttribute(
-        "y",
-        String(
-            y
-        )
-    );
-
-
-    rettangolo.setAttribute(
-        "width",
-        "44"
-    );
-
-
-    rettangolo.setAttribute(
-        "height",
-        String(
-            altezza
-        )
-    );
-
-
-    clip.appendChild(
-        rettangolo
-    );
-
-
-    defs.appendChild(
-        clip
-    );
-
-
-    svg.appendChild(
-        defs
-    );
-
-
-    [
-        polmoneSinistro,
-        polmoneDestro
-    ].forEach(
-        function (
-            d
-        ) {
-
-            const path =
-                document.createElementNS(
-                    ns,
-                    "path"
-                );
-
-
-            path.setAttribute(
-                "d",
-                d
-            );
-
-
-            path.setAttribute(
-                "fill",
-                "#777"
-            );
-
-
-            path.setAttribute(
+            fascia.setAttribute(
                 "clip-path",
                 "url(#" +
                 clipId +
@@ -3105,7 +3085,7 @@ function creaIconaVolume(
 
 
             svg.appendChild(
-                path
+                fascia
             );
 
         }
@@ -3113,7 +3093,7 @@ function creaIconaVolume(
 
 
     /*
-    RIDISEGNO DEL CONTORNO
+    CONTORNO ESTERNO DEI POLMONI
     */
 
     [
@@ -3176,8 +3156,7 @@ function creaIconaVolume(
 
     return contenitore;
 
-}    
-
+}
 /* =====================================================
    VOLUME SINGOLO SETTORE
 ===================================================== */
