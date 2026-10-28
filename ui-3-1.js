@@ -2843,20 +2843,20 @@ function creaIconaVolume(
         "volume-icon";
 
 
-    const svgNS =
+    const ns =
         "http://www.w3.org/2000/svg";
 
 
     const svg =
         document.createElementNS(
-            svgNS,
+            ns,
             "svg"
         );
 
 
     svg.setAttribute(
         "viewBox",
-        "0 0 40 40"
+        "0 0 64 64"
     );
 
 
@@ -2866,54 +2866,317 @@ function creaIconaVolume(
     );
 
 
-    function creaCerchioBase(
-        riempimento = "#fff"
+    /*
+    LIVELLO DI RIEMPIMENTO
+    */
+
+    let percentuale = 0;
+
+
+    if (
+        volume ===
+        ANEMOS_VOLUMI.SCARSO
     ) {
-
-        const cerchio =
-            document.createElementNS(
-                svgNS,
-                "circle"
-            );
+        percentuale = 25;
+    }
 
 
-        cerchio.setAttribute(
-            "cx",
-            "20"
-        );
-
-        cerchio.setAttribute(
-            "cy",
-            "20"
-        );
-
-        cerchio.setAttribute(
-            "r",
-            "16"
-        );
-
-        cerchio.setAttribute(
-            "fill",
-            riempimento
-        );
-
-        cerchio.setAttribute(
-            "stroke",
-            "#000"
-        );
-
-        cerchio.setAttribute(
-            "stroke-width",
-            "2"
-        );
+    if (
+        volume ===
+        ANEMOS_VOLUMI.CONFORTEVOLE
+    ) {
+        percentuale = 50;
+    }
 
 
-        return cerchio;
+    if (
+        volume ===
+        ANEMOS_VOLUMI.ABBONDANTE
+    ) {
+        percentuale = 75;
+    }
 
+
+    if (
+        volume ===
+        ANEMOS_VOLUMI.PIENO
+    ) {
+        percentuale = 100;
     }
 
 
     /*
+    FORMA DEI POLMONI
+    */
+
+    const polmoneSinistro =
+        "M29 18 C25 16 21 17 18 21 C14 27 12 36 13 46 C14 53 18 57 23 56 C27 55 29 50 29 44 Z";
+
+
+    const polmoneDestro =
+        "M35 18 C39 16 43 17 46 21 C50 27 52 36 51 46 C50 53 46 57 41 56 C37 55 35 50 35 44 Z";
+
+
+    /*
+    BASE CHIARA
+    */
+
+    [
+        polmoneSinistro,
+        polmoneDestro
+    ].forEach(
+        function (
+            d
+        ) {
+
+            const path =
+                document.createElementNS(
+                    ns,
+                    "path"
+                );
+
+
+            path.setAttribute(
+                "d",
+                d
+            );
+
+
+            path.setAttribute(
+                "fill",
+                "#F1F1F1"
+            );
+
+
+            path.setAttribute(
+                "stroke",
+                "#555"
+            );
+
+
+            path.setAttribute(
+                "stroke-width",
+                "2"
+            );
+
+
+            path.setAttribute(
+                "stroke-linejoin",
+                "round"
+            );
+
+
+            svg.appendChild(
+                path
+            );
+
+        }
+    );
+
+
+    /*
+    RIEMPIMENTO GRIGIO
+    DAL BASSO VERSO L'ALTO
+    */
+
+    const altezzaMassima = 40;
+
+
+    const altezza =
+        altezzaMassima *
+        percentuale /
+        100;
+
+
+    const y =
+        57 - altezza;
+
+
+    const defs =
+        document.createElementNS(
+            ns,
+            "defs"
+        );
+
+
+    const clip =
+        document.createElementNS(
+            ns,
+            "clipPath"
+        );
+
+
+    const clipId =
+        "anemos-volume-" +
+        Math.random()
+            .toString(36)
+            .slice(2);
+
+
+    clip.setAttribute(
+        "id",
+        clipId
+    );
+
+
+    const rettangolo =
+        document.createElementNS(
+            ns,
+            "rect"
+        );
+
+
+    rettangolo.setAttribute(
+        "x",
+        "10"
+    );
+
+
+    rettangolo.setAttribute(
+        "y",
+        String(
+            y
+        )
+    );
+
+
+    rettangolo.setAttribute(
+        "width",
+        "44"
+    );
+
+
+    rettangolo.setAttribute(
+        "height",
+        String(
+            altezza
+        )
+    );
+
+
+    clip.appendChild(
+        rettangolo
+    );
+
+
+    defs.appendChild(
+        clip
+    );
+
+
+    svg.appendChild(
+        defs
+    );
+
+
+    [
+        polmoneSinistro,
+        polmoneDestro
+    ].forEach(
+        function (
+            d
+        ) {
+
+            const path =
+                document.createElementNS(
+                    ns,
+                    "path"
+                );
+
+
+            path.setAttribute(
+                "d",
+                d
+            );
+
+
+            path.setAttribute(
+                "fill",
+                "#777"
+            );
+
+
+            path.setAttribute(
+                "clip-path",
+                "url(#" +
+                clipId +
+                ")"
+            );
+
+
+            svg.appendChild(
+                path
+            );
+
+        }
+    );
+
+
+    /*
+    RIDISEGNO DEL CONTORNO
+    */
+
+    [
+        polmoneSinistro,
+        polmoneDestro
+    ].forEach(
+        function (
+            d
+        ) {
+
+            const bordo =
+                document.createElementNS(
+                    ns,
+                    "path"
+                );
+
+
+            bordo.setAttribute(
+                "d",
+                d
+            );
+
+
+            bordo.setAttribute(
+                "fill",
+                "none"
+            );
+
+
+            bordo.setAttribute(
+                "stroke",
+                "#555"
+            );
+
+
+            bordo.setAttribute(
+                "stroke-width",
+                "2"
+            );
+
+
+            bordo.setAttribute(
+                "stroke-linejoin",
+                "round"
+            );
+
+
+            svg.appendChild(
+                bordo
+            );
+
+        }
+    );
+
+
+    contenitore.appendChild(
+        svg
+    );
+
+
+    return contenitore;
+
+}    /*
     =====================================================
     VUOTO
     =====================================================
