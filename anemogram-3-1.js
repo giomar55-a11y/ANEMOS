@@ -730,8 +730,10 @@ function creaIconaVolumeAnemogramma(
             "anemogramma-icona-volume"
         );
 
+
     const ns =
         "http://www.w3.org/2000/svg";
+
 
     const svg =
         document.createElementNS(
@@ -739,10 +741,12 @@ function creaIconaVolumeAnemogramma(
             "svg"
         );
 
+
     svg.setAttribute(
         "viewBox",
         "0 0 64 64"
     );
+
 
     svg.setAttribute(
         "aria-hidden",
@@ -751,194 +755,284 @@ function creaIconaVolumeAnemogramma(
 
 
     /*
-    LIVELLO DEL VOLUME
+    NUMERO DI LIVELLI PIENI
     */
 
-    let percentuale = 0;
+    let livelliPieni = 0;
+
 
     if (
         volume ===
         ANEMOS_VOLUMI.SCARSO
     ) {
-        percentuale = 25;
+        livelliPieni = 1;
     }
+
 
     if (
         volume ===
         ANEMOS_VOLUMI.CONFORTEVOLE
     ) {
-        percentuale = 50;
+        livelliPieni = 2;
     }
+
 
     if (
         volume ===
         ANEMOS_VOLUMI.ABBONDANTE
     ) {
-        percentuale = 75;
+        livelliPieni = 3;
     }
+
 
     if (
         volume ===
         ANEMOS_VOLUMI.PIENO
     ) {
-        percentuale = 100;
+        livelliPieni = 4;
     }
 
 
     /*
-    FORMA FISSA DEI POLMONI
+    FORMA DEI POLMONI
     */
 
     const polmoneSinistro =
         "M29 18 C25 16 21 17 18 21 C14 27 12 36 13 46 C14 53 18 57 23 56 C27 55 29 50 29 44 Z";
+
 
     const polmoneDestro =
         "M35 18 C39 16 43 17 46 21 C50 27 52 36 51 46 C50 53 46 57 41 56 C37 55 35 50 35 44 Z";
 
 
     /*
-    BASE CHIARA
-    */
-
-    [
-        polmoneSinistro,
-        polmoneDestro
-    ].forEach(function(d) {
-
-        const path =
-            document.createElementNS(
-                ns,
-                "path"
-            );
-
-        path.setAttribute("d", d);
-        path.setAttribute(
-            "fill",
-            "#F1F1F1"
-        );
-        path.setAttribute(
-            "stroke",
-            "#555"
-        );
-        path.setAttribute(
-            "stroke-width",
-            "2"
-        );
-        path.setAttribute(
-            "stroke-linejoin",
-            "round"
-        );
-
-        svg.appendChild(path);
-
-    });
-
-
-    /*
-    RIEMPIMENTO GRIGIO
+    4 LIVELLI DISTINTI
     DAL BASSO VERSO L'ALTO
     */
 
-    const altezzaMassima = 40;
+    const livelli = [
 
-    const altezza =
-        altezzaMassima *
-        percentuale /
-        100;
+        {
+            y: 47,
+            altezza: 10
+        },
 
-    const y =
-        57 - altezza;
+        {
+            y: 37,
+            altezza: 10
+        },
 
-    const defs =
-        document.createElementNS(
-            ns,
-            "defs"
-        );
+        {
+            y: 27,
+            altezza: 10
+        },
 
-    const clip =
-        document.createElementNS(
-            ns,
-            "clipPath"
-        );
+        {
+            y: 17,
+            altezza: 10
+        }
 
-    const clipId =
-        "anemos-volume-" +
-        Math.random()
-            .toString(36)
-            .slice(2);
+    ];
 
-    clip.setAttribute(
-        "id",
-        clipId
+
+    livelli.forEach(
+        function (
+            livello,
+            indice
+        ) {
+
+            const clipId =
+                "anemogramma-volume-" +
+                Math.random()
+                    .toString(36)
+                    .slice(2);
+
+
+            const defs =
+                document.createElementNS(
+                    ns,
+                    "defs"
+                );
+
+
+            const clip =
+                document.createElementNS(
+                    ns,
+                    "clipPath"
+                );
+
+
+            clip.setAttribute(
+                "id",
+                clipId
+            );
+
+
+            [
+                polmoneSinistro,
+                polmoneDestro
+            ].forEach(
+                function (
+                    d
+                ) {
+
+                    const forma =
+                        document.createElementNS(
+                            ns,
+                            "path"
+                        );
+
+
+                    forma.setAttribute(
+                        "d",
+                        d
+                    );
+
+
+                    clip.appendChild(
+                        forma
+                    );
+
+                }
+            );
+
+
+            defs.appendChild(
+                clip
+            );
+
+
+            svg.appendChild(
+                defs
+            );
+
+
+            const fascia =
+                document.createElementNS(
+                    ns,
+                    "rect"
+                );
+
+
+            fascia.setAttribute(
+                "x",
+                "11"
+            );
+
+
+            fascia.setAttribute(
+                "y",
+                String(
+                    livello.y
+                )
+            );
+
+
+            fascia.setAttribute(
+                "width",
+                "42"
+            );
+
+
+            fascia.setAttribute(
+                "height",
+                String(
+                    livello.altezza
+                )
+            );
+
+
+            fascia.setAttribute(
+                "fill",
+                indice < livelliPieni
+                    ? "#777"
+                    : "#F1F1F1"
+            );
+
+
+            fascia.setAttribute(
+                "stroke",
+                "#555"
+            );
+
+
+            fascia.setAttribute(
+                "stroke-width",
+                "1.5"
+            );
+
+
+            fascia.setAttribute(
+                "clip-path",
+                "url(#" +
+                clipId +
+                ")"
+            );
+
+
+            svg.appendChild(
+                fascia
+            );
+
+        }
     );
 
-    const rettangolo =
-        document.createElementNS(
-            ns,
-            "rect"
-        );
 
-    rettangolo.setAttribute(
-        "x",
-        "10"
-    );
-
-    rettangolo.setAttribute(
-        "y",
-        String(y)
-    );
-
-    rettangolo.setAttribute(
-        "width",
-        "44"
-    );
-
-    rettangolo.setAttribute(
-        "height",
-        String(altezza)
-    );
-
-    clip.appendChild(
-        rettangolo
-    );
-
-    defs.appendChild(
-        clip
-    );
-
-    svg.appendChild(
-        defs
-    );
-
+    /*
+    CONTORNO ESTERNO DEI POLMONI
+    */
 
     [
         polmoneSinistro,
         polmoneDestro
-    ].forEach(function(d) {
+    ].forEach(
+        function (
+            d
+        ) {
 
-        const path =
-            document.createElementNS(
-                ns,
-                "path"
+            const bordo =
+                document.createElementNS(
+                    ns,
+                    "path"
+                );
+
+
+            bordo.setAttribute(
+                "d",
+                d
             );
 
-        path.setAttribute("d", d);
 
-        path.setAttribute(
-            "fill",
-            "#777"
-        );
+            bordo.setAttribute(
+                "fill",
+                "none"
+            );
 
-        path.setAttribute(
-            "clip-path",
-            "url(#" +
-            clipId +
-            ")"
-        );
 
-        svg.appendChild(path);
+            bordo.setAttribute(
+                "stroke",
+                "#555"
+            );
 
-    });
+
+            bordo.setAttribute(
+                "stroke-width",
+                "2"
+            );
+
+
+            bordo.setAttribute(
+                "stroke-linejoin",
+                "round"
+            );
+
+
+            svg.appendChild(
+                bordo
+            );
+
+        }
+    );
 
 
     /*
@@ -951,30 +1045,36 @@ function creaIconaVolumeAnemogramma(
             "path"
         );
 
+
     vieAeree.setAttribute(
         "d",
         "M32 7 L32 25 M32 25 L25 32 M32 25 L39 32"
     );
+
 
     vieAeree.setAttribute(
         "fill",
         "none"
     );
 
+
     vieAeree.setAttribute(
         "stroke",
         "#555"
     );
+
 
     vieAeree.setAttribute(
         "stroke-width",
         "2.5"
     );
 
+
     vieAeree.setAttribute(
         "stroke-linecap",
         "round"
     );
+
 
     svg.appendChild(
         vieAeree
@@ -985,9 +1085,12 @@ function creaIconaVolumeAnemogramma(
         svg
     );
 
+
     return contenitore;
 
-}/* =====================================================
+
+}
+/* =====================================================
    SINGOLO SETTORE + VOLUME
 ===================================================== */
 
