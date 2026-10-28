@@ -128,7 +128,7 @@ function creaIconaFlussoAnemogramma(
         flusso ===
         ANEMOS_FLUSSI.TRATTENUTO
     ) {
-        lineeAttive = 0;
+        lineeAttive = 1;
     }
 
     if (
@@ -209,6 +209,19 @@ function creaIconaFlussoAnemogramma(
                 "stroke-linejoin",
                 "round"
             );
+
+           if (
+    flusso ===
+        ANEMOS_FLUSSI.TRATTENUTO &&
+    indice === 0
+) {
+
+    onda.setAttribute(
+        "stroke-dasharray",
+        "4 6"
+    );
+
+}
 
 
             if (
