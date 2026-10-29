@@ -40,13 +40,27 @@ function preparaDisplayAnemoscopio() {
 
 
     const volumi = [
-        "PIENO",
-        "ABBONDANTE",
-        "CONFORTEVOLE",
-        "SCARSO",
-        "VUOTO"
-    ];
-
+    {
+        nome: "PIENO",
+        simbolo: "●"
+    },
+    {
+        nome: "ABBONDANTE",
+        simbolo: "◕"
+    },
+    {
+        nome: "CONFORTEVOLE",
+        simbolo: "☯"
+    },
+    {
+        nome: "SCARSO",
+        simbolo: "◔"
+    },
+    {
+        nome: "VUOTO",
+        simbolo: "○"
+    }
+];
 
     volumi.forEach(
         function (volume) {
@@ -60,11 +74,26 @@ function preparaDisplayAnemoscopio() {
                 "anemoscopio-livello-volume";
 
             livello.dataset.volume =
-                volume;
+    volume.nome;
 
-            scalaVolume.appendChild(
-                livello
-            );
+const simbolo =
+    document.createElement(
+        "span"
+    );
+
+simbolo.className =
+    "anemoscopio-simbolo-volume";
+
+simbolo.textContent =
+    volume.simbolo;
+
+livello.appendChild(
+    simbolo
+);
+
+scalaVolume.appendChild(
+    livello
+);
         }
     );
 
