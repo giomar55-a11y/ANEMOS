@@ -101,6 +101,18 @@ scalaVolume.appendChild(
     anemoscopioDisplay.appendChild(
         scalaVolume
     );
+const campoTraiettoria =
+    document.createElement(
+        "div"
+    );
+
+campoTraiettoria.className =
+    "anemoscopio-campo-traiettoria";
+
+anemoscopioDisplay.appendChild(
+    campoTraiettoria
+);
+   
 }
 
 function apriAnemoscopio(
