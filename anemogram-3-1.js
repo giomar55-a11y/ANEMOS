@@ -2863,6 +2863,16 @@ if (avvisoAvvio) {
             return;
         }
 
+                if (
+            typeof window.apriAnemoscopio ===
+            "function"
+        ) {
+
+            window.apriAnemoscopio();
+
+            return;
+        }
+
         creaPannelloAnemogramma();
 
     }
