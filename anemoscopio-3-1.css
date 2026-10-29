@@ -118,3 +118,27 @@
     background:
         rgba(0, 0, 0, 0.06);
 }
+
+.anemoscopio-simbolo-volume {
+    position: absolute;
+
+    top: 0;
+    left: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+
+    font-size: 25px;
+    line-height: 1;
+
+    z-index: 2;
+}
