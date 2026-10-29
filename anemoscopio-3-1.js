@@ -19,15 +19,44 @@ const anemoscopioDisplay =
     document.getElementById("anemoscopio-display");
 
 
-function apriAnemoscopio() {
+function apriAnemoscopio(
+    timeline = null
+) {
 
     if (!anemoscopio) {
         return;
     }
 
+    if (
+        Array.isArray(
+            timeline
+        )
+    ) {
+
+        window.anemoscopioTimeline =
+            timeline;
+
+    } else if (
+        typeof ottieniTimelineAnemogramma ===
+            "function" &&
+        typeof anemos31 !==
+            "undefined"
+    ) {
+
+        window.anemoscopioTimeline =
+            ottieniTimelineAnemogramma(
+                anemos31
+            );
+
+    } else {
+
+        window.anemoscopioTimeline =
+            [];
+
+    }
+
     anemoscopio.hidden = false;
 }
-
 
 function chiudiAnemoscopioVisuale() {
 
