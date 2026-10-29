@@ -142,3 +142,21 @@
 
     z-index: 2;
 }
+
+/* =================================================
+   CAMPO TRAIETTORIA
+================================================= */
+
+.anemoscopio-campo-traiettoria {
+    position: absolute;
+
+    top: 40px;
+    right: 20px;
+    bottom: 40px;
+    left: 68px;
+
+    overflow: hidden;
+
+    z-index: 1;
+}
+
