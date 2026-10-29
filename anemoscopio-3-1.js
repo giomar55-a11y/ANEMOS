@@ -18,6 +18,61 @@ const chiudiAnemoscopio =
 const anemoscopioDisplay =
     document.getElementById("anemoscopio-display");
 
+/* =================================================
+   DISPLAY
+================================================= */
+
+function preparaDisplayAnemoscopio() {
+
+    if (!anemoscopioDisplay) {
+        return;
+    }
+
+    anemoscopioDisplay.innerHTML = "";
+
+    const scalaVolume =
+        document.createElement(
+            "div"
+        );
+
+    scalaVolume.className =
+        "anemoscopio-scala-volume";
+
+
+    const volumi = [
+        "PIENO",
+        "ABBONDANTE",
+        "CONFORTEVOLE",
+        "SCARSO",
+        "VUOTO"
+    ];
+
+
+    volumi.forEach(
+        function (volume) {
+
+            const livello =
+                document.createElement(
+                    "div"
+                );
+
+            livello.className =
+                "anemoscopio-livello-volume";
+
+            livello.dataset.volume =
+                volume;
+
+            scalaVolume.appendChild(
+                livello
+            );
+        }
+    );
+
+
+    anemoscopioDisplay.appendChild(
+        scalaVolume
+    );
+}
 
 function apriAnemoscopio(
     timeline = null
@@ -54,6 +109,8 @@ function apriAnemoscopio(
             [];
 
     }
+
+        preparaDisplayAnemoscopio();
 
     anemoscopio.hidden = false;
 }
