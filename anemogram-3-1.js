@@ -2842,13 +2842,24 @@ if (avvisoAvvio) {
                     anemosystemaCorrente
                 );
 
+                        if (
+                typeof window.apriAnemoscopio ===
+                "function"
+            ) {
+
+                window.apriAnemoscopio(
+                    timeline
+                );
+
+                return;
+            }
+
             creaPannelloAnemogramma(
                 null,
                 timeline
             );
 
-            return;
-        }
+            return;        }
 
                if (
             !anemodromoHaSettoriCompleti(
