@@ -1,0 +1,7 @@
+"use strict";
+
+/* =================================================
+   ANEMOS 3.1
+   ANEMOSCOPIO
+   Guida visiva dinamica della respirazione
+================================================= */
