@@ -141,6 +141,20 @@ livelloSettori.classList.add(
 pianoTraiettoria.appendChild(
     livelloSettori
 );
+
+const livelloRespiro =
+    document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "g"
+    );
+
+livelloRespiro.classList.add(
+    "anemoscopio-livello-respiro"
+);
+
+pianoTraiettoria.appendChild(
+    livelloRespiro
+);   
    
 campoTraiettoria.appendChild(
     pianoTraiettoria
