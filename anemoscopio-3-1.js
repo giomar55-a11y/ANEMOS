@@ -126,7 +126,54 @@ function creaBandeSettoriSimultaneiAnemoscopio(
         }
     );
 }
+function disegnaSettoriTimelineAnemoscopio(
+    livelloSettori
+) {
 
+    if (
+        !livelloSettori ||
+        !Array.isArray(
+            window.anemoscopioTimeline
+        )
+    ) {
+        return;
+    }
+
+    const pixelPerSecondo = 50;
+
+    let x = 0;
+
+    window.anemoscopioTimeline.forEach(
+        function (elemento) {
+
+            if (
+                elemento.tipo !==
+                "anemomero"
+            ) {
+                return;
+            }
+
+            const dati =
+                elemento.dati;
+
+            const durata =
+                Number(dati.durata) || 0;
+
+            const larghezza =
+                durata *
+                pixelPerSecondo;
+
+            creaBandeSettoriSimultaneiAnemoscopio(
+                livelloSettori,
+                dati.settori,
+                x,
+                larghezza
+            );
+
+            x += larghezza;
+        }
+    );
+}
 function preparaDisplayAnemoscopio() {
 
     if (!anemoscopioDisplay) {
