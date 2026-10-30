@@ -26,7 +26,58 @@ const COLORI_SETTORI_ANEMOSCOPIO = {
     "Torace inferiore": "#9B51E0",
     "Torace superiore": "#35C6E8"
 };
+function creaBandaSettoreAnemoscopio(
+    nomeSettore,
+    x,
+    larghezza,
+    y,
+    altezza
+) {
 
+    const colore =
+        COLORI_SETTORI_ANEMOSCOPIO[
+            nomeSettore
+        ];
+
+    if (!colore) {
+        return null;
+    }
+
+    const banda =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "rect"
+        );
+
+    banda.setAttribute("x", x);
+    banda.setAttribute("y", y);
+
+    banda.setAttribute(
+        "width",
+        larghezza
+    );
+
+    banda.setAttribute(
+        "height",
+        altezza
+    );
+
+    banda.setAttribute(
+        "fill",
+        colore
+    );
+
+    banda.setAttribute(
+        "fill-opacity",
+        "0.16"
+    );
+
+    banda.classList.add(
+        "anemoscopio-banda-settore"
+    );
+
+    return banda;
+}
 function preparaDisplayAnemoscopio() {
 
     if (!anemoscopioDisplay) {
