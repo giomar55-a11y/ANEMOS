@@ -78,6 +78,55 @@ function creaBandaSettoreAnemoscopio(
 
     return banda;
 }
+
+function creaBandeSettoriSimultaneiAnemoscopio(
+    livelloSettori,
+    settori,
+    x,
+    larghezza
+) {
+
+    if (
+        !livelloSettori ||
+        !Array.isArray(settori) ||
+        settori.length === 0
+    ) {
+        return;
+    }
+
+    const altezzaTotale = 500;
+
+    const altezzaBanda =
+        altezzaTotale /
+        settori.length;
+
+    settori.forEach(
+        function (settore, indice) {
+
+            const nomeSettore =
+                typeof settore === "string"
+                    ? settore
+                    : settore.settore;
+
+            const banda =
+                creaBandaSettoreAnemoscopio(
+                    nomeSettore,
+                    x,
+                    larghezza,
+                    indice * altezzaBanda,
+                    altezzaBanda
+                );
+
+            if (banda) {
+
+                livelloSettori.appendChild(
+                    banda
+                );
+            }
+        }
+    );
+}
+
 function preparaDisplayAnemoscopio() {
 
     if (!anemoscopioDisplay) {
