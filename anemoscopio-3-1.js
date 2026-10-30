@@ -294,6 +294,10 @@ pianoTraiettoria.appendChild(
     livelloSettori
 );
 
+disegnaSettoriTimelineAnemoscopio(
+    livelloSettori
+);   
+
 const livelloRespiro =
     document.createElementNS(
         "http://www.w3.org/2000/svg",
