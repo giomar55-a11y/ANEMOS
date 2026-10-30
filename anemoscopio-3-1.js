@@ -128,6 +128,20 @@ pianoTraiettoria.setAttribute(
     "none"
 );
 
+const livelloSettori =
+    document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "g"
+    );
+
+livelloSettori.classList.add(
+    "anemoscopio-livello-settori"
+);
+
+pianoTraiettoria.appendChild(
+    livelloSettori
+);
+   
 campoTraiettoria.appendChild(
     pianoTraiettoria
 );
