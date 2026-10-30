@@ -108,7 +108,29 @@ const campoTraiettoria =
 
 campoTraiettoria.className =
     "anemoscopio-campo-traiettoria";
+const pianoTraiettoria =
+    document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "svg"
+    );
 
+pianoTraiettoria.classList.add(
+    "anemoscopio-piano-traiettoria"
+);
+
+pianoTraiettoria.setAttribute(
+    "viewBox",
+    "0 0 1000 500"
+);
+
+pianoTraiettoria.setAttribute(
+    "preserveAspectRatio",
+    "none"
+);
+
+campoTraiettoria.appendChild(
+    pianoTraiettoria
+);
 anemoscopioDisplay.appendChild(
     campoTraiettoria
 );
