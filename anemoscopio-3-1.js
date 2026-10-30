@@ -21,6 +21,11 @@ const anemoscopioDisplay =
 /* =================================================
    DISPLAY
 ================================================= */
+const COLORI_SETTORI_ANEMOSCOPIO = {
+    "Addome": "#2457D6",
+    "Torace inferiore": "#9B51E0",
+    "Torace superiore": "#35C6E8"
+};
 
 function preparaDisplayAnemoscopio() {
 
