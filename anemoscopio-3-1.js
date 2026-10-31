@@ -347,7 +347,63 @@ polmoneDestro.setAttribute(
     "stroke-width",
     "2"
 );
+const clipPath =
+    document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "clipPath"
+    );
 
+const clipId =
+    "anemoscopio-polmoni-" +
+    Math.random()
+        .toString(36)
+        .slice(2);
+
+clipPath.setAttribute(
+    "id",
+    clipId
+);
+
+const clipSinistro =
+    polmoneSinistro.cloneNode();
+
+const clipDestro =
+    polmoneDestro.cloneNode();
+
+clipSinistro.removeAttribute(
+    "stroke"
+);
+
+clipDestro.removeAttribute(
+    "stroke"
+);
+
+clipPath.appendChild(
+    clipSinistro
+);
+
+clipPath.appendChild(
+    clipDestro
+);
+
+cursore.appendChild(
+    clipPath
+);
+
+const gruppoFasce =
+    document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "g"
+    );
+
+gruppoFasce.setAttribute(
+    "clip-path",
+    "url(#" + clipId + ")"
+);
+
+cursore.appendChild(
+    gruppoFasce
+);
 const livelliPieni =
     ottieniLivelliPieniCursoreAnemoscopio(
         volumeObiettivo
@@ -406,9 +462,9 @@ fasce.forEach(
             "1.5"
         );
 
-        cursore.appendChild(
-            banda
-        );
+        gruppoFasce.appendChild(
+    banda
+);
     }
 );
    
