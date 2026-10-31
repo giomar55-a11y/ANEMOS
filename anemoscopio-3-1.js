@@ -273,18 +273,34 @@ function disegnaSettoriTimelineAnemoscopio(
     let x = 0;
 
     window.anemoscopioTimeline.forEach(
-        function (elemento) {
+    function (elemento) {
 
-            if (
-                elemento.tipo !==
-                "anemomero"
-            ) {
-                return;
-            }
+        if (
+            elemento.tipo ===
+            "apnea"
+        ) {
 
-            const dati =
-                elemento.dati;
+            const durataApnea =
+                Number(
+                    elemento.durata
+                ) || 0;
 
+            x +=
+                durataApnea *
+                pixelPerSecondo;
+
+            return;
+        }
+
+        if (
+            elemento.tipo !==
+            "anemomero"
+        ) {
+            return;
+        }
+
+        const dati =
+            elemento.dati;
             const durata =
                 Number(dati.durata) || 0;
 
