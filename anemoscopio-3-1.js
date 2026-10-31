@@ -249,6 +249,28 @@ function creaLineeFlussoAnemoscopio(
 
     return gruppo;
 }
+
+function nascondiCursoriAnemoscopio(
+    livelloRespiro
+) {
+
+    if (!livelloRespiro) {
+        return;
+    }
+
+    const cursori =
+        livelloRespiro.querySelectorAll(
+            ".anemoscopio-cursore"
+        );
+
+    cursori.forEach(
+        function (cursore) {
+            cursore.style.display =
+                "none";
+        }
+    );
+}
+
 function ottieniLivelliPieniCursoreAnemoscopio(
     volume
 ) {
