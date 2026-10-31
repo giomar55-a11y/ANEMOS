@@ -295,6 +295,68 @@ function creaCursoreAnemoscopio(
             volumeObiettivo || ""
         );
 
+   const polmoneSinistro =
+    document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "path"
+    );
+
+polmoneSinistro.setAttribute(
+    "d",
+    "M29 18 C25 16 21 17 18 21 C14 27 12 36 13 46 C14 53 18 57 23 56 C27 55 29 50 29 44 Z"
+);
+
+polmoneSinistro.setAttribute(
+    "fill",
+    "#F1F1F1"
+);
+
+polmoneSinistro.setAttribute(
+    "stroke",
+    "#555"
+);
+
+polmoneSinistro.setAttribute(
+    "stroke-width",
+    "2"
+);
+
+
+const polmoneDestro =
+    document.createElementNS(
+        "http://www.w3.org/2000/svg",
+        "path"
+    );
+
+polmoneDestro.setAttribute(
+    "d",
+    "M35 18 C39 16 43 17 46 21 C50 27 52 36 51 46 C50 53 46 57 41 56 C37 55 35 50 35 44 Z"
+);
+
+polmoneDestro.setAttribute(
+    "fill",
+    "#F1F1F1"
+);
+
+polmoneDestro.setAttribute(
+    "stroke",
+    "#555"
+);
+
+polmoneDestro.setAttribute(
+    "stroke-width",
+    "2"
+);
+
+
+cursore.appendChild(
+    polmoneSinistro
+);
+
+cursore.appendChild(
+    polmoneDestro
+);
+
     return cursore;
 }
 
