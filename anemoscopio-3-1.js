@@ -175,8 +175,9 @@ function creaLineaRespiroAnemoscopio(
     xInizio,
     yInizio,
     xFine,
-    yFine
-) {
+    yFine,
+    flusso
+){
 
     const linea =
         document.createElementNS(
@@ -218,6 +219,18 @@ function creaLineaRespiroAnemoscopio(
         "stroke-linecap",
         "round"
     );
+
+   if (
+    String(flusso || "")
+        .trim()
+        .toLowerCase() ===
+        "trattenuto"
+) {
+    linea.setAttribute(
+        "stroke-dasharray",
+        "8 8"
+    );
+}
 
     linea.classList.add(
         "anemoscopio-linea-respiro"
