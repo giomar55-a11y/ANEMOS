@@ -470,11 +470,24 @@ function disegnaRespiroTimelineAnemoscopio(
                         elemento.durata
                     ) || 0;
 
-                x +=
-                    durataApnea *
-                    pixelPerSecondo;
+                const larghezzaApnea =
+    durataApnea *
+    pixelPerSecondo;
 
-                return;
+const testoApnea =
+    creaTestoApneaAnemoscopio(
+        x,
+        larghezzaApnea,
+        durataApnea
+    );
+
+livelloRespiro.appendChild(
+    testoApnea
+);
+
+x += larghezzaApnea;
+
+return;
             }
 
             if (
