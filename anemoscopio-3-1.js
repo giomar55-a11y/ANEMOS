@@ -26,6 +26,38 @@ const COLORI_SETTORI_ANEMOSCOPIO = {
     "Torace inferiore": "#9B51E0",
     "Torace superiore": "#35C6E8"
 };
+
+const Y_VOLUME_ANEMOSCOPIO = {
+    "PIENO": 0,
+    "ABBONDANTE": 125,
+    "CONFORTEVOLE": 250,
+    "SCARSO": 375,
+    "VUOTO": 500
+};
+
+function ottieniYVolumeAnemoscopio(
+    volume
+) {
+
+    if (
+        typeof volume !==
+        "string"
+    ) {
+        return null;
+    }
+
+    const nomeVolume =
+        volume
+            .trim()
+            .toUpperCase();
+
+    return (
+        Y_VOLUME_ANEMOSCOPIO[
+            nomeVolume
+        ] ?? null
+    );
+}
+
 function creaBandaSettoreAnemoscopio(
     nomeSettore,
     x,
