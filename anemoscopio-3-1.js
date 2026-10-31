@@ -58,6 +58,61 @@ function ottieniYVolumeAnemoscopio(
     );
 }
 
+function creaLineaRespiroAnemoscopio(
+    xInizio,
+    yInizio,
+    xFine,
+    yFine
+) {
+
+    const linea =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "line"
+        );
+
+    linea.setAttribute(
+        "x1",
+        xInizio
+    );
+
+    linea.setAttribute(
+        "y1",
+        yInizio
+    );
+
+    linea.setAttribute(
+        "x2",
+        xFine
+    );
+
+    linea.setAttribute(
+        "y2",
+        yFine
+    );
+
+    linea.setAttribute(
+        "stroke",
+        "#000"
+    );
+
+    linea.setAttribute(
+        "stroke-width",
+        "4"
+    );
+
+    linea.setAttribute(
+        "stroke-linecap",
+        "round"
+    );
+
+    linea.classList.add(
+        "anemoscopio-linea-respiro"
+    );
+
+    return linea;
+}
+
 function creaBandaSettoreAnemoscopio(
     nomeSettore,
     x,
