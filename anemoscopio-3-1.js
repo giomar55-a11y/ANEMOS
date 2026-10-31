@@ -391,6 +391,53 @@ function disegnaSettoriTimelineAnemoscopio(
     );
 }
 
+function creaTestoApneaAnemoscopio(
+    x,
+    larghezza,
+    durata
+) {
+
+    const testo =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "text"
+        );
+
+    testo.setAttribute(
+        "x",
+        x + larghezza / 2
+    );
+
+    testo.setAttribute(
+        "y",
+        250
+    );
+
+    testo.setAttribute(
+        "text-anchor",
+        "middle"
+    );
+
+    testo.classList.add(
+        "anemoscopio-countdown-apnea"
+    );
+
+    const numeri = [];
+
+    for (
+        let secondo = durata;
+        secondo >= 1;
+        secondo--
+    ) {
+        numeri.push(secondo);
+    }
+
+    testo.textContent =
+        numeri.join(" · ");
+
+    return testo;
+}
+
 function disegnaRespiroTimelineAnemoscopio(
     livelloRespiro
 ) {
