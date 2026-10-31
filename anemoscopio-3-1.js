@@ -373,7 +373,7 @@ polmoneSinistro.setAttribute(
 
 polmoneSinistro.setAttribute(
     "fill",
-    "#F1F1F1"
+    "none"
 );
 
 polmoneSinistro.setAttribute(
@@ -400,7 +400,7 @@ polmoneDestro.setAttribute(
 
 polmoneDestro.setAttribute(
     "fill",
-    "#F1F1F1"
+    "none"
 );
 
 polmoneDestro.setAttribute(
