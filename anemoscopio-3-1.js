@@ -189,6 +189,27 @@ function ottieniNumeroLineeFlussoAnemoscopio(
 
     return 1;
 }
+
+function ottieniOffsetLineeFlussoAnemoscopio(
+    flusso
+) {
+
+    const numeroLinee =
+        ottieniNumeroLineeFlussoAnemoscopio(
+            flusso
+        );
+
+    if (numeroLinee === 2) {
+        return [-5, 5];
+    }
+
+    if (numeroLinee === 3) {
+        return [-8, 0, 8];
+    }
+
+    return [0];
+}
+
 function creaLineaRespiroAnemoscopio(
     xInizio,
     yInizio,
