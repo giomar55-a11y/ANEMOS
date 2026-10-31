@@ -250,6 +250,28 @@ function creaLineeFlussoAnemoscopio(
     return gruppo;
 }
 
+function creaCursoreAnemoscopio(
+    volumeObiettivo
+) {
+
+    const cursore =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "g"
+        );
+
+    cursore.classList.add(
+        "anemoscopio-cursore"
+    );
+
+    cursore.dataset.volumeObiettivo =
+        String(
+            volumeObiettivo || ""
+        );
+
+    return cursore;
+}
+
 function creaLineaRespiroAnemoscopio(
     xInizio,
     yInizio,
