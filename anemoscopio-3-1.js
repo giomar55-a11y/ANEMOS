@@ -370,6 +370,8 @@ function disegnaRespiroTimelineAnemoscopio(
 
     let x = 0;
 
+   let yPrecedente = null;
+
     window.anemoscopioTimeline.forEach(
         function (elemento) {
 
