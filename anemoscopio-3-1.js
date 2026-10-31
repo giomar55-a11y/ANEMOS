@@ -1227,10 +1227,16 @@ disegnaRespiroTimelineAnemoscopio(
 nascondiCursoriAnemoscopio(
     livelloRespiro
 );   
-creaCursoreAttivoAnemoscopio(
-    livelloRespiro
+const cursoreAttivo =
+    creaCursoreAttivoAnemoscopio(
+        livelloRespiro
+    );
+
+posizionaCursoreAttivoAnemoscopio(
+    cursoreAttivo,
+    0
 );
-campoTraiettoria.appendChild(
+   campoTraiettoria.appendChild(
     pianoTraiettoria
 );
    anemoscopioDisplay.appendChild(
