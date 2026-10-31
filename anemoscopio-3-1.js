@@ -1136,6 +1136,10 @@ disegnaRespiroTimelineAnemoscopio(
     livelloRespiro
 );
 
+nascondiCursoriAnemoscopio(
+    livelloRespiro
+);   
+
 campoTraiettoria.appendChild(
     pianoTraiettoria
 );
