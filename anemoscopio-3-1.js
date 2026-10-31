@@ -348,7 +348,70 @@ polmoneDestro.setAttribute(
     "2"
 );
 
+const livelliPieni =
+    ottieniLivelliPieniCursoreAnemoscopio(
+        volumeObiettivo
+    );
 
+const fasce = [
+    { y: 47, h: 10 },
+    { y: 37, h: 10 },
+    { y: 27, h: 10 },
+    { y: 17, h: 10 }
+];
+
+fasce.forEach(
+    function (fascia, indice) {
+
+        const banda =
+            document.createElementNS(
+                "http://www.w3.org/2000/svg",
+                "rect"
+            );
+
+        banda.setAttribute(
+            "x",
+            "12"
+        );
+
+        banda.setAttribute(
+            "y",
+            fascia.y
+        );
+
+        banda.setAttribute(
+            "width",
+            "40"
+        );
+
+        banda.setAttribute(
+            "height",
+            fascia.h
+        );
+
+        banda.setAttribute(
+            "fill",
+            indice < livelliPieni
+                ? "#777"
+                : "#F1F1F1"
+        );
+
+        banda.setAttribute(
+            "stroke",
+            "#555"
+        );
+
+        banda.setAttribute(
+            "stroke-width",
+            "1.5"
+        );
+
+        cursore.appendChild(
+            banda
+        );
+    }
+);
+   
 cursore.appendChild(
     polmoneSinistro
 );
