@@ -302,6 +302,63 @@ function creaCursoreAttivoAnemoscopio(
 
     return cursoreAttivo;
 }
+function posizionaCursoreAttivoAnemoscopio(
+    cursore,
+    avanzamento
+) {
+
+    if (!cursore) {
+        return;
+    }
+
+    const progresso =
+        Math.max(
+            0,
+            Math.min(
+                1,
+                Number(avanzamento) || 0
+            )
+        );
+
+    const xInizio =
+        Number(
+            cursore.dataset.inizioFase
+        );
+
+    const xFine =
+        Number(
+            cursore.dataset.fineFase
+        );
+
+    const yInizio =
+        Number(
+            cursore.dataset.yInizio
+        );
+
+    const yFine =
+        Number(
+            cursore.dataset.yFine
+        );
+
+    const x =
+        xInizio +
+        (xFine - xInizio) *
+        progresso;
+
+    const y =
+        yInizio +
+        (yFine - yInizio) *
+        progresso;
+
+    cursore.setAttribute(
+        "transform",
+        "translate(" +
+            (x - 32) +
+            " " +
+            (y - 32) +
+        ")"
+    );
+}
 function ottieniLivelliPieniCursoreAnemoscopio(
     volume
 ) {
