@@ -58,6 +58,48 @@ function ottieniYVolumeAnemoscopio(
     );
 }
 
+function ottieniEstremiVolumeAnemoscopio(
+    settori
+) {
+
+    if (
+        !Array.isArray(settori) ||
+        settori.length === 0
+    ) {
+        return null;
+    }
+
+    const valori = [];
+
+    settori.forEach(
+        function (settore) {
+
+            const volume =
+                typeof settore === "string"
+                    ? null
+                    : settore.volume;
+
+            const y =
+                ottieniYVolumeAnemoscopio(
+                    volume
+                );
+
+            if (y !== null) {
+                valori.push(y);
+            }
+        }
+    );
+
+    if (valori.length === 0) {
+        return null;
+    }
+
+    return {
+        yMin: Math.min(...valori),
+        yMax: Math.max(...valori)
+    };
+}
+
 function creaLineaRespiroAnemoscopio(
     xInizio,
     yInizio,
