@@ -517,12 +517,16 @@ livelloRespiro.classList.add(
 
 pianoTraiettoria.appendChild(
     livelloRespiro
-);   
-   
+);
+
+disegnaRespiroTimelineAnemoscopio(
+    livelloRespiro
+);
+
 campoTraiettoria.appendChild(
     pianoTraiettoria
 );
-anemoscopioDisplay.appendChild(
+   anemoscopioDisplay.appendChild(
     campoTraiettoria
 );
    
