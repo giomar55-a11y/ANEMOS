@@ -935,6 +935,20 @@ if (volumeObiettivo) {
             volumeObiettivo
         );
 
+   cursore.dataset.inizioFase =
+    String(x);
+
+cursore.dataset.fineFase =
+    String(
+        x + larghezza
+    );
+
+cursore.dataset.yInizio =
+    String(yPrecedente);
+
+cursore.dataset.yFine =
+    String(yFinale);
+
     cursore.setAttribute(
         "transform",
         "translate(" +
