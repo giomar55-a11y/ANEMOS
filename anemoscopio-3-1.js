@@ -99,7 +99,40 @@ function ottieniEstremiVolumeAnemoscopio(
         yMax: Math.max(...valori)
     };
 }
+function ottieniYFinaleFaseAnemoscopio(
+    dati
+) {
 
+    if (!dati) {
+        return null;
+    }
+
+    const estremi =
+        ottieniEstremiVolumeAnemoscopio(
+            dati.settori
+        );
+
+    if (!estremi) {
+        return null;
+    }
+
+    const fase =
+        String(
+            dati.fase || ""
+        )
+            .trim()
+            .toUpperCase();
+
+    if (fase === "IN") {
+        return estremi.yMin;
+    }
+
+    if (fase === "ES") {
+        return estremi.yMax;
+    }
+
+    return null;
+}
 function creaLineaRespiroAnemoscopio(
     xInizio,
     yInizio,
