@@ -456,8 +456,15 @@ const yFinale =
 
 if (yFinale !== null) {
 
-    if (yPrecedente !== null) {
+    if (yPrecedente === null) {
+        yPrecedente =
+            ottieniYInizialePrimaFaseAnemoscopio(
+                dati
+            );
+    }
 
+    if (yPrecedente !== null)
+    {
         const linea =
             creaLineaRespiroAnemoscopio(
                 x,
