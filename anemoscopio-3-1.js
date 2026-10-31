@@ -539,13 +539,13 @@ if (yFinale !== null) {
     if (yPrecedente !== null)
     {
         const linea =
-            creaLineaRespiroAnemoscopio(
-                x,
-                yPrecedente,
-                x + larghezza,
-                yFinale
-            );
-
+    creaLineaRespiroAnemoscopio(
+        x,
+        yPrecedente,
+        x + larghezza,
+        yFinale,
+        dati.flusso
+    );
         livelloRespiro.appendChild(
             linea
         );
