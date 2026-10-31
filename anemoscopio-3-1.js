@@ -249,7 +249,33 @@ function creaLineeFlussoAnemoscopio(
 
     return gruppo;
 }
+function ottieniLivelliPieniCursoreAnemoscopio(
+    volume
+) {
 
+    const nomeVolume =
+        String(volume || "")
+            .trim()
+            .toUpperCase();
+
+    if (nomeVolume === "SCARSO") {
+        return 1;
+    }
+
+    if (nomeVolume === "CONFORTEVOLE") {
+        return 2;
+    }
+
+    if (nomeVolume === "ABBONDANTE") {
+        return 3;
+    }
+
+    if (nomeVolume === "PIENO") {
+        return 4;
+    }
+
+    return 0;
+}
 function creaCursoreAnemoscopio(
     volumeObiettivo
 ) {
