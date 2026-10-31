@@ -133,6 +133,44 @@ function ottieniYFinaleFaseAnemoscopio(
 
     return null;
 }
+
+function ottieniYInizialePrimaFaseAnemoscopio(
+    dati
+) {
+
+    const yFinale =
+        ottieniYFinaleFaseAnemoscopio(
+            dati
+        );
+
+    if (yFinale === null) {
+        return null;
+    }
+
+    const fase =
+        String(
+            dati.fase || ""
+        )
+            .trim()
+            .toUpperCase();
+
+    if (fase === "IN") {
+        return Math.min(
+            500,
+            yFinale + 125
+        );
+    }
+
+    if (fase === "ES") {
+        return Math.max(
+            0,
+            yFinale - 125
+        );
+    }
+
+    return null;
+}
+
 function creaLineaRespiroAnemoscopio(
     xInizio,
     yInizio,
