@@ -359,6 +359,59 @@ function posizionaCursoreAttivoAnemoscopio(
         ")"
     );
 }
+
+function animaPrimaFaseAnemoscopio(
+    cursore,
+    durataSecondi
+) {
+
+    if (!cursore) {
+        return;
+    }
+
+    const durata =
+        Math.max(
+            0,
+            Number(durataSecondi) || 0
+        ) * 1000;
+
+    if (durata === 0) {
+        posizionaCursoreAttivoAnemoscopio(
+            cursore,
+            1
+        );
+        return;
+    }
+
+    const inizio =
+        performance.now();
+
+    function aggiorna(tempo) {
+
+        const avanzamento =
+            Math.min(
+                1,
+                (tempo - inizio) /
+                durata
+            );
+
+        posizionaCursoreAttivoAnemoscopio(
+            cursore,
+            avanzamento
+        );
+
+        if (avanzamento < 1) {
+            requestAnimationFrame(
+                aggiorna
+            );
+        }
+    }
+
+    requestAnimationFrame(
+        aggiorna
+    );
+}
+
 function ottieniLivelliPieniCursoreAnemoscopio(
     volume
 ) {
