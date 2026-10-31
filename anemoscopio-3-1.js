@@ -210,6 +210,46 @@ function ottieniOffsetLineeFlussoAnemoscopio(
     return [0];
 }
 
+function creaLineeFlussoAnemoscopio(
+    xInizio,
+    yInizio,
+    xFine,
+    yFine,
+    flusso
+) {
+
+    const gruppo =
+        document.createElementNS(
+            "http://www.w3.org/2000/svg",
+            "g"
+        );
+
+    const offsets =
+        ottieniOffsetLineeFlussoAnemoscopio(
+            flusso
+        );
+
+    offsets.forEach(
+        function (offset) {
+
+            const linea =
+                creaLineaRespiroAnemoscopio(
+                    xInizio,
+                    yInizio + offset,
+                    xFine,
+                    yFine + offset,
+                    flusso
+                );
+
+            gruppo.appendChild(
+                linea
+            );
+        }
+    );
+
+    return gruppo;
+}
+
 function creaLineaRespiroAnemoscopio(
     xInizio,
     yInizio,
