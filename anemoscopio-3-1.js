@@ -923,6 +923,31 @@ if (yFinale !== null) {
 livelloRespiro.appendChild(
     linee
 );
+const volumeObiettivo =
+    ottieniVolumeObiettivoCursoreAnemoscopio(
+        dati
+    );
+
+if (volumeObiettivo) {
+
+    const cursore =
+        creaCursoreAnemoscopio(
+            volumeObiettivo
+        );
+
+    cursore.setAttribute(
+        "transform",
+        "translate(" +
+            (x + larghezza - 32) +
+            " " +
+            (yFinale - 32) +
+        ")"
+    );
+
+    livelloRespiro.appendChild(
+        cursore
+    );
+}       
     }
 
     yPrecedente = yFinale;
