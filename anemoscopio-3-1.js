@@ -276,6 +276,71 @@ function ottieniLivelliPieniCursoreAnemoscopio(
 
     return 0;
 }
+
+function ottieniVolumeObiettivoCursoreAnemoscopio(
+    dati
+) {
+
+    if (
+        !dati ||
+        !Array.isArray(dati.settori) ||
+        dati.settori.length === 0
+    ) {
+        return null;
+    }
+
+    const fase =
+        String(dati.fase || "")
+            .trim()
+            .toUpperCase();
+
+    const volumiValidi =
+        dati.settori
+            .map(
+                function (settore) {
+                    return (
+                        typeof settore === "string"
+                            ? null
+                            : settore.volume
+                    );
+                }
+            )
+            .filter(
+                function (volume) {
+                    return (
+                        ottieniYVolumeAnemoscopio(
+                            volume
+                        ) !== null
+                    );
+                }
+            );
+
+    if (volumiValidi.length === 0) {
+        return null;
+    }
+
+    volumiValidi.sort(
+        function (a, b) {
+            return (
+                ottieniYVolumeAnemoscopio(a) -
+                ottieniYVolumeAnemoscopio(b)
+            );
+        }
+    );
+
+    if (fase === "IN") {
+        return volumiValidi[0];
+    }
+
+    if (fase === "ES") {
+        return volumiValidi[
+            volumiValidi.length - 1
+        ];
+    }
+
+    return null;
+}
+
 function creaCursoreAnemoscopio(
     volumeObiettivo
 ) {
