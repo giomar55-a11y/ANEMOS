@@ -170,7 +170,25 @@ function ottieniYInizialePrimaFaseAnemoscopio(
 
     return null;
 }
+function ottieniNumeroLineeFlussoAnemoscopio(
+    flusso
+) {
 
+    const nomeFlusso =
+        String(flusso || "")
+            .trim()
+            .toLowerCase();
+
+    if (nomeFlusso === "spontaneo") {
+        return 2;
+    }
+
+    if (nomeFlusso === "forzato") {
+        return 3;
+    }
+
+    return 1;
+}
 function creaLineaRespiroAnemoscopio(
     xInizio,
     yInizio,
