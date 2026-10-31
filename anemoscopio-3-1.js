@@ -408,10 +408,19 @@ function disegnaRespiroTimelineAnemoscopio(
                 ) || 0;
 
             const larghezza =
-                durata *
-                pixelPerSecondo;
+    durata *
+    pixelPerSecondo;
 
-            x += larghezza;
+const yFinale =
+    ottieniYFinaleFaseAnemoscopio(
+        dati
+    );
+
+if (yFinale !== null) {
+    yPrecedente = yFinale;
+}
+
+x += larghezza;
         }
     );
 }
