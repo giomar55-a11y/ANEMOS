@@ -617,17 +617,18 @@ if (yFinale !== null) {
 
     if (yPrecedente !== null)
     {
-        const linea =
-    creaLineaRespiroAnemoscopio(
+        const linee =
+    creaLineeFlussoAnemoscopio(
         x,
         yPrecedente,
         x + larghezza,
         yFinale,
         dati.flusso
     );
-        livelloRespiro.appendChild(
-            linea
-        );
+
+livelloRespiro.appendChild(
+    linee
+);
     }
 
     yPrecedente = yFinale;
