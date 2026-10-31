@@ -417,6 +417,22 @@ const yFinale =
     );
 
 if (yFinale !== null) {
+
+    if (yPrecedente !== null) {
+
+        const linea =
+            creaLineaRespiroAnemoscopio(
+                x,
+                yPrecedente,
+                x + larghezza,
+                yFinale
+            );
+
+        livelloRespiro.appendChild(
+            linea
+        );
+    }
+
     yPrecedente = yFinale;
 }
 
