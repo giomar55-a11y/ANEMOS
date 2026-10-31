@@ -270,7 +270,38 @@ function nascondiCursoriAnemoscopio(
         }
     );
 }
+function creaCursoreAttivoAnemoscopio(
+    livelloRespiro
+) {
 
+    if (!livelloRespiro) {
+        return null;
+    }
+
+    const primoCursore =
+        livelloRespiro.querySelector(
+            ".anemoscopio-cursore"
+        );
+
+    if (!primoCursore) {
+        return null;
+    }
+
+    const cursoreAttivo =
+        primoCursore.cloneNode(true);
+
+    cursoreAttivo.classList.add(
+        "anemoscopio-cursore-attivo"
+    );
+
+    cursoreAttivo.style.display = "";
+
+    livelloRespiro.appendChild(
+        cursoreAttivo
+    );
+
+    return cursoreAttivo;
+}
 function ottieniLivelliPieniCursoreAnemoscopio(
     volume
 ) {
