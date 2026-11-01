@@ -465,7 +465,40 @@ function ottieniLivelliPieniCursoreAnemoscopio(
 
     return 0;
 }
+function aggiornaVolumeCursoreAnemoscopio(
+    cursore,
+    volume
+) {
 
+    if (!cursore) {
+        return;
+    }
+
+    const livelliPieni =
+        ottieniLivelliPieniCursoreAnemoscopio(
+            volume
+        );
+
+    const fasce =
+        cursore.querySelectorAll(
+            "g[clip-path] rect"
+        );
+
+    fasce.forEach(
+        function (fascia, indice) {
+
+            fascia.setAttribute(
+                "fill",
+                indice < livelliPieni
+                    ? "#777"
+                    : "#F1F1F1"
+            );
+        }
+    );
+
+    cursore.dataset.volumeObiettivo =
+        String(volume || "");
+}
 function ottieniVolumeObiettivoCursoreAnemoscopio(
     dati
 ) {
