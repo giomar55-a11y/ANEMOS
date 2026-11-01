@@ -1289,6 +1289,31 @@ posizionaCursoreAttivoAnemoscopio(
     cursoreAttivo,
     0
 );
+
+const primaFase =
+    Array.isArray(
+        window.anemoscopioTimeline
+    )
+        ? window.anemoscopioTimeline.find(
+            function (elemento) {
+                return (
+                    elemento.tipo ===
+                    "anemomero"
+                );
+            }
+        )
+        : null;
+
+if (
+    primaFase &&
+    primaFase.dati
+) {
+    animaPrimaFaseAnemoscopio(
+        cursoreAttivo,
+        primaFase.dati.durata
+    );
+}
+   
    campoTraiettoria.appendChild(
     pianoTraiettoria
 );
