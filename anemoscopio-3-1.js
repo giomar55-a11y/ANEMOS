@@ -411,7 +411,33 @@ function animaPrimaFaseAnemoscopio(
         aggiorna
     );
 }
+function preparaFaseCursoreAttivoAnemoscopio(
+    cursoreAttivo,
+    cursoreFase
+) {
 
+    if (
+        !cursoreAttivo ||
+        !cursoreFase
+    ) {
+        return;
+    }
+
+    cursoreAttivo.dataset.inizioFase =
+        cursoreFase.dataset.inizioFase;
+
+    cursoreAttivo.dataset.fineFase =
+        cursoreFase.dataset.fineFase;
+
+    cursoreAttivo.dataset.yInizio =
+        cursoreFase.dataset.yInizio;
+
+    cursoreAttivo.dataset.yFine =
+        cursoreFase.dataset.yFine;
+
+    cursoreAttivo.dataset.volumeObiettivo =
+        cursoreFase.dataset.volumeObiettivo;
+}
 function ottieniLivelliPieniCursoreAnemoscopio(
     volume
 ) {
