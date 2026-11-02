@@ -474,6 +474,33 @@ function attendiApneaAnemoscopio(
         durata
     );
 }
+
+function ottieniElementiTimelineAnemoscopio() {
+
+    if (
+        !Array.isArray(
+            window.anemoscopioTimeline
+        )
+    ) {
+        return [];
+    }
+
+    return window.anemoscopioTimeline.filter(
+        function (elemento) {
+
+            return (
+                elemento &&
+                (
+                    elemento.tipo ===
+                        "anemomero" ||
+                    elemento.tipo ===
+                        "apnea"
+                )
+            );
+        }
+    );
+}
+
 function animaFaseCursoreAnemoscopio(
     livelloRespiro,
     cursoreAttivo,
