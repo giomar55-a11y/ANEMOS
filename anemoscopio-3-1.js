@@ -1450,38 +1450,12 @@ if (
         primaFase.dati.durata,
         function () {
 
-            const secondaFase =
-                ottieniCursoreFaseAnemoscopio(
-                    livelloRespiro,
-                    1
-                );
-
-            const datiSecondaFase =
-                fasiRespiratorie[1];
-
-            if (
-                !secondaFase ||
-                !datiSecondaFase ||
-                !datiSecondaFase.dati
-            ) {
-                return;
-            }
-
-            preparaFaseCursoreAttivoAnemoscopio(
-                cursoreAttivo,
-                secondaFase
-            );
-
-            posizionaCursoreAttivoAnemoscopio(
-                cursoreAttivo,
-                0
-            );
-
-            animaPrimaFaseAnemoscopio(
-                cursoreAttivo,
-                datiSecondaFase.dati.durata
-            );
-        }
+            animaFaseCursoreAnemoscopio(
+    livelloRespiro,
+    cursoreAttivo,
+    fasiRespiratorie,
+    1
+);
     );
 }
    campoTraiettoria.appendChild(
