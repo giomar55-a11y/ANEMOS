@@ -1454,7 +1454,16 @@ if (
     livelloRespiro,
     cursoreAttivo,
     fasiRespiratorie,
-    1
+    1,
+    function () {
+
+        animaFaseCursoreAnemoscopio(
+            livelloRespiro,
+            cursoreAttivo,
+            fasiRespiratorie,
+            2
+        );
+    }
 );
    }        
     );
