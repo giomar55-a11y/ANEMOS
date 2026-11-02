@@ -438,6 +438,49 @@ function animaPrimaFaseAnemoscopio(
         aggiorna
     );
 }
+
+function animaFaseCursoreAnemoscopio(
+    livelloRespiro,
+    cursoreAttivo,
+    fasiRespiratorie,
+    indiceFase,
+    alTermine
+) {
+
+    const cursoreFase =
+        ottieniCursoreFaseAnemoscopio(
+            livelloRespiro,
+            indiceFase
+        );
+
+    const datiFase =
+        fasiRespiratorie[indiceFase];
+
+    if (
+        !cursoreFase ||
+        !datiFase ||
+        !datiFase.dati
+    ) {
+        return;
+    }
+
+    preparaFaseCursoreAttivoAnemoscopio(
+        cursoreAttivo,
+        cursoreFase
+    );
+
+    posizionaCursoreAttivoAnemoscopio(
+        cursoreAttivo,
+        0
+    );
+
+    animaPrimaFaseAnemoscopio(
+        cursoreAttivo,
+        datiFase.dati.durata,
+        alTermine
+    );
+}
+
 function preparaFaseCursoreAttivoAnemoscopio(
     cursoreAttivo,
     cursoreFase
