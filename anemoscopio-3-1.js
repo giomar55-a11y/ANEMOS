@@ -1481,22 +1481,13 @@ if (
         primaFase.dati.durata,
         function () {
 
-            animaFaseCursoreAnemoscopio(
-    livelloRespiro,
-    cursoreAttivo,
-    fasiRespiratorie,
-    1,
-    function () {
-
-        animaFaseCursoreAnemoscopio(
-            livelloRespiro,
-            cursoreAttivo,
-            fasiRespiratorie,
-            2
-        );
-    }
-);
-   }        
+            animaFasiSuccessiveAnemoscopio(
+                livelloRespiro,
+                cursoreAttivo,
+                fasiRespiratorie,
+                1
+            );
+        }
     );
 }
    campoTraiettoria.appendChild(
