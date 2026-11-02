@@ -270,6 +270,29 @@ function nascondiCursoriAnemoscopio(
         }
     );
 }
+
+function ottieniCursoreFaseAnemoscopio(
+    livelloRespiro,
+    indiceFase
+) {
+
+    if (!livelloRespiro) {
+        return null;
+    }
+
+    const cursori =
+        Array.from(
+            livelloRespiro.querySelectorAll(
+                ".anemoscopio-cursore:not(.anemoscopio-cursore-attivo)"
+            )
+        );
+
+    return (
+        cursori[indiceFase] ||
+        null
+    );
+}
+
 function creaCursoreAttivoAnemoscopio(
     livelloRespiro
 ) {
