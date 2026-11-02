@@ -500,7 +500,38 @@ function ottieniElementiTimelineAnemoscopio() {
         }
     );
 }
+function animaElementoTimelineAnemoscopio(
+    elemento,
+    alTermine
+) {
 
+    if (!elemento) {
+        return;
+    }
+
+    if (elemento.tipo === "apnea") {
+
+        const durata =
+            elemento.dati &&
+            elemento.dati.durata !== undefined
+                ? elemento.dati.durata
+                : elemento.durata;
+
+        attendiApneaAnemoscopio(
+            durata,
+            alTermine
+        );
+
+        return;
+    }
+
+    if (
+        typeof alTermine ===
+        "function"
+    ) {
+        alTermine();
+    }
+}
 function animaFaseCursoreAnemoscopio(
     livelloRespiro,
     cursoreAttivo,
