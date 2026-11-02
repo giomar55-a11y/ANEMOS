@@ -1380,33 +1380,12 @@ posizionaCursoreAttivoAnemoscopio(
     cursoreAttivo,
     0
 );
+
 const fasiRespiratorie =
-    window.anemoscopioTimeline.filter(
-        function (elemento) {
-            return (
-                elemento.tipo ===
-                "anemomero"
-            );
-        }
-    );
-
-const datiSecondaFase =
-    fasiRespiratorie[1];
-
-if (
-    datiSecondaFase &&
-    datiSecondaFase.dati
-) {
-    animaPrimaFaseAnemoscopio(
-        cursoreAttivo,
-        datiSecondaFase.dati.durata
-    );
-}   
-const primaFase =
     Array.isArray(
         window.anemoscopioTimeline
     )
-        ? window.anemoscopioTimeline.find(
+        ? window.anemoscopioTimeline.filter(
             function (elemento) {
                 return (
                     elemento.tipo ===
@@ -1414,7 +1393,10 @@ const primaFase =
                 );
             }
         )
-        : null;
+        : [];
+
+const primaFase =
+    fasiRespiratorie[0];
 
 if (
     primaFase &&
@@ -1431,7 +1413,14 @@ if (
                     1
                 );
 
-            if (!secondaFase) {
+            const datiSecondaFase =
+                fasiRespiratorie[1];
+
+            if (
+                !secondaFase ||
+                !datiSecondaFase ||
+                !datiSecondaFase.dati
+            ) {
                 return;
             }
 
@@ -1444,9 +1433,14 @@ if (
                 cursoreAttivo,
                 0
             );
+
+            animaPrimaFaseAnemoscopio(
+                cursoreAttivo,
+                datiSecondaFase.dati.durata
+            );
         }
     );
-}   
+}
    campoTraiettoria.appendChild(
     pianoTraiettoria
 );
