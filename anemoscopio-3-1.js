@@ -436,7 +436,12 @@ function preparaFaseCursoreAttivoAnemoscopio(
         cursoreFase.dataset.yFine;
 
     cursoreAttivo.dataset.volumeObiettivo =
-        cursoreFase.dataset.volumeObiettivo;
+    cursoreFase.dataset.volumeObiettivo;
+
+aggiornaVolumeCursoreAnemoscopio(
+    cursoreAttivo,
+    cursoreFase.dataset.volumeObiettivo
+);
 }
 function ottieniLivelliPieniCursoreAnemoscopio(
     volume
