@@ -1401,10 +1401,31 @@ if (
 ) {
     animaPrimaFaseAnemoscopio(
         cursoreAttivo,
-        primaFase.dati.durata
+        primaFase.dati.durata,
+        function () {
+
+            const secondaFase =
+                ottieniCursoreFaseAnemoscopio(
+                    livelloRespiro,
+                    1
+                );
+
+            if (!secondaFase) {
+                return;
+            }
+
+            preparaFaseCursoreAttivoAnemoscopio(
+                cursoreAttivo,
+                secondaFase
+            );
+
+            posizionaCursoreAttivoAnemoscopio(
+                cursoreAttivo,
+                0
+            );
+        }
     );
-}
-   
+}   
    campoTraiettoria.appendChild(
     pianoTraiettoria
 );
