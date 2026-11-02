@@ -1380,6 +1380,28 @@ posizionaCursoreAttivoAnemoscopio(
     cursoreAttivo,
     0
 );
+const fasiRespiratorie =
+    window.anemoscopioTimeline.filter(
+        function (elemento) {
+            return (
+                elemento.tipo ===
+                "anemomero"
+            );
+        }
+    );
+
+const datiSecondaFase =
+    fasiRespiratorie[1];
+
+if (
+    datiSecondaFase &&
+    datiSecondaFase.dati
+) {
+    animaPrimaFaseAnemoscopio(
+        cursoreAttivo,
+        datiSecondaFase.dati.durata
+    );
+}   
 const primaFase =
     Array.isArray(
         window.anemoscopioTimeline
