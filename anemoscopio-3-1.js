@@ -438,7 +438,42 @@ function animaPrimaFaseAnemoscopio(
         aggiorna
     );
 }
+function attendiApneaAnemoscopio(
+    durataSecondi,
+    alTermine
+) {
 
+    const durata =
+        Math.max(
+            0,
+            Number(durataSecondi) || 0
+        ) * 1000;
+
+    if (durata === 0) {
+
+        if (
+            typeof alTermine ===
+            "function"
+        ) {
+            alTermine();
+        }
+
+        return;
+    }
+
+    setTimeout(
+        function () {
+
+            if (
+                typeof alTermine ===
+                "function"
+            ) {
+                alTermine();
+            }
+        },
+        durata
+    );
+}
 function animaFaseCursoreAnemoscopio(
     livelloRespiro,
     cursoreAttivo,
