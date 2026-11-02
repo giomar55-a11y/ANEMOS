@@ -481,6 +481,37 @@ function animaFaseCursoreAnemoscopio(
     );
 }
 
+function animaFasiSuccessiveAnemoscopio(
+    livelloRespiro,
+    cursoreAttivo,
+    fasiRespiratorie,
+    indiceFase
+) {
+
+    if (
+        indiceFase >=
+        fasiRespiratorie.length
+    ) {
+        return;
+    }
+
+    animaFaseCursoreAnemoscopio(
+        livelloRespiro,
+        cursoreAttivo,
+        fasiRespiratorie,
+        indiceFase,
+        function () {
+
+            animaFasiSuccessiveAnemoscopio(
+                livelloRespiro,
+                cursoreAttivo,
+                fasiRespiratorie,
+                indiceFase + 1
+            );
+        }
+    );
+}
+
 function preparaFaseCursoreAttivoAnemoscopio(
     cursoreAttivo,
     cursoreFase
