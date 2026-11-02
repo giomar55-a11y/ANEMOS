@@ -385,9 +385,9 @@ function posizionaCursoreAttivoAnemoscopio(
 
 function animaPrimaFaseAnemoscopio(
     cursore,
-    durataSecondi
+    durataSecondi,
+    alTermine
 ) {
-
     if (!cursore) {
         return;
     }
@@ -424,11 +424,15 @@ function animaPrimaFaseAnemoscopio(
         );
 
         if (avanzamento < 1) {
-            requestAnimationFrame(
-                aggiorna
-            );
-        }
-    }
+    requestAnimationFrame(
+        aggiorna
+    );
+} else if (
+    typeof alTermine ===
+    "function"
+) {
+    alTermine();
+}    }
 
     requestAnimationFrame(
         aggiorna
