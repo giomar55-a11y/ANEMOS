@@ -1456,6 +1456,7 @@ if (
     fasiRespiratorie,
     1
 );
+   }        
     );
 }
    campoTraiettoria.appendChild(
