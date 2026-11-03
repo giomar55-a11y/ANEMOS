@@ -574,6 +574,31 @@ function animaFaseCursoreAnemoscopio(
     );
 }
 
+function contaFasiRespiratoriePrimaAnemoscopio(
+    elementiTimeline,
+    indiceElemento
+) {
+
+    let numeroFasi = 0;
+
+    for (
+        let i = 0;
+        i < indiceElemento;
+        i++
+    ) {
+
+        if (
+            elementiTimeline[i] &&
+            elementiTimeline[i].tipo ===
+                "anemomero"
+        ) {
+            numeroFasi++;
+        }
+    }
+
+    return numeroFasi;
+}
+
 function animaFasiSuccessiveAnemoscopio(
     livelloRespiro,
     cursoreAttivo,
