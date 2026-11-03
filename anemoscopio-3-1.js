@@ -653,6 +653,37 @@ function animaElementoCompletoAnemoscopio(
     }
 }
 
+function animaSequenzaCompletaAnemoscopio(
+    livelloRespiro,
+    cursoreAttivo,
+    elementiTimeline,
+    indiceElemento
+) {
+
+    if (
+        indiceElemento >=
+        elementiTimeline.length
+    ) {
+        return;
+    }
+
+    animaElementoCompletoAnemoscopio(
+        livelloRespiro,
+        cursoreAttivo,
+        elementiTimeline,
+        indiceElemento,
+        function () {
+
+            animaSequenzaCompletaAnemoscopio(
+                livelloRespiro,
+                cursoreAttivo,
+                elementiTimeline,
+                indiceElemento + 1
+            );
+        }
+    );
+}
+
 function animaFasiSuccessiveAnemoscopio(
     livelloRespiro,
     cursoreAttivo,
