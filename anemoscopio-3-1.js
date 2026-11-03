@@ -599,6 +599,60 @@ function contaFasiRespiratoriePrimaAnemoscopio(
     return numeroFasi;
 }
 
+function animaElementoCompletoAnemoscopio(
+    livelloRespiro,
+    cursoreAttivo,
+    elementiTimeline,
+    indiceElemento,
+    alTermine
+) {
+
+    const elemento =
+        elementiTimeline[indiceElemento];
+
+    if (!elemento) {
+        return;
+    }
+
+    if (elemento.tipo === "apnea") {
+
+        animaElementoTimelineAnemoscopio(
+            elemento,
+            alTermine
+        );
+
+        return;
+    }
+
+    if (elemento.tipo === "anemomero") {
+
+        const indiceFase =
+            contaFasiRespiratoriePrimaAnemoscopio(
+                elementiTimeline,
+                indiceElemento
+            );
+
+        const fasiRespiratorie =
+            elementiTimeline.filter(
+                function (voce) {
+                    return (
+                        voce &&
+                        voce.tipo ===
+                            "anemomero"
+                    );
+                }
+            );
+
+        animaFaseCursoreAnemoscopio(
+            livelloRespiro,
+            cursoreAttivo,
+            fasiRespiratorie,
+            indiceFase,
+            alTermine
+        );
+    }
+}
+
 function animaFasiSuccessiveAnemoscopio(
     livelloRespiro,
     cursoreAttivo,
