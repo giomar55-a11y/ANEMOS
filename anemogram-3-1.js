@@ -2842,17 +2842,6 @@ if (avvisoAvvio) {
                     anemosystemaCorrente
                 );
 
-                        if (
-                typeof window.apriAnemoscopio ===
-                "function"
-            ) {
-
-                window.apriAnemoscopio(
-                    timeline
-                );
-
-                return;
-            }
 
             creaPannelloAnemogramma(
                 null,
@@ -2871,16 +2860,6 @@ if (avvisoAvvio) {
 if (avvisoAvvio) {
     avvisoAvvio.hidden = false;
 }
-            return;
-        }
-
-                if (
-            typeof window.apriAnemoscopio ===
-            "function"
-        ) {
-
-            window.apriAnemoscopio();
-
             return;
         }
 
