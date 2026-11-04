@@ -1511,6 +1511,42 @@ function preparaDisplayAnemoscopio() {
 
     anemoscopioDisplay.innerHTML = "";
 
+  const selettoreMovimento =
+    document.createElement("select");
+
+selettoreMovimento.id =
+    "anemoscopio-modalita-movimento";
+
+selettoreMovimento.setAttribute(
+    "aria-label",
+    "Modalità movimento Anemoscopio"
+);
+
+selettoreMovimento.innerHTML = `
+    <option value="cursore">
+        Cursore mobile
+    </option>
+    <option value="tracciato">
+        Tracciato mobile
+    </option>
+`;
+
+selettoreMovimento.value =
+    window.anemoscopioModalitaMovimento ||
+    "cursore";
+
+selettoreMovimento.addEventListener(
+    "change",
+    function () {
+        window.anemoscopioModalitaMovimento =
+            selettoreMovimento.value;
+    }
+);
+
+anemoscopioDisplay.appendChild(
+    selettoreMovimento
+); 
+
     const scalaVolume =
         document.createElement(
             "div"
