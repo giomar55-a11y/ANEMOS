@@ -2869,7 +2869,65 @@ if (avvisoAvvio) {
 );
 }
 
+function inizializzaPulsanteAnemoscopio() {
 
+    const pulsante =
+        document.getElementById(
+            "avvia-anemoscopio"
+        );
+
+    if (!pulsante) {
+        return;
+    }
+
+    pulsante.addEventListener(
+        "click",
+        function () {
+
+            const areaAnemosystema =
+                document.getElementById(
+                    "anemosystema-area"
+                );
+
+            const modalitaAnemosystema =
+                areaAnemosystema &&
+                !areaAnemosystema.hidden;
+
+            if (
+                modalitaAnemosystema &&
+                typeof anemosystemaCorrente !==
+                    "undefined"
+            ) {
+
+                const timeline =
+                    ottieniTimelineAnemosystema(
+                        anemosystemaCorrente
+                    );
+
+                window.apriAnemoscopio(
+                    timeline
+                );
+
+                return;
+            }
+
+            if (
+                !anemodromoHaSettoriCompleti(
+                    anemos31
+                )
+            ) {
+                return;
+            }
+
+            window.apriAnemoscopio();
+        }
+    );
+}
+
+document.addEventListener(
+    "DOMContentLoaded",
+    inizializzaPulsanteAnemoscopio
+);
 /* =====================================================
    AVVIO MODULO ANEMOGRAMMA
 ===================================================== */
