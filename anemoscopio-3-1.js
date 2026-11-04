@@ -1658,42 +1658,20 @@ posizionaCursoreAttivoAnemoscopio(
     0
 );
 
-const fasiRespiratorie =
-    Array.isArray(
-        window.anemoscopioTimeline
-    )
-        ? window.anemoscopioTimeline.filter(
-            function (elemento) {
-                return (
-                    elemento.tipo ===
-                    "anemomero"
-                );
-            }
-        )
-        : [];
-
-const primaFase =
-    fasiRespiratorie[0];
+const elementiTimeline =
+    ottieniElementiTimelineAnemoscopio();
 
 if (
-    primaFase &&
-    primaFase.dati
+    cursoreAttivo &&
+    elementiTimeline.length > 0
 ) {
-    animaPrimaFaseAnemoscopio(
+    animaSequenzaCompletaAnemoscopio(
+        livelloRespiro,
         cursoreAttivo,
-        primaFase.dati.durata,
-        function () {
-
-            animaFasiSuccessiveAnemoscopio(
-                livelloRespiro,
-                cursoreAttivo,
-                fasiRespiratorie,
-                1
-            );
-        }
+        elementiTimeline,
+        0
     );
-}
-   campoTraiettoria.appendChild(
+}   campoTraiettoria.appendChild(
     pianoTraiettoria
 );
    anemoscopioDisplay.appendChild(
