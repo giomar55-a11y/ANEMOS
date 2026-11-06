@@ -373,33 +373,7 @@ function posizionaCursoreAttivoAnemoscopio(
         (yFine - yInizio) *
         progresso;
 
-        const livelloRespiro =
-        cursore.parentElement;
-
-    const modalita =
-        window.anemoscopioModalitaMovimento ||
-        "cursore";
-
-    if (
-        modalita === "tracciato" &&
-        livelloRespiro
-    ) {
-
-        livelloRespiro.setAttribute(
-            "transform",
-            "translate(" +
-                (500 - x) +
-                " " +
-                (250 - y) +
-            ")"
-        );
-
-    } else if (livelloRespiro) {
-
-        livelloRespiro.removeAttribute(
-            "transform"
-        );
-    }
+        
 
     cursore.setAttribute(
         "transform",
