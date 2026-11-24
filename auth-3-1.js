@@ -51,9 +51,12 @@ async function anemosAuthRegistrati(
         error
     } =
         await anemosSupabase.auth.signUp({
-            email: email,
-            password: password
-        });
+    email: email,
+    password: password,
+    options: {
+        emailRedirectTo: "https://giomar55-a11y.github.io/ANEMOS/index-3-1.html"
+    }
+});
 
 
     if (error) {
