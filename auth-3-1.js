@@ -530,19 +530,270 @@ async function anemosAuthInizializza() {
 
 }
 
+const anemosAuthPulsanteRecupera =
+    document.getElementById("anemos-auth-recupera");
+
+if (anemosAuthPulsanteRecupera) {
+
+    anemosAuthPulsanteRecupera.hidden = false;
+
+    anemosAuthPulsanteRecupera.addEventListener(
+        "click",
+        async function () {
+
+            const email = anemosAuthEmail.value.trim();
+
+            function mostraStato(testo, stato) {
+                anemosAuthStato.classList.remove(
+                    "in-corso", "successo", "errore"
+                );
+                anemosAuthStato.classList.add(stato);
+                anemosAuthStato.textContent = testo;
+            }
+
+            if (!email) {
+                mostraStato(
+                    "Inserisci la tua email per recuperare la password.",
+                    "errore"
+                );
+                return;
+            }
+
+            mostraStato(
+                "Invio della richiesta in corso...",
+                "in-corso"
+            );
+
+            anemosAuthPulsanteRecupera.disabled = true;
+
+            try {
+
+                const { error } =
+                    await anemosSupabase.auth.resetPasswordForEmail(
+                        email,
+                        {
+                            redirectTo:
+                                "https://giomar55-a11y.github.io/ANEMOS/index-3-1.html"
+                        }
+                    );
+
+                if (error) {
+                    mostraStato(
+                        "Richiesta non riuscita. Riprova.",
+                        "errore"
+                    );
+                    return;
+                }
+
+                mostraStato(
+                    "Se l'indirizzo è registrato, riceverai una email per impostare una nuova password.",
+                    "successo"
+                );
+
+            } catch (errore) {
+
+                mostraStato(
+                    "Si è verificato un errore. Riprova.",
+                    "errore"
+                );
+
+            } finally {
+
+                anemosAuthPulsanteRecupera.disabled = false;
+
+            }
+
+        }
+    );
+}
+function anemosAuthNuovaPassword() {
+
+    if (document.getElementById("anemos-recupero-overlay")) {
+        return;
+    }
+
+    const overlay = document.createElement("div");
+
+    overlay.id = "anemos-recupero-overlay";
+
+    overlay.style.cssText = `
+        position: fixed;
+        inset: 0;
+        z-index: 20000;
+        background: rgba(0,0,0,0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+    `;
+
+    overlay.innerHTML = `
+        <div style="
+            background: white;
+            color: #222;
+            padding: 24px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 380px;
+            box-sizing: border-box;
+        ">
+            <h2>Nuova password</h2>
+
+            <p>Scegli una nuova password per il tuo account ANEMOS.</p>
+
+            <label for="anemos-nuova-password">Nuova password</label>
+            <input
+                id="anemos-nuova-password"
+                type="password"
+                autocomplete="new-password"
+                placeholder="Nuova password"
+                style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;"
+            >
+
+            <label for="anemos-conferma-password">Conferma password</label>
+            <input
+                id="anemos-conferma-password"
+                type="password"
+                autocomplete="new-password"
+                placeholder="Conferma password"
+                style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;"
+            >
+
+            <button
+                id="anemos-salva-password"
+                type="button"
+                style="
+                    width:100%;
+                    padding:14px;
+                    margin-top:12px;
+                    background:#222;
+                    color:white;
+                    border:0;
+                    border-radius:10px;
+                    font-weight:600;
+                "
+            >
+                Salva nuova password
+            </button>
+
+            <div
+                id="anemos-recupero-stato"
+                class="anemos-auth-stato"
+                role="status"
+            ></div>
+        </div>
+    `;
+
+    document.body.appendChild(overlay);
+
+    const pulsante =
+        document.getElementById("anemos-salva-password");
+
+    const stato =
+        document.getElementById("anemos-recupero-stato");
+
+    function mostraStato(testo, tipo) {
+
+        stato.classList.remove(
+            "in-corso", "successo", "errore"
+        );
+
+        stato.classList.add(tipo);
+        stato.textContent = testo;
+    }
+
+    pulsante.addEventListener("click", async function () {
+
+        const password =
+            document.getElementById("anemos-nuova-password").value;
+
+        const conferma =
+            document.getElementById("anemos-conferma-password").value;
+
+        if (password.length < 6) {
+
+            mostraStato(
+                "La password deve contenere almeno 6 caratteri.",
+                "errore"
+            );
+
+            return;
+        }
+
+        if (password !== conferma) {
+
+            mostraStato(
+                "Le password non coincidono.",
+                "errore"
+            );
+
+            return;
+        }
+
+        pulsante.disabled = true;
+
+        mostraStato(
+            "Salvataggio in corso...",
+            "in-corso"
+        );
+
+        try {
+
+            const { error } =
+                await anemosSupabase.auth.updateUser({
+                    password: password
+                });
+
+            if (error) {
+
+                mostraStato(
+                    "Impossibile aggiornare la password. Riprova o richiedi un nuovo link.",
+                    "errore"
+                );
+
+                pulsante.disabled = false;
+                return;
+            }
+
+            mostraStato(
+                "Password aggiornata correttamente!",
+                "successo"
+            );
+
+            document.getElementById("anemos-nuova-password").value = "";
+            document.getElementById("anemos-conferma-password").value = "";
+
+            setTimeout(function () {
+                overlay.remove();
+            }, 2500);
+
+        } catch (errore) {
+
+            mostraStato(
+                "Si è verificato un errore. Riprova.",
+                "errore"
+            );
+
+            pulsante.disabled = false;
+        }
+
+    });
+
+}
 
 anemosSupabase.auth.onAuthStateChange(
-    function (
-        evento,
-        sessione
-    ) {
+    function (evento, sessione) {
 
-        anemosAuthAggiornaInterfaccia(
-            sessione
-        );
+        if (evento === "PASSWORD_RECOVERY" && sessione) {
+
+            anemosAuthNuovaPassword();
+
+            return;
+        }
+
+        anemosAuthAggiornaInterfaccia(sessione);
 
     }
 );
-
 
 anemosAuthInizializza();
