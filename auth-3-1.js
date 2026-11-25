@@ -382,87 +382,93 @@ anemosAuthPulsanteRegistrati.addEventListener(
     "click",
     async function () {
 
-        const email =
-            anemosAuthEmail.value.trim();
-
-        const password =
-            anemosAuthPassword.value;
-
-
-        if (
-            !email ||
-            !password
-        ) {
-
-            anemosAuthStato.textContent =
-                "Inserisci email e password.";
-
-            return;
-
+        function mostraStato(testo, tipo) {
+            anemosAuthStato.classList.remove(
+                "in-corso", "successo", "errore"
+            );
+            anemosAuthStato.classList.add(tipo);
+            anemosAuthStato.textContent = testo;
         }
 
+        const email = anemosAuthEmail.value.trim();
+        const password = anemosAuthPassword.value;
 
-        if (
-            password.length < 6
-        ) {
-
-            anemosAuthStato.textContent =
-                "La password deve contenere almeno 6 caratteri.";
-
+        if (!email || !password) {
+            mostraStato(
+                "Inserisci email e password.",
+                "errore"
+            );
             return;
-
         }
 
+        if (password.length < 6) {
+            mostraStato(
+                "La password deve contenere almeno 6 caratteri.",
+                "errore"
+            );
+            return;
+        }
 
-        anemosAuthStato.textContent =
-            "Registrazione in corso…";
+        mostraStato(
+            "Registrazione in corso...",
+            "in-corso"
+        );
 
+        anemosAuthPulsanteRegistrati.disabled = true;
 
-        const risultato =
-            await anemosAuthRegistrati(
+        try {
+
+            const risultato = await anemosAuthRegistrati(
                 email,
                 password
             );
 
+            if (!risultato.successo) {
+                mostraStato(
+                    "Registrazione non riuscita: " +
+                    risultato.errore.message,
+                    "errore"
+                );
+                return;
+            }
 
-        if (
-            !risultato.successo
-        ) {
+            anemosAuthPassword.value = "";
 
-            anemosAuthStato.textContent =
-                "Registrazione non riuscita: " +
-                risultato.errore.message;
+            if (risultato.dati.session) {
 
-            return;
+                anemosAuthAggiornaInterfaccia(
+                    risultato.dati.session
+                );
 
-        }
+                mostraStato(
+                    "Registrazione completata.",
+                    "successo"
+                );
 
+            } else {
 
-        anemosAuthPassword.value = "";
+                mostraStato(
+                    "Registrazione completata! Controlla la tua email per attivare l'account.",
+                    "successo"
+                );
 
+            }
 
-        if (
-            risultato.dati.session
-        ) {
+        } catch (errore) {
 
-            anemosAuthAggiornaInterfaccia(
-                risultato.dati.session
+            mostraStato(
+                "Si è verificato un errore. Riprova.",
+                "errore"
             );
 
-            anemosAuthStato.textContent =
-                "Registrazione completata.";
+        } finally {
 
-        } else {
-
-            anemosAuthStato.textContent =
-                "Registrazione completata. Controlla la tua email per confermare l'account.";
+            anemosAuthPulsanteRegistrati.disabled = false;
 
         }
 
     }
 );
-
-
 /* =====================================================
    USCITA
 ===================================================== */
