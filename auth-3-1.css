@@ -106,10 +106,34 @@
 
 .anemos-auth-stato {
     margin-top: 14px;
-    font-size: 13px;
-    line-height: 1.4;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.5;
+    text-align: center;
+    background: #f1f5f9;
+    color: #334155;
 }
 
+.anemos-auth-stato:empty {
+    display: none;
+}
+
+.anemos-auth-stato.in-corso {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.anemos-auth-stato.successo {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.anemos-auth-stato.errore {
+    background: #fee2e2;
+    color: #991b1b;
+}
 .anemos-auth-utente {
     font-size: 14px;
     line-height: 1.5;
