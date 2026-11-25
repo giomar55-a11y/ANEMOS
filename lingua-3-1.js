@@ -37,7 +37,7 @@ const ANEMOS_DIZIONARIO = {
 
     ANEMOS: {
         anemos: "ANEMOS",
-        italiano: "Padroneggiare il respiro"
+        italiano: "ANEMOS"
     },
 
     ANEMOMERO: {
