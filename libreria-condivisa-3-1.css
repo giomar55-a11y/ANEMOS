@@ -1,0 +1,35 @@
+/* =====================================================
+   ANEMOS 3.1
+   LIBRERIA CONDIVISA
+   Interfaccia grafica v1.0
+===================================================== */
+
+.libreria-sezioni {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+}
+
+.libreria-sezioni button {
+    flex: 1;
+    padding: 12px 8px;
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.libreria-sezioni button.attiva {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #ffffff;
+}
+
+.libreria-sezioni button:active {
+    transform: scale(0.98);
+}
