@@ -72,6 +72,8 @@ function anemosCondivisaConverti(riga) {
     return {
 
         id: riga.id,
+       
+       origine: "condivisa",
 
         autoreId: riga.author_id,
 
