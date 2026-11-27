@@ -1469,11 +1469,20 @@ document.addEventListener(
 
         function chiudiPannello() {
 
-            pannello.classList.remove(
-                "aperto"
-            );
+    delete pannello.dataset.modificaId;
+    delete pannello.dataset.modificaIntento;
+    delete pannello.dataset.modificaSequenza;
+    delete pannello.dataset.modificaTipo;
+    delete pannello.dataset.modificaOrigine;
 
-        }
+    pulsanteConferma.textContent =
+        "Salva nella Libreria";
+
+    pannello.classList.remove(
+        "aperto"
+    );
+
+}
 
 
         pulsanteSalva.addEventListener(
@@ -1887,8 +1896,26 @@ if (
 let risultato;
 
 
-if (modificaId) {
+if (
+    modificaId &&
+    pannello.dataset.modificaOrigine === "condivisa"
+) {
 
+    risultato = await anemosCondivisaModifica(
+        modificaId,
+        {
+            nome: nome,
+            note: note,
+            intento: pannello.dataset.modificaIntento || "",
+            sequenza: JSON.parse(
+                pannello.dataset.modificaSequenza
+            ),
+            tipo: pannello.dataset.modificaTipo ||
+                ANEMOS_TIPO_ANEMODROMO
+        }
+    );
+
+} else if (modificaId) {
     risultato =
     await anemosLibreriaModificaSupabase(
         modificaId,
@@ -1979,8 +2006,8 @@ delete pannello.dataset.modificaId;
 delete pannello.dataset.modificaIntento;
 delete pannello.dataset.modificaSequenza;
 delete pannello.dataset.modificaTipo;
-
-
+delete pannello.dataset.modificaOrigine;
+       
 pulsanteConferma.textContent =
     "Salva nella Libreria";
 
@@ -3171,6 +3198,10 @@ async function () {
 
         pannello.dataset.modificaId =
             voce.id;
+   pannello.dataset.modificaOrigine =
+    voce.origine === "condivisa"
+        ? "condivisa"
+        : "personale";
 
        pannello.dataset.modificaIntento =
     voce.intento || "";
@@ -3361,19 +3392,206 @@ if (pannelloLibreria) {
     }
 );
        
-        pannelloMenu.appendChild(
-            modifica
+        if (!voce.autoreId) {
+
+    pannelloMenu.appendChild(modifica);
+
+    pannelloMenu.appendChild(duplica);
+
+    pannelloMenu.appendChild(elimina);
+
+}
+if (voce.autoreId) {
+
+    const salvaPersonale =
+        document.createElement("button");
+
+    salvaPersonale.type = "button";
+
+    salvaPersonale.textContent =
+        "Salva nella Libreria Personale";
+
+    salvaPersonale.addEventListener(
+        "click",
+        async function () {
+
+            salvaPersonale.disabled = true;
+
+            try {
+
+                const risultato =
+                    await anemosCondivisaSalvaPersonale(voce);
+
+                if (risultato.successo) {
+
+                    alert("Salvato nella Libreria Personale.");
+
+                } else {
+
+                    alert("Salvataggio non riuscito.");
+
+                }
+
+            } catch (errore) {
+
+                alert("Errore durante il salvataggio.");
+
+            } finally {
+
+                salvaPersonale.disabled = false;
+
+            }
+
+        }
+    );
+
+    pannelloMenu.appendChild(salvaPersonale);
+
+}
+if (!voce.autoreId) {
+
+    anemosCondivisaProgrammatore()
+        .then(function (programmatore) {
+
+            if (!programmatore) {
+                return;
+            }
+
+            const pubblica =
+                document.createElement("button");
+
+            pubblica.type = "button";
+
+            pubblica.textContent =
+                "Pubblica nella Libreria Condivisa";
+
+            pubblica.addEventListener(
+                "click",
+                async function () {
+
+                    if (!confirm(
+                        "Vuoi pubblicare questa respirazione nella Libreria Condivisa?"
+                    )) {
+                        return;
+                    }
+
+                    pubblica.disabled = true;
+
+                    try {
+
+                        const risultato =
+                            await anemosCondivisaPubblica(voce);
+
+                        if (risultato.successo) {
+
+                            alert("Pubblicazione riuscita.");
+
+                        } else {
+
+                            alert("Pubblicazione non riuscita.");
+
+                        }
+
+                    } catch (errore) {
+
+                        alert("Errore durante la pubblicazione.");
+
+                    } finally {
+
+                        pubblica.disabled = false;
+
+                    }
+
+                }
+            );
+
+            pannelloMenu.appendChild(pubblica);
+
+        })
+        .catch(function (errore) {
+
+            console.error(errore);
+
+        });
+
+}
+       if (voce.autoreId) {
+
+    Promise.all([
+        anemosCondivisaUtente(),
+        anemosCondivisaProgrammatore()
+    ])
+    .then(function ([utente, programmatore]) {
+
+        if (
+            !utente ||
+            !programmatore ||
+            utente.id !== voce.autoreId
+        ) {
+            return;
+        }
+
+        const eliminaCondivisa =
+            document.createElement("button");
+
+        eliminaCondivisa.type = "button";
+
+        eliminaCondivisa.textContent =
+            "Elimina pubblicazione";
+
+        eliminaCondivisa.className =
+            "libreria-menu-elimina";
+
+        eliminaCondivisa.addEventListener(
+            "click",
+            async function () {
+
+                if (!confirm(
+                    "Vuoi eliminare questa pubblicazione dalla Libreria Condivisa?"
+                )) {
+                    return;
+                }
+
+                eliminaCondivisa.disabled = true;
+
+                try {
+
+                    const risultato =
+                        await anemosCondivisaElimina(voce.id);
+
+                    if (risultato.successo) {
+
+                        await renderLibreria();
+
+                        alert("Pubblicazione eliminata.");
+
+                    } else {
+
+                        alert("Eliminazione non riuscita.");
+
+                    }
+
+                } catch (errore) {
+
+                    alert("Errore durante l'eliminazione.");
+
+                } finally {
+
+                    eliminaCondivisa.disabled = false;
+
+                }
+
+            }
         );
 
-        pannelloMenu.appendChild(
-            duplica
-        );
+        pannelloMenu.appendChild(eliminaCondivisa);
 
-        pannelloMenu.appendChild(
-            elimina
-        );
+    })
+    .catch(function (errore) {
+        console.error(errore);
+    });
 
-
+}
         card.appendChild(
             pannelloMenu
         );
