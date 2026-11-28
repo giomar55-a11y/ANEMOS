@@ -2225,11 +2225,14 @@ document.addEventListener(
    dalla sequenza originale salvata.
 */
 
+let sezioneLibreriaAttiva = "personale";
+
 async function renderLibreria() {
 
     const risultato =
-        await anemosLibreriaLeggiDisponibile();
-
+        sezioneLibreriaAttiva === "condivisa"
+            ? await anemosCondivisaLeggi()
+            : await anemosLibreriaLeggiDisponibile();
     const libreria =
         risultato.libreria;
 
@@ -3657,7 +3660,36 @@ azioni.appendChild(
            dei risultati della Libreria
            quando cambiano i filtri.
         */
+const pulsantePersonale =
+    document.getElementById("libreria-personale");
 
+const pulsanteCondivisa =
+    document.getElementById("libreria-condivisa");
+
+function selezionaSezioneLibreria(sezione) {
+
+    sezioneLibreriaAttiva = sezione;
+
+    pulsantePersonale?.classList.toggle(
+        "attiva",
+        sezione === "personale"
+    );
+
+    pulsanteCondivisa?.classList.toggle(
+        "attiva",
+        sezione === "condivisa"
+    );
+
+    renderLibreria();
+}
+
+pulsantePersonale?.addEventListener("click", function () {
+    selezionaSezioneLibreria("personale");
+});
+
+pulsanteCondivisa?.addEventListener("click", function () {
+    selezionaSezioneLibreria("condivisa");
+});
 const filtroTipoLibreria =
     document.getElementById(
         "libreria-filtro-tipo"
