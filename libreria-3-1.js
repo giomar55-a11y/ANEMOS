@@ -547,9 +547,10 @@ async function anemosLibreriaScriviSupabase(
     intentoId,
     note,
     sequenza,
-    tipo = ANEMOS_TIPO_ANEMODROMO
+    tipo = ANEMOS_TIPO_ANEMODROMO,
+    sharedSourceId = null
 ) {
-    try {
+   try {
 
         const {
             data: sessionData,
@@ -583,6 +584,7 @@ async function anemosLibreriaScriviSupabase(
                 .from("anemodromi")
                 .insert({
                     user_id: utente.id,
+                    shared_source_id: sharedSourceId,
                     nome: String(nome ?? "").trim(),
                     intento_id: String(intentoId ?? "").trim(),
                     note: String(note ?? "").trim(),
@@ -591,7 +593,7 @@ tipo: tipo,
 versione: ANEMOS_LIBRERIA_VERSIONE
                 })
                 .select(
-    "id, user_id, nome, intento_id, note, sequenza, tipo, versione, created_at, updated_at"
+    "id, user_id, nome, intento_id, note, sequenza, tipo, versione, created_at, updated_at, shared_source_id"
 )
                 .single();
 
@@ -2236,6 +2238,25 @@ async function renderLibreria() {
     const libreria =
         risultato.libreria;
 
+   let respirazioniPersonali = [];
+
+if (sezioneLibreriaAttiva === "condivisa") {
+
+    const utente = await anemosCondivisaUtente();
+
+    if (utente) {
+
+        const { data, error } = await anemosSupabase
+            .from("anemodromi")
+            .select("id, shared_source_id")
+            .eq("user_id", utente.id);
+
+        if (!error) {
+            respirazioniPersonali = data || [];
+        }
+    }
+}
+
    if (
     !risultato.successo &&
     risultato.motivo ===
@@ -3404,7 +3425,15 @@ if (pannelloLibreria) {
     pannelloMenu.appendChild(elimina);
 
 }
-if (voce.autoreId) {
+if (
+    voce.autoreId &&
+    !respirazioniPersonali.some(function (personale) {
+        return (
+            personale.id === voce.sourceId ||
+            personale.shared_source_id === voce.id
+        );
+    })
+) {
 
     const salvaPersonale =
         document.createElement("button");
@@ -3428,6 +3457,8 @@ if (voce.autoreId) {
                 if (risultato.successo) {
 
                     alert("Salvato nella Libreria Personale.");
+
+renderLibreria();
 
                 } else {
 
