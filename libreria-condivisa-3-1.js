@@ -77,6 +77,8 @@ function anemosCondivisaConverti(riga) {
 
         autoreId: riga.author_id,
 
+       sourceId: riga.source_id || null,
+
         nome: riga.title,
 
         note: riga.description || "",
@@ -193,7 +195,7 @@ async function anemosCondivisaLeggi() {
         } = await anemosSupabase
             .from("anemos_shared_library")
             .select(
-                "id, author_id, title, description, breathing_data, created_at"
+                "id, author_id, title, description, breathing_data, created_at, source_id"
             )
             .order(
                 "created_at",
@@ -247,7 +249,9 @@ async function anemosCondivisaPubblica(voce) {
         }
 
         const contenuto =
-            anemosCondivisaPrepara(voce);
+    anemosCondivisaPrepara(voce);
+
+contenuto.source_id = voce.id;
 
         const {
             data,
@@ -429,8 +433,9 @@ async function anemosCondivisaSalvaPersonale(voce) {
             ),
 
             voce.tipo ||
-                ANEMOS_TIPO_ANEMODROMO
+    ANEMOS_TIPO_ANEMODROMO,
 
+voce.id
         );
 
     } catch (errore) {
