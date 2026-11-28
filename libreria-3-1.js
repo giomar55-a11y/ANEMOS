@@ -2238,6 +2238,25 @@ async function renderLibreria() {
     const libreria =
         risultato.libreria;
 
+  let respirazioniPubblicate = [];
+
+if (sezioneLibreriaAttiva === "personale") {
+
+    const utente = await anemosCondivisaUtente();
+
+    if (utente) {
+
+        const { data, error } = await anemosSupabase
+            .from("anemos_shared_library")
+            .select("id, source_id")
+            .eq("author_id", utente.id);
+
+        if (!error) {
+            respirazioniPubblicate = data || [];
+        }
+    }
+} 
+
    let respirazioniPersonali = [];
 
 if (sezioneLibreriaAttiva === "condivisa") {
@@ -3496,8 +3515,14 @@ if (!voce.autoreId) {
 
             pubblica.type = "button";
 
-            pubblica.textContent =
-                "Pubblica nella Libreria Condivisa";
+            const pubblicazioneEsistente =
+    respirazioniPubblicate.find(function (pubblicazione) {
+        return pubblicazione.source_id === voce.id;
+    });
+
+pubblica.textContent = pubblicazioneEsistente
+    ? "Aggiorna pubblicazione"
+    : "Pubblica nella Libreria Condivisa";
 
             pubblica.addEventListener(
                 "click",
